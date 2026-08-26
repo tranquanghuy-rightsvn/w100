@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web100 — Tạo Landing Page kéo thả</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/blocks.css">
+<link rel="stylesheet" href="css/builder.css">
+</head>
+<body>
+
+<!-- ============================ BUILDER TOOLBAR ============================ -->
+<div class="builder-bar">
+  <div class="builder-bar-left">
+    <a class="builder-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Web100 Builder
+    </a>
+  </div>
+  <div class="builder-bar-hint">Mẹo: kéo icon <strong>⠿</strong> để di chuyển khối/mục, nhấp vào chữ/ảnh để sửa trực tiếp.</div>
+  <div class="builder-bar-right">
+    <button class="builder-btn" type="button" id="btnUndo" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg>
+      Hoàn tác
+    </button>
+    <button class="builder-btn" type="button" id="btnReset">Xoá hết</button>
+    <button class="builder-btn" type="button" id="btnPreview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      Live Preview
+    </button>
+    <button class="builder-btn builder-btn--primary" type="button" id="btnExport">
+      Xuất trang
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="builder-shell">
+  <!-- ============================ SIDEBAR TRÁI ============================ -->
+  <aside class="builder-sidebar">
+    <div class="sidebar-add">
+      <button class="sidebar-add-btn" type="button" id="btnAddBlock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Thêm khối
+      </button>
+    </div>
+
+    <div class="sidebar-list" id="blockList">
+      <p class="sidebar-empty" id="sidebarEmpty">Chưa có khối nào — bấm <strong>Thêm khối</strong> để bắt đầu.</p>
+    </div>
+  </aside>
+
+  <!-- ============================ CANVAS (trắng, dựng từ state.blocks) ============================ -->
+  <div class="builder-canvas-wrap">
+    <div class="builder-canvas" id="canvas">
+      <p class="canvas-empty" id="canvasEmpty">Canvas trống — thêm khối đầu tiên từ sidebar bên trái.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ POPUP CHỌN KHỐI TRỰC QUAN ============================ -->
+<div class="add-modal" id="addBlockModal">
+  <div class="add-card">
+    <div class="add-card__head">
+      <h3 id="addModalTitle">Thêm khối</h3>
+      <button class="export-close" type="button" id="addModalClose" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="add-card__body">
+      <div class="add-categories" id="addCategories"></div>
+      <div class="add-variants" id="addVariants"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal tuỳ chỉnh nút bấm (customStyle:"button", vd nút Liên hệ của menu) -->
+<div class="btnstyle-modal" id="buttonStyleModal">
+  <div class="btnstyle-card">
+    <div class="add-card__head">
+      <h3>Tuỳ chỉnh nút bấm</h3>
+      <button class="export-close" type="button" id="btnStyleCloseBtn" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="btnstyle-body">
+      <div class="btnstyle-section">Màu sắc</div>
+      <div class="prop-row"><label>Màu nền</label><input type="color" id="btnStyleBg"></div>
+      <div class="prop-row"><label>Độ trong suốt màu nền</label><input type="range" id="btnStyleBgOpacity" min="0" max="1" step="0.05"></div>
+
+      <div class="btnstyle-section">Chữ</div>
+      <div class="prop-row"><label>Màu chữ</label><input type="color" id="btnStyleText"></div>
+      <div class="prop-row">
+        <label>Font chữ</label>
+        <select id="btnStyleFont">
+          <option value="">(Theo khối)</option>
+        </select>
+      </div>
+      <div class="prop-row"><label>Kích thước chữ</label><input type="range" id="btnStyleFontSize" min="10" max="24" step="1"></div>
+      <div class="prop-row">
+        <label>Độ đậm</label>
+        <select id="btnStyleWeight">
+          <option value="400">Thường</option>
+          <option value="500">Vừa</option>
+          <option value="600">Hơi đậm</option>
+          <option value="700">Đậm</option>
+          <option value="800">Rất đậm</option>
+        </select>
+      </div>
+      <div class="prop-row"><label>Chữ nghiêng</label><input type="checkbox" id="btnStyleItalic"></div>
+      <div class="prop-row"><label>Gạch chân</label><input type="checkbox" id="btnStyleUnderline"></div>
+
+      <div class="btnstyle-section">Kích thước &amp; viền</div>
+      <div class="prop-row"><label>Đệm ngang (trái-phải)</label><input type="range" id="btnStylePaddingX" min="4" max="48" step="1"></div>
+      <div class="prop-row"><label>Đệm dọc (trên-dưới)</label><input type="range" id="btnStylePaddingY" min="2" max="30" step="1"></div>
+      <div class="prop-row"><label>Bo góc</label><input type="range" id="btnStyleRadius" min="0" max="40" step="1"></div>
+      <div class="prop-row"><label>Độ dày viền</label><input type="range" id="btnStyleBorderWidth" min="0" max="6" step="0.5"></div>
+      <div class="prop-row"><label>Màu viền</label><input type="color" id="btnStyleBorderColor"></div>
+      <div class="prop-row"><label>Đổ bóng (dưới-phải)</label><input type="range" id="btnStyleShadow" min="0" max="24" step="1"></div>
+
+      <div class="btnstyle-section">Icon trước chữ</div>
+      <div class="prop-row"><label>Icon</label><button class="list-add-btn" type="button" id="btnStyleIconPickBtn">Chọn icon…</button></div>
+      <div id="btnStyleIconGroup">
+        <div class="prop-row"><label>Màu icon</label><input type="color" id="btnStyleIconColor"></div>
+        <div class="prop-row"><label>Kích thước icon</label><input type="range" id="btnStyleIconSize" min="10" max="32" step="1"></div>
+        <div class="prop-row"><label></label><button class="list-add-btn" type="button" id="btnStyleIconRemoveBtn">Xoá icon</button></div>
+      </div>
+
+      <div class="btnstyle-section">Hiệu ứng hover</div>
+      <div class="prop-row">
+        <label>Khi rê chuột vào</label>
+        <select id="btnStyleHover">
+          <option value="none">Không có</option>
+          <option value="darken">Đậm màu hơn</option>
+          <option value="lighten">Nhạt màu hơn</option>
+          <option value="lift">Nâng lên</option>
+          <option value="scale">Phóng to nhẹ</option>
+          <option value="glow">Phát sáng viền</option>
+          <option value="sweep">Ánh sáng lướt qua</option>
+          <option value="spotlight">Sáng lên theo con trỏ</option>
+          <option value="flip3d">Lật nhẹ kiểu 3D</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal tuỳ chỉnh chữ (mọi field type:"text"/"richtext" không phải customStyle:"button") -->
+<div class="btnstyle-modal" id="textStyleModal">
+  <div class="btnstyle-card">
+    <div class="add-card__head">
+      <h3>Tuỳ chỉnh chữ</h3>
+      <button class="export-close" type="button" id="textStyleCloseBtn" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="btnstyle-body">
+      <div class="prop-row"><label>Màu chữ</label><input type="color" id="textStyleColor"></div>
+      <div class="prop-row">
+        <label>Font chữ</label>
+        <select id="textStyleFont">
+          <option value="">(Theo khối)</option>
+        </select>
+      </div>
+      <div class="prop-row"><label>Cỡ chữ</label><input type="range" id="textStyleFontSize" min="10" max="72" step="1"></div>
+      <div class="prop-row">
+        <label>Độ đậm</label>
+        <select id="textStyleWeight">
+          <option value="400">Thường</option>
+          <option value="500">Vừa</option>
+          <option value="600">Hơi đậm</option>
+          <option value="700">Đậm</option>
+          <option value="800">Rất đậm</option>
+        </select>
+      </div>
+      <div class="prop-row"><label>Chữ nghiêng</label><input type="checkbox" id="textStyleItalic"></div>
+      <div class="prop-row"><label>Gạch chân</label><input type="checkbox" id="textStyleUnderline"></div>
+      <div class="prop-row"><label></label><button class="list-add-btn" type="button" id="textStyleResetBtn">Đặt lại theo khối</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup chọn icon riêng (data/icons-catalog.json — thêm icon mới chỉ cần sửa file đó) -->
+<div class="btnstyle-modal" id="iconPickerModal">
+  <div class="btnstyle-card" style="width:min(480px,92vw);">
+    <div class="add-card__head">
+      <h3>Chọn icon</h3>
+      <button class="export-close" type="button" id="iconPickerCloseBtn" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="btnstyle-body">
+      <div class="icon-picker-grid" id="iconPickerGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal tuỳ chỉnh ảnh (mọi field type:"image", bao gồm cả logo) -->
+<div class="btnstyle-modal" id="imageStyleModal">
+  <div class="btnstyle-card">
+    <div class="add-card__head">
+      <h3>Tuỳ chỉnh ảnh</h3>
+      <button class="export-close" type="button" id="imgStyleCloseBtn" aria-label="Đóng">&times;</button>
+    </div>
+    <div class="btnstyle-body">
+      <div class="prop-row"><label>Ảnh</label><button class="list-add-btn" type="button" id="imgStyleUploadBtn">Đổi ảnh</button></div>
+
+      <div id="imgStyleRatioGroup">
+        <div class="btnstyle-section">Tỉ lệ ảnh</div>
+        <div class="prop-row">
+          <label>Tỉ lệ</label>
+          <select id="imgStyleRatio"></select>
+        </div>
+        <div class="prop-row prop-row--ratio-custom" id="imgStyleRatioCustomRow">
+          <input type="number" id="imgStyleRatioW" min="1">
+          <span>:</span>
+          <input type="number" id="imgStyleRatioH" min="1">
+        </div>
+      </div>
+
+      <div class="btnstyle-section">Thu / phóng</div>
+      <div class="prop-row"><label>Thu / phóng ảnh</label><input type="range" id="imgStyleZoom" min="1" max="2.5" step="0.05"></div>
+
+      <div id="imgStyleOverlayGroup">
+        <div class="btnstyle-section">Lớp phủ</div>
+        <div class="prop-row"><label>Thêm lớp phủ</label><input type="checkbox" id="imgStyleOverlayToggle"></div>
+        <div class="prop-row" id="imgStyleOverlayColorRow"><label>Màu lớp phủ</label><input type="color" id="imgStyleOverlayColor"></div>
+        <div class="prop-row" id="imgStyleOverlayOpacityRow"><label>Độ mờ lớp phủ</label><input type="range" id="imgStyleOverlayOpacity" min="0" max="1" step="0.05"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal xác nhận dùng chung cho các hành động có thể mất dữ liệu -->
+<div class="confirm-modal" id="confirmModal">
+  <div class="confirm-card">
+    <div class="confirm-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+    </div>
+    <h3 id="confirmTitle">Xác nhận</h3>
+    <p id="confirmMessage"></p>
+    <div class="confirm-actions">
+      <button class="confirm-btn confirm-btn--ghost" type="button" id="confirmCancelBtn">Huỷ</button>
+      <button class="confirm-btn confirm-btn--danger" type="button" id="confirmOkBtn">Đồng ý</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay upload ảnh -->
+<div class="upload-overlay" id="uploadOverlay">
+  <div class="upload-card">
+    <h3 id="uploadTitle">Đổi ảnh</h3>
+    <label class="upload-drop">
+      <input type="file" id="uploadInput" accept="image/*">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+      Chọn ảnh từ máy
+    </label>
+    <button class="upload-cancel" type="button" id="uploadCancel">Huỷ</button>
+  </div>
+</div>
+
+<!-- Modal xuất trang -->
+<div class="export-modal" id="exportModal">
+  <div class="export-card">
+    <button class="export-close" type="button" id="exportClose" aria-label="Đóng">&times;</button>
+    <h3>Xuất trang của bạn</h3>
+    <p class="export-desc">Chọn cách bạn muốn nhận lại trang đã chỉnh sửa.</p>
+
+    <div class="export-options">
+      <button class="export-option" type="button" id="btnExportZip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 21h14"/></svg>
+        <strong>Tải file ZIP</strong>
+        <span>Trọn bộ HTML/CSS/ảnh, mở lên chạy ngay</span>
+      </button>
+      <button class="export-option" type="button" id="btnExportAdmin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4Z"/><path d="m4 6 8 7 8-7"/></svg>
+        <strong>Gửi cho admin</strong>
+        <span>Sao chép mã, gửi qua email/Zalo để được lên hosting</span>
+      </button>
+    </div>
+
+    <div class="export-admin-box" id="exportAdminBox">
+      <textarea id="exportAdminCode" readonly></textarea>
+      <button class="builder-btn" type="button" id="btnCopyAdminCode">Sao chép mã</button>
+      <span class="export-copied" id="exportCopiedNote">Đã sao chép!</span>
+    </div>
+  </div>
+</div>
+
+<script src="js/builder.js"></script>
+</body>
+</html>

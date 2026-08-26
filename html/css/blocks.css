@@ -1,0 +1,387 @@
+/* ==========================================================================
+   blocks.css — hệ thiết kế cho các khối trong catalog (data/blocks-catalog.json).
+   File này KHÔNG phải editor-only: được copy nguyên vào bản xuất (ZIP), nên
+   chỉ chứa CSS cần để hiển thị đúng các khối, không chứa gì thuộc UI chỉnh sửa
+   (những cái đó nằm ở css/builder.css).
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { text-decoration: none; color: inherit; }
+
+:root {
+  --blk-accent: #0bcb68;
+  --blk-accent-dark: #078c46;
+}
+
+/* ------------------------------ Thành phần dùng chung ------------------------------ */
+.blk-badge {
+  display: inline-flex;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(11, 203, 104, 0.12);
+  color: var(--blk-accent-dark);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.blk-heading { font-size: 38px; font-weight: 800; letter-spacing: -0.01em; }
+.blk-lead { font-size: 15.5px; opacity: 0.75; max-width: 420px; }
+.blk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.blk-btn--sm { height: 38px; padding: 0 16px; font-size: 13px; }
+.blk-btn--primary { background: linear-gradient(135deg, var(--blk-accent), var(--blk-accent-dark)); color: #fff; }
+.blk-btn--outline { background: transparent; border: 1.5px solid currentColor; color: inherit; }
+/* Icon trước chữ (customStyle:"button", data/icons-catalog.json) — span
+   riêng chứ không phải text node, nên el.textContent lưu field vẫn đúng. */
+.blk-btn__icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: transparent; }
+.blk-btn__icon svg { width: 100%; height: 100%; display: block; }
+
+/* ------------------------------ Khối gốc: nền/màu/font theo style riêng ------------------------------ */
+.blk {
+  background: var(--blk-bg, #fff);
+  color: var(--blk-text, #0b0f14);
+  font-family: var(--blk-font, 'Plus Jakarta Sans', sans-serif);
+  position: relative;
+}
+
+/* Toggle "overlay" (vd Menu): đè lên khối ngay bên dưới thay vì chiếm chỗ
+   riêng — dùng position:absolute nên khối kế tiếp trong luồng tự trồi lên
+   lấp đúng chỗ, tạo cảm giác menu nổi trên banner. Bật khi tick checkbox
+   HOẶC tự động khi opacity < 1 (autoWhen) — cả 2 trường hợp đều nổi.
+   Riêng việc ép nền trong suốt hoàn toàn CHỈ áp dụng khi tick checkbox
+   (blk--overlay-forced) — nếu không, kéo thanh opacity sẽ luôn nhảy về
+   trong suốt 100% ngay khi vừa nhích khỏi 1, không theo đúng % đang kéo. */
+.blk--overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 50 !important;
+}
+.blk--overlay-forced {
+  background: transparent !important;
+}
+
+/* Khối đang đổ bóng cần z-index cao hơn khối kế tiếp trong luồng, nếu
+   không phần bóng đổ xuống dưới (box-shadow không chiếm chỗ layout) sẽ bị
+   khối ngay sau đó (vd Hero banner) vẽ chồng lên, trông như bị "che mất". */
+.blk--shadow-active { z-index: 5; }
+
+/* ------------------------------ Hero ------------------------------ */
+.blk-hero { overflow: hidden; }
+
+/* Nội dung (badge/tiêu đề/mô tả/nút) nằm ở VỊ TRÍ CỐ ĐỊNH theo mẫu thiết kế
+   chuẩn (flexbox, căn giữa theo chiều dọc, đệm responsive) — không còn kéo
+   thả tự do như trước (từng gây lệch/chồng chữ lên nhau tuỳ độ dài nội
+   dung và độ rộng màn hình). Người dùng chỉ sửa được TEXT + màu/cỡ/viền
+   của nút qua popup, không di chuyển được vị trí. */
+.blk-hero__content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+  max-width: 620px; padding: 64px 6%;
+  color: var(--blk-text);
+}
+.blk-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 8px; }
+
+/* Hero ảnh/slideshow full màn hình (chữ trái hoặc giữa, đè lên ảnh) — ảnh
+   (hoặc slideshow) nằm lớp dưới cùng, lớp phủ (::before, màu lấy từ style
+   "bg"/"opacity" — xem applyInstanceStyle) PHỦ TRÙM TOÀN BỘ khối (không đặt
+   trên .blk-hero__content, vì content chỉ rộng bằng cột chữ đọc được —
+   max-width phía trên — đặt lớp phủ ở đó sẽ chỉ tô màu đúng phần đó, để lộ
+   nguyên ảnh sáng ở 2 bên, đúng bug từng gặp), rồi .blk-hero__content (cột
+   chữ, canh giữa theo chiều dọc) nằm trên cùng để chữ luôn đọc được dù ảnh
+   sáng/tối thế nào. Bản "chữ trái" dùng gradient mờ dần từ trái ra phải
+   (đậm đúng phía có chữ); bản "chữ giữa" (blk-hero--full-center) phủ đều
+   toàn ảnh vì chữ nằm giữa theo chiều ngang. */
+.blk-hero--full { position: relative; min-height: 640px; }
+.blk-hero--full > .blk-hero__bgwrap,
+.blk-hero--full > .blk-hero__slides { position: absolute; inset: 0; z-index: 0; }
+.blk-hero--full > .blk-hero__bgwrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blk-hero--full > .blk-hero__bgwrap .img-style-wrap { display: block; width: 100%; height: 100%; }
+.blk-hero--full::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--blk-bg) 0%, transparent 62%);
+}
+.blk-hero--full > .blk-hero__content { position: absolute; inset: 0; justify-content: center; }
+.blk-hero--full-center::before { background: var(--blk-bg); }
+/* Chữ giữa cần khung rộng hơn bản chữ trái — dòng ngắn bị bó hẹp khi canh
+   giữa trông gãy/gượng hơn nhiều so với canh trái (canh trái vẫn tự nhiên
+   dù xuống dòng sớm), nên nới max-width theo chuẩn hero hiện đại. */
+.blk-hero--full-center > .blk-hero__content { align-items: center; text-align: center; margin: 0 auto; max-width: 1020px; }
+.blk-hero--full-center .blk-hero__actions { justify-content: center; }
+
+/* Slideshow (fieldDef.slideshow, xem buildHeroDots trong builder.js): mỗi
+   slide là 1 .blk-hero__slide phủ kín, chỉ mục ".is-active" mới hiện — script
+   tự chạy (heroSlideScript) đổi qua lại, tự chứa nên sống sót qua bản xuất
+   tĩnh. Chọn theo class ".blk-hero__slide", KHÔNG chọn theo attribute
+   [data-list-item] — attribute đó bị stripEditorArtifacts() gỡ khi xuất
+   trang tĩnh (chỉ dùng cho editor), chọn theo nó sẽ làm mọi slide mất
+   position:absolute lúc xuất/Live Preview, vỡ bố cục dù vẫn đúng trong
+   canvas editor (đã từng dính bug này). */
+.blk-hero__slides .blk-hero__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+.blk-hero__slides .blk-hero__slide.is-active { opacity: 1; z-index: 1; }
+.blk-hero__slides img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blk-hero__slides .img-style-wrap { display: block; width: 100%; height: 100%; }
+/* Icon kéo/xoá của mỗi slide đè lên chính giữa nếu để mặc định (item-tools
+   dùng chung định vị top:-14px cho danh sách dạng thanh mỏng) — full-bleed
+   ảnh thì kéo icon vào hẳn góc trong mới bấm được. Chỉ có hiệu lực trong
+   editor (item-tools bị gỡ khi xuất) nên chọn theo attribute ở đây vẫn ổn. */
+.blk-hero__slides [data-list-item] .item-tools { top: 14px; right: 14px; }
+
+/* Nốt chỉ mục slideshow — 3 kiểu chọn qua style "dotsStyle" (select,
+   cssClassPrefix "blk-hero--dots-" tự đổi class trên khối, xem
+   applyInstanceStyle). Mặc định (không có class nào) = hình tròn. */
+.blk-hero__dots { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3; display: flex; align-items: center; gap: 8px; }
+.blk-hero__dot {
+  width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%;
+  background: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.2s ease;
+}
+.blk-hero__dot.is-active { background: #fff; }
+.blk-hero--dots-dash .blk-hero__dot { width: 24px; height: 4px; border-radius: 2px; }
+.blk-hero--dots-dash-circle .blk-hero__dot.is-active { width: 24px; height: 9px; border-radius: 999px; }
+
+/* Nút prev/next của slideshow hero (buildHeroDots/heroSlideScript trong
+   builder.js) — dựng cho MỌI bản hero có slideshow, không riêng gì 1 biến
+   thể, nên đặt CSS chung ở đây thay vì theo từng ".blk-hero--*". */
+.blk-hero__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; padding: 0; border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.25); color: #fff; cursor: pointer;
+  z-index: 3; transition: background 0.2s ease;
+}
+.blk-hero__arrow svg { width: 20px; height: 20px; }
+.blk-hero__arrow:hover { background: rgba(255,255,255,0.45); }
+.blk-hero__arrow--prev { left: 16px; }
+.blk-hero__arrow--next { right: 16px; }
+
+/* Hero slideshow 3/4 + 2 ô ảnh vuông chia đôi trên dưới ở 1/4 còn lại — các
+   ô cách nhau bằng "gap" (không phải border) nên border-radius (style
+   "cellRadius", biến --blk-hero-cell-radius) bo được tất cả 4 góc mỗi ô mà
+   không lộ cạnh vuông ở chỗ giáp ô kế bên. */
+/* Nền trắng cố định cho chính khối (không dùng var(--blk-bg)) — nếu không,
+   khoảng cách "gap" giữa slideshow/2 ô ảnh sẽ lộ ra đúng màu lớp phủ đang
+   chọn (kế thừa từ ".blk{background:var(--blk-bg)}" ở trên), trông như lớp
+   phủ "ăn" luôn ra cả phần khoảng cách chứ không chỉ riêng từng ảnh. */
+.blk-hero--split34 { display: flex; gap: 15px; min-height: 560px; background: #fff; }
+.blk-hero--split34 .blk-hero__slidecol { position: relative; flex: 0 0 75%; overflow: hidden; min-height: 560px; border-radius: var(--blk-hero-cell-radius, 0px); }
+.blk-hero--split34 .blk-hero__slides { position: absolute; inset: 0; z-index: 0; }
+/* Lớp phủ đặt trên .blk-hero__slidecol (phủ TOÀN BỘ cột ảnh 75%) — không đặt
+   trên .blk-hero__content vì content chỉ rộng bằng cột chữ (max-width phía
+   dưới), đặt lớp phủ ở đó sẽ chỉ tô đúng phần đó, để lộ nguyên ảnh sáng ở 2
+   bên (đúng bug từng gặp ở bản full-center). Loại trừ "-slidecontent" (loại
+   5) vì bản đó đã có lớp phủ RIÊNG cho từng slide (.blk-hero__slide::before
+   ở dưới) — thêm lớp này nữa sẽ chồng chéo, không cần thiết. */
+.blk-hero--split34:not(.blk-hero--split34-slidecontent) .blk-hero__slidecol::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--blk-bg) 0%, transparent 65%);
+}
+.blk-hero--split34 .blk-hero__slidecol > .blk-hero__content { position: absolute; inset: 0; z-index: 2; justify-content: center; max-width: 480px; }
+/* Bản "chữ giữa" — chữ có thể nằm giữa cột slideshow theo chiều ngang nên
+   phủ đều toàn ảnh thay vì gradient lệch trái, giống cách xử lý ở
+   .blk-hero--full-center bên trên. */
+.blk-hero--split34-center .blk-hero__slidecol::before { background: var(--blk-bg); }
+.blk-hero--split34-center .blk-hero__slidecol > .blk-hero__content { align-items: center; text-align: center; margin: 0 auto; max-width: 730px; }
+.blk-hero--split34-center .blk-hero__actions { justify-content: center; }
+.blk-hero--split34 .blk-hero__sidecol { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+.blk-hero--split34 .blk-hero__sidecell { flex: 1 1 50%; position: relative; overflow: hidden; border-radius: var(--blk-hero-cell-radius, 0px); }
+.blk-hero--split34 .blk-hero__sidecell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blk-hero--split34 .blk-hero__sidecell .img-style-wrap { display: block; width: 100%; height: 100%; }
+
+/* "Loại 5" — hero slideshow 3/4 + 2 ô ảnh, MỖI SLIDE CÓ NỘI DUNG RIÊNG (tiêu
+   đề/mô tả/nút đổi theo từng slide) + 2 ô ảnh bên có tiêu đề/mô tả/nút riêng —
+   dựng theo đúng bố cục banner của dự án khtcard. Khác 2 bản slideshow ở
+   trên: không dùng .blk-hero__canvas/field kéo tự do, chữ nằm NGAY TRONG
+   từng .blk-hero__slide (list item) và từng .blk-hero__sidecell — nên mọi
+   rule dưới đây khoanh vùng riêng bằng ".blk-hero--split34-slidecontent" để
+   không đụng vào bản "chữ giữa" (blk-hero--split34-center) vẫn dùng canvas
+   overlay như cũ. */
+.blk-hero--split34-slidecontent .blk-hero__slide { display: flex; align-items: center; }
+.blk-hero--split34-slidecontent .blk-hero__slide .img-style-wrap { position: absolute; inset: 0; z-index: 0; }
+.blk-hero--split34-slidecontent .blk-hero__slide::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--blk-bg) 0%, transparent 70%);
+}
+.blk-hero__slidebody { position: relative; z-index: 2; max-width: 460px; padding: 40px 40px 40px 64px; color: var(--blk-text); }
+.blk-hero__eyebrow { display: block; font-style: italic; font-weight: 600; font-size: 15px; opacity: 0.85; margin-bottom: 10px; }
+.blk-hero__slidetitle { font-size: 32px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.blk-hero__slidetext { font-size: 15px; line-height: 1.6; opacity: 0.85; max-width: 380px; margin-bottom: 22px; }
+/* Box/màu/viền của nút này giờ do popup "Tuỳ chỉnh nút" (customStyle:
+   "button", xem buttonStyleCss) quyết định — chỉ còn giữ phần bố cục/chữ mà
+   hệ thống đó không đụng tới. */
+.blk-hero__slidecta { display: inline-flex; align-items: center; font-weight: 700; letter-spacing: 0.3px; }
+
+/* Lớp phủ của 2 ô ảnh bên — dùng CHUNG biến --blk-bg với lớp phủ của ảnh/
+   slideshow chính (applyInstanceStyle đã gộp sẵn màu + độ đậm vào biến này),
+   để chỉnh 1 chỗ trong panel "Tuỳ chỉnh khối" là đổi đồng bộ cho cả 3 ảnh,
+   không phải set riêng rgba cố định từng nơi. Áp riêng cho TỪNG ô (không đặt
+   trên .blk-hero__sidecol) nên không lan ra phần "gap" giữa 2 ô — .blk-hero__
+   sidecell overflow:hidden nên "inset:0" vẫn khoanh đúng bo góc của từng ô. */
+.blk-hero--split34-slidecontent .blk-hero__sidecell::before,
+.blk-hero--split34-center .blk-hero__sidecell::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--blk-bg);
+}
+/* .img-style-wrap (span bọc <img>, xem wireImageCustomStyle) có sẵn
+   position:relative nhưng KHÔNG set z-index — nếu để z-index:0 như trên thì
+   lớp phủ và ảnh cùng ở mức "0/auto", thứ tự DOM (ảnh nằm sau ::before)
+   khiến ảnh vẫn vẽ chồng lên trên, lớp phủ bị che mất dù màu đã đúng. Đặt
+   ::before ở z-index:1 (cao hơn ảnh) và sidebody ở z-index:2 (cao hơn nữa)
+   để thứ tự luôn đúng bất kể DOM. */
+.blk-hero__sidebody { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: 22px 24px; color: #fff; }
+.blk-hero__sidebody h3 { font-size: 17px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+.blk-hero__sidebody p { font-size: 12.5px; line-height: 1.55; opacity: 0.9; max-width: 26ch; margin-bottom: 12px; }
+.blk-hero__sidecta { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 3px; color: inherit; }
+.blk-hero__sidecta svg { width: 14px; height: 14px; transition: transform 0.2s ease; }
+.blk-hero__sidecell:hover .blk-hero__sidecta svg { transform: translateX(4px); }
+
+/* Responsive — mọi bản hero. Thu nhỏ chữ/đệm dần theo màn hình, xếp lại bản
+   3/4 + 2 ô ảnh theo chiều dọc ở màn hẹp (giống bố cục banner khtcard tham
+   khảo ban đầu) để 2 ô ảnh không bị bóp còn 1 dải hẹp bên cạnh slideshow. */
+@media (max-width: 900px) {
+  .blk-hero__content { padding: 48px 6%; max-width: 100%; }
+  .blk-heading { font-size: 30px; }
+  .blk-hero--split34 { flex-direction: column; min-height: 0; }
+  .blk-hero--split34 .blk-hero__slidecol { flex: none; width: 100%; min-height: 420px; }
+  .blk-hero--split34 .blk-hero__sidecol { flex-direction: row; }
+  .blk-hero--split34 .blk-hero__sidecell { min-height: 180px; }
+  .blk-hero__slidetitle { font-size: 26px; }
+}
+@media (max-width: 640px) {
+  .blk-hero--full, .blk-hero--split34 .blk-hero__slidecol { min-height: 480px; }
+  .blk-hero__content { padding: 36px 6%; gap: 12px; }
+  .blk-heading { font-size: 25px; }
+  .blk-lead { font-size: 14px; }
+  .blk-hero__arrow { display: none; }
+  .blk-hero--split34 .blk-hero__sidecol { flex-direction: column; }
+  .blk-hero__slidebody { padding: 28px 24px 32px 32px; }
+  .blk-hero__slidetitle { font-size: 22px; margin-bottom: 10px; }
+  .blk-hero__slidetext { font-size: 13.5px; }
+  .blk-hero__sidebody { padding: 16px 18px; }
+  .blk-hero__sidebody h3 { font-size: 14px; }
+}
+
+/* ------------------------------ Menu ------------------------------ */
+.blk-menu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 5%;
+}
+.blk-menu__logo { font-weight: 800; font-size: 19px; margin-right: auto; }
+.blk-menu__logo-img { height: 40px; width: auto; aspect-ratio: 1 / 1; object-fit: contain; }
+.blk-menu .img-style-wrap { display: inline-flex; height: 40px; margin-right: auto; vertical-align: middle; }
+.blk-menu__nav { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.blk-menu__nav a { font-size: var(--blk-menu-nav-size, 14px); font-weight: 600; opacity: 0.85; }
+
+.blk-menu--nav-center { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+.blk-menu--nav-center .img-style-wrap { justify-self: start; margin-right: 0; }
+.blk-menu--nav-center .blk-menu__nav { justify-self: center; }
+.blk-menu--nav-center .btn-style-wrap { justify-self: end; }
+
+.blk-menu--split-center { justify-content: center; }
+.blk-menu--split-center .img-style-wrap { margin-right: 0; }
+
+/* ------------------------------ Hiệu ứng hover cho mục menu ------------------------------ */
+.blk-menu--hover-color .blk-menu__nav a { transition: color 0.2s ease; }
+.blk-menu--hover-color .blk-menu__nav a:hover { color: var(--blk-nav-hover-color, #0bcb68) !important; opacity: 1; }
+
+.blk-menu--hover-zoom .blk-menu__nav a { display: inline-block; transition: transform 0.2s ease; }
+.blk-menu--hover-zoom .blk-menu__nav a:hover { transform: scale(1.08); }
+
+.blk-menu--hover-bold .blk-menu__nav a { transition: font-weight 0.15s ease, opacity 0.15s ease; }
+.blk-menu--hover-bold .blk-menu__nav a:hover { font-weight: 800; opacity: 1; }
+
+.blk-menu--hover-underline-grow .blk-menu__nav a { position: relative; padding-bottom: 4px; }
+.blk-menu--hover-underline-grow .blk-menu__nav a::after {
+  content: "";
+  position: absolute; left: 50%; right: 50%; bottom: 0;
+  height: 2px; background: var(--blk-nav-hover-color, currentColor);
+  transition: left 0.2s ease, right 0.2s ease;
+}
+.blk-menu--hover-underline-grow .blk-menu__nav a:hover::after { left: 0; right: 0; }
+
+.blk-menu--hover-underline-slide .blk-menu__nav { position: relative; }
+.blk-menu__nav-indicator {
+  position: absolute; bottom: -8px; height: 2px; border-radius: 2px;
+  background: var(--blk-nav-hover-color, #0bcb68);
+  opacity: 0; transition: left 0.25s ease, width 0.25s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+.blk-menu__nav-indicator.is-active { opacity: 1; }
+
+/* Bọc field kiểu button (customStyle:"button", vd nút CTA của menu) — style
+   nền/chữ/bo góc/hover riêng cho từng khối được set qua <style> chèn ngay
+   bên trong, không đụng blocks.css chung nên export tĩnh vẫn tự chứa đủ. */
+.btn-style-wrap { position: relative; display: inline-flex; }
+
+/* Bọc MỌI field chữ (text/richtext, không phải customStyle:"button") —
+   dùng <span> nếu field vốn inline (span/a, xem INLINE_TEXT_TAGS trong
+   builder.js) hoặc <div> nếu field vốn khối (h1/h2/h3/p...) để không đổi
+   ngữ cảnh dòng/khối của nội dung gốc. Chỉ set position:relative làm điểm
+   neo cho icon sửa — không set display, để nguyên default (inline hoặc
+   block tương ứng) nên không ảnh hưởng layout của field bên trong. */
+.text-style-wrap { position: relative; }
+
+/* Bọc mọi field kiểu "image" (ảnh hero, logo menu, ...) — cho phép zoom
+   (transform:scale trên chính ảnh, wrap clip phần dư qua overflow:hidden)
+   và lớp phủ màu (span con .img-style-overlay, chỉ tồn tại khi bật). Khai
+   báo ở blocks.css vì phải sống sót qua bản xuất tĩnh. */
+.img-style-wrap { position: relative; overflow: hidden; }
+.img-style-wrap img { transform-origin: center; }
+.img-style-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+
+/* ------------------------------ Features ------------------------------ */
+.blk-features { padding: 64px 6%; text-align: center; }
+.blk-features__heading { font-size: 28px; font-weight: 800; margin-bottom: 36px; }
+.blk-features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.blk-features__item {
+  padding: 28px 20px;
+  border-radius: 18px;
+  background: rgba(127, 127, 127, 0.06);
+  position: relative;
+}
+.blk-features__icon { display: block; font-size: 30px; margin-bottom: 14px; }
+.blk-features__item h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.blk-features__item p { font-size: 13.5px; opacity: 0.72; }
+
+/* ------------------------------ Footer ------------------------------ */
+.blk-footer { padding: 48px 6% 28px; }
+.blk-footer__top { margin-bottom: 24px; }
+.blk-footer__logo { display: block; font-weight: 800; font-size: 18px; margin-bottom: 8px; }
+.blk-footer__top p { font-size: 13.5px; opacity: 0.7; max-width: 420px; }
+.blk-footer__links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+}
+.blk-footer__links a { font-size: 13.5px; font-weight: 600; opacity: 0.8; }
+.blk-footer__copy { font-size: 12.5px; opacity: 0.55; }
+
+/* ------------------------------ List item — chỗ trống cho tay nắm/nút xoá của editor ------------------------------ */
+.blk-menu__nav li, .blk-footer__links li, .blk-features__item { position: relative; }
