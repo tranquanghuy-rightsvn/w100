@@ -494,6 +494,16 @@ body.is-dragging-something * {
 .variant-card.is-current .variant-label { color: var(--ui-green-dark); }
 .variant-thumb {
   height: 130px; overflow: hidden; position: relative;
+  /* Bo góc trên đặt ngay tại chính phần tử overflow:hidden bao trực tiếp
+     .variant-thumb-inner (thay vì chỉ dựa vào border-radius của .variant-card
+     bên ngoài) — Safari không cắt đúng theo border-radius/overflow của
+     ancestor khi phần tử con có transform (đúng trường hợp scale(0.25) bên
+     dưới), khiến ảnh thumbnail bị lồi ra hoặc lệch/hụt so với khung. Dùng
+     thêm clip-path (không bị lỗi tương tự với phần tử có transform, kể cả
+     trên Safari) làm cơ chế cắt chính, overflow+border-radius chỉ còn là lớp
+     dự phòng cho trình duyệt không hỗ trợ clip-path bo góc. */
+  border-radius: 14px 14px 0 0;
+  clip-path: inset(0 round 14px 14px 0 0);
   background: var(--ui-bg-alt);
   pointer-events: none;
 }
@@ -503,6 +513,16 @@ body.is-dragging-something * {
   transform: scale(0.25);
   transform-origin: top left;
 }
+/* Khối thật được render vào đây để làm preview (renderAddModalVariants
+   trong builder.js) — .variant-thumb-inner giả định khối con cao đúng bằng
+   400% chiều cao .variant-thumb (vd 4×130px = 520px) để scale(0.25) trả về
+   đúng khung xem trước. Nhưng nhiều khối tự đặt min-height riêng (vd
+   .blk-hero--full: 640px) LỚN HƠN ngân sách đó — khối thật render cao hơn
+   520px, khiến ảnh nền/nội dung căn giữa bị tràn xuống dưới và bị cắt mất
+   phần dưới, nhìn như ảnh "lệch" khỏi khung xem trước. Ép khối con luôn cao
+   đúng 100% (bỏ mọi min-height riêng) để nó luôn khớp khít khung 4x, bất kể
+   variant nào tự đặt min-height bao nhiêu. */
+.variant-thumb-inner > * { height: 100% !important; min-height: 0 !important; }
 .variant-label { padding: 10px 12px; font-size: 12.5px; font-weight: 700; border-top: 1px solid var(--ui-line); }
 
 @media (max-width: 900px) {

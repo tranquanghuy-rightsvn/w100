@@ -367,6 +367,133 @@ a { text-decoration: none; color: inherit; }
 .blk-features__item h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
 .blk-features__item p { font-size: 13.5px; opacity: 0.72; }
 
+/* -- features-icon-row: hàng icon nhỏ gọn, không thẻ nền -- */
+.blk-features--row .blk-features__rowlist {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 32px;
+  max-width: 1100px; margin: 0 auto; text-align: left;
+}
+.blk-features--row .blk-features__rowlist li { display: flex; align-items: center; gap: 12px; flex: 1 1 220px; }
+.blk-features--row .blk-features__icon {
+  font-size: 20px; flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(11, 203, 104, 0.12);
+  display: flex; align-items: center; justify-content: center;
+}
+.blk-features--row h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+.blk-features--row p { font-size: 12.5px; opacity: 0.65; }
+
+/* ------------------------------ Logos (đối tác/khách hàng) ------------------------------ */
+.blk-logos { padding: 48px 6%; text-align: center; }
+.blk-logos__label { font-size: 13px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; opacity: 0.55; margin-bottom: 28px; }
+.blk-logos__grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 40px; max-width: 1000px; margin: 0 auto; }
+.blk-logos__grid img { height: 32px; width: auto; object-fit: contain; filter: grayscale(1); opacity: 0.55; transition: filter 0.2s ease, opacity 0.2s ease; }
+.blk-logos__grid img:hover { filter: grayscale(0); opacity: 1; }
+
+/* -- logos-split: tiêu đề trái, logo phải -- */
+.blk-logos.blk-logos--split { display: flex; align-items: center; justify-content: space-between; gap: 40px; text-align: left; flex-wrap: wrap; }
+.blk-logos--split .blk-logos__intro { flex: 0 0 260px; }
+.blk-logos--split .blk-logos__intro h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.blk-logos--split .blk-logos__intro p { font-size: 13.5px; opacity: 0.65; }
+.blk-logos--split .blk-logos__grid { flex: 1; justify-content: flex-start; margin: 0; max-width: none; }
+
+/* ------------------------------ About (giới thiệu) ------------------------------ */
+.blk-about { display: flex; align-items: center; gap: 56px; padding: 72px 6%; }
+.blk-about--right { flex-direction: row-reverse; }
+.blk-about__media { flex: 0 0 42%; border-radius: 20px; overflow: hidden; aspect-ratio: 1 / 1; }
+.blk-about__media img { width: 100%; height: 100%; object-fit: cover; }
+.blk-about__body { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.blk-about__heading { font-size: 32px; font-weight: 800; letter-spacing: -0.01em; }
+.blk-about__desc { font-size: 15px; opacity: 0.75; max-width: 480px; }
+@media (max-width: 780px) {
+  .blk-about { flex-direction: column; }
+  .blk-about--right { flex-direction: column; }
+  .blk-about__media { width: 100%; flex: none; }
+}
+
+/* -- about-centered: chữ giữa, không ảnh, kèm hàng giá trị cốt lõi -- */
+.blk-about.blk-about--centered { flex-direction: column; text-align: center; align-items: center; gap: 18px; }
+.blk-about--centered .blk-about__desc { max-width: 560px; }
+.blk-about__values { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 12px; }
+.blk-about__values li { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.blk-about__values span { font-size: 20px; }
+
+/* ------------------------------ Stats (thống kê) ------------------------------ */
+.blk-stats { padding: 56px 6%; }
+.blk-stats__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; text-align: center; }
+.blk-stats__grid li { display: flex; flex-direction: column; gap: 6px; }
+.blk-stats__grid strong { font-size: 34px; font-weight: 800; letter-spacing: -0.01em; }
+.blk-stats__grid span { font-size: 13.5px; opacity: 0.7; }
+
+/* -- stats-cards: mỗi số liệu trong 1 thẻ nền sáng có viền -- */
+.blk-stats--cards .blk-stats__grid li { background: #fff; border: 1px solid rgba(127, 127, 127, 0.18); border-radius: 16px; padding: 24px 16px; }
+
+/* ------------------------------ Pricing (bảng giá) ------------------------------ */
+.blk-pricing { padding: 72px 6%; text-align: center; }
+.blk-pricing__heading { font-size: 30px; font-weight: 800; margin-bottom: 40px; }
+.blk-pricing__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; text-align: left; }
+.blk-pricing__plan { position: relative; background: #fff; border: 1px solid rgba(127, 127, 127, 0.18); border-radius: 20px; padding: 32px 26px; display: flex; flex-direction: column; gap: 14px; }
+.blk-pricing__badge { position: absolute; top: -12px; left: 26px; font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: var(--blk-accent); color: #fff; }
+.blk-pricing__badge:empty { display: none; }
+.blk-pricing__plan h3 { font-size: 18px; font-weight: 700; }
+.blk-pricing__price { display: flex; align-items: baseline; gap: 4px; }
+.blk-pricing__price strong { font-size: 30px; font-weight: 800; }
+.blk-pricing__price span { font-size: 13px; opacity: 0.6; }
+.blk-pricing__desc { font-size: 13.5px; opacity: 0.7; }
+.blk-pricing__features { display: flex; flex-direction: column; gap: 9px; margin: 4px 0 6px; }
+.blk-pricing__features li { font-size: 13.5px; opacity: 0.85; }
+.blk-pricing__cta { justify-content: center; width: 100%; }
+
+/* -- pricing-simple-2col: 2 gói tối giản, không liệt kê tính năng -- */
+.blk-pricing__grid.blk-pricing__grid--simple { grid-template-columns: repeat(2, minmax(240px, 1fr)); max-width: 680px; }
+.blk-pricing__plan--simple { text-align: center; align-items: center; }
+.blk-pricing__plan--simple .blk-pricing__price { justify-content: center; }
+
+/* ------------------------------ Testimonials (đánh giá khách hàng) ------------------------------ */
+.blk-testi { padding: 72px 6%; text-align: center; }
+.blk-testi__heading { font-size: 30px; font-weight: 800; margin-bottom: 40px; }
+.blk-testi__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto; text-align: left; }
+.blk-testi__grid li { background: rgba(127, 127, 127, 0.06); border-radius: 18px; padding: 26px 24px; display: flex; flex-direction: column; gap: 18px; }
+.blk-testi__quote { font-size: 14.5px; line-height: 1.6; opacity: 0.85; }
+.blk-testi__quote::before { content: "“"; }
+.blk-testi__quote::after { content: "”"; }
+.blk-testi__person { display: flex; align-items: center; gap: 12px; }
+.blk-testi__person img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.blk-testi__person div { display: flex; flex-direction: column; }
+.blk-testi__person strong { font-size: 13.5px; font-weight: 700; }
+.blk-testi__person span { font-size: 12px; opacity: 0.6; }
+
+/* -- testimonials-spotlight: 1 trích dẫn lớn, canh giữa -- */
+.blk-testi__spotlight { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.blk-testi--spotlight .blk-testi__quote { font-size: 22px; font-weight: 700; line-height: 1.5; opacity: 1; }
+
+/* ------------------------------ FAQ (câu hỏi thường gặp) ------------------------------ */
+.blk-faq { padding: 72px 6%; text-align: center; }
+.blk-faq__heading { font-size: 30px; font-weight: 800; margin-bottom: 32px; }
+.blk-faq__list { max-width: 720px; margin: 0 auto; text-align: left; display: flex; flex-direction: column; }
+.blk-faq__list li { padding: 22px 4px; border-bottom: 1px solid rgba(127, 127, 127, 0.18); }
+.blk-faq__list h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.blk-faq__list p { font-size: 14px; opacity: 0.72; line-height: 1.6; }
+
+/* -- faq-2col: lưới 2 cột cho nhiều câu hỏi -- */
+.blk-faq__list.blk-faq__list--grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 48px; max-width: 1000px; }
+@media (max-width: 700px) {
+  .blk-faq__list.blk-faq__list--grid { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------ CTA band (kêu gọi hành động) ------------------------------ */
+.blk-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 56px 6%; }
+.blk-cta__text h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+.blk-cta__text p { font-size: 14.5px; opacity: 0.75; max-width: 440px; }
+.blk-cta__btn { flex-shrink: 0; }
+@media (max-width: 640px) {
+  .blk-cta { flex-direction: column; text-align: center; }
+  .blk-cta__text p { margin: 0 auto; }
+}
+
+/* -- cta-centered: chữ giữa, xếp dọc -- */
+.blk-cta.blk-cta--centered { flex-direction: column; text-align: center; gap: 16px; }
+.blk-cta--centered h2 { font-size: 32px; }
+.blk-cta--centered p { max-width: 520px; margin: 0 auto; }
+
 /* ------------------------------ Footer ------------------------------ */
 .blk-footer { padding: 48px 6% 28px; }
 .blk-footer__top { margin-bottom: 24px; }
@@ -383,5 +510,22 @@ a { text-decoration: none; color: inherit; }
 .blk-footer__links a { font-size: 13.5px; font-weight: 600; opacity: 0.8; }
 .blk-footer__copy { font-size: 12.5px; opacity: 0.55; }
 
+/* -- footer-columns: nhiều cột (thương hiệu / liên kết / liên hệ) -- */
+.blk-footer--columns { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; padding: 56px 6% 28px; }
+.blk-footer--columns .blk-footer__col--brand p { font-size: 13.5px; opacity: 0.7; max-width: 280px; margin-top: 8px; }
+.blk-footer--columns h4 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 14px; opacity: 0.85; }
+.blk-footer--columns .blk-footer__col p { font-size: 13.5px; opacity: 0.75; margin-bottom: 6px; }
+.blk-footer__linklist { display: flex; flex-direction: column; gap: 10px; }
+.blk-footer__linklist a { font-size: 13.5px; opacity: 0.75; }
+.blk-footer__copy.blk-footer__copy--columns {
+  grid-column: 1 / -1; margin-top: 8px; padding-top: 20px;
+  border-top: 1px solid rgba(127, 127, 127, 0.2);
+}
+@media (max-width: 700px) {
+  .blk-footer--columns { grid-template-columns: 1fr; }
+}
+
 /* ------------------------------ List item — chỗ trống cho tay nắm/nút xoá của editor ------------------------------ */
-.blk-menu__nav li, .blk-footer__links li, .blk-features__item { position: relative; }
+.blk-menu__nav li, .blk-footer__links li, .blk-features__item,
+.blk-logos__grid li, .blk-stats__grid li, .blk-testi__grid li, .blk-faq__list li,
+.blk-footer__linklist li, .blk-about__values li, .blk-features__rowlist li { position: relative; }
