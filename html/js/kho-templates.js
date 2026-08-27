@@ -5,17 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
   initTplLightbox();
 });
 
-/* -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Bộ lọc danh mục: khối tô nền (.tpl-filter-indicator) trượt tới nút đang
+   active bằng transform, đo vị trí qua getBoundingClientRect() nên chạy
+   đúng ở cả layout dọc (desktop) lẫn hàng ngang (mobile, xem media query
+   trong kho-templates.css) mà không cần biết flex-direction hiện tại.
+   -------------------------------------------------------------------------- */
 function initTplFilters() {
   const filters = document.querySelectorAll('.tpl-filter');
   const cards = document.querySelectorAll('.tpl-card');
   const empty = document.getElementById('tplEmpty');
+  const wrap = document.getElementById('tplFilters');
+  const indicator = document.getElementById('tplFilterIndicator');
   if (!filters.length || !cards.length) return;
+
+  const moveIndicator = (btn, animate) => {
+    if (!indicator || !wrap) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const rect = btn.getBoundingClientRect();
+    indicator.style.transition = animate ? '' : 'none';
+    indicator.style.width = `${rect.width}px`;
+    indicator.style.height = `${rect.height}px`;
+    indicator.style.transform = `translate(${rect.left - wrapRect.left}px, ${rect.top - wrapRect.top}px)`;
+  };
 
   filters.forEach((btn) => {
     btn.addEventListener('click', () => {
       filters.forEach((b) => b.classList.remove('is-active'));
       btn.classList.add('is-active');
+      moveIndicator(btn, true);
 
       const filter = btn.dataset.filter;
       let visibleCount = 0;
@@ -26,6 +44,18 @@ function initTplFilters() {
       });
       if (empty) empty.classList.toggle('is-visible', visibleCount === 0);
     });
+  });
+
+  const placeInitial = () => {
+    const active = document.querySelector('.tpl-filter.is-active');
+    if (active) moveIndicator(active, false);
+  };
+  placeInitial();
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(placeInitial, 120);
   });
 }
 

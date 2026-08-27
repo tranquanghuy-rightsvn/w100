@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDrawerAccordion();
   initNavDropdowns();
   initNavIndicator();
+  initFaqAccordion();
   initReveal();
   initToTop();
   initProjectNext();
@@ -132,6 +133,31 @@ function initDrawerAccordion() {
         if (other !== item) {
           other.classList.remove('open');
           other.querySelector('.drawer-trigger').setAttribute('aria-expanded', 'false');
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Accordion FAQ: mỗi lần chỉ mở một câu hỏi, trượt bằng grid-template-rows
+   (0fr -> 1fr) giống accordion drawer mobile.
+   -------------------------------------------------------------------------- */
+function initFaqAccordion() {
+  const items = document.querySelectorAll('.faq-item');
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('.faq-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      items.forEach((other) => {
+        if (other !== item) {
+          other.classList.remove('open');
+          other.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
         }
       });
       item.classList.toggle('open', !isOpen);

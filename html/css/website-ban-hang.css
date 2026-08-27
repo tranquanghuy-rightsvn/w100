@@ -1,0 +1,144 @@
+/* ==========================================================================
+   website-ban-hang.css — trang dịch vụ "Website bán hàng, chốt đơn nhanh"
+   (html/website-ban-hang/index.html). Dùng chung biến màu/khoảng cách/thành
+   phần (container, btn, eyebrow, section-head, service-slide, process, faq,
+   cta-band...) đã khai báo trong css/style.css — file này chỉ chứa CSS
+   riêng cho hero, lưới tính năng và dải số liệu của trang.
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.sh-hero {
+  position: relative;
+  padding: 64px 0 96px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%);
+}
+.sh-hero::before,
+.sh-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(70px); pointer-events: none;
+}
+.sh-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
+.sh-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.sh-hero .container {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 56px;
+}
+.sh-hero__copy { max-width: 480px; }
+.sh-hero__copy h1 { font-size: 42px; line-height: 1.18; margin-bottom: 18px; }
+.sh-hero__copy .section-desc { max-width: 460px; margin: 0; font-size: 16.5px; }
+.sh-hero__actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+.sh-hero__trust {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.sh-hero__trust span {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.sh-hero__trust svg { width: 15px; height: 15px; color: var(--green-dark); flex-shrink: 0; }
+
+.sh-hero__visual { position: relative; }
+.sh-hero__frame { aspect-ratio: 4 / 3.4; }
+.sh-hero__float {
+  position: absolute;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  animation: shFloat 4s ease-in-out infinite;
+}
+.sh-hero__float-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--green-tint); color: var(--green-dark);
+  flex-shrink: 0;
+}
+.sh-hero__float-icon svg { width: 17px; height: 17px; }
+.sh-hero__float strong { display: block; font-size: 15px; line-height: 1.2; }
+.sh-hero__float span:not(.sh-hero__float-icon) { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.sh-hero__float--a { top: -18px; right: -18px; animation-delay: 0s; }
+.sh-hero__float--b { bottom: -18px; left: -24px; animation-delay: 1.6s; }
+@keyframes shFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ------------------------------ Tính năng nổi bật ------------------------------ */
+.sh-features { padding: 96px 0; background: var(--bg-alt); }
+.sh-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.sh-feature-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.sh-feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.sh-feature-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--green-tint); color: var(--green-dark);
+  margin-bottom: 18px;
+}
+.sh-feature-icon svg { width: 20px; height: 20px; }
+.sh-feature-card h3 { font-size: 16.5px; margin-bottom: 8px; }
+.sh-feature-card p { font-size: 13.5px; color: var(--muted); }
+
+/* ------------------------------ Showcase (dùng lại service-slide) ------------------------------ */
+.sh-showcase { padding: 96px 0; }
+.sh-showcase .service-slide { padding: 6px 0; gap: 64px; }
+.sh-showcase .service-slide + .service-slide { margin-top: 72px; }
+
+/* ------------------------------ Dải số liệu ------------------------------ */
+.sh-stats {
+  padding: 64px 0;
+  background: linear-gradient(135deg, var(--ink) 0%, #14342a 100%);
+}
+.sh-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.sh-stats__item strong { display: block; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.sh-stats__item span { font-size: 13.5px; color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 1100px) {
+  .sh-hero__copy h1 { font-size: 36px; }
+}
+
+@media (max-width: 1080px) {
+  .sh-showcase .service-slide { grid-template-columns: 1fr; gap: 32px; }
+  .sh-showcase .service-slide--reverse .service-visual,
+  .sh-showcase .service-slide--reverse .service-copy { order: initial; }
+  .sh-showcase .service-copy { max-width: none; }
+}
+
+@media (max-width: 900px) {
+  .sh-hero .container { grid-template-columns: 1fr; gap: 64px; }
+  .sh-hero__visual { max-width: 440px; margin: 0 auto; }
+  .sh-features-grid { grid-template-columns: repeat(2, 1fr); }
+  .sh-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+}
+
+@media (max-width: 700px) {
+  .sh-hero { padding: 40px 0 72px; }
+  .sh-hero__copy h1 { font-size: 28px; }
+  .sh-hero__float { padding: 10px 12px; gap: 8px; }
+  .sh-hero__float strong { font-size: 13.5px; }
+  .sh-hero__float--a { top: -14px; right: -10px; }
+  .sh-hero__float--b { bottom: -14px; left: -10px; }
+  .sh-features { padding: 64px 0; }
+  .sh-features-grid { grid-template-columns: 1fr; }
+  .sh-showcase { padding: 64px 0; }
+  .sh-stats__grid { grid-template-columns: 1fr; gap: 24px; }
+}

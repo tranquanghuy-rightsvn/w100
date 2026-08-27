@@ -1,221 +1,482 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web100 — Thiết kế website độc bản, chuẩn SEO, tốc độ vượt trội</title>
-<meta name="description" content="Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị. Websites with a human touch.">
-<meta property="og:title" content="Web100 — Thiết kế website độc bản, chuẩn SEO, tốc độ vượt trội">
-<meta property="og:description" content="Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.">
-<meta property="og:image" content="images/preview.png">
-<link rel="icon" type="image/png" href="images/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-<!-- ============================ HEADER ============================ -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="logo" href="#top">
-      <img src="images/logo.png" alt="Web100">
-    </a>
-
-    <nav>
-      <ul class="main-nav">
-        <li class="nav-item has-dropdown">
-          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
-            Dịch vụ
-            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="nav-panel">
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
-              Website doanh nghiệp
-            </a>
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>
-              Website bán hàng
-            </a>
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13l3 3v13H4Z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
-              Website tin tức
-            </a>
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-              Landing page
-            </a>
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></svg></span>
-              Cải tạo website cũ
-            </a>
-          </div>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="kho-templates/index.html">Kho templates</a></li>
-        <li class="nav-item"><a class="nav-link" href="khach-hang-cua-chung-toi/index.html">Khách hàng của chúng tôi</a></li>
-        <li class="nav-item has-dropdown">
-          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
-            Tool
-            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="nav-panel">
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg></span>
-              Check thứ hạng từ khóa
-            </a>
-            <a class="nav-panel-link" href="tool-landing-builder.html">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6v6H3z"/></svg></span>
-              Tạo Landing Page kéo thả
-            </a>
-            <a class="nav-panel-link" href="#">
-              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
-              Kiểm tra tốc độ website
-            </a>
-          </div>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="hieu-ung-dep/index.html">Hiệu ứng đẹp</a></li>
-        <li class="nav-item"><a class="nav-link" href="blog/index.html">Blog</a></li>
-        <li class="nav-indicator" aria-hidden="true"></li>
-      </ul>
-    </nav>
-
-    <a class="btn btn-primary btn-sm header-cta" href="#lien-he">
-      Liên hệ
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-
-    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<div class="mobile-nav-drawer" id="drawer">
-  <div class="drawer-item">
-    <button class="drawer-trigger" type="button" aria-expanded="false">
-      Dịch vụ
-      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-    </button>
-    <div class="drawer-panel">
-      <div class="drawer-panel-inner">
-        <a href="#">Website doanh nghiệp</a>
-        <a href="#">Website bán hàng</a>
-        <a href="#">Website tin tức</a>
-        <a href="#">Landing page</a>
-        <a href="#">Cải tạo website cũ</a>
-      </div>
-    </div>
-  </div>
-  <a href="kho-templates/index.html">Kho templates</a>
-  <a href="khach-hang-cua-chung-toi/index.html">Khách hàng của chúng tôi</a>
-  <div class="drawer-item">
-    <button class="drawer-trigger" type="button" aria-expanded="false">
-      Tool
-      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-    </button>
-    <div class="drawer-panel">
-      <div class="drawer-panel-inner">
-        <a href="#">Check thứ hạng từ khóa</a>
-        <a href="tool-landing-builder.html">Tạo Landing Page kéo thả</a>
-        <a href="#">Kiểm tra tốc độ website</a>
-      </div>
-    </div>
-  </div>
-  <a href="hieu-ung-dep/index.html">Hiệu ứng đẹp</a>
-  <a href="blog/index.html">Blog</a>
-  <a class="btn btn-primary drawer-cta" href="#lien-he">Liên hệ</a>
-</div>
-<div class="nav-overlay"></div>
-
-<main id="top">
-
-<!-- ============================ HERO ============================ -->
-<section class="hero">
-  <div class="hero-media">
-    <img src="images/hero-banner-cropped.png" alt="Báo cáo Lighthouse điểm 100/100 hiển thị trên laptop và điện thoại">
-  </div>
-  <div class="container hero-inner">
-    <div class="hero-copy">
-      <span class="badge-pill">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-9.3-8.1C1 10.1 1.6 6.6 4.4 5.1c2.2-1.2 4.7-.5 6 1.4L12 8l1.6-1.5c1.3-1.9 3.8-2.6 6-1.4 2.8 1.5 3.4 5 1.7 7.8C18.7 16.65 12 21 12 21Z"/></svg>
-        Websites with a human touch
-      </span>
-      <h1>Thiết kế website<br>chuẩn SEO,<br>tốc độ chớp mắt</h1>
-      <p class="lead">Không nói suông, chúng tôi cam kết bằng kết quả đo được của Google Lighthouse</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#lien-he">
-          Bắt đầu dự án
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Web100 — Thiết kế website độc bản, chuẩn SEO, tốc độ vượt trội
+    </title>
+    <meta
+      name="description"
+      content="Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị. Websites with a human touch."
+    />
+    <meta
+      property="og:title"
+      content="Web100 — Thiết kế website độc bản, chuẩn SEO, tốc độ vượt trội"
+    />
+    <meta
+      property="og:description"
+      content="Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị."
+    />
+    <meta property="og:image" content="images/preview.png" />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ============================ HEADER ============================ -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="#top">
+          <img src="images/logo.png" alt="Web100" />
         </a>
-        <a class="btn btn-outline" href="#du-an">
-          Xem dự án nổi bật
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor" stroke="none"/></svg>
+
+        <nav>
+          <ul class="main-nav">
+            <li class="nav-item has-dropdown">
+              <button
+                class="nav-link nav-trigger"
+                type="button"
+                aria-expanded="false"
+              >
+                Dịch vụ
+                <svg
+                  class="nav-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="nav-panel">
+                <a class="nav-panel-link" href="#dich-vu">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="4" width="18" height="16" rx="2" />
+                      <path d="M3 9h18M8 4v5" /></svg
+                  ></span>
+                  Website doanh nghiệp
+                </a>
+                <a class="nav-panel-link" href="website-ban-hang/index.html">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <circle cx="9" cy="20" r="1.4" />
+                      <circle cx="17" cy="20" r="1.4" />
+                      <path
+                        d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"
+                      /></svg
+                  ></span>
+                  Website bán hàng
+                </a>
+                <a class="nav-panel-link" href="#dich-vu">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M4 4h13l3 3v13H4Z" />
+                      <path d="M8 9h8M8 13h8M8 17h5" /></svg
+                  ></span>
+                  Website tin tức
+                </a>
+                <a class="nav-panel-link" href="#dich-vu">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M3 9h18M9 21V9" /></svg
+                  ></span>
+                  Landing page
+                </a>
+                <a class="nav-panel-link" href="cai-tao-website/index.html">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M3 12a9 9 0 0 1 15.3-6.4L21 8" />
+                      <path d="M21 3v5h-5" />
+                      <path d="M21 12a9 9 0 0 1-15.3 6.4L3 16" />
+                      <path d="M3 21v-5h5" /></svg
+                  ></span>
+                  Cải tạo website cũ
+                </a>
+                <a class="nav-panel-link" href="seo-ben-vung/index.html">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="m21 21-4.3-4.3" /></svg
+                  ></span>
+                  SEO bền vững
+                </a>
+                <a class="nav-panel-link" href="#dich-vu">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="m3 11 18-5v12L3 14v-3Z" />
+                      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg
+                  ></span>
+                  Chạy quảng cáo
+                </a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="kho-templates/index.html"
+                >Kho templates</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="khach-hang-cua-chung-toi/index.html"
+                >Khách hàng của chúng tôi</a
+              >
+            </li>
+            <li class="nav-item has-dropdown">
+              <button
+                class="nav-link nav-trigger"
+                type="button"
+                aria-expanded="false"
+              >
+                Tool
+                <svg
+                  class="nav-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div class="nav-panel">
+                <a class="nav-panel-link" href="#">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="m3 17 6-6 4 4 8-8" />
+                      <path d="M15 6h6v6" /></svg
+                  ></span>
+                  Check thứ hạng từ khóa
+                </a>
+                <a class="nav-panel-link" href="tool-landing-builder.html">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M3 9h6v6H3z" /></svg
+                  ></span>
+                  Tạo Landing Page kéo thả
+                </a>
+                <a class="nav-panel-link" href="#">
+                  <span class="nav-panel-icon"
+                    ><svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" /></svg
+                  ></span>
+                  Kiểm tra tốc độ website
+                </a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="hieu-ung-dep/index.html"
+                >Hiệu ứng đẹp</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog/index.html">Blog</a>
+            </li>
+            <li class="nav-indicator" aria-hidden="true"></li>
+          </ul>
+        </nav>
+
+        <a class="btn btn-primary btn-sm header-cta" href="#lien-he">
+          Liên hệ
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </a>
-      </div>
-    </div>
-  </div>
 
-  <svg class="hero-waves" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hero-wave hero-wave--back" d="M0,20 C60,55 140,43 260,50 C440,60 500,120 660,140 C820,160 900,110 1040,100 C1180,90 1300,150 1440,130 L1440,180 L0,180 Z"/>
-    <path class="hero-wave hero-wave--front" d="M0,45 C60,78 110,66 220,75 C400,90 460,143 620,160 C760,175 820,140 980,130 C1140,120 1280,170 1440,150 L1440,180 L0,180 Z"/>
-  </svg>
-</section>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Mở menu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
 
-<!-- ============================ FEATURES STRIP ============================ -->
-<section class="features">
-  <div class="container features-grid">
-    <div class="feature-item">
-      <span class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
-      </span>
-      <div>
-        <h3>Tốc độ tối ưu</h3>
-        <p>Điểm 100/100 trên Lighthouse</p>
+    <div class="mobile-nav-drawer" id="drawer">
+      <div class="drawer-item">
+        <button class="drawer-trigger" type="button" aria-expanded="false">
+          Dịch vụ
+          <svg
+            class="nav-chevron"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="drawer-panel">
+          <div class="drawer-panel-inner">
+            <a href="#dich-vu">Website doanh nghiệp</a>
+            <a href="website-ban-hang/index.html">Website bán hàng</a>
+            <a href="#dich-vu">Website tin tức</a>
+            <a href="#dich-vu">Landing page</a>
+            <a href="cai-tao-website/index.html">Cải tạo website cũ</a>
+            <a href="seo-ben-vung/index.html">SEO bền vững</a>
+            <a href="#dich-vu">Chạy quảng cáo</a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="feature-item">
-      <span class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </span>
-      <div>
-        <h3>Chuẩn SEO</h3>
-        <p>Tối ưu toàn diện cho công cụ tìm kiếm</p>
+      <a href="kho-templates/index.html">Kho templates</a>
+      <a href="khach-hang-cua-chung-toi/index.html">Khách hàng của chúng tôi</a>
+      <div class="drawer-item">
+        <button class="drawer-trigger" type="button" aria-expanded="false">
+          Tool
+          <svg
+            class="nav-chevron"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="drawer-panel">
+          <div class="drawer-panel-inner">
+            <a href="#">Check thứ hạng từ khóa</a>
+            <a href="tool-landing-builder.html">Tạo Landing Page kéo thả</a>
+            <a href="#">Kiểm tra tốc độ website</a>
+          </div>
+        </div>
       </div>
+      <a href="hieu-ung-dep/index.html">Hiệu ứng đẹp</a>
+      <a href="blog/index.html">Blog</a>
+      <a class="btn btn-primary drawer-cta" href="#lien-he">Liên hệ</a>
     </div>
-    <div class="feature-item">
-      <span class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="8" height="16" rx="1.5"/><rect x="16" y="7" width="6" height="12" rx="1.2"/><path d="M9 16h2"/></svg>
-      </span>
-      <div>
-        <h3>Responsive</h3>
-        <p>Hiển thị hoàn hảo mọi thiết bị</p>
-      </div>
-    </div>
-    <div class="feature-item">
-      <span class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-      </span>
-      <div>
-        <h3>Bảo mật cao</h3>
-        <p>An toàn dữ liệu, chống tấn công</p>
-      </div>
-    </div>
-    <div class="feature-item">
-      <span class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg>
-      </span>
-      <div>
-        <h3>Dễ dàng quản lý</h3>
-        <p>Giao diện thân thiện, tự do chỉnh sửa</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="nav-overlay"></div>
 
-<!-- ============================ QUY TRÌNH ============================ -->
-<!-- <section class="process" id="quy-trinh">
+    <main id="top">
+      <!-- ============================ HERO ============================ -->
+      <section class="hero">
+        <div class="hero-media">
+          <img
+            src="images/hero-banner-cropped.png"
+            alt="Báo cáo Lighthouse điểm 100/100 hiển thị trên laptop và điện thoại"
+          />
+        </div>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="badge-pill">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 21s-6.7-4.35-9.3-8.1C1 10.1 1.6 6.6 4.4 5.1c2.2-1.2 4.7-.5 6 1.4L12 8l1.6-1.5c1.3-1.9 3.8-2.6 6-1.4 2.8 1.5 3.4 5 1.7 7.8C18.7 16.65 12 21 12 21Z"
+                />
+              </svg>
+              Websites with a human touch
+            </span>
+            <h1>Thiết kế website<br />chuẩn SEO,<br />tốc độ chớp mắt</h1>
+            <p class="lead">
+              Không nói suông, chúng tôi cam kết bằng kết quả đo được của Google
+              Lighthouse
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#lien-he">
+                Bắt đầu dự án
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              <a class="btn btn-outline" href="#du-an">
+                Xem dự án nổi bật
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path
+                    d="M10 8.5v7l6-3.5-6-3.5Z"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <svg
+          class="hero-waves"
+          viewBox="0 0 1440 180"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            class="hero-wave hero-wave--back"
+            d="M0,20 C60,55 140,43 260,50 C440,60 500,120 660,140 C820,160 900,110 1040,100 C1180,90 1300,150 1440,130 L1440,180 L0,180 Z"
+          />
+          <path
+            class="hero-wave hero-wave--front"
+            d="M0,45 C60,78 110,66 220,75 C400,90 460,143 620,160 C760,175 820,140 980,130 C1140,120 1280,170 1440,150 L1440,180 L0,180 Z"
+          />
+        </svg>
+      </section>
+
+      <!-- ============================ FEATURES STRIP ============================ -->
+      <section class="features">
+        <div class="container features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+              </svg>
+            </span>
+            <div>
+              <h3>Tốc độ tối ưu</h3>
+              <p>Điểm 100/100 trên Lighthouse</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </span>
+            <div>
+              <h3>Chuẩn SEO</h3>
+              <p>Tối ưu toàn diện cho công cụ tìm kiếm</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="6" y="2" width="8" height="16" rx="1.5" />
+                <rect x="16" y="7" width="6" height="12" rx="1.2" />
+                <path d="M9 16h2" />
+              </svg>
+            </span>
+            <div>
+              <h3>Responsive</h3>
+              <p>Hiển thị hoàn hảo mọi thiết bị</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="4" y="10" width="16" height="10" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+            </span>
+            <div>
+              <h3>Bảo mật cao</h3>
+              <p>An toàn dữ liệu, chống tấn công</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m9 18-6-6 6-6M15 6l6 6-6 6" />
+              </svg>
+            </span>
+            <div>
+              <h3>Dễ dàng quản lý</h3>
+              <p>Giao diện thân thiện, tự do chỉnh sửa</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ QUY TRÌNH ============================ -->
+      <!-- <section class="process" id="quy-trinh">
   <div class="container">
     <div class="section-head">
       <div>
@@ -289,512 +550,1129 @@
   </div>
 </section> -->
 
-<!-- ============================ DỊCH VỤ ============================ -->
-<section class="services" id="dich-vu">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">
-          7 dịch vụ cốt lõi
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-        <h2>Đúng dịch vụ,<br>đúng thời điểm</h2>
-        <p class="section-desc">Từ landing page chuyển đổi nhanh đến chiến lược SEO dài hạn — chọn giải pháp phù hợp với mục tiêu hiện tại của bạn.</p>
-      </div>
-    </div>
-
-    <div class="service-track-wrap">
-      <button class="service-arrow service-arrow--prev" type="button" aria-label="Dịch vụ trước">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 6-6 6 6 6"/></svg>
-      </button>
-
-      <div class="service-track" id="serviceTrack">
-
-        <!-- 01 — Cải tạo website cũ (before/after kéo thả) -->
-        <div class="service-slide reveal">
-          <div class="service-visual" data-before-after>
-            <div class="ba-pane ba-pane--before">
-              <div class="svc-frame svc-frame--old">
-                <div class="svc-frame__bar"><span></span><span></span><span></span></div>
-                <div class="svc-frame__shotwrap">
-                  <img class="svc-frame__shot" src="images/dich-vu/page-old.png" alt="Giao diện website cũ trước khi cải tạo">
-                </div>
-              </div>
-              <span class="ba-label ba-label--before">TRƯỚC</span>
-            </div>
-            <div class="ba-pane ba-pane--after">
-              <div class="svc-frame svc-frame--new">
-                <div class="svc-frame__bar"><span></span><span></span><span></span></div>
-                <div class="svc-frame__shotwrap">
-                  <img class="svc-frame__shot" src="images/dich-vu/page-new.png" alt="Giao diện website sau khi cải tạo">
-                </div>
-              </div>
-              <span class="ba-label ba-label--after">SAU</span>
-            </div>
-            <div class="ba-handle">
-              <span class="ba-handle__line"></span>
-              <span class="ba-handle__grip">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/></svg>
+      <!-- ============================ DỊCH VỤ ============================ -->
+      <section class="services" id="dich-vu">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">
+                7 dịch vụ cốt lõi
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
               </span>
+              <h2>Đúng dịch vụ,<br />đúng thời điểm</h2>
+              <p class="section-desc">
+                Từ landing page chuyển đổi nhanh đến chiến lược SEO dài hạn —
+                chọn giải pháp phù hợp với mục tiêu hiện tại của bạn.
+              </p>
             </div>
           </div>
-          <div class="service-copy">
-            <span class="service-num">01</span>
-            <h3>Website cũ, diện mạo mới</h3>
-            <p>Giữ nguyên dữ liệu và thứ hạng đã gây dựng, thay áo hoàn toàn cho website — nhanh hơn, đẹp hơn, chuẩn SEO hơn. Kéo thanh ở giữa để tự tay so sánh trước và sau.</p>
-            <a class="text-link" href="#">
-              Xem chi tiết dịch vụ
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-        </div>
 
-        <!-- 02 — Website bán hàng (video) -->
-        <div class="service-slide service-slide--reverse reveal">
-          <div class="service-visual service-visual--video">
-            <video class="svc-video" poster="images/dich-vu/shopping-demo-poster.jpg" autoplay muted loop playsinline>
-              <source src="images/dich-vu/shopping-demo.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="service-copy">
-            <span class="service-num">02</span>
-            <h3>Website bán hàng, chốt đơn nhanh</h3>
-            <p>Giao diện tối ưu chuyển đổi, giỏ hàng và thanh toán mượt mà — để khách hàng chỉ mất vài giây từ xem sản phẩm đến đặt hàng.</p>
-            <a class="text-link" href="#">
-              Tìm hiểu thêm
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-        </div>
+          <div class="service-track-wrap">
+            <button
+              class="service-arrow service-arrow--prev"
+              type="button"
+              aria-label="Dịch vụ trước"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m15 6-6 6 6 6" />
+              </svg>
+            </button>
 
-        <!-- 03 — Website tin tức -->
-        <div class="service-slide reveal">
-          <div class="service-visual sv-news">
-            <div class="svc-frame">
-              <div class="svc-frame__bar"><span></span><span></span><span></span></div>
-              <div class="svc-frame__body">
-                <div class="svc-navbar">
-                  <span class="svc-navbar__brand"><span class="svc-dot"></span><span class="svc-line"></span></span>
-                  <span class="svc-navbar__links"><span></span><span></span><span></span></span>
-                </div>
-                <div class="svc-article">
-                  <span class="svc-thumb">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-5 4"/></svg>
-                  </span>
-                  <span class="svc-article__lines">
-                    <span class="svc-line" style="width:92%"></span>
-                    <span class="svc-line" style="width:68%"></span>
-                    <span class="svc-line svc-line--soft" style="width:36%"></span>
-                  </span>
-                </div>
-                <div class="svc-article-grid">
-                  <span class="svc-article-card">
-                    <span class="svc-thumb">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-5 4"/></svg>
-                    </span>
-                    <span class="svc-line" style="width:82%"></span>
-                  </span>
-                  <span class="svc-article-card">
-                    <span class="svc-thumb">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-5 4"/></svg>
-                    </span>
-                    <span class="svc-line" style="width:70%"></span>
-                  </span>
-                  <span class="svc-article-card">
-                    <span class="svc-thumb">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-5 4"/></svg>
-                    </span>
-                    <span class="svc-line" style="width:76%"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="service-copy">
-            <span class="service-num">03</span>
-            <h3>Website tin tức, cập nhật tức thời</h3>
-            <p>Hệ thống quản trị nội dung linh hoạt, tốc độ tải cực nhanh dù hàng nghìn bài viết — giữ chân độc giả ở lại lâu hơn.</p>
-            <a class="text-link" href="#">
-              Tìm hiểu thêm
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- 04 — Landing page (kéo thả trực quan) -->
-        <div class="service-slide service-slide--reverse reveal">
-          <div class="service-visual sv-builder">
-            <div class="svc-builder">
-              <div class="svc-builder__side">
-                <span class="svc-builder__addchip">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                  Thêm khối
-                </span>
-                <span class="svc-builder__block"><svg class="svc-builder__handle" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.3"/><circle cx="16" cy="6" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="18" r="1.3"/><circle cx="16" cy="18" r="1.3"/></svg>Menu</span>
-                <span class="svc-builder__block svc-builder__block--active"><svg class="svc-builder__handle" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.3"/><circle cx="16" cy="6" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="18" r="1.3"/><circle cx="16" cy="18" r="1.3"/></svg>Hero</span>
-                <span class="svc-builder__block"><svg class="svc-builder__handle" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.3"/><circle cx="16" cy="6" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="18" r="1.3"/><circle cx="16" cy="18" r="1.3"/></svg>Tính năng</span>
-              </div>
-              <div class="svc-builder__canvas">
-                <span class="svc-line" style="width:60%"></span>
-                <span class="svc-line" style="width:40%"></span>
-                <span class="svc-block" style="height:56px"></span>
-              </div>
-            </div>
-          </div>
-          <div class="service-copy">
-            <span class="service-num">04</span>
-            <h3>Landing Page, tự tay dựng trong vài phút</h3>
-            <p>Công cụ kéo thả trực quan — chọn khối, đổi nội dung, xuất trang ngay lập tức. Không cần biết lập trình.</p>
-            <a class="text-link" href="tool-landing-builder.html">
-              Trải nghiệm ngay
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- 05 — Website doanh nghiệp -->
-        <div class="service-slide reveal">
-          <div class="service-visual sv-corporate">
-            <div class="svc-frame">
-              <div class="svc-frame__bar"><span></span><span></span><span></span></div>
-              <div class="svc-frame__body">
-                <div class="svc-navbar">
-                  <span class="svc-navbar__brand"><span class="svc-dot"></span><span class="svc-line"></span></span>
-                  <span class="svc-navbar__links"><span></span><span></span><span></span></span>
-                </div>
-                <span class="svc-pill" style="width:38%"></span>
-                <span class="svc-line" style="width:70%; height:12px;"></span>
-                <span class="svc-line svc-line--soft" style="width:52%"></span>
-                <span class="svc-cta">
-                  <span class="svc-line" style="width:44px"></span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </span>
-                <div class="svc-feature-row">
-                  <div class="svc-feature">
-                    <span class="svc-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
-                    <span class="svc-feature__lines">
-                      <span class="svc-line" style="width:75%"></span>
-                      <span class="svc-line svc-line--soft" style="width:48%"></span>
-                    </span>
+            <div class="service-track" id="serviceTrack">
+              <!-- 01 — Cải tạo website cũ (before/after kéo thả) -->
+              <div class="service-slide reveal">
+                <div class="service-visual" data-before-after>
+                  <div class="ba-pane ba-pane--before">
+                    <div class="svc-frame svc-frame--old">
+                      <div class="svc-frame__bar">
+                        <span></span><span></span><span></span>
+                      </div>
+                      <div class="svc-frame__shotwrap">
+                        <img
+                          class="svc-frame__shot"
+                          src="images/dich-vu/page-old.png"
+                          alt="Giao diện website cũ trước khi cải tạo"
+                        />
+                      </div>
+                    </div>
+                    <span class="ba-label ba-label--before">TRƯỚC</span>
                   </div>
-                  <div class="svc-feature">
-                    <span class="svc-feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7Z"/></svg></span>
-                    <span class="svc-feature__lines">
-                      <span class="svc-line" style="width:68%"></span>
-                      <span class="svc-line svc-line--soft" style="width:40%"></span>
+                  <div class="ba-pane ba-pane--after">
+                    <div class="svc-frame svc-frame--new">
+                      <div class="svc-frame__bar">
+                        <span></span><span></span><span></span>
+                      </div>
+                      <div class="svc-frame__shotwrap">
+                        <img
+                          class="svc-frame__shot"
+                          src="images/dich-vu/page-new.png"
+                          alt="Giao diện website sau khi cải tạo"
+                        />
+                      </div>
+                    </div>
+                    <span class="ba-label ba-label--after">SAU</span>
+                  </div>
+                  <div class="ba-handle">
+                    <span class="ba-handle__line"></span>
+                    <span class="ba-handle__grip">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path d="m8 8-4 4 4 4M16 8l4 4-4 4" />
+                      </svg>
                     </span>
                   </div>
                 </div>
+                <div class="service-copy">
+                  <span class="service-num">01</span>
+                  <h3>Website cũ, diện mạo mới</h3>
+                  <p>
+                    Giữ nguyên dữ liệu và thứ hạng đã gây dựng, thay áo hoàn
+                    toàn cho website — nhanh hơn, đẹp hơn, chuẩn SEO hơn. Kéo
+                    thanh ở giữa để tự tay so sánh trước và sau.
+                  </p>
+                  <a class="text-link" href="cai-tao-website/index.html">
+                    Xem chi tiết dịch vụ
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 02 — Website bán hàng (video) -->
+              <div class="service-slide service-slide--reverse reveal">
+                <div class="service-visual service-visual--video">
+                  <video
+                    class="svc-video"
+                    poster="images/dich-vu/shopping-demo-poster.jpg"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                  >
+                    <source
+                      src="images/dich-vu/shopping-demo.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">02</span>
+                  <h3>Website bán hàng, chốt đơn nhanh</h3>
+                  <p>
+                    Giao diện tối ưu chuyển đổi, giỏ hàng và thanh toán mượt mà
+                    — để khách hàng chỉ mất vài giây từ xem sản phẩm đến đặt
+                    hàng.
+                  </p>
+                  <a class="text-link" href="#">
+                    Tìm hiểu thêm
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 03 — Website tin tức -->
+              <div class="service-slide reveal">
+                <div class="service-visual sv-news">
+                  <div class="svc-frame">
+                    <div class="svc-frame__bar">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="svc-frame__body">
+                      <div class="svc-navbar">
+                        <span class="svc-navbar__brand"
+                          ><span class="svc-dot"></span
+                          ><span class="svc-line"></span
+                        ></span>
+                        <span class="svc-navbar__links"
+                          ><span></span><span></span><span></span
+                        ></span>
+                      </div>
+                      <div class="svc-article">
+                        <span class="svc-thumb">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                          >
+                            <rect x="3" y="5" width="18" height="14" rx="2" />
+                            <circle cx="8.5" cy="10" r="1.5" />
+                            <path d="m21 15-5-4-4 3-3-2-5 4" />
+                          </svg>
+                        </span>
+                        <span class="svc-article__lines">
+                          <span class="svc-line" style="width: 92%"></span>
+                          <span class="svc-line" style="width: 68%"></span>
+                          <span
+                            class="svc-line svc-line--soft"
+                            style="width: 36%"
+                          ></span>
+                        </span>
+                      </div>
+                      <div class="svc-article-grid">
+                        <span class="svc-article-card">
+                          <span class="svc-thumb">
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.6"
+                            >
+                              <rect x="3" y="5" width="18" height="14" rx="2" />
+                              <circle cx="8.5" cy="10" r="1.5" />
+                              <path d="m21 15-5-4-4 3-3-2-5 4" />
+                            </svg>
+                          </span>
+                          <span class="svc-line" style="width: 82%"></span>
+                        </span>
+                        <span class="svc-article-card">
+                          <span class="svc-thumb">
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.6"
+                            >
+                              <rect x="3" y="5" width="18" height="14" rx="2" />
+                              <circle cx="8.5" cy="10" r="1.5" />
+                              <path d="m21 15-5-4-4 3-3-2-5 4" />
+                            </svg>
+                          </span>
+                          <span class="svc-line" style="width: 70%"></span>
+                        </span>
+                        <span class="svc-article-card">
+                          <span class="svc-thumb">
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.6"
+                            >
+                              <rect x="3" y="5" width="18" height="14" rx="2" />
+                              <circle cx="8.5" cy="10" r="1.5" />
+                              <path d="m21 15-5-4-4 3-3-2-5 4" />
+                            </svg>
+                          </span>
+                          <span class="svc-line" style="width: 76%"></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">03</span>
+                  <h3>Website tin tức, cập nhật tức thời</h3>
+                  <p>
+                    Hệ thống quản trị nội dung linh hoạt, tốc độ tải cực nhanh
+                    dù hàng nghìn bài viết — giữ chân độc giả ở lại lâu hơn.
+                  </p>
+                  <a class="text-link" href="#">
+                    Tìm hiểu thêm
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 04 — Landing page (kéo thả trực quan) -->
+              <div class="service-slide service-slide--reverse reveal">
+                <div class="service-visual sv-builder">
+                  <div class="svc-builder">
+                    <div class="svc-builder__side">
+                      <span class="svc-builder__addchip">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path d="M12 5v14M5 12h14" />
+                        </svg>
+                        Thêm khối
+                      </span>
+                      <span class="svc-builder__block"
+                        ><svg
+                          class="svc-builder__handle"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <circle cx="8" cy="6" r="1.3" />
+                          <circle cx="16" cy="6" r="1.3" />
+                          <circle cx="8" cy="12" r="1.3" />
+                          <circle cx="16" cy="12" r="1.3" />
+                          <circle cx="8" cy="18" r="1.3" />
+                          <circle cx="16" cy="18" r="1.3" /></svg
+                        >Menu</span
+                      >
+                      <span
+                        class="svc-builder__block svc-builder__block--active"
+                        ><svg
+                          class="svc-builder__handle"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <circle cx="8" cy="6" r="1.3" />
+                          <circle cx="16" cy="6" r="1.3" />
+                          <circle cx="8" cy="12" r="1.3" />
+                          <circle cx="16" cy="12" r="1.3" />
+                          <circle cx="8" cy="18" r="1.3" />
+                          <circle cx="16" cy="18" r="1.3" /></svg
+                        >Hero</span
+                      >
+                      <span class="svc-builder__block"
+                        ><svg
+                          class="svc-builder__handle"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <circle cx="8" cy="6" r="1.3" />
+                          <circle cx="16" cy="6" r="1.3" />
+                          <circle cx="8" cy="12" r="1.3" />
+                          <circle cx="16" cy="12" r="1.3" />
+                          <circle cx="8" cy="18" r="1.3" />
+                          <circle cx="16" cy="18" r="1.3" /></svg
+                        >Tính năng</span
+                      >
+                    </div>
+                    <div class="svc-builder__canvas">
+                      <span class="svc-line" style="width: 60%"></span>
+                      <span class="svc-line" style="width: 40%"></span>
+                      <span class="svc-block" style="height: 56px"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">04</span>
+                  <h3>Landing Page, tự tay dựng trong vài phút</h3>
+                  <p>
+                    Công cụ kéo thả trực quan — chọn khối, đổi nội dung, xuất
+                    trang ngay lập tức. Không cần biết lập trình.
+                  </p>
+                  <a class="text-link" href="tool-landing-builder.html">
+                    Trải nghiệm ngay
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 05 — Website doanh nghiệp -->
+              <div class="service-slide reveal">
+                <div class="service-visual sv-corporate">
+                  <div class="svc-frame">
+                    <div class="svc-frame__bar">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="svc-frame__body">
+                      <div class="svc-navbar">
+                        <span class="svc-navbar__brand"
+                          ><span class="svc-dot"></span
+                          ><span class="svc-line"></span
+                        ></span>
+                        <span class="svc-navbar__links"
+                          ><span></span><span></span><span></span
+                        ></span>
+                      </div>
+                      <span class="svc-pill" style="width: 38%"></span>
+                      <span
+                        class="svc-line"
+                        style="width: 70%; height: 12px"
+                      ></span>
+                      <span
+                        class="svc-line svc-line--soft"
+                        style="width: 52%"
+                      ></span>
+                      <span class="svc-cta">
+                        <span class="svc-line" style="width: 44px"></span>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                        >
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </span>
+                      <div class="svc-feature-row">
+                        <div class="svc-feature">
+                          <span class="svc-feature__icon"
+                            ><svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path d="M9 12l2 2 4-4" />
+                              <circle cx="12" cy="12" r="9" /></svg
+                          ></span>
+                          <span class="svc-feature__lines">
+                            <span class="svc-line" style="width: 75%"></span>
+                            <span
+                              class="svc-line svc-line--soft"
+                              style="width: 48%"
+                            ></span>
+                          </span>
+                        </div>
+                        <div class="svc-feature">
+                          <span class="svc-feature__icon"
+                            ><svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7Z"
+                              /></svg
+                          ></span>
+                          <span class="svc-feature__lines">
+                            <span class="svc-line" style="width: 68%"></span>
+                            <span
+                              class="svc-line svc-line--soft"
+                              style="width: 40%"
+                            ></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">05</span>
+                  <h3>Website doanh nghiệp, chuyên nghiệp &amp; đáng tin</h3>
+                  <p>
+                    Truyền tải đúng hình ảnh thương hiệu, xây dựng niềm tin với
+                    khách hàng và đối tác ngay từ lần ghé thăm đầu tiên.
+                  </p>
+                  <a class="text-link" href="#">
+                    Tìm hiểu thêm
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 06 — SEO -->
+              <div class="service-slide service-slide--reverse reveal">
+                <div class="service-visual sv-seo">
+                  <svg
+                    class="svc-chart"
+                    viewBox="0 0 240 140"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <polyline
+                      points="0,118 40,100 80,108 120,66 160,48 200,28 240,10"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <circle cx="240" cy="10" r="5" fill="#fff" />
+                  </svg>
+                  <span class="svc-chart-badge">Top 1–3 Google</span>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">06</span>
+                  <h3>SEO website, lên top bền vững</h3>
+                  <p>
+                    Tối ưu kỹ thuật, nội dung và liên kết đúng chuẩn Google —
+                    traffic tự nhiên tăng trưởng đều, không phụ thuộc quảng cáo.
+                  </p>
+                  <a class="text-link" href="#lien-he">
+                    Liên hệ tư vấn
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 07 — Chạy quảng cáo -->
+              <div class="service-slide reveal">
+                <div class="service-visual sv-ads">
+                  <div class="svc-adcard">
+                    <span class="svc-adcard__badge">Được tài trợ</span>
+                    <span class="svc-block svc-adcard__thumb">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                      >
+                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                        <circle cx="8.5" cy="10" r="1.5" />
+                        <path d="m21 15-5-4-4 3-3-2-5 4" />
+                      </svg>
+                    </span>
+                    <span class="svc-line" style="width: 70%"></span>
+                    <span class="svc-line" style="width: 45%"></span>
+                    <span class="svc-pill svc-adcard__cta"></span>
+                  </div>
+                </div>
+                <div class="service-copy">
+                  <span class="service-num">07</span>
+                  <h3>Chạy quảng cáo, tối ưu chi phí</h3>
+                  <p>
+                    Lên chiến lược và vận hành quảng cáo Google/Facebook đúng
+                    khách hàng mục tiêu — đo lường rõ ràng, tối ưu từng đồng
+                    ngân sách.
+                  </p>
+                  <a class="text-link" href="#lien-he">
+                    Liên hệ tư vấn
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="service-arrow service-arrow--next"
+              type="button"
+              aria-label="Dịch vụ tiếp theo"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="service-dots" id="serviceDots"></div>
+        </div>
+      </section>
+
+      <!-- ============================ CÔNG CỤ MIỄN PHÍ ============================ -->
+      <section class="tools" id="cong-cu">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">
+                Miễn phí, không giới hạn
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+              <h2>Công cụ hỗ trợ<br />hoàn toàn miễn phí</h2>
+              <p class="section-desc">
+                Bộ công cụ nhỏ giúp bạn tự kiểm tra và cải thiện website ngay
+                hôm nay — không cần đăng ký, không mất phí.
+              </p>
+            </div>
+          </div>
+
+          <div class="tools-grid">
+            <div class="tool-card reveal">
+              <span class="tool-badge">Miễn phí</span>
+              <span class="tool-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="m3 17 6-6 4 4 8-8" />
+                  <path d="M15 6h6v6" />
+                </svg>
+              </span>
+              <h3>Check thứ hạng từ khóa</h3>
+              <p>
+                Kiểm tra vị trí website của bạn trên Google theo từng từ khóa
+                mục tiêu.
+              </p>
+              <a class="text-link" href="#">
+                Dùng công cụ
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="tool-card reveal">
+              <span class="tool-badge">Miễn phí</span>
+              <span class="tool-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h6v6H3z" />
+                </svg>
+              </span>
+              <h3>Tạo Landing Page kéo thả</h3>
+              <p>
+                Dựng landing page bằng công cụ kéo thả trực quan, xuất trang
+                ngay trong vài phút.
+              </p>
+              <a class="text-link" href="tool-landing-builder.html">
+                Dùng công cụ
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="tool-card reveal">
+              <span class="tool-badge">Miễn phí</span>
+              <span class="tool-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+                </svg>
+              </span>
+              <h3>Kiểm tra tốc độ website</h3>
+              <p>
+                Phân tích tốc độ tải trang và nhận gợi ý cụ thể để tối ưu hiệu
+                suất.
+              </p>
+              <a class="text-link" href="#">
+                Dùng công cụ
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ DỰ ÁN NỔI BẬT ============================ -->
+      <section class="projects" id="du-an">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Dự án nổi bật</span>
+              <h2>Mỗi website là một<br />câu chuyện khác nhau.</h2>
+            </div>
+            <a class="text-link" href="#du-an">
+              Xem tất cả dự án
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-track-wrap">
+            <div class="project-track">
+              <a class="project-card ph-fashion reveal" href="#du-an">
+                <span class="project-tag">Thời trang</span>
+                <span class="project-mark" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path d="M8 4h8l1.5 3-3 2 1 11H8.5l1-11-3-2Z" />
+                  </svg>
+                </span>
+                <span class="project-info">
+                  <strong>Levents</strong>
+                  <span>Luxury Fashion</span>
+                </span>
+              </a>
+              <a class="project-card ph-corporate reveal" href="#du-an">
+                <span class="project-tag">Doanh nghiệp</span>
+                <span class="project-mark" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <rect x="4" y="3" width="10" height="18" />
+                    <rect x="14" y="8" width="6" height="13" />
+                    <path d="M7 7h4M7 11h4M7 15h4" />
+                  </svg>
+                </span>
+                <span class="project-info">
+                  <strong>Nexora</strong>
+                  <span>Technology Company</span>
+                </span>
+              </a>
+              <a class="project-card ph-food reveal" href="#du-an">
+                <span class="project-tag">Ẩm thực</span>
+                <span class="project-mark" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path
+                      d="M4 3s1.5 4-2 6c1 2 3 2 3 2M12 21c-3.9 0-7-2.5-7-7 0-2 1-3 1-3h12s1 1 1 3c0 4.5-3.1 7-7 7Z"
+                    />
+                  </svg>
+                </span>
+                <span class="project-info">
+                  <strong>Ocha House</strong>
+                  <span>Tea &amp; Dessert</span>
+                </span>
+              </a>
+              <a class="project-card ph-creative reveal" href="#du-an">
+                <span class="project-tag">Sáng tạo</span>
+                <span class="project-mark" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="1.5" />
+                    <path d="M8 21h8M12 17v4" />
+                  </svg>
+                </span>
+                <span class="project-info">
+                  <strong>Tilt Studio</strong>
+                  <span>Creative Agency</span>
+                </span>
+              </a>
+            </div>
+            <button
+              class="project-next"
+              type="button"
+              aria-label="Dự án tiếp theo"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ VỀ CHÚNG TÔI ============================ -->
+      <section class="about" id="ve-chung-toi">
+        <div class="container about-inner">
+          <div class="about-copy reveal">
+            <span class="eyebrow">Về chúng tôi</span>
+            <h2>Made by humans.<br />Made for humans.</h2>
+            <p>
+              Chúng tôi tin rằng công nghệ chỉ thực sự mạnh mẽ khi được kết hợp
+              với sự thấu hiểu con người.
+            </p>
+            <p>Research. Conversation. Taste. Judgment. Craft. Obsession.</p>
+            <a class="text-link" href="#lien-he">
+              Tìm hiểu về chúng tôi
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+          <div class="about-media reveal">
+            <span class="about-badge">
+              <img src="images/logo.png" alt="" />
+            </span>
+            <div class="about-people" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <circle cx="12" cy="8" r="3.4" />
+                <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" />
+              </svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2.4" />
+                <path
+                  d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14.5 14.2c2.6.4 4.5 2.6 4.5 5.3"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ VÌ SAO CHỌN WEB100 ============================ -->
+      <section class="why">
+        <div class="container">
+          <span class="eyebrow">Vì sao chọn Web100?</span>
+          <h2>100% cam kết<br />cho chất lượng</h2>
+
+          <div class="why-grid">
+            <div class="why-item reveal">
+              <span class="why-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                </svg>
+              </span>
+              <strong>100%</strong>
+              <h3>Thiết kế độc bản</h3>
+              <p>Không sử dụng mẫu đại trà, mỗi website là duy nhất.</p>
+            </div>
+            <div class="why-item reveal">
+              <span class="why-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" />
+                </svg>
+              </span>
+              <strong>100%</strong>
+              <h3>Tối ưu hiệu suất</h3>
+              <p>Điểm Lighthouse 90-100 ở mọi tiêu chí.</p>
+            </div>
+            <div class="why-item reveal">
+              <span class="why-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M4 15v-3a8 8 0 1 1 16 0v3" />
+                  <rect x="2.5" y="14" width="4" height="6" rx="1.5" />
+                  <rect x="17.5" y="14" width="4" height="6" rx="1.5" />
+                </svg>
+              </span>
+              <strong>100%</strong>
+              <h3>Sở hữu trọn vẹn</h3>
+              <p>Bạn sở hữu toàn bộ code và dữ liệu website.</p>
+            </div>
+            <div class="why-item reveal">
+              <span class="why-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="8" r="3.4" />
+                  <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" />
+                </svg>
+              </span>
+              <strong>100%</strong>
+              <h3>Định hướng con người</h3>
+              <p>
+                AI có thể tạo ra website. Chúng tôi tạo ra website dành riêng
+                cho bạn.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ FAQ ============================ -->
+      <section class="faq" id="cau-hoi-thuong-gap">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Câu hỏi thường gặp</span>
+              <h2>Giải đáp những<br />thắc mắc của bạn</h2>
+              <p class="section-desc">
+                Một số câu hỏi khách hàng thường đặt ra trước khi bắt đầu dự án
+                cùng Web100.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item reveal open">
+              <button class="faq-trigger" aria-expanded="true">
+                <span>Thời gian hoàn thành một website mất bao lâu?</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-panel">
+                <p>
+                  Tuỳ theo quy mô, một website landing page thường mất 5-7 ngày,
+                  trong khi website doanh nghiệp nhiều trang có thể mất 2-4
+                  tuần. Chúng tôi sẽ thống nhất mốc thời gian cụ thể ngay từ
+                  buổi tư vấn đầu tiên.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item reveal">
+              <button class="faq-trigger" aria-expanded="false">
+                <span>Chi phí thiết kế website được tính như thế nào?</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-panel">
+                <p>
+                  Chi phí phụ thuộc vào số lượng trang, tính năng và mức độ tuỳ
+                  biến thiết kế. Sau khi trao đổi nhu cầu, chúng tôi gửi báo giá
+                  chi tiết, minh bạch, không phát sinh chi phí ẩn.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item reveal">
+              <button class="faq-trigger" aria-expanded="false">
+                <span
+                  >Sau khi bàn giao, tôi có tự quản trị được website
+                  không?</span
+                >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-panel">
+                <p>
+                  Có. Bạn sở hữu toàn bộ mã nguồn và dữ liệu, đồng thời được
+                  hướng dẫn cách chỉnh sửa nội dung, cập nhật hình ảnh và quản
+                  trị website sau bàn giao.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item reveal">
+              <button class="faq-trigger" aria-expanded="false">
+                <span
+                  >Web100 có hỗ trợ tối ưu SEO và tốc độ tải trang không?</span
+                >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-panel">
+                <p>
+                  Mọi website đều được tối ưu chuẩn SEO kỹ thuật và tốc độ tải
+                  trang ngay từ khâu phát triển, đạt điểm Lighthouse 90-100 ở
+                  hầu hết các tiêu chí.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item reveal">
+              <button class="faq-trigger" aria-expanded="false">
+                <span
+                  >Sau khi ra mắt, website có được hỗ trợ bảo trì không?</span
+                >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="faq-panel">
+                <p>
+                  Chúng tôi cung cấp các gói bảo trì, cập nhật và hỗ trợ kỹ
+                  thuật sau bàn giao để website luôn hoạt động ổn định và an
+                  toàn.
+                </p>
               </div>
             </div>
           </div>
-          <div class="service-copy">
-            <span class="service-num">05</span>
-            <h3>Website doanh nghiệp, chuyên nghiệp &amp; đáng tin</h3>
-            <p>Truyền tải đúng hình ảnh thương hiệu, xây dựng niềm tin với khách hàng và đối tác ngay từ lần ghé thăm đầu tiên.</p>
-            <a class="text-link" href="#">
-              Tìm hiểu thêm
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
         </div>
+      </section>
 
-        <!-- 06 — SEO -->
-        <div class="service-slide service-slide--reverse reveal">
-          <div class="service-visual sv-seo">
-            <svg class="svc-chart" viewBox="0 0 240 140" preserveAspectRatio="none" aria-hidden="true">
-              <polyline points="0,118 40,100 80,108 120,66 160,48 200,28 240,10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="240" cy="10" r="5" fill="#fff"/>
+      <!-- ============================ CTA BAND ============================ -->
+      <section class="cta-band" id="lien-he">
+        <div class="container cta-inner">
+          <div>
+            <h2>Sẵn sàng bắt đầu<br />dự án của bạn?</h2>
+            <p>
+              Chia sẻ ý tưởng của bạn, chúng tôi sẽ biến nó thành một website
+              độc bản, chuẩn SEO và tốc độ vượt trội.
+            </p>
+          </div>
+          <a class="btn btn-primary btn-lg" href="mailto:hello@web100.vn">
+            Bắt đầu dự án
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
-            <span class="svc-chart-badge">Top 1–3 Google</span>
-          </div>
-          <div class="service-copy">
-            <span class="service-num">06</span>
-            <h3>SEO website, lên top bền vững</h3>
-            <p>Tối ưu kỹ thuật, nội dung và liên kết đúng chuẩn Google — traffic tự nhiên tăng trưởng đều, không phụ thuộc quảng cáo.</p>
-            <a class="text-link" href="#lien-he">
-              Liên hệ tư vấn
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
+          </a>
         </div>
+      </section>
+    </main>
 
-        <!-- 07 — Chạy quảng cáo -->
-        <div class="service-slide reveal">
-          <div class="service-visual sv-ads">
-            <div class="svc-adcard">
-              <span class="svc-adcard__badge">Được tài trợ</span>
-              <span class="svc-block svc-adcard__thumb">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-5 4"/></svg>
-              </span>
-              <span class="svc-line" style="width:70%"></span>
-              <span class="svc-line" style="width:45%"></span>
-              <span class="svc-pill svc-adcard__cta"></span>
-            </div>
-          </div>
-          <div class="service-copy">
-            <span class="service-num">07</span>
-            <h3>Chạy quảng cáo, tối ưu chi phí</h3>
-            <p>Lên chiến lược và vận hành quảng cáo Google/Facebook đúng khách hàng mục tiêu — đo lường rõ ràng, tối ưu từng đồng ngân sách.</p>
-            <a class="text-link" href="#lien-he">
-              Liên hệ tư vấn
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Web100" />
+          <p>
+            Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn
+            SEO và dễ dàng quản trị.
+          </p>
         </div>
-
+        <div class="footer-col">
+          <h4>Điều hướng</h4>
+          <a href="#top">Trang chủ</a>
+          <a href="#du-an">Dự án</a>
+          <a href="#dich-vu">Dịch vụ</a>
+          <a href="#quy-trinh">Quy trình</a>
+        </div>
+        <div class="footer-col">
+          <h4>Công ty</h4>
+          <a href="#ve-chung-toi">Về chúng tôi</a>
+          <a href="blog/index.html">Blog</a>
+          <a href="#cau-hoi-thuong-gap">FAQ</a>
+          <a href="#lien-he">Liên hệ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Liên hệ</h4>
+          <a href="mailto:hello@web100.vn">hello@web100.vn</a>
+          <a href="tel:+84900000000">+84 900 000 000</a>
+        </div>
       </div>
-
-      <button class="service-arrow service-arrow--next" type="button" aria-label="Dịch vụ tiếp theo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
-      </button>
-    </div>
-
-    <div class="service-dots" id="serviceDots"></div>
-  </div>
-</section>
-
-<!-- ============================ CÔNG CỤ MIỄN PHÍ ============================ -->
-<section class="tools" id="cong-cu">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">
-          Miễn phí, không giới hạn
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-        <h2>Công cụ hỗ trợ<br>hoàn toàn miễn phí</h2>
-        <p class="section-desc">Bộ công cụ nhỏ giúp bạn tự kiểm tra và cải thiện website ngay hôm nay — không cần đăng ký, không mất phí.</p>
+      <div class="container footer-bottom">
+        <span>© 2026 Web100. All rights reserved.</span>
+        <span>Websites with a human touch.</span>
       </div>
-    </div>
+    </footer>
 
-    <div class="tools-grid">
-      <div class="tool-card reveal">
-        <span class="tool-badge">Miễn phí</span>
-        <span class="tool-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg>
-        </span>
-        <h3>Check thứ hạng từ khóa</h3>
-        <p>Kiểm tra vị trí website của bạn trên Google theo từng từ khóa mục tiêu.</p>
-        <a class="text-link" href="#">
-          Dùng công cụ
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+    <button class="to-top" type="button" aria-label="Lên đầu trang">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
 
-      <div class="tool-card reveal">
-        <span class="tool-badge">Miễn phí</span>
-        <span class="tool-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6v6H3z"/></svg>
-        </span>
-        <h3>Tạo Landing Page kéo thả</h3>
-        <p>Dựng landing page bằng công cụ kéo thả trực quan, xuất trang ngay trong vài phút.</p>
-        <a class="text-link" href="tool-landing-builder.html">
-          Dùng công cụ
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-
-      <div class="tool-card reveal">
-        <span class="tool-badge">Miễn phí</span>
-        <span class="tool-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
-        </span>
-        <h3>Kiểm tra tốc độ website</h3>
-        <p>Phân tích tốc độ tải trang và nhận gợi ý cụ thể để tối ưu hiệu suất.</p>
-        <a class="text-link" href="#">
-          Dùng công cụ
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ DỰ ÁN NỔI BẬT ============================ -->
-<section class="projects" id="du-an">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">Dự án nổi bật</span>
-        <h2>Mỗi website là một<br>câu chuyện khác nhau.</h2>
-      </div>
-      <a class="text-link" href="#du-an">
-        Xem tất cả dự án
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-
-    <div class="project-track-wrap">
-      <div class="project-track">
-        <a class="project-card ph-fashion reveal" href="#du-an">
-          <span class="project-tag">Thời trang</span>
-          <span class="project-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4h8l1.5 3-3 2 1 11H8.5l1-11-3-2Z"/></svg>
-          </span>
-          <span class="project-info">
-            <strong>Levents</strong>
-            <span>Luxury Fashion</span>
-          </span>
-        </a>
-        <a class="project-card ph-corporate reveal" href="#du-an">
-          <span class="project-tag">Doanh nghiệp</span>
-          <span class="project-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="10" height="18"/><rect x="14" y="8" width="6" height="13"/><path d="M7 7h4M7 11h4M7 15h4"/></svg>
-          </span>
-          <span class="project-info">
-            <strong>Nexora</strong>
-            <span>Technology Company</span>
-          </span>
-        </a>
-        <a class="project-card ph-food reveal" href="#du-an">
-          <span class="project-tag">Ẩm thực</span>
-          <span class="project-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3s1.5 4-2 6c1 2 3 2 3 2M12 21c-3.9 0-7-2.5-7-7 0-2 1-3 1-3h12s1 1 1 3c0 4.5-3.1 7-7 7Z"/></svg>
-          </span>
-          <span class="project-info">
-            <strong>Ocha House</strong>
-            <span>Tea &amp; Dessert</span>
-          </span>
-        </a>
-        <a class="project-card ph-creative reveal" href="#du-an">
-          <span class="project-tag">Sáng tạo</span>
-          <span class="project-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
-          </span>
-          <span class="project-info">
-            <strong>Tilt Studio</strong>
-            <span>Creative Agency</span>
-          </span>
-        </a>
-      </div>
-      <button class="project-next" type="button" aria-label="Dự án tiếp theo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ VỀ CHÚNG TÔI ============================ -->
-<section class="about" id="ve-chung-toi">
-  <div class="container about-inner">
-    <div class="about-copy reveal">
-      <span class="eyebrow">Về chúng tôi</span>
-      <h2>Made by humans.<br>Made for humans.</h2>
-      <p>Chúng tôi tin rằng công nghệ chỉ thực sự mạnh mẽ khi được kết hợp với sự thấu hiểu con người.</p>
-      <p>Research. Conversation. Taste. Judgment. Craft. Obsession.</p>
-      <a class="text-link" href="#lien-he">
-        Tìm hiểu về chúng tôi
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-    <div class="about-media reveal">
-      <span class="about-badge">
-        <img src="images/logo.png" alt="">
-      </span>
-      <div class="about-people" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14.5 14.2c2.6.4 4.5 2.6 4.5 5.3"/></svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ VÌ SAO CHỌN WEB100 ============================ -->
-<section class="why">
-  <div class="container">
-    <span class="eyebrow">Vì sao chọn Web100?</span>
-    <h2>100% cam kết<br>cho chất lượng</h2>
-
-    <div class="why-grid">
-      <div class="why-item reveal">
-        <span class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        </span>
-        <strong>100%</strong>
-        <h3>Thiết kế độc bản</h3>
-        <p>Không sử dụng mẫu đại trà, mỗi website là duy nhất.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        </span>
-        <strong>100%</strong>
-        <h3>Tối ưu hiệu suất</h3>
-        <p>Điểm Lighthouse 90-100 ở mọi tiêu chí.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15v-3a8 8 0 1 1 16 0v3"/><rect x="2.5" y="14" width="4" height="6" rx="1.5"/><rect x="17.5" y="14" width="4" height="6" rx="1.5"/></svg>
-        </span>
-        <strong>100%</strong>
-        <h3>Sở hữu trọn vẹn</h3>
-        <p>Bạn sở hữu toàn bộ code và dữ liệu website.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
-        </span>
-        <strong>100%</strong>
-        <h3>Định hướng con người</h3>
-        <p>AI có thể tạo ra website. Chúng tôi tạo ra website dành riêng cho bạn.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ CTA BAND ============================ -->
-<section class="cta-band" id="lien-he">
-  <div class="container cta-inner">
-    <div>
-      <h2>Sẵn sàng bắt đầu<br>dự án của bạn?</h2>
-      <p>Chia sẻ ý tưởng của bạn, chúng tôi sẽ biến nó thành một website độc bản, chuẩn SEO và tốc độ vượt trội.</p>
-    </div>
-    <a class="btn btn-primary btn-lg" href="mailto:hello@web100.vn">
-      Bắt đầu dự án
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </div>
-</section>
-
-</main>
-
-<!-- ============================ FOOTER ============================ -->
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <img src="images/logo.png" alt="Web100">
-      <p>Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Điều hướng</h4>
-      <a href="#top">Trang chủ</a>
-      <a href="#du-an">Dự án</a>
-      <a href="#dich-vu">Dịch vụ</a>
-      <a href="#quy-trinh">Quy trình</a>
-    </div>
-    <div class="footer-col">
-      <h4>Công ty</h4>
-      <a href="#ve-chung-toi">Về chúng tôi</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="#lien-he">Liên hệ</a>
-    </div>
-    <div class="footer-col">
-      <h4>Liên hệ</h4>
-      <a href="mailto:hello@web100.vn">hello@web100.vn</a>
-      <a href="tel:+84900000000">+84 900 000 000</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <span>© 2026 Web100. All rights reserved.</span>
-    <span>Websites with a human touch.</span>
-  </div>
-</footer>
-
-<button class="to-top" type="button" aria-label="Lên đầu trang">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
-
-<script src="js/main.js"></script>
-</body>
+    <script src="js/main.js"></script>
+  </body>
 </html>

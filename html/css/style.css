@@ -811,6 +811,46 @@ button { font: inherit; cursor: pointer; }
 .why-item h3 { font-size: 15.5px; margin-bottom: 6px; }
 .why-item p { font-size: 13.5px; color: var(--muted); }
 
+/* ------------------------------ FAQ ------------------------------ */
+.faq { padding: 96px 0; }
+.faq-list { width: 100%; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 4px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.faq-trigger svg {
+  width: 18px; height: 18px; flex-shrink: 0;
+  color: var(--green-dark);
+  transition: transform 0.25s ease;
+}
+.faq-item.open .faq-trigger svg { transform: rotate(180deg); }
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.faq-panel > p {
+  overflow: hidden;
+  min-height: 0;
+  padding-right: 34px;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+.faq-item.open .faq-panel { grid-template-rows: 1fr; }
+.faq-item.open .faq-panel > p { padding-bottom: 20px; }
+
 /* ------------------------------ CTA band ------------------------------ */
 .cta-band { padding: 64px 0; }
 .cta-inner {

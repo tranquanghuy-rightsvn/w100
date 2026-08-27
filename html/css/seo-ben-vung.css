@@ -1,0 +1,170 @@
+/* ==========================================================================
+   seo-ben-vung.css — trang dịch vụ "SEO bền vững" (html/seo-ben-vung/index.html).
+   Dùng chung biến màu/khoảng cách/thành phần (container, btn, eyebrow,
+   section-head, faq, cta-band, process...) đã khai báo trong css/style.css —
+   file này chỉ chứa CSS riêng cho hero, bảng so sánh, lưới lợi ích và dải
+   số liệu của trang.
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.seo-hero {
+  position: relative;
+  padding: 64px 0 96px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%);
+}
+.seo-hero::before,
+.seo-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(70px); pointer-events: none;
+}
+.seo-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
+.seo-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.seo-hero .container {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 56px;
+}
+.seo-hero__copy { max-width: 520px; }
+.seo-hero__copy h1 { font-size: 42px; line-height: 1.18; margin-bottom: 18px; }
+.seo-hero__copy .section-desc { max-width: 480px; margin: 0; font-size: 16.5px; }
+.seo-hero__actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+.seo-hero__trust {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.seo-hero__trust span {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.seo-hero__trust svg { width: 15px; height: 15px; color: var(--green-dark); flex-shrink: 0; }
+
+.seo-hero__visual { position: relative; }
+.seo-hero__frame { aspect-ratio: 4 / 3.4; }
+.seo-hero__float {
+  position: absolute;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  animation: seoFloat 4s ease-in-out infinite;
+}
+.seo-hero__float-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--green-tint); color: var(--green-dark);
+  flex-shrink: 0;
+}
+.seo-hero__float-icon svg { width: 17px; height: 17px; }
+.seo-hero__float strong { display: block; font-size: 15px; line-height: 1.2; }
+.seo-hero__float span:not(.seo-hero__float-icon) { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.seo-hero__float--a { top: -18px; right: -18px; animation-delay: 0s; }
+.seo-hero__float--b { bottom: -18px; left: -24px; animation-delay: 1.6s; }
+@keyframes seoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ------------------------------ So sánh: ngắn hạn vs bền vững ------------------------------ */
+.seo-compare { padding: 96px 0; background: var(--bg-alt); }
+.seo-compare .section-head { text-align: center; justify-content: center; }
+.seo-compare .section-head > div { max-width: 620px; margin: 0 auto; }
+.seo-compare .eyebrow { justify-content: center; }
+.seo-compare .section-desc { margin: 14px auto 0; }
+
+.seo-compare__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.seo-compare-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--line);
+}
+.seo-compare-card--good {
+  border-color: var(--green);
+  box-shadow: 0 20px 44px -20px rgba(7, 140, 70, 0.28);
+}
+.seo-compare-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.seo-compare-card__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+}
+.seo-compare-card--bad .seo-compare-card__icon { background: rgba(220, 60, 60, 0.1); color: #c0392b; }
+.seo-compare-card--good .seo-compare-card__icon { background: var(--green-tint); color: var(--green-dark); }
+.seo-compare-card__icon svg { width: 20px; height: 20px; }
+.seo-compare-card h3 { font-size: 18px; }
+.seo-compare-card ul { display: flex; flex-direction: column; gap: 14px; }
+.seo-compare-card li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); }
+.seo-compare-card li svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+.seo-compare-card--bad li svg { color: #c0392b; }
+.seo-compare-card--good li svg { color: var(--green-dark); }
+
+/* ------------------------------ Lợi ích ------------------------------ */
+.seo-benefits { padding: 96px 0; }
+.seo-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.seo-benefit-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.seo-benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.seo-benefit-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--green-tint); color: var(--green-dark);
+  margin-bottom: 18px;
+}
+.seo-benefit-icon svg { width: 20px; height: 20px; }
+.seo-benefit-card h3 { font-size: 16.5px; margin-bottom: 8px; }
+.seo-benefit-card p { font-size: 13.5px; color: var(--muted); }
+
+/* ------------------------------ Dải số liệu ------------------------------ */
+.seo-stats {
+  padding: 64px 0;
+  background: linear-gradient(135deg, var(--ink) 0%, #14342a 100%);
+}
+.seo-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.seo-stats__item strong { display: block; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.seo-stats__item span { font-size: 13.5px; color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 1100px) {
+  .seo-hero__copy h1 { font-size: 36px; }
+}
+
+@media (max-width: 900px) {
+  .seo-hero .container { grid-template-columns: 1fr; gap: 64px; }
+  .seo-hero__visual { max-width: 440px; margin: 0 auto; }
+  .seo-compare__grid { grid-template-columns: 1fr; }
+  .seo-benefit-grid { grid-template-columns: repeat(2, 1fr); }
+  .seo-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+}
+
+@media (max-width: 700px) {
+  .seo-hero { padding: 40px 0 72px; }
+  .seo-hero__copy h1 { font-size: 28px; }
+  .seo-hero__float { padding: 10px 12px; gap: 8px; }
+  .seo-hero__float strong { font-size: 13.5px; }
+  .seo-hero__float--a { top: -14px; right: -10px; }
+  .seo-hero__float--b { bottom: -14px; left: -10px; }
+  .seo-compare, .seo-benefits { padding: 64px 0; }
+  .seo-benefit-grid { grid-template-columns: 1fr; }
+  .seo-stats__grid { grid-template-columns: 1fr; gap: 24px; }
+}
