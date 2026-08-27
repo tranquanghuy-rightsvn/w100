@@ -425,6 +425,260 @@ button { font: inherit; cursor: pointer; }
 }
 .step-arrow svg { width: 16px; height: 16px; }
 
+/* ------------------------------ Services (slide trượt) ------------------------------ */
+.services { padding: 96px 0; overflow: hidden; background: var(--bg-alt);}
+.services h2 { font-size: 34px; }
+
+.service-track-wrap { position: relative; }
+.service-track {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.service-track::-webkit-scrollbar { display: none; }
+
+.service-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 64px;
+  padding: 6px 56px;
+}
+.service-slide--reverse .service-visual { order: 2; }
+.service-slide--reverse .service-copy { order: 1; }
+
+.service-copy { max-width: 440px; }
+.service-num { display: block; font-size: 13px; font-weight: 800; color: var(--green-dark); margin-bottom: 10px; letter-spacing: 0.5px; }
+.service-copy h3 { font-size: 26px; margin-bottom: 14px; }
+.service-copy p { font-size: 15px; margin-bottom: 24px; }
+
+.service-visual {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(160deg, #14161c 0%, #33383f 100%);
+}
+
+/* -- khung "trình duyệt" dùng chung cho vài mockup -- */
+.svc-frame { position: absolute; inset: 0; }
+.svc-frame__bar { height: 32px; display: flex; align-items: center; gap: 6px; padding: 0 14px; background: rgba(255, 255, 255, 0.08); }
+.svc-frame__bar span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); }
+.svc-frame__body { position: absolute; inset: 32px 0 0 0; padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+.svc-line { display: block; height: 9px; border-radius: 5px; background: rgba(255, 255, 255, 0.2); }
+.svc-pill { display: block; height: 22px; border-radius: 999px; background: rgba(255, 255, 255, 0.9); }
+.svc-block { display: block; border-radius: 10px; background: rgba(255, 255, 255, 0.12); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.svc-grid span { aspect-ratio: 1; border-radius: 8px; }
+.svc-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.svc-grid--2 span { aspect-ratio: 16 / 10; }
+.svc-line--soft { background: rgba(255, 255, 255, 0.12); }
+
+.sv-news { background: linear-gradient(160deg, #0e161c 0%, #1c2a33 100%); }
+.sv-corporate { background: linear-gradient(160deg, #0e2a24 0%, #0b5c40 100%); }
+
+/* -- thành phần mockup chi tiết: nav giả, ảnh giả, nút CTA, thẻ tính năng -- */
+.svc-navbar { display: flex; align-items: center; justify-content: space-between; }
+.svc-navbar__brand { display: flex; align-items: center; gap: 8px; }
+.svc-navbar__brand .svc-dot { width: 16px; height: 16px; border-radius: 50%; background: rgba(255, 255, 255, 0.9); flex-shrink: 0; }
+.svc-navbar__brand .svc-line { width: 44px; margin: 0; }
+.svc-navbar__links { display: flex; gap: 8px; }
+.svc-navbar__links span { width: 26px; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, 0.22); }
+
+.svc-thumb {
+  position: relative;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  border-radius: 10px;
+  overflow: hidden;
+}
+.svc-thumb svg {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 32%; height: 32%; color: rgba(255, 255, 255, 0.4);
+}
+
+.svc-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 999px;
+  background: var(--green); width: fit-content;
+}
+.svc-cta .svc-line { width: 48px; margin: 0; background: rgba(11, 15, 20, 0.55); }
+.svc-cta svg { width: 12px; height: 12px; color: rgba(11, 15, 20, 0.55); }
+
+.svc-feature-row { display: flex; gap: 12px; }
+.svc-feature {
+  flex: 1; display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px;
+}
+.svc-feature__icon {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  display: flex; align-items: center; justify-content: center;
+}
+.svc-feature__icon svg { width: 15px; height: 15px; color: #fff; }
+.svc-feature__lines { flex: 1; display: flex; flex-direction: column; gap: 7px; padding-top: 3px; }
+
+.svc-article { display: flex; gap: 14px; }
+.svc-article .svc-thumb { flex: 0 0 92px; height: 66px; }
+.svc-article__lines { flex: 1; display: flex; flex-direction: column; gap: 9px; justify-content: center; }
+
+.svc-article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.svc-article-card { display: flex; flex-direction: column; gap: 8px; }
+.svc-article-card .svc-thumb { aspect-ratio: 4 / 3; }
+
+/* -- 01: before / after kéo thả -- */
+.ba-pane { position: absolute; inset: 0; }
+.ba-pane--after { clip-path: inset(0 50% 0 0); }
+.svc-frame--old { background: #1c1e22; }
+.svc-frame--new { background: var(--green-deep); }
+.svc-frame__shotwrap { position: absolute; inset: 32px 0 0 0; overflow: hidden; }
+.svc-frame__shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.ba-label {
+  position: absolute; top: 14px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(11, 15, 20, 0.45); color: #fff;
+  backdrop-filter: blur(4px);
+}
+.ba-label--before { left: 14px; }
+.ba-label--after { right: 14px; }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.ba-handle__line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: #fff; }
+.ba-handle__grip {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #fff; color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow);
+  pointer-events: auto; cursor: ew-resize;
+}
+.ba-handle__grip svg { width: 18px; height: 18px; }
+.service-visual[data-before-after] {
+  cursor: ew-resize;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.service-visual[data-before-after] img { -webkit-user-drag: none; pointer-events: none; }
+
+/* -- 02: video giới thiệu website bán hàng -- */
+.service-visual--video { background: #14161c; }
+.svc-video { width: 100%; height: 100%; object-fit: cover; }
+
+/* -- 04: mockup builder kéo thả -- */
+.sv-builder { background: var(--bg-alt); }
+.svc-builder { position: absolute; inset: 0; display: grid; grid-template-columns: 120px 1fr; }
+.svc-builder__side { background: #fff; border-right: 1px solid var(--line); padding: 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+.svc-builder__addchip {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; color: var(--green-deep);
+  background: var(--green-tint); border-radius: 8px; padding: 8px 10px; margin-bottom: 4px;
+}
+.svc-builder__addchip svg { width: 12px; height: 12px; }
+.svc-builder__block {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; color: var(--text);
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; padding: 8px 8px;
+}
+.svc-builder__handle { width: 12px; height: 12px; color: var(--muted); flex-shrink: 0; }
+.svc-builder__block--active { border-color: var(--green); background: var(--green-tint); color: var(--green-deep); }
+.svc-builder__canvas { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+.svc-builder .svc-line { background: var(--line); }
+.svc-builder .svc-block { background: var(--bg-alt); border: 1px dashed var(--line); }
+
+/* -- 06: biểu đồ SEO tăng trưởng -- */
+.sv-seo { background: linear-gradient(160deg, #0b0f14 0%, #078c46 140%); display: flex; align-items: flex-end; padding: 24px; }
+.svc-chart { width: 100%; height: 62%; opacity: 0.9; }
+.svc-chart-badge {
+  position: absolute; top: 18px; left: 18px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 7px 13px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14); color: #fff;
+}
+
+/* -- 07: thẻ quảng cáo -- */
+.sv-ads { background: var(--bg-alt); display: flex; align-items: center; justify-content: center; }
+.svc-adcard {
+  width: 76%; background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); padding: 16px; display: flex; flex-direction: column; gap: 10px;
+  position: relative;
+}
+.svc-adcard__badge {
+  align-self: flex-start; font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+  color: var(--green-deep); background: var(--green-tint); border-radius: 6px; padding: 4px 8px;
+}
+.svc-adcard__thumb { position: relative; height: 74px; background: linear-gradient(160deg, #e7fbf0 0%, #cdf3de 100%); border-radius: 8px; }
+.svc-adcard__thumb svg {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 26px; height: 26px; color: rgba(7, 140, 70, 0.35);
+}
+.svc-adcard .svc-line { background: var(--line); }
+.svc-adcard__cta { height: 30px; width: 96px; background: var(--green); border-radius: 8px; margin-top: 4px; }
+
+/* -- điều hướng slide -- */
+.service-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); z-index: 2;
+}
+.service-arrow svg { width: 18px; height: 18px; }
+.service-arrow:hover { background: var(--ink); color: #fff; }
+.service-arrow--prev { left: -24px; }
+.service-arrow--next { right: -24px; }
+
+.service-dots { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
+.service-dot { width: 8px; height: 8px; padding: 0; border: none; border-radius: 999px; background: var(--line); transition: width 0.25s ease, background 0.25s ease; }
+.service-dot.active { width: 24px; background: var(--green); }
+
+/* ------------------------------ Free tools ------------------------------ */
+.tools { padding: 96px 0; }
+.tools h2 { font-size: 34px; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.tool-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.tool-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.tool-badge {
+  position: absolute; top: 24px; right: 24px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px;
+  background: var(--green-tint); color: var(--green-dark);
+}
+.tool-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--ink); color: #fff;
+  margin-bottom: 20px;
+}
+.tool-icon svg { width: 22px; height: 22px; }
+.tool-card h3 { font-size: 19px; margin-bottom: 8px; padding-right: 64px; }
+.tool-card p { font-size: 14px; color: var(--muted); margin-bottom: 22px; flex-grow: 1; }
+.tool-card .text-link { align-self: flex-start; }
+
 /* ------------------------------ Projects ------------------------------ */
 .projects { padding: 96px 0; background: var(--bg-alt); }
 .projects h2 { font-size: 34px; }
@@ -633,7 +887,12 @@ button { font: inherit; cursor: pointer; }
   .step-arrow { display: none; }
   .project-card { flex: 0 0 calc(50% - 10px); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
+  .service-slide, .service-slide--reverse { grid-template-columns: 1fr; gap: 28px; padding: 6px 2px; }
+  .service-slide--reverse .service-visual, .service-slide--reverse .service-copy { order: initial; }
+  .service-copy { max-width: none; }
+  .service-arrow { display: none; }
 }
 
 @media (max-width: 700px) {
@@ -644,12 +903,16 @@ button { font: inherit; cursor: pointer; }
   .hero-actions .btn { flex: 1 1 auto; }
   .features-grid { grid-template-columns: 1fr 1fr; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .process, .projects, .about, .why { padding: 64px 0; }
-  .process h2, .projects h2, .about-copy h2, .why h2 { font-size: 27px; }
+  .process, .services, .projects, .about, .why, .tools { padding: 64px 0; }
+  .process h2, .services h2, .projects h2, .about-copy h2, .why h2, .tools h2 { font-size: 27px; }
   .process-step { flex: 1 1 100%; }
+  .service-copy h3 { font-size: 21px; }
+  .service-visual { aspect-ratio: 16 / 11; }
+  .svc-builder { grid-template-columns: 96px 1fr; }
   .project-card { flex: 0 0 78%; }
   .project-next { right: 8px; bottom: -60px; top: auto; transform: none; }
   .why-grid { grid-template-columns: 1fr; }
+  .tools-grid { grid-template-columns: 1fr; }
   .cta-inner { padding: 36px 24px; flex-direction: column; text-align: center; }
   .cta-inner p { margin: 0 auto; }
   .footer-inner { grid-template-columns: 1fr; gap: 28px; }

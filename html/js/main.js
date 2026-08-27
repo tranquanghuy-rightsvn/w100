@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initToTop();
   initProjectNext();
+  initServiceSlider();
+  initBeforeAfter();
 });
 
 /* -------------------------------------------------------------------------- */
@@ -198,3 +200,102 @@ function initProjectNext() {
     track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + step, behavior: 'smooth' });
   });
 }
+
+/* --------------------------------------------------------------------------
+   Slide dịch vụ: mỗi lần 1 slide toàn chiều rộng (scroll-snap), có nút
+   trái/phải + dấu chấm đồng bộ theo slide đang hiển thị.
+   -------------------------------------------------------------------------- */
+function initServiceSlider() {
+  const track = document.querySelector('#serviceTrack');
+  const dotsWrap = document.querySelector('#serviceDots');
+  if (!track || !dotsWrap) return;
+
+  const slides = Array.from(track.querySelectorAll('.service-slide'));
+  if (!slides.length) return;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'service-dot';
+    dot.setAttribute('aria-label', `Đến dịch vụ ${i + 1}`);
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  const currentIndex = () => {
+    let closest = 0;
+    let minDist = Infinity;
+    slides.forEach((slide, i) => {
+      const dist = Math.abs(slide.offsetLeft - track.scrollLeft);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    return closest;
+  };
+
+  const setActiveDot = (i) => {
+    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+  };
+
+  const goTo = (i) => {
+    const clamped = Math.max(0, Math.min(slides.length - 1, i));
+    track.scrollTo({ left: slides[clamped].offsetLeft, behavior: 'smooth' });
+  };
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+  const prevBtn = document.querySelector('.service-arrow--prev');
+  const nextBtn = document.querySelector('.service-arrow--next');
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(currentIndex() - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(currentIndex() + 1));
+
+  let ticking = false;
+  track.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { setActiveDot(currentIndex()); ticking = false; });
+  }, { passive: true });
+
+  setActiveDot(0);
+}
+
+/* --------------------------------------------------------------------------
+   So sánh trước/sau: kéo (chuột hoặc chạm) trên toàn khối để lộ dần ảnh
+   "sau" qua clip-path, thanh kéo bám theo vị trí con trỏ.
+   -------------------------------------------------------------------------- */
+function initBeforeAfter() {
+  document.querySelectorAll('[data-before-after]').forEach((el) => {
+    const afterPane = el.querySelector('.ba-pane--after');
+    const handle = el.querySelector('.ba-handle');
+    if (!afterPane || !handle) return;
+
+    let dragging = false;
+
+    const setPercent = (percent) => {
+      const p = clamp(percent, 0, 100);
+      afterPane.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
+      handle.style.left = p + '%';
+    };
+
+    const percentFromEvent = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX != null ? e.clientX : 0) - rect.left;
+      return (x / rect.width) * 100;
+    };
+
+    el.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      dragging = true;
+      el.setPointerCapture(e.pointerId);
+      setPercent(percentFromEvent(e));
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      setPercent(percentFromEvent(e));
+    });
+    const stopDrag = () => { dragging = false; };
+    el.addEventListener('pointerup', stopDrag);
+    el.addEventListener('pointercancel', stopDrag);
+  });
+}
+
+function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
