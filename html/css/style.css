@@ -698,6 +698,10 @@ button { font: inherit; cursor: pointer; }
   aspect-ratio: 3 / 4;
   border-radius: var(--radius);
   overflow: hidden;
+  /* Thẻ tự có transform khi hover (translateY bên dưới) — thêm clip-path
+     làm cơ chế cắt chính vì Safari cắt sai góc bo tròn khi chính phần tử
+     overflow:hidden lại có transform trên bản thân nó. */
+  clip-path: inset(0 round var(--radius));
   display: flex;
   flex-direction: column;
   justify-content: space-between;

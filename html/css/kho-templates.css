@@ -1,0 +1,145 @@
+/* ==========================================================================
+   kho-templates.css — trang "Kho templates" (html/kho-templates/index.html).
+   Dùng chung biến màu/khoảng cách/thành phần (container, btn, eyebrow,
+   text-link, cta-band...) đã khai báo trong css/style.css — file này chỉ
+   chứa CSS riêng cho intro, bộ lọc, lưới thẻ template và popup xem demo.
+   ========================================================================== */
+
+/* ------------------------------ Intro ------------------------------ */
+.tpl-hero { padding: 64px 0 40px; text-align: center; }
+.tpl-hero .eyebrow { justify-content: center; }
+.tpl-hero h1 { font-size: 38px; margin-bottom: 16px; }
+.tpl-hero .section-desc { max-width: 560px; margin: 0 auto; }
+
+/* ------------------------------ Bộ lọc danh mục ------------------------------ */
+.tpl-filters-wrap { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 48px; }
+.tpl-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tpl-filter {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.tpl-filter:hover { border-color: var(--green); color: var(--ink); }
+.tpl-filter.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* ------------------------------ Lưới template ------------------------------ */
+.tpl-gallery { padding: 0 0 96px; }
+.tpl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.tpl-empty { display: none; text-align: center; color: var(--muted); padding: 40px 0; }
+.tpl-empty.is-visible { display: block; }
+
+.tpl-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  /* Thẻ tự có transform khi hover (translateY bên dưới) — cần clip-path
+     làm cơ chế cắt chính, không chỉ dựa vào overflow+border-radius, vì
+     Safari cắt sai góc bo tròn khi chính phần tử overflow:hidden lại có
+     transform trên bản thân nó. */
+  clip-path: inset(0 round var(--radius));
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.tpl-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+
+.tpl-card .tpl-thumb.service-visual {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.tpl-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.tpl-tag {
+  align-self: flex-start;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+  background: var(--green-tint); color: var(--green-deep);
+  margin-bottom: 6px;
+}
+.tpl-body h3 { font-size: 19px; }
+.tpl-desc { font-size: 13.5px; color: var(--muted); flex: 1; margin-bottom: 6px; }
+.tpl-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.tpl-demo-btn {
+  font-family: inherit; background: none; border: none; padding: 0;
+  cursor: pointer; font-size: 14px;
+}
+
+/* -- mockup dùng riêng cho trang này (không có sẵn trong style.css) -- */
+.sv-market { background: linear-gradient(160deg, #1c2410 0%, #3d5c1f 100%); }
+
+/* ------------------------------ Popup xem demo ------------------------------ */
+.tpl-lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(11, 15, 20, 0.55);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.tpl-lightbox.is-open { opacity: 1; visibility: visible; }
+.tpl-lightbox__panel {
+  position: relative;
+  width: 100%; max-width: 920px;
+  background: #fff; border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  /* Cột trái chỉ chứa ảnh position:absolute nên tự nó cao 0 — không có
+     min-height thì cả popup chỉ cao bằng đúng nội dung chữ bên phải, trông
+     hụt/ngắn so với 1 bản xem trước landing page. */
+  min-height: 500px;
+  overflow: hidden;
+  /* clip-path làm cơ chế cắt chính (không chỉ dựa vào overflow+border-radius)
+     vì chính khối này có transform trên bản thân nó (hiệu ứng mở/đóng) —
+     Safari render sai phần bo góc khi 1 phần tử vừa overflow:hidden vừa có
+     transform, khiến nút đóng ở góc bị lệch khỏi khung. */
+  clip-path: inset(0 round var(--radius));
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.25s ease;
+}
+.tpl-lightbox.is-open .tpl-lightbox__panel { transform: translateY(0) scale(1); }
+.tpl-lightbox__close {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: none; background: rgba(11, 15, 20, 0.5); color: #fff;
+  padding: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.tpl-lightbox__close svg { width: 16px; height: 16px; }
+.tpl-lightbox__preview { position: relative; background: var(--bg-alt); }
+.tpl-lightbox__preview .service-visual {
+  position: absolute; inset: 0;
+  aspect-ratio: auto; border-radius: 0; box-shadow: none;
+  width: 100%; height: 100%;
+}
+.tpl-lightbox__info { padding: 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.tpl-lightbox__info h3 { font-size: 24px; }
+.tpl-lightbox__info p { font-size: 14.5px; color: var(--muted); margin-bottom: 8px; }
+
+@media (max-width: 1100px) {
+  .tpl-grid { grid-template-columns: repeat(2, 1fr); }
+  .tpl-lightbox__panel { grid-template-columns: 1fr; }
+  .tpl-lightbox__preview { aspect-ratio: 4 / 3; }
+}
+
+@media (max-width: 700px) {
+  .tpl-hero { padding: 48px 0 32px; }
+  .tpl-hero h1 { font-size: 27px; }
+  .tpl-grid { grid-template-columns: 1fr; }
+  .tpl-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .tpl-filter { white-space: nowrap; }
+  .tpl-lightbox { padding: 0; }
+  .tpl-lightbox__panel { border-radius: 0; height: 100%; overflow-y: auto; }
+}

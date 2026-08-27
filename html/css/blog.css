@@ -1,0 +1,167 @@
+/* ==========================================================================
+   blog.css — trang "Blog" (html/blog/index.html). Dùng chung biến màu/
+   khoảng cách/thành phần (container, btn, eyebrow, text-link, cta-band...)
+   đã khai báo trong css/style.css — file này chỉ chứa CSS riêng cho hero,
+   bài viết nổi bật, bộ lọc chủ đề, lưới bài viết và khối đăng ký nhận tin.
+   ========================================================================== */
+
+/* ------------------------------ Hero (nền tối, phong cách editorial) ------------------------------ */
+.blog-hero { position: relative; padding: 88px 0 72px; background: var(--ink); color: #fff; overflow: hidden; text-align: center; }
+.blog-hero::before,
+.blog-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(80px); pointer-events: none;
+}
+.blog-hero::before { top: -140px; left: -100px; width: 360px; height: 360px; background: rgba(11, 203, 104, 0.25); }
+.blog-hero::after { bottom: -180px; right: -120px; width: 420px; height: 420px; background: rgba(11, 203, 104, 0.14); }
+.blog-hero .container { position: relative; z-index: 1; }
+.blog-hero .eyebrow { justify-content: center; color: var(--green); }
+.blog-hero h1 { font-size: 40px; color: #fff; margin-bottom: 16px; }
+.blog-hero .section-desc { max-width: 560px; margin: 0 auto; color: rgba(255, 255, 255, 0.72); }
+
+/* ------------------------------ Bài viết nổi bật ------------------------------ */
+.blog-featured { padding: 48px 0 0; }
+.blog-featured__card {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.blog-featured__card:hover { transform: translateY(-4px); }
+.blog-featured__cover { min-height: 280px; }
+.blog-featured__body { padding: 40px 44px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.blog-featured__body h2 { font-size: 26px; line-height: 1.25; }
+.blog-featured__body p { font-size: 14.5px; color: var(--muted); }
+
+/* ------------------------------ Bộ lọc chủ đề ------------------------------ */
+.blog-filters-wrap { border-bottom: 1px solid var(--line); padding: 56px 0 20px; margin-bottom: 48px; }
+.blog-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.blog-filter {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.blog-filter:hover { border-color: var(--green); color: var(--ink); }
+.blog-filter.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* ------------------------------ Lưới bài viết ------------------------------ */
+.blog-gallery { padding: 0 0 96px; }
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.blog-empty { display: none; text-align: center; color: var(--muted); padding: 40px 0; }
+.blog-empty.is-visible { display: block; }
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.blog-card__body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.blog-card__body h3 { font-size: 17.5px; line-height: 1.3; }
+.blog-card__body p { font-size: 13.5px; color: var(--muted); flex: 1; }
+
+/* -- ảnh bìa dạng gradient + icon minh hoạ (không cần ảnh thật, đồng bộ
+   ngôn ngữ hình ảnh với .project-card ở các trang khác) -- */
+.blog-cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+}
+.blog-cover svg { width: 30%; height: 30%; opacity: 0.28; }
+.blog-cover--design { background: linear-gradient(160deg, #1c1024 0%, #7a2f9e 100%); }
+.blog-cover--seo { background: linear-gradient(160deg, #0e1624 0%, #1f6c9e 100%); }
+.blog-cover--performance { background: linear-gradient(160deg, #241a10 0%, #c4621f 100%); }
+.blog-cover--case-study { background: linear-gradient(160deg, #0e2a1c 0%, #0bab63 100%); }
+.blog-cover--business { background: linear-gradient(160deg, #10141c 0%, #34455e 100%); }
+.blog-cover--tools { background: linear-gradient(160deg, #0e2422 0%, #14877a 100%); }
+
+.blog-tag {
+  align-self: flex-start;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+  background: var(--green-tint); color: var(--green-deep);
+}
+.blog-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.blog-meta__avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: contain; background: var(--bg-alt); padding: 3px; }
+.blog-meta__dot { opacity: 0.5; }
+
+/* ------------------------------ Đăng ký nhận bài viết ------------------------------ */
+.blog-newsletter { padding: 72px 0; background: var(--bg-alt); }
+.blog-newsletter__card {
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 40px 48px;
+  box-shadow: var(--shadow);
+}
+.blog-newsletter__card::before {
+  content: ""; position: absolute; z-index: 0;
+  top: -70px; right: -60px; width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(11, 203, 104, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.blog-newsletter__intro { position: relative; z-index: 1; display: flex; align-items: center; gap: 20px; flex: 1 1 320px; }
+.blog-newsletter__icon {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--green-tint); color: var(--green-dark);
+}
+.blog-newsletter__icon svg { width: 26px; height: 26px; }
+.blog-newsletter__intro h2 { font-size: 22px; margin-bottom: 6px; }
+.blog-newsletter__intro p { font-size: 13.5px; color: var(--muted); max-width: 360px; }
+.blog-newsletter__form { position: relative; z-index: 1; display: flex; gap: 10px; flex-shrink: 0; }
+.blog-newsletter__form input {
+  font-family: inherit; font-size: 14px;
+  height: 50px; padding: 0 20px; min-width: 240px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: #fff; color: var(--ink);
+}
+.blog-newsletter__form input:focus { outline: none; border-color: var(--green); }
+.blog-newsletter__note { text-align: center; font-size: 13px; color: var(--green-dark); font-weight: 600; margin-top: 18px; min-height: 1em; }
+
+@media (max-width: 1100px) {
+  .blog-featured__card { grid-template-columns: 1fr; }
+  .blog-featured__cover { min-height: 220px; }
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  .blog-newsletter__card { justify-content: center; text-align: center; padding: 36px; }
+  .blog-newsletter__intro { flex-direction: column; text-align: center; }
+  .blog-newsletter__intro p { margin: 0 auto; }
+}
+
+@media (max-width: 700px) {
+  .blog-hero { padding: 56px 0 48px; }
+  .blog-hero h1 { font-size: 27px; }
+  .blog-featured__body { padding: 28px 24px; }
+  .blog-featured__body h2 { font-size: 21px; }
+  .blog-filters-wrap { padding-top: 32px; }
+  .blog-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .blog-filter { white-space: nowrap; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .blog-newsletter__form { flex-direction: column; width: 100%; }
+  .blog-newsletter__form input { width: 100%; min-width: 0; }
+  .blog-newsletter__form .btn { width: 100%; justify-content: center; }
+}
