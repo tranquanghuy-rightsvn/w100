@@ -1,185 +1,418 @@
 /* ==========================================================================
    hieu-ung-dep.css — trang "Hiệu ứng đẹp" (html/hieu-ung-dep/index.html).
    Dùng chung biến màu/khoảng cách/thành phần (container, btn, eyebrow,
-   cta-band...) đã khai báo trong css/style.css — file này chứa CSS cho
-   hero, bộ lọc, lưới demo và TOÀN BỘ hiệu ứng minh hoạ (fx-*).
-   Quy ước: mỗi hiệu ứng phản ứng với cả :hover (chuột) VÀ .is-active
-   (gắn qua click trong hieu-ung-dep.js) để dùng được trên điện thoại.
+   section-desc, reveal, ba-*, cta-band...) đã khai báo trong css/style.css —
+   file này chứa CSS riêng cho hero, quick-nav và 7 nhóm hiệu ứng minh hoạ.
    ========================================================================== */
 
+:root {
+  --fx-teal: #0891a8;
+  --fx-teal-tint: #e3f6f9;
+  --fx-gold: #d4a012;
+}
+
+/* ------------------------------ Scroll progress (global) ------------------------------ */
+.fx-scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 200;
+  background: linear-gradient(90deg, var(--green), var(--fx-teal));
+  transition: width 0.1s linear;
+}
+
 /* ------------------------------ Hero ------------------------------ */
-.fx-hero { position: relative; padding: 88px 0 72px; text-align: center; overflow: hidden; background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%); }
+.fx-hero { position: relative; padding: 88px 0 64px; text-align: center; overflow: hidden; background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%); }
 .fx-hero::before,
 .fx-hero::after {
   content: ""; position: absolute; z-index: 0; border-radius: 50%;
   filter: blur(70px); pointer-events: none;
 }
 .fx-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
-.fx-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.fx-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(8, 145, 168, 0.14); }
 .fx-hero .container { position: relative; z-index: 1; }
 .fx-hero .eyebrow { justify-content: center; }
 .fx-hero h1 { font-size: 38px; margin-bottom: 16px; line-height: 1.25; }
 .fx-hero .section-desc { max-width: 600px; margin: 0 auto; }
+.fx-grad { background: linear-gradient(90deg, var(--green), var(--fx-teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-/* ------------------------------ Bộ lọc ------------------------------ */
-.fx-filters-wrap { border-bottom: 1px solid var(--line); padding: 48px 0 20px; margin-bottom: 48px; }
-.fx-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.fx-filter {
-  font-family: inherit; font-size: 13.5px; font-weight: 700;
-  padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line);
-  background: #fff; color: var(--text); cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-.fx-filter:hover { border-color: var(--green); color: var(--ink); }
-.fx-filter.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
-
-/* ------------------------------ Lưới demo ------------------------------ */
-.fx-gallery { padding: 0 0 96px; }
-.fx-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.fx-card {
-  display: flex; flex-direction: column;
-  border: 1px solid var(--line); border-radius: var(--radius);
-  background: #fff; overflow: hidden;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.fx-card:hover { box-shadow: var(--shadow); border-color: var(--green); }
-.fx-card__stage {
-  height: 160px; display: flex; align-items: center; justify-content: center;
-  background: var(--bg-alt); padding: 20px; cursor: pointer;
-}
-.fx-card__label { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 4px; }
-.fx-card__label strong { font-size: 14.5px; }
-.fx-card__label span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
-
-/* ==========================================================================
-   HIỆU ỨNG — NÚT BẤM
-   ========================================================================== */
-.fx-btn--scale:hover,
-.fx-btn--scale.is-active { transform: scale(1.08); }
-
-.fx-btn--sweep { position: relative; overflow: hidden; }
-.fx-btn--sweep span { position: relative; z-index: 1; }
-.fx-btn--sweep::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: -60%;
-  width: 40%; background: rgba(255, 255, 255, 0.45);
-  transform: skewX(-20deg); transition: left 0.6s ease;
-}
-.fx-btn--sweep:hover::before,
-.fx-btn--sweep.is-active::before { left: 130%; }
-
-.fx-btn--glow:hover,
-.fx-btn--glow.is-active {
-  box-shadow: 0 0 0 6px rgba(11, 203, 104, 0.22), 0 0 26px rgba(11, 203, 104, 0.55);
+.fx-sparkle-wrap { position: relative; display: inline-block; }
+.fx-sparkle-canvas {
+  position: absolute; inset: -70px;
+  width: calc(100% + 140px); height: calc(100% + 140px);
+  pointer-events: none; z-index: 2;
 }
 
-/* ==========================================================================
-   HIỆU ỨNG — THẺ & ẢNH
-   ========================================================================== */
-.fx-zoom { width: 140px; height: 100px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
-.fx-zoom img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-.fx-zoom:hover img,
-.fx-zoom.is-active img { transform: scale(1.15); }
+.fx-scroll-cue {
+  margin: 36px auto 0; width: 26px; height: 42px;
+  border: 2px solid var(--line); border-radius: 16px;
+  display: flex; justify-content: center; padding-top: 8px;
+}
+.fx-scroll-cue::before {
+  content: ""; width: 4px; height: 8px; background: var(--green); border-radius: 2px;
+  animation: fxCueMove 1.6s ease-in-out infinite;
+}
+@keyframes fxCueMove { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px); } }
 
-.fx-tilt {
-  width: 140px; height: 100px; border-radius: 16px;
-  background: linear-gradient(160deg, #0e2a1c 0%, #0bab63 100%);
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--shadow);
-  transition: transform 0.15s ease;
-  will-change: transform;
+/* ------------------------------ Quick nav ------------------------------ */
+.fx-quicknav-wrap { position: sticky; top: var(--header-h); z-index: 40; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); padding: 16px 0; }
+.fx-quicknav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.fx-quicknav a {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
 }
-.fx-tilt__badge { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+.fx-quicknav a:hover { border-color: var(--green); color: var(--ink); background: var(--green-tint); }
 
-.fx-reveal { position: relative; width: 140px; height: 100px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
-.fx-reveal img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.fx-reveal__overlay {
-  position: absolute; inset: 0; display: flex; align-items: flex-end;
-  padding: 10px 12px; font-size: 12.5px; font-weight: 700; color: #fff;
-  background: linear-gradient(0deg, rgba(11, 15, 20, 0.75) 0%, transparent 70%);
-  transform: translateY(100%); transition: transform 0.3s ease;
-}
-.fx-reveal:hover .fx-reveal__overlay,
-.fx-reveal.is-active .fx-reveal__overlay { transform: translateY(0); }
+/* ------------------------------ Nhóm hiệu ứng (section shell) ------------------------------ */
+.fx-group { padding: 96px 0; }
+.fx-group--alt { background: var(--bg-alt); }
+.fx-group .section-head { display: block; margin-bottom: 48px; }
+.fx-group .kicker { font-size: 12.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-deep); margin-bottom: 10px; }
+.fx-group h2 { font-size: clamp(24px, 3.4vw, 34px); margin-bottom: 10px; }
+.fx-group .section-desc { max-width: 640px; margin-top: 0; }
 
-.fx-border {
-  width: 140px; height: 100px; border-radius: 16px; padding: 3px;
-  background: linear-gradient(270deg, #0bcb68, #046c36, #0bcb68);
-  background-size: 400% 400%;
-  animation: fxBorderMove 4s ease infinite;
+.fx-demo { margin-bottom: 56px; }
+.fx-demo:last-child { margin-bottom: 0; }
+.fx-demo-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--green-deep); background: var(--green-tint);
+  border: 1px solid rgba(11, 203, 104, 0.25);
+  padding: 6px 14px; border-radius: 999px; margin-bottom: 14px;
 }
-.fx-border__inner {
-  width: 100%; height: 100%; border-radius: 13px;
-  background: #fff; display: flex; align-items: center; justify-content: center;
-  font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: center; padding: 8px;
-}
-@keyframes fxBorderMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.fx-demo-desc { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 720px; line-height: 1.6; }
+.fx-stage {
+  border-radius: var(--radius); border: 1px solid var(--line); background: #fff;
+  overflow: hidden; position: relative;
 }
 
 /* ==========================================================================
-   HIỆU ỨNG — CHỮ & TƯƠNG TÁC
+   1. CHIỀU SÂU & 3D
    ========================================================================== */
-.fx-gradient-text {
-  background: linear-gradient(90deg, #0bcb68, #046c36, #0bcb68);
-  background-size: 200% auto;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: fxGradientMove 3s linear infinite;
+.fx-parallax-stage { height: 380px; }
+.fx-parallax-layer { position: absolute; inset: 0; will-change: transform; }
+.fx-parallax-bg { inset: -140px 0; background: url('../images/hero-full-1600x900.jpg') center/cover no-repeat; filter: brightness(0.55); }
+.fx-parallax-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; color: #fff; }
+.fx-parallax-content h3 { font-size: 26px; margin: 0; color: #fff; }
+.fx-parallax-content span { color: rgba(255, 255, 255, 0.75); font-size: 14px; }
+
+.fx-tilt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+.fx-tilt-card {
+  height: 240px; border-radius: var(--radius); position: relative; overflow: hidden;
+  transform-style: preserve-3d; transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  box-shadow: var(--shadow); cursor: pointer;
 }
-.fx-gradient-text--lg { font-size: 24px; font-weight: 800; }
-@keyframes fxGradientMove {
-  to { background-position: 200% center; }
+.fx-tilt-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fx-tilt-glare { position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.45), transparent 60%); transition: opacity 0.2s ease; }
+.fx-tilt-card:hover .fx-tilt-glare { opacity: 1; }
+.fx-tilt-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 16px; z-index: 2;
+  background: linear-gradient(180deg, transparent, rgba(11, 15, 20, 0.75)); color: #fff; font-weight: 700; font-size: 14px;
 }
 
-.fx-underline {
-  position: relative; display: inline-block;
-  font-size: 15px; font-weight: 700; color: var(--ink); padding-bottom: 4px;
-}
-.fx-underline::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: var(--green); transform: scaleX(0); transform-origin: left;
-  transition: transform 0.3s ease;
-}
-.fx-underline:hover::after,
-.fx-underline.is-active::after { transform: scaleX(1); }
+.fx-layered-stage { height: 380px; }
+.fx-layer-back { background: radial-gradient(circle at 30% 30%, #f2fbf6, #ffffff 70%); }
+.fx-layer-city { background: url('../images/hero-full-2-1600x900.jpg') center bottom/cover no-repeat; opacity: 0.75; }
+.fx-layer-glow { background: radial-gradient(circle at 25% 40%, rgba(11, 203, 104, 0.35), transparent 45%), radial-gradient(circle at 75% 60%, rgba(8, 145, 168, 0.3), transparent 45%); }
+.fx-layer-text { display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; gap: 6px; z-index: 3; }
+.fx-layer-text h3 { margin: 0; font-size: 24px; color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
+.fx-layer-text span { color: rgba(255, 255, 255, 0.85); font-size: 14px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); }
 
-.fx-spotlight {
-  position: relative; overflow: hidden;
-  width: 100%; height: 100%; border-radius: 14px;
-  background: #0b0f14; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; text-align: center; padding: 12px;
-}
-.fx-spotlight::before {
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle 90px at var(--x, 50%) var(--y, 50%), rgba(11, 203, 104, 0.45), transparent 70%);
-  opacity: 0; transition: opacity 0.2s ease;
-}
-.fx-spotlight:hover::before,
-.fx-spotlight.is-active::before { opacity: 1; }
-.fx-spotlight span { position: relative; z-index: 1; }
+.fx-particle-stage { height: 360px; background: var(--ink); }
+.fx-particle-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fx-particle-stage--attract { cursor: none; }
+.fx-particle-overlay { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; gap: 6px; pointer-events: none; }
+.fx-particle-overlay h3 { margin: 0; font-size: 24px; color: #fff; }
+.fx-particle-overlay span { color: rgba(255, 255, 255, 0.65); font-size: 14px; }
 
-.fx-bounce { display: inline-block; font-size: 15px; font-weight: 700; color: var(--ink); }
-.fx-bounce:hover,
-.fx-bounce.is-active { animation: fxBounce 0.6s ease; }
-@keyframes fxBounce {
-  0%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-10px); }
-  55% { transform: translateY(0); }
-  75% { transform: translateY(-5px); }
+.fx-mesh-card { height: 260px; display: flex; align-items: center; justify-content: center; background: var(--ink); }
+.fx-mesh-gradient {
+  position: absolute; inset: -10%;
+  background:
+    radial-gradient(at 20% 25%, rgba(11, 203, 104, 0.9) 0px, transparent 55%),
+    radial-gradient(at 80% 10%, rgba(8, 145, 168, 0.8) 0px, transparent 55%),
+    radial-gradient(at 15% 90%, rgba(212, 160, 18, 0.55) 0px, transparent 55%),
+    radial-gradient(at 85% 85%, rgba(4, 108, 54, 0.7) 0px, transparent 55%),
+    #0b0f14;
+  background-size: 200% 200%;
+  filter: blur(60px) saturate(150%);
+  animation: fxMeshMove 14s ease-in-out infinite;
 }
+@keyframes fxMeshMove { 0%, 100% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; } 50% { background-position: 100% 100%, 0% 100%, 100% 0%, 0% 0%; } }
+.fx-mesh-card h3 { position: relative; z-index: 2; font-size: 22px; margin: 0; text-align: center; padding: 0 24px; color: #fff; }
+
+.fx-water-stage { height: 420px; background: #050608; cursor: pointer; }
+.fx-water-stage canvas { display: block; width: 100%; height: 100%; }
+.fx-water-hint {
+  position: absolute; top: 16px; left: 16px; z-index: 3; pointer-events: none;
+  font-size: 12.5px; color: rgba(255, 255, 255, 0.85); background: rgba(0, 0, 0, 0.45);
+  padding: 6px 12px; border-radius: 999px;
+}
+
+/* ==========================================================================
+   2. HIỆU ỨNG THEO SCROLL
+   ========================================================================== */
+.fx-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 40px 30px; text-align: center; align-items: center; position: relative; }
+.fx-stat-num { font-size: clamp(28px, 4.2vw, 46px); font-weight: 800; font-variant-numeric: tabular-nums; color: var(--green-deep); }
+.fx-stat-label { color: var(--muted); font-size: 13px; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.fx-stat-replay { position: absolute; top: 14px; right: 14px; }
+@media (max-width: 600px) { .fx-stats-grid { grid-template-columns: 1fr; } }
+
+.fx-awning-stage { padding: 0; height: 340px; }
+.fx-awning-wrap { position: relative; overflow: hidden; width: 100%; height: 100%; }
+.fx-awning-panel { transform-origin: center center; will-change: transform; position: absolute; inset: 0; }
+.fx-awning-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.fx-reveal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.fx-reveal-card { border-radius: 14px; overflow: hidden; height: 190px; position: relative; }
+.fx-reveal-card img { width: 100%; height: 100%; object-fit: cover; }
+.fx-reveal-card .fx-tag { position: absolute; bottom: 10px; left: 10px; background: rgba(11, 15, 20, 0.6); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 999px; }
+
+.fx-story { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.fx-story-visual { position: sticky; top: calc(var(--header-h) + 100px); height: 360px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.fx-story-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.6s ease; }
+.fx-story-visual img.is-active { opacity: 1; }
+.fx-story-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 20px; z-index: 2; background: linear-gradient(180deg, transparent, rgba(11, 15, 20, 0.82)); color: #fff; font-weight: 700; }
+.fx-story-steps { display: flex; flex-direction: column; gap: 180px; padding: 30px 0 40px; }
+.fx-story-step { opacity: 0.35; transition: opacity 0.4s ease; }
+.fx-story-step.is-active { opacity: 1; }
+.fx-story-step .fx-num { color: var(--green-deep); font-weight: 800; font-size: 13px; }
+.fx-story-step h4 { font-size: 21px; margin: 8px 0 10px; }
+.fx-story-step p { color: var(--muted); font-size: 14.5px; max-width: 420px; }
+
+.fx-pin-wrap { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+.fx-pin-title { position: sticky; top: calc(var(--header-h) + 100px); align-self: start; }
+.fx-pin-title h3 { font-size: 22px; margin: 0 0 8px; }
+.fx-pin-title span { color: var(--muted); font-size: 13.5px; }
+.fx-pin-body p { color: var(--muted); font-size: 15px; padding: 24px; margin: 0 0 18px; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 14px; }
+
+.fx-smooth-demo { display: flex; gap: 14px; align-items: center; padding: 30px; }
+.fx-smooth-track { flex: 1; height: 6px; border-radius: 6px; background: var(--line); position: relative; overflow: hidden; }
+.fx-smooth-track .fx-dot { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: linear-gradient(90deg, var(--green), var(--fx-teal)); }
+
+/* ==========================================================================
+   3. TƯƠNG TÁC CHUỘT / VI TƯƠNG TÁC
+   ========================================================================== */
+.fx-hover-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.fx-hover-box { padding: 34px; text-align: center; min-height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+
+.fx-magnetic-btn {
+  padding: 16px 34px; border-radius: 999px; border: none;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; font-weight: 700; font-size: 14px;
+  cursor: pointer; transition: transform 0.18s ease-out; box-shadow: 0 12px 24px -8px rgba(7, 140, 70, 0.45);
+}
+
+.fx-cursor-zone { height: 210px; cursor: none; position: relative; display: flex; align-items: center; justify-content: center; }
+.fx-cursor-zone .fx-hint { color: var(--muted); font-size: 14px; }
+.fx-custom-cursor {
+  position: fixed; top: 0; left: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--ink); pointer-events: none; z-index: 900; opacity: 0;
+  transform: translate(-50%, -50%); transition: width 0.18s ease, height 0.18s ease, opacity 0.18s ease;
+  mix-blend-mode: normal;
+}
+.fx-custom-cursor.is-show { opacity: 1; }
+.fx-custom-cursor.is-big { width: 46px; height: 46px; background: var(--green); opacity: 0.85; }
+
+.fx-spotlight-card { height: 210px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--ink); }
+.fx-spotlight-card::before {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s ease;
+  background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgba(11, 203, 104, 0.45), transparent 65%);
+}
+.fx-spotlight-card:hover::before { opacity: 1; }
+.fx-spotlight-card span { position: relative; z-index: 2; font-weight: 700; color: rgba(255, 255, 255, 0.8); }
+
+.fx-ripple-btn {
+  position: relative; overflow: hidden; padding: 16px 30px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--bg-alt); color: var(--ink); font-weight: 700; cursor: pointer; font-size: 14px;
+}
+.fx-ripple { position: absolute; border-radius: 50%; background: rgba(11, 203, 104, 0.4); transform: scale(0); animation: fxRippleAnim 0.6s ease-out forwards; pointer-events: none; }
+@keyframes fxRippleAnim { to { transform: scale(3); opacity: 0; } }
+
+/* ==========================================================================
+   4. CHỮ & HÌNH ẢNH
+   ========================================================================== */
+.fx-split-text { font-size: clamp(24px, 3.6vw, 36px); font-weight: 800; text-align: center; color: var(--ink); }
+.fx-split-text .fx-ch { display: inline-block; opacity: 0; transform: translateY(24px) rotate(4deg); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fx-split-text.is-in-view .fx-ch { opacity: 1; transform: none; }
+
+.fx-typewriter-box { text-align: center; padding: 46px 20px; }
+.fx-tw-line { font-size: clamp(19px, 2.8vw, 26px); font-weight: 700; color: var(--green-deep); min-height: 1.4em; }
+.fx-tw-line::after { content: "|"; animation: fxBlink 1s step-end infinite; color: var(--ink); }
+@keyframes fxBlink { 50% { opacity: 0; } }
+
+.fx-blob-wrap { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; }
+.fx-blob {
+  width: 240px; height: 240px; overflow: hidden; position: relative;
+  border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%;
+  animation: fxBlobMove 8s ease-in-out infinite;
+  box-shadow: 0 30px 60px rgba(11, 203, 104, 0.28);
+}
+.fx-blob img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@keyframes fxBlobMove {
+  0%, 100% { border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%; }
+  34% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+  67% { border-radius: 40% 60% 55% 45% / 60% 35% 65% 40%; }
+}
+
+.fx-lottie-box { height: 240px; display: flex; align-items: center; justify-content: center; }
+.fx-lottie-shape {
+  width: 110px; height: 110px; border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--green), var(--fx-teal), var(--fx-gold), var(--green));
+  animation: fxLottieSpin 3s linear infinite, fxLottiePulse 1.5s ease-in-out infinite;
+}
+@keyframes fxLottieSpin { to { transform: rotate(360deg); } }
+@keyframes fxLottiePulse { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.15) rotate(180deg); } }
+
+/* ==========================================================================
+   5. BỀ MẶT / CHẤT LIỆU
+   ========================================================================== */
+.fx-surface-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+
+.fx-glass-stage { height: 260px; background: url('../images/dich-vu/shopping-demo-poster.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center; }
+.fx-glass-card {
+  padding: 26px 30px; border-radius: 18px; text-align: center;
+  background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+.fx-glass-card h4 { margin: 0 0 6px; color: #fff; }
+.fx-glass-card span { font-size: 13px; color: rgba(255, 255, 255, 0.85); }
+
+.fx-neu-stage { height: 260px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; }
+.fx-neu-card {
+  width: 190px; height: 190px; border-radius: 28px; background: var(--bg-alt);
+  box-shadow: 16px 16px 32px #dde3e0, -16px -16px 32px #ffffff;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+}
+.fx-neu-btn {
+  padding: 12px 22px; border-radius: 14px; background: var(--bg-alt); color: var(--ink); font-weight: 700; font-size: 13px;
+  box-shadow: 6px 6px 12px #dde3e0, -6px -6px 12px #ffffff; border: none; cursor: pointer;
+}
+.fx-neu-btn:active { box-shadow: inset 4px 4px 8px #dde3e0, inset -4px -4px 8px #ffffff; }
+
+.fx-noise-stage { height: 260px; position: relative; background: linear-gradient(135deg, var(--green-tint), #ffffff); display: flex; align-items: center; justify-content: center; }
+.fx-noise-stage::after {
+  content: ""; position: absolute; inset: 0; opacity: 0.06; mix-blend-mode: multiply; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.fx-noise-stage span { position: relative; z-index: 2; font-weight: 700; color: var(--text); }
+
+/* ==========================================================================
+   6. BỐ CỤC XU HƯỚNG
+   ========================================================================== */
+.fx-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 130px; gap: 16px; }
+.fx-bento-item { border-radius: 16px; overflow: hidden; position: relative; }
+.fx-bento-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.fx-bento-item:hover img { transform: scale(1.06); }
+.fx-bento-item .fx-label { position: absolute; left: 12px; bottom: 12px; z-index: 2; font-size: 13px; font-weight: 700; color: #fff; background: rgba(11, 15, 20, 0.55); padding: 5px 10px; border-radius: 999px; }
+.fx-b1 { grid-column: span 2; grid-row: span 2; }
+.fx-b2 { grid-column: span 2; grid-row: span 1; }
+.fx-b3 { grid-column: span 1; grid-row: span 1; }
+.fx-b4 { grid-column: span 1; grid-row: span 1; }
+.fx-b5 { grid-column: span 2; grid-row: span 1; }
+.fx-b6 { grid-column: span 2; grid-row: span 1; }
+@media (max-width: 760px) {
+  .fx-bento { grid-template-columns: repeat(2, 1fr); }
+  .fx-b1, .fx-b2, .fx-b5, .fx-b6 { grid-column: span 2; }
+}
+
+.fx-kb-hero { height: 400px; position: relative; overflow: hidden; }
+.fx-kb-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.15); transition: opacity 1.4s ease; }
+.fx-kb-slide.is-active { opacity: 1; animation: fxKenBurns 7s ease-in-out forwards; }
+@keyframes fxKenBurns { from { transform: scale(1.15) translate(0, 0); } to { transform: scale(1.3) translate(-2%, -1%); } }
+.fx-kb-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 15, 20, 0.1), rgba(11, 15, 20, 0.6)); z-index: 1; }
+.fx-kb-content { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; text-align: center; }
+.fx-kb-content h3 { font-size: 24px; margin: 0; color: #fff; }
+.fx-kb-content span { color: rgba(255, 255, 255, 0.8); font-size: 13.5px; }
+
+.fx-marquee-wrap { overflow: hidden; padding: 28px 0; background: var(--bg-alt); }
+.fx-marquee-track { display: flex; gap: 16px; width: max-content; animation: fxMarquee 26s linear infinite; }
+.fx-marquee-wrap:hover .fx-marquee-track { animation-play-state: paused; }
+.fx-marquee-track span {
+  font-size: 13.5px; font-weight: 700; color: var(--green-deep); background: #fff;
+  border: 1px solid var(--line); padding: 10px 20px; border-radius: 999px; white-space: nowrap;
+}
+@keyframes fxMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ==========================================================================
+   7. HIỆU ỨNG BỔ SUNG
+   ========================================================================== */
+.fx-stack-cards { display: flex; flex-direction: column; gap: 24px; }
+.fx-stack-card {
+  position: sticky; height: 300px; border-radius: 18px; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
+  will-change: transform; transform-origin: top center;
+}
+.fx-stack-card img { width: 100%; height: 100%; object-fit: cover; }
+.fx-stack-info { padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.fx-stack-info .fx-num { color: var(--green-deep); font-weight: 800; font-size: 13px; }
+.fx-stack-info h4 { margin: 0; font-size: 21px; }
+.fx-stack-info p { margin: 0; color: var(--muted); font-size: 14px; }
+@media (max-width: 700px) { .fx-stack-card { grid-template-columns: 1fr; height: 360px; } }
+
+.fx-accordion-gallery { display: flex; gap: 10px; height: 360px; }
+.fx-acc-item { flex: 1; overflow: hidden; border-radius: 14px; position: relative; cursor: pointer; transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.3, 1); }
+.fx-acc-item:hover, .fx-acc-item.is-active { flex: 3.2; }
+@media (max-width: 700px) { .fx-accordion-gallery { flex-direction: column; height: 540px; } }
+.fx-acc-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fx-acc-item span { position: absolute; left: 12px; bottom: 12px; z-index: 2; font-size: 13px; font-weight: 700; color: #fff; background: rgba(11, 15, 20, 0.6); padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+
+.fx-ba { height: 400px; position: relative; overflow: hidden; }
+.fx-ba .ba-pane img { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; pointer-events: none; }
+
+.fx-scramble-text { font-size: clamp(20px, 3.2vw, 32px); font-weight: 800; text-align: center; font-family: "SF Mono", Menlo, Consolas, monospace; min-height: 1.5em; color: var(--ink); }
+.fx-scramble-text .fx-scr { color: var(--fx-teal); opacity: 0.75; }
+
+.fx-glow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.fx-glow-border { position: relative; padding: 2px; border-radius: 18px; overflow: hidden; }
+.fx-glow-border::before {
+  content: ""; position: absolute; inset: -60%;
+  background: conic-gradient(from 0deg, transparent 0deg 200deg, var(--green) 250deg, var(--fx-teal) 290deg, transparent 340deg 360deg);
+  animation: fxGlowSpin 4s linear infinite;
+}
+.fx-glow-border.is-reverse::before { animation-direction: reverse; animation-duration: 6s; }
+@keyframes fxGlowSpin { to { transform: rotate(360deg); } }
+.fx-glow-inner { position: relative; z-index: 1; background: #fff; border-radius: 16px; padding: 26px; height: 100%; }
+.fx-glow-inner h4 { margin: 0 0 8px; }
+.fx-glow-inner p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.fx-trail-stage { height: 280px; background: var(--ink); }
+.fx-trail-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.fx-zoompan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.fx-zoompan { overflow: hidden; border-radius: 14px; height: 280px; box-shadow: var(--shadow); }
+.fx-zoompan img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease-out; will-change: transform; }
+
+.fx-flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.fx-flip { perspective: 1100px; height: 280px; }
+.fx-flip-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.3, 0.7, 0.3, 1); }
+.fx-flip:hover .fx-flip-card { transform: rotateY(180deg); }
+.fx-flip-face { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.fx-flip-front img { width: 100%; height: 100%; object-fit: cover; }
+.fx-flip-front span { position: absolute; left: 14px; bottom: 14px; font-weight: 700; font-size: 14px; color: #fff; background: rgba(11, 15, 20, 0.6); padding: 6px 12px; border-radius: 999px; }
+.fx-flip-back {
+  transform: rotateY(180deg); background: linear-gradient(135deg, var(--ink), #1c2530); border: 1px solid var(--line);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 26px; text-align: center;
+}
+.fx-flip-back h4 { margin: 0; color: #fff; }
+.fx-flip-back p { margin: 0; color: rgba(255, 255, 255, 0.65); font-size: 14px; }
+
+.fx-confetti-stage { height: 280px; display: flex; align-items: center; justify-content: center; background: var(--bg-alt); }
+.fx-confetti-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
 /* ------------------------------ Responsive ------------------------------ */
-@media (max-width: 1100px) {
-  .fx-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 900px) {
+  .fx-story { grid-template-columns: 1fr; }
+  .fx-story-visual { position: relative; top: 0; height: 260px; }
+  .fx-story-steps { gap: 40px; }
+  .fx-pin-wrap { grid-template-columns: 1fr; }
+  .fx-pin-title { position: relative; top: 0; }
 }
 
 @media (max-width: 700px) {
   .fx-hero { padding: 56px 0 40px; }
   .fx-hero h1 { font-size: 26px; }
-  .fx-filters-wrap { padding-top: 32px; }
-  .fx-filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
-  .fx-filter { white-space: nowrap; }
-  .fx-grid { grid-template-columns: 1fr; }
+  .fx-group { padding: 64px 0; }
+  .fx-quicknav { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .fx-quicknav a { white-space: nowrap; }
 }

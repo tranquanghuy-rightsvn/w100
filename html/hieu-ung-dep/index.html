@@ -17,6 +17,9 @@
 </head>
 <body>
 
+<div class="fx-scroll-progress" id="fxScrollProgress" aria-hidden="true"></div>
+<div class="fx-custom-cursor" id="fxCustomCursor" aria-hidden="true"></div>
+
 <!-- ============================ HEADER ============================ -->
 <header class="site-header">
   <div class="container header-inner">
@@ -149,162 +152,517 @@
       Hiệu ứng đẹp
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </span>
-    <h1><span class="fx-gradient-text">Tương tác mượt mà,</span><br>ấn tượng ngay từ cú chạm đầu tiên</h1>
-    <p class="section-desc">Bộ sưu tập hiệu ứng cho nút bấm, thẻ, ảnh và chữ — di chuột (hoặc chạm trên điện thoại) vào từng khối bên dưới để xem trực tiếp. Mọi hiệu ứng đều có thể áp dụng vào website của bạn.</p>
+    <div class="fx-sparkle-wrap">
+      <canvas class="fx-sparkle-canvas" id="fxSparkleCanvas" aria-hidden="true"></canvas>
+      <h1><span class="fx-grad">Tương tác mượt mà,</span><br>ấn tượng ngay từ cú chạm đầu tiên</h1>
+    </div>
+    <p class="section-desc">Hàng chục hiệu ứng cho chiều sâu/3D, scroll, hover, chữ &amp; hình ảnh, chất liệu bề mặt và bố cục xu hướng — di chuột (hoặc chạm trên điện thoại) vào từng khối bên dưới để xem trực tiếp. Toàn bộ đều có thể áp dụng vào website của bạn.</p>
+    <div class="fx-scroll-cue" aria-hidden="true"></div>
   </div>
 </section>
 
-<!-- ============================ BỘ LỌC NHÓM HIỆU ỨNG ============================ -->
-<div class="fx-filters-wrap">
+<!-- ============================ QUICK NAV ============================ -->
+<div class="fx-quicknav-wrap">
   <div class="container">
-    <div class="fx-filters" id="fxFilters">
-      <button class="fx-filter is-active" type="button" data-filter="all">Tất cả</button>
-      <button class="fx-filter" type="button" data-filter="button">Nút bấm</button>
-      <button class="fx-filter" type="button" data-filter="card">Thẻ &amp; ảnh</button>
-      <button class="fx-filter" type="button" data-filter="text">Chữ &amp; tương tác</button>
-    </div>
+    <nav class="fx-quicknav" aria-label="Điều hướng nhóm hiệu ứng">
+      <a href="#depth">Chiều sâu &amp; 3D</a>
+      <a href="#scroll">Theo scroll</a>
+      <a href="#hover">Hover &amp; tương tác</a>
+      <a href="#text">Chữ &amp; hình ảnh</a>
+      <a href="#surface">Bề mặt</a>
+      <a href="#layout">Bố cục</a>
+      <a href="#extra">Bổ sung</a>
+    </nav>
   </div>
 </div>
 
-<!-- ============================ LƯỚI HIỆU ỨNG ============================ -->
-<section class="fx-gallery">
+<!-- ============================ 01. CHIỀU SÂU & 3D ============================ -->
+<section class="fx-group" id="depth">
   <div class="container">
-    <div class="fx-grid" id="fxGrid">
+    <div class="section-head">
+      <span class="kicker">01</span>
+      <h2>Chiều sâu &amp; 3D</h2>
+      <p class="section-desc">Tạo cảm giác lớp xa–gần bằng chuyển động lệch tốc độ, nghiêng 3D theo con trỏ và nền động nhiều lớp.</p>
+    </div>
 
-      <!-- Nút bấm -->
-      <div class="fx-card reveal" data-category="button">
-        <div class="fx-card__stage">
-          <button class="btn btn-primary fx-trigger" type="button">Nâng lên</button>
-        </div>
-        <div class="fx-card__label">
-          <strong>Đổ bóng nâng lên</strong>
-          <span>Nút nhô lên kèm đổ bóng khi rê chuột — cảm giác "có thể bấm được" rõ ràng.</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Parallax scrolling</span>
+      <p class="fx-demo-desc">Ảnh nền di chuyển chậm hơn nội dung khi cuộn — cảm giác lớp xa ở phía sau.</p>
+      <div class="fx-stage fx-parallax-stage">
+        <div class="fx-parallax-layer fx-parallax-bg" data-speed="0.55"></div>
+        <div class="fx-parallax-content" data-speed="-0.3">
+          <h3>Lớp nền trôi chậm hơn lớp chữ</h3>
+          <span>Cuộn trang lên/xuống để thấy độ lệch tốc độ</span>
         </div>
       </div>
+    </div>
 
-      <div class="fx-card reveal" data-category="button">
-        <div class="fx-card__stage">
-          <button class="btn btn-primary fx-btn--scale fx-trigger" type="button">Phóng to nhẹ</button>
-        </div>
-        <div class="fx-card__label">
-          <strong>Phóng to nhẹ</strong>
-          <span>Kích thước nút lớn dần tinh tế, không làm vỡ bố cục xung quanh.</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Tilt 3D theo chuột</span>
+      <p class="fx-demo-desc">Thẻ nghiêng theo vị trí con trỏ bằng transform: perspective + rotateX/rotateY.</p>
+      <div class="fx-tilt-grid">
+        <div class="fx-tilt-card"><img src="../images/hero-slide-1-1600x900.jpg" alt="Website doanh nghiệp"><div class="fx-tilt-glare"></div><div class="fx-tilt-caption">Website doanh nghiệp</div></div>
+        <div class="fx-tilt-card"><img src="../images/hero-slide-2-1600x900.jpg" alt="Website bán hàng"><div class="fx-tilt-glare"></div><div class="fx-tilt-caption">Website bán hàng</div></div>
+        <div class="fx-tilt-card"><img src="../images/hero-slide-3-1600x900.jpg" alt="Landing page"><div class="fx-tilt-glare"></div><div class="fx-tilt-caption">Landing page</div></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Layered background nhiều lớp</span>
+      <p class="fx-demo-desc">3 lớp (nền, ảnh, glow màu) di chuyển tốc độ khác nhau khi cuộn để tạo cảm giác "lồng nhau".</p>
+      <div class="fx-stage fx-layered-stage">
+        <div class="fx-parallax-layer fx-layer-back" data-speed="0.05"></div>
+        <div class="fx-parallax-layer fx-layer-city" data-speed="0.2"></div>
+        <div class="fx-parallax-layer fx-layer-glow" data-speed="0.4"></div>
+        <div class="fx-parallax-layer fx-layer-text" data-speed="0.6">
+          <h3>3 lớp — 3 tốc độ khác nhau</h3>
+          <span>nền (0.05) · ảnh (0.2) · glow (0.4) · chữ (0.6)</span>
         </div>
       </div>
+    </div>
 
-      <div class="fx-card reveal" data-category="button">
-        <div class="fx-card__stage">
-          <button class="btn btn-primary fx-btn--sweep fx-trigger" type="button"><span>Ánh sáng lướt</span></button>
-        </div>
-        <div class="fx-card__label">
-          <strong>Ánh sáng lướt qua</strong>
-          <span>Một dải sáng chạy ngang qua nút, tạo cảm giác cao cấp, bóng bẩy.</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Nền động dạng particle (đẩy ra)</span>
+      <p class="fx-demo-desc">Canvas 2D vẽ các hạt bay tự do và nối đường khi ở gần nhau, đẩy ra xa khi rê chuột tới gần.</p>
+      <div class="fx-stage fx-particle-stage" id="fxParticleStage">
+        <canvas id="fxParticleCanvas"></canvas>
+        <div class="fx-particle-overlay">
+          <h3>Particle network — đẩy ra</h3>
+          <span>Di chuột vào, các hạt bị đẩy dạt ra xa con trỏ</span>
         </div>
       </div>
+    </div>
 
-      <div class="fx-card reveal" data-category="button">
-        <div class="fx-card__stage">
-          <button class="btn btn-primary fx-btn--glow fx-trigger" type="button">Viền phát sáng</button>
-        </div>
-        <div class="fx-card__label">
-          <strong>Viền phát sáng</strong>
-          <span>Quầng sáng lan toả quanh nút — nổi bật cho nút hành động quan trọng.</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Particle — bản hút vào (attract)</span>
+      <p class="fx-demo-desc">Cùng hệ hạt như trên nhưng đảo chiều lực hút — hạt quây thành cụm quanh con trỏ.</p>
+      <div class="fx-stage fx-particle-stage fx-particle-stage--attract" id="fxParticleStageAttract">
+        <canvas id="fxParticleCanvasAttract"></canvas>
+        <div class="fx-particle-overlay">
+          <h3>Particle network — hút vào</h3>
+          <span>Di chuột vào — con trỏ biến thành nam châm 🧲 hút các hạt tụ về quanh nó</span>
         </div>
       </div>
+    </div>
 
-      <!-- Thẻ & ảnh -->
-      <div class="fx-card reveal" data-category="card">
-        <div class="fx-card__stage">
-          <div class="fx-zoom fx-trigger">
-            <img src="../images/hero-side-square-1-800x800.jpg" alt="">
+    <div class="fx-demo">
+      <span class="fx-demo-label">Mesh gradient động</span>
+      <p class="fx-demo-desc">Nhiều radial-gradient chồng lớp, làm mờ mạnh và animate background-position để tạo cảm giác gradient "loang" mượt như shader.</p>
+      <div class="fx-stage fx-mesh-card">
+        <div class="fx-mesh-gradient"></div>
+        <h3>Mesh gradient — CSS thuần, không WebGL</h3>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Gợn sóng mặt nước</span>
+      <p class="fx-demo-desc">Mô phỏng vật lý sóng bằng height-field 2 buffer — ảnh bị "khúc xạ" qua mặt nước. Click vào ảnh để tạo sóng.</p>
+      <div class="fx-stage fx-water-stage" id="fxWaterStage">
+        <canvas id="fxWaterCanvas" role="img" aria-label="Ảnh với hiệu ứng gợn sóng tương tác khi click"></canvas>
+        <div class="fx-water-hint" aria-hidden="true">Click vào ảnh để tạo sóng</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 02. HIỆU ỨNG THEO SCROLL ============================ -->
+<section class="fx-group fx-group--alt" id="scroll">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">02</span>
+      <h2>Hiệu ứng theo scroll</h2>
+      <p class="section-desc">Reveal khi cuộn tới, kể chuyện theo tiến trình scroll, pin section và smooth scroll có easing.</p>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Count-up số liệu</span>
+      <p class="fx-demo-desc">Khi khối lọt vào khung nhìn, cả 3 số cùng đếm từ 0 lên giá trị đích trong 2.2 giây với easing ease-out.</p>
+      <div class="fx-stage fx-stats-grid" id="fxStatsGrid">
+        <div>
+          <div class="fx-stat-num" data-target="12345">0</div>
+          <div class="fx-stat-label">khách hàng</div>
+        </div>
+        <div>
+          <div class="fx-stat-num" data-target="180">0</div>
+          <div class="fx-stat-label">dự án</div>
+        </div>
+        <div>
+          <div class="fx-stat-num" data-target="20014">0</div>
+          <div class="fx-stat-label">giờ hỗ trợ</div>
+        </div>
+        <button class="fx-neu-btn fx-stat-replay" id="fxStatsReplay" style="box-shadow:none;background:#fff;border:1px solid var(--line);">Replay</button>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Zoom ảnh khi cuộn</span>
+      <p class="fx-demo-desc">Mức zoom tỉ lệ thuận với thanh cuộn của trang — cuộn xuống ảnh zoom-in, cuộn lên ảnh zoom-out.</p>
+      <div class="fx-stage fx-awning-stage">
+        <div class="fx-awning-wrap">
+          <div class="fx-awning-panel" id="fxAwningPanel">
+            <img src="../images/hero-banner.png" alt="Ảnh minh hoạ hiệu ứng zoom khi cuộn">
           </div>
         </div>
-        <div class="fx-card__label">
-          <strong>Phóng to ảnh</strong>
-          <span>Ảnh phóng to nhẹ bên trong khung cố định, không tràn ra ngoài bố cục.</span>
-        </div>
+        <div class="fx-water-hint" aria-hidden="true">Cuộn xuống ảnh zoom-in — cuộn lên ảnh zoom-out</div>
       </div>
+    </div>
 
-      <div class="fx-card reveal" data-category="card">
-        <div class="fx-card__stage">
-          <div class="fx-tilt fx-trigger" id="fxTilt">
-            <span class="fx-tilt__badge">3D</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Scroll reveal</span>
+      <p class="fx-demo-desc">Dùng IntersectionObserver để thêm class khi phần tử lọt vào khung nhìn, kết hợp transition CSS.</p>
+      <div class="fx-reveal-grid">
+        <div class="fx-reveal-card reveal"><img src="../images/hero-side-square-1-800x800.jpg" alt=""><span class="fx-tag">01</span></div>
+        <div class="fx-reveal-card reveal" style="transition-delay:.1s"><img src="../images/hero-side-square-2-800x800.jpg" alt=""><span class="fx-tag">02</span></div>
+        <div class="fx-reveal-card reveal" style="transition-delay:.2s"><img src="../images/dich-vu/shopping-demo-poster.jpg" alt=""><span class="fx-tag">03</span></div>
+        <div class="fx-reveal-card reveal" style="transition-delay:.3s"><img src="../images/hero-full-2-1600x900.jpg" alt=""><span class="fx-tag">04</span></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Scrollytelling</span>
+      <p class="fx-demo-desc">Ảnh bên trái đứng yên (sticky), nội dung bên phải cuộn qua từng bước, đổi ảnh + caption theo bước đang active.</p>
+      <div class="fx-story">
+        <div class="fx-story-visual">
+          <img src="../images/hero-full-1600x900.jpg" class="is-active" data-step="0">
+          <img src="../images/hero-full-2-1600x900.jpg" data-step="1">
+          <img src="../images/hero-slide-1-1600x900.jpg" data-step="2">
+          <img src="../images/hero-slide-2-1600x900.jpg" data-step="3">
+          <div class="fx-story-caption" id="fxStoryCaption">Bước 1 — Khởi đầu</div>
+        </div>
+        <div class="fx-story-steps">
+          <div class="fx-story-step is-active" data-step="0">
+            <div class="fx-num">BƯỚC 01</div>
+            <h4>Khởi đầu câu chuyện</h4>
+            <p>Ảnh bên trái được ghim (sticky) trong khi bạn cuộn qua từng đoạn text ở đây.</p>
+          </div>
+          <div class="fx-story-step" data-step="1">
+            <div class="fx-num">BƯỚC 02</div>
+            <h4>Khảo sát &amp; lên ý tưởng</h4>
+            <p>Khi đoạn text này lọt vào giữa khung nhìn, ảnh minh hoạ tương ứng sẽ crossfade.</p>
+          </div>
+          <div class="fx-story-step" data-step="2">
+            <div class="fx-num">BƯỚC 03</div>
+            <h4>Thiết kế &amp; phát triển</h4>
+            <p>Kỹ thuật này thường thấy ở bài báo tương tác — nội dung dẫn dắt hình ảnh.</p>
+          </div>
+          <div class="fx-story-step" data-step="3">
+            <div class="fx-num">BƯỚC 04</div>
+            <h4>Ra mắt dự án</h4>
+            <p>Kết thúc chuỗi bước — ảnh cuối cùng hiển thị cùng caption tổng kết.</p>
           </div>
         </div>
-        <div class="fx-card__label">
-          <strong>Nghiêng 3D theo con trỏ</strong>
-          <span>Thẻ nghiêng theo vị trí con trỏ, tạo chiều sâu như một vật thể thật.</span>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Sticky / pinned section</span>
+      <p class="fx-demo-desc">Tiêu đề bên trái dùng position: sticky nên đứng im khi nội dung bên phải cuộn qua nó.</p>
+      <div class="fx-pin-wrap">
+        <div class="fx-pin-title">
+          <h3>Tiêu đề ghim lại</h3>
+          <span>position: sticky;</span>
+        </div>
+        <div class="fx-pin-body">
+          <p>Đoạn nội dung 1 — khi bạn cuộn xuống, khối tiêu đề bên trái vẫn đứng yên trong vùng nhìn thấy cho đến khi container kết thúc.</p>
+          <p>Đoạn nội dung 2 — đây là kỹ thuật rất rẻ về hiệu năng vì không cần JS, chỉ cần CSS position: sticky kết hợp một container đủ cao.</p>
+          <p>Đoạn nội dung 3 — thường dùng cho mục lục, ảnh minh hoạ sản phẩm, hoặc thanh tiến trình đọc bài viết dài.</p>
         </div>
       </div>
+    </div>
 
-      <div class="fx-card reveal" data-category="card">
-        <div class="fx-card__stage">
-          <div class="fx-reveal fx-trigger">
-            <img src="../images/hero-side-square-2-800x800.jpg" alt="">
-            <span class="fx-reveal__overlay">Xem dự án →</span>
+    <div class="fx-demo">
+      <span class="fx-demo-label">Smooth scroll (easing)</span>
+      <p class="fx-demo-desc">JS tự tính easing (easeInOutQuad) thay vì nhảy khung hình tức thì — thanh bên dưới minh hoạ đường cong easing đó.</p>
+      <div class="fx-stage fx-smooth-demo">
+        <span style="color:var(--muted);font-size:13px;">start</span>
+        <div class="fx-smooth-track"><div class="fx-dot" id="fxEaseDot"></div></div>
+        <span style="color:var(--muted);font-size:13px;">end</span>
+        <button class="fx-neu-btn" id="fxReplayEase" style="box-shadow:none;background:#fff;border:1px solid var(--line);">Replay</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 03. HOVER & VI TƯƠNG TÁC ============================ -->
+<section class="fx-group" id="hover">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">03</span>
+      <h2>Hover &amp; vi tương tác</h2>
+      <p class="section-desc">Những chi tiết nhỏ khiến giao diện "sống" hơn khi người dùng rê chuột hoặc click.</p>
+    </div>
+    <div class="fx-hover-grid">
+      <div class="fx-stage fx-hover-box">
+        <span class="fx-demo-label" style="margin:0;">Magnetic button</span>
+        <button class="fx-magnetic-btn" id="fxMagneticBtn">Rê chuột lại gần tôi</button>
+      </div>
+      <div class="fx-stage fx-hover-box fx-cursor-zone" id="fxCursorZone">
+        <span class="fx-demo-label" style="margin:0;">Custom cursor</span>
+        <span class="fx-hint">Di chuột trong vùng này để thấy con trỏ tuỳ chỉnh</span>
+      </div>
+      <div class="fx-stage fx-spotlight-card" id="fxSpotlightCard">
+        <span class="fx-demo-label" style="position:absolute; top:16px; left:16px;">Spotlight hover</span>
+        <span>Di chuột để thấy đốm sáng đi theo</span>
+      </div>
+      <div class="fx-stage fx-hover-box">
+        <span class="fx-demo-label" style="margin:0;">Ripple effect</span>
+        <button class="fx-ripple-btn" id="fxRippleBtn">Nhấn vào đây</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 04. CHỮ & HÌNH ẢNH ============================ -->
+<section class="fx-group fx-group--alt" id="text">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">04</span>
+      <h2>Chữ &amp; hình ảnh</h2>
+      <p class="section-desc">Chữ chuyển động theo ký tự, hiệu ứng gõ chữ, blob morph hữu cơ và animation vector nhẹ.</p>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Kinetic typography / split-text reveal</span>
+      <p class="fx-demo-desc">Mỗi ký tự được bọc trong 1 span riêng, có transition-delay tăng dần; khi tiêu đề lọt vào khung nhìn, từng ký tự bay lên lần lượt.</p>
+      <div class="fx-stage" style="padding:46px 24px;">
+        <div class="fx-split-text" id="fxSplitText">Reveal từng ký tự khi cuộn tới</div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Typewriter effect</span>
+      <p class="fx-demo-desc">JS gõ dần từng ký tự rồi xoá để chuyển sang câu tiếp theo, con trỏ nhấp nháy bằng CSS animation.</p>
+      <div class="fx-stage fx-typewriter-box">
+        <div class="fx-tw-line" id="fxTwLine"></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Morphing blob</span>
+      <p class="fx-demo-desc">border-radius với 8 giá trị được animate qua 3 trạng thái — tương đương morph SVG path nhưng nhẹ hơn.</p>
+      <div class="fx-stage fx-blob-wrap">
+        <div class="fx-blob"><img src="../images/hero-side-square-1-800x800.jpg" alt=""></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Animation vector nhẹ</span>
+      <p class="fx-demo-desc">CSS animation thuần cho icon/illustration động nhẹ — không cần thư viện Lottie.</p>
+      <div class="fx-stage fx-lottie-box">
+        <div class="fx-lottie-shape"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 05. BỀ MẶT & CHẤT LIỆU ============================ -->
+<section class="fx-group" id="surface">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">05</span>
+      <h2>Bề mặt &amp; chất liệu</h2>
+      <p class="section-desc">Kính mờ, khối nổi mềm mại và lớp hạt nhiễu nhẹ để tránh giao diện bị phẳng.</p>
+    </div>
+    <div class="fx-surface-grid">
+      <div class="fx-stage fx-glass-stage">
+        <div class="fx-glass-card">
+          <h4>Glassmorphism</h4>
+          <span>backdrop-filter: blur(16px)</span>
+        </div>
+      </div>
+      <div class="fx-stage fx-neu-stage">
+        <div class="fx-neu-card">
+          <span style="font-weight:700;font-size:13px;color:var(--muted);">Neumorphism</span>
+          <button class="fx-neu-btn">Nhấn thử</button>
+        </div>
+      </div>
+      <div class="fx-stage fx-noise-stage">
+        <span>Noise / grain overlay (SVG feTurbulence)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 06. BỐ CỤC XU HƯỚNG ============================ -->
+<section class="fx-group fx-group--alt" id="layout">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">06</span>
+      <h2>Bố cục xu hướng</h2>
+      <p class="section-desc">Bento grid kiểu widget, hero full-screen dạng loop ảnh và dải nhãn chạy vô tận.</p>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Bento grid</span>
+      <p class="fx-demo-desc">CSS Grid với các ô kích thước khác nhau (span 1–2 cột/hàng) — bố cục rất phổ biến hiện nay.</p>
+      <div class="fx-bento">
+        <div class="fx-bento-item fx-b1"><img src="../images/hero-full-1600x900.jpg" alt=""><span class="fx-label">Dự án</span></div>
+        <div class="fx-bento-item fx-b2"><img src="../images/hero-slide-1-1600x900.jpg" alt=""><span class="fx-label">Doanh nghiệp</span></div>
+        <div class="fx-bento-item fx-b3"><img src="../images/hero-side-square-1-800x800.jpg" alt=""><span class="fx-label">01</span></div>
+        <div class="fx-bento-item fx-b4"><img src="../images/hero-side-square-2-800x800.jpg" alt=""><span class="fx-label">02</span></div>
+        <div class="fx-bento-item fx-b5"><img src="../images/dich-vu/shopping-demo-poster.jpg" alt=""><span class="fx-label">Bán hàng</span></div>
+        <div class="fx-bento-item fx-b6"><img src="../images/hero-slide-3-1600x900.jpg" alt=""><span class="fx-label">Landing page</span></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Full-screen hero loop (Ken Burns)</span>
+      <p class="fx-demo-desc">Slideshow ảnh full-screen tự động zoom/pan chậm rồi crossfade — thường thay bằng &lt;video autoplay loop muted&gt; khi có sẵn video.</p>
+      <div class="fx-stage fx-kb-hero" id="fxKbHero">
+        <div class="fx-kb-slide is-active" style="background-image:url('../images/hero-full-1600x900.jpg')"></div>
+        <div class="fx-kb-slide" style="background-image:url('../images/hero-full-2-1600x900.jpg')"></div>
+        <div class="fx-kb-slide" style="background-image:url('../images/hero-slide-1-1600x900.jpg')"></div>
+        <div class="fx-kb-slide" style="background-image:url('../images/hero-slide-2-1600x900.jpg')"></div>
+        <div class="fx-kb-overlay"></div>
+        <div class="fx-kb-content">
+          <h3>Full-screen background loop</h3>
+          <span>Tự động chuyển ảnh + zoom chậm mỗi 5 giây</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">Marquee / dải nhãn chạy vô tận</span>
+      <p class="fx-demo-desc">Danh sách được nhân đôi rồi animate translateX liên tục — khi tới nửa danh sách sẽ lặp lại liền mạch. Dừng khi hover.</p>
+      <div class="fx-marquee-wrap">
+        <div class="fx-marquee-track" id="fxMarqueeTrack"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 07. HIỆU ỨNG BỔ SUNG ============================ -->
+<section class="fx-group" id="extra">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">07</span>
+      <h2>Hiệu ứng bổ sung</h2>
+      <p class="section-desc">10 hiệu ứng mở rộng: thanh tiến trình cuộn, thẻ chồng khi cuộn, gallery accordion, so sánh trước/sau, chữ giải mã, viền gradient xoay, vệt sáng theo chuột, zoom-pan, lật thẻ 3D và pháo giấy khi click.</p>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">1. Scroll progress bar</span>
+      <p class="fx-demo-desc">Thanh gradient 3px cố định trên đỉnh màn hình (trên cả menu), chiều rộng = % trang đã cuộn — nhìn lên đỉnh trang khi cuộn để thấy nó chạy.</p>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">2. Sticky stacking cards</span>
+      <p class="fx-demo-desc">Mỗi card dùng position: sticky với top lệch nhau; cuộn xuống, card sau trượt đè lên card trước thành chồng bài, card bị đè thu nhỏ dần.</p>
+      <div class="fx-stack-cards" id="fxStackCards">
+        <div class="fx-stack-card" style="top:90px;">
+          <img src="../images/hero-slide-1-1600x900.jpg" alt="">
+          <div class="fx-stack-info"><span class="fx-num">01</span><h4>Khảo sát</h4><p>Tìm hiểu nhu cầu, nghiên cứu người dùng và xác định phạm vi dự án.</p></div>
+        </div>
+        <div class="fx-stack-card" style="top:108px;">
+          <img src="../images/hero-slide-2-1600x900.jpg" alt="">
+          <div class="fx-stack-info"><span class="fx-num">02</span><h4>Thiết kế</h4><p>Dựng wireframe, prototype và hệ thống thiết kế nhất quán.</p></div>
+        </div>
+        <div class="fx-stack-card" style="top:126px;">
+          <img src="../images/hero-slide-3-1600x900.jpg" alt="">
+          <div class="fx-stack-info"><span class="fx-num">03</span><h4>Phát triển</h4><p>Xây dựng sản phẩm với quy trình review chặt chẽ.</p></div>
+        </div>
+        <div class="fx-stack-card" style="top:144px;">
+          <img src="../images/hero-full-2-1600x900.jpg" alt="">
+          <div class="fx-stack-info"><span class="fx-num">04</span><h4>Ra mắt</h4><p>Kiểm thử, tối ưu hiệu năng và đưa sản phẩm ra thị trường.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">3. Accordion gallery</span>
+      <p class="fx-demo-desc">Các cột ảnh chia đều bằng flex; hover vào cột nào thì flex của cột đó tăng lên với transition — cột nở rộng mượt, các cột khác tự ép lại.</p>
+      <div class="fx-accordion-gallery">
+        <div class="fx-acc-item"><img src="../images/hero-slide-1-1600x900.jpg" alt=""><span>Khảo sát</span></div>
+        <div class="fx-acc-item"><img src="../images/hero-slide-2-1600x900.jpg" alt=""><span>Thiết kế</span></div>
+        <div class="fx-acc-item"><img src="../images/hero-slide-3-1600x900.jpg" alt=""><span>Phát triển</span></div>
+        <div class="fx-acc-item"><img src="../images/hero-full-1600x900.jpg" alt=""><span>Kiểm thử</span></div>
+        <div class="fx-acc-item"><img src="../images/hero-full-2-1600x900.jpg" alt=""><span>Ra mắt</span></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">4. Before / After slider</span>
+      <p class="fx-demo-desc">Hai lớp ảnh chồng nhau bị cắt bằng clip-path; kéo/chạm ngang để di chuyển ranh giới so sánh.</p>
+      <div class="fx-stage fx-ba" data-before-after>
+        <div class="ba-pane ba-pane--before">
+          <img src="../images/dich-vu/page-old.png" alt="Giao diện website cũ">
+        </div>
+        <div class="ba-pane ba-pane--after">
+          <img src="../images/dich-vu/page-new.png" alt="Giao diện website mới">
+        </div>
+        <span class="ba-label ba-label--before">TRƯỚC</span>
+        <span class="ba-label ba-label--after">SAU</span>
+        <div class="ba-handle">
+          <span class="ba-handle__line"></span>
+          <span class="ba-handle__grip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">5. Text scramble / decode</span>
+      <p class="fx-demo-desc">Chữ hiện lên từ ký tự nhiễu ngẫu nhiên rồi "giải mã" dần từ trái sang phải — chạy khi lọt vào khung nhìn, bấm Replay để xem lại.</p>
+      <div class="fx-stage" style="padding:46px 24px; text-align:center; position:relative;">
+        <div class="fx-scramble-text" id="fxScrambleText" data-text="GIẢI MÃ THÀNH CÔNG_"></div>
+        <button class="fx-neu-btn fx-stat-replay" id="fxScrambleReplay" style="box-shadow:none;background:#fff;border:1px solid var(--line);">Replay</button>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">6. Viền gradient xoay</span>
+      <p class="fx-demo-desc">Một lớp conic-gradient khổ lớn quay tròn phía sau, card đè lên chừa viền 2px — tạo vệt sáng chạy quanh viền card.</p>
+      <div class="fx-glow-grid">
+        <div class="fx-glow-border"><div class="fx-glow-inner"><h4>Card viền sáng</h4><p>Vệt sáng xanh lá–xanh ngọc chạy quanh viền theo chiều kim đồng hồ, chu kỳ 4 giây.</p></div></div>
+        <div class="fx-glow-border is-reverse"><div class="fx-glow-inner"><h4>Chiều ngược lại</h4><p>Card này quay ngược chiều kim đồng hồ và chậm hơn (6 giây) để so sánh.</p></div></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">7. Cursor trail</span>
+      <p class="fx-demo-desc">Mỗi lần chuột di chuyển sinh vài hạt sáng tại vị trí con trỏ; hạt bay tản nhẹ, nhỏ và mờ dần rồi biến mất — vẽ bằng canvas 2D.</p>
+      <div class="fx-stage fx-trail-stage" id="fxTrailStage">
+        <canvas id="fxTrailCanvas"></canvas>
+        <div class="fx-particle-overlay"><h3>Cursor trail</h3><span>Di chuột trong khung để lại vệt sáng</span></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">8. Zoom-pan theo hướng chuột</span>
+      <p class="fx-demo-desc">Hover vào ảnh: ảnh phóng to và trượt về phía con trỏ — vùng ảnh dưới con trỏ luôn được "soi" gần hơn.</p>
+      <div class="fx-zoompan-grid">
+        <div class="fx-zoompan"><img src="../images/hero-side-square-1-800x800.jpg" alt=""></div>
+        <div class="fx-zoompan"><img src="../images/hero-side-square-2-800x800.jpg" alt=""></div>
+      </div>
+    </div>
+
+    <div class="fx-demo">
+      <span class="fx-demo-label">9. 3D flip card</span>
+      <p class="fx-demo-desc">Hover để lật card 180° quanh trục Y — mặt trước là ảnh, mặt sau là nội dung; backface-visibility ẩn mặt đang quay đi.</p>
+      <div class="fx-flip-grid">
+        <div class="fx-flip">
+          <div class="fx-flip-card">
+            <div class="fx-flip-face fx-flip-front"><img src="../images/hero-slide-1-1600x900.jpg" alt=""><span>Hover để lật</span></div>
+            <div class="fx-flip-face fx-flip-back"><h4>Website doanh nghiệp</h4><p>Mặt sau chứa mô tả chi tiết, nút bấm hoặc thông tin liên hệ.</p></div>
           </div>
         </div>
-        <div class="fx-card__label">
-          <strong>Lớp phủ trượt lên</strong>
-          <span>Thông tin trượt lên từ đáy ảnh khi rê chuột — thường dùng cho thẻ dự án.</span>
-        </div>
-      </div>
-
-      <div class="fx-card reveal" data-category="card">
-        <div class="fx-card__stage">
-          <div class="fx-border fx-trigger">
-            <span class="fx-border__inner">Viền chạy quanh</span>
+        <div class="fx-flip">
+          <div class="fx-flip-card">
+            <div class="fx-flip-face fx-flip-front"><img src="../images/hero-slide-2-1600x900.jpg" alt=""><span>Hover để lật</span></div>
+            <div class="fx-flip-face fx-flip-back"><h4>Website bán hàng</h4><p>Card lật bằng CSS thuần: preserve-3d + rotateY, không cần JS.</p></div>
           </div>
         </div>
-        <div class="fx-card__label">
-          <strong>Viền gradient chuyển động</strong>
-          <span>Viền đổi màu liên tục, phù hợp huy hiệu "nổi bật" hoặc "mới".</span>
-        </div>
       </div>
+    </div>
 
-      <!-- Chữ & tương tác -->
-      <div class="fx-card reveal" data-category="text">
-        <div class="fx-card__stage">
-          <span class="fx-gradient-text fx-gradient-text--lg">Chữ gradient</span>
-        </div>
-        <div class="fx-card__label">
-          <strong>Chữ gradient chuyển động</strong>
-          <span>Dải màu thương hiệu chạy liên tục trong chữ — bắt mắt cho tiêu đề lớn.</span>
-        </div>
+    <div class="fx-demo">
+      <span class="fx-demo-label">10. Confetti khi click</span>
+      <p class="fx-demo-desc">Bấm nút để bắn pháo giấy: các mảnh giấy màu bay lên theo vận tốc ngẫu nhiên, rơi xuống bởi trọng lực và xoay lật trong không trung.</p>
+      <div class="fx-stage fx-confetti-stage" id="fxConfettiStage">
+        <canvas id="fxConfettiCanvas"></canvas>
+        <button class="fx-magnetic-btn" id="fxConfettiBtn" style="position:relative;z-index:2;">🎉 Bắn pháo giấy</button>
       </div>
-
-      <div class="fx-card reveal" data-category="text">
-        <div class="fx-card__stage">
-          <a class="fx-underline fx-trigger" href="#" onclick="return false">Gạch chân trượt</a>
-        </div>
-        <div class="fx-card__label">
-          <strong>Gạch chân trượt</strong>
-          <span>Gạch chân mọc dần từ trái sang phải — nhẹ nhàng cho menu và liên kết.</span>
-        </div>
-      </div>
-
-      <div class="fx-card reveal" data-category="text">
-        <div class="fx-card__stage">
-          <div class="fx-spotlight fx-trigger" id="fxSpotlight">
-            <span>Đèn rọi theo con trỏ</span>
-          </div>
-        </div>
-        <div class="fx-card__label">
-          <strong>Đèn rọi theo con trỏ</strong>
-          <span>Vùng sáng bám theo vị trí chuột trên nền tối — điểm nhấn cho khối CTA.</span>
-        </div>
-      </div>
-
-      <div class="fx-card reveal" data-category="text">
-        <div class="fx-card__stage">
-          <span class="fx-bounce fx-trigger">Nảy nhẹ</span>
-        </div>
-        <div class="fx-card__label">
-          <strong>Nảy nhẹ</strong>
-          <span>Chuyển động nảy vui mắt — hợp với icon thông báo hoặc nhãn mới.</span>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
