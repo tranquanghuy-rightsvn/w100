@@ -1,0 +1,239 @@
+/* ==========================================================================
+   chay-quang-cao.css — trang dịch vụ "Chạy quảng cáo" (html/chay-quang-cao/index.html).
+   Dùng chung biến màu/khoảng cách/thành phần (container, btn, eyebrow,
+   section-head, faq, cta-band, process...) đã khai báo trong css/style.css —
+   file này chỉ chứa CSS riêng cho hero, dải nền tảng, bảng so sánh, lưới
+   lợi ích và dải số liệu của trang.
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.ads-hero {
+  position: relative;
+  padding: 64px 0 96px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%);
+}
+.ads-hero::before,
+.ads-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(70px); pointer-events: none;
+}
+.ads-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
+.ads-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.ads-hero .container {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 56px;
+}
+.ads-hero__copy { max-width: 520px; }
+.ads-hero__copy h1 { font-size: 42px; line-height: 1.18; margin-bottom: 18px; }
+.ads-hero__copy .section-desc { max-width: 480px; margin: 0; font-size: 16.5px; }
+.ads-hero__actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+.ads-hero__trust {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.ads-hero__trust span {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.ads-hero__trust svg { width: 15px; height: 15px; color: var(--green-dark); flex-shrink: 0; }
+
+.ads-hero__visual { position: relative; }
+
+/* -- mockup bảng điều khiển quảng cáo -- */
+.ads-hero__frame {
+  position: relative;
+  aspect-ratio: 4 / 3.4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(160deg, #0b0f14 0%, #0e2a24 60%, #078c46 160%);
+}
+.ads-mock { position: absolute; inset: 0; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+
+.ads-mock__tabs { display: flex; gap: 8px; }
+.ads-mock__tab {
+  font-size: 11.5px; font-weight: 700; color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08); border-radius: 999px; padding: 7px 13px;
+}
+.ads-mock__tab--active { background: #fff; color: var(--ink); }
+
+.ads-mock__stat-row { display: flex; gap: 10px; }
+.ads-mock__stat {
+  flex: 1; background: rgba(255, 255, 255, 0.08); border-radius: 12px;
+  padding: 10px 12px; display: flex; flex-direction: column; gap: 4px;
+}
+.ads-mock__stat span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px; color: rgba(255, 255, 255, 0.55); text-transform: uppercase; }
+.ads-mock__stat strong { font-size: 18px; font-weight: 800; color: #fff; }
+.ads-mock__stat strong.up { color: #6fe6a8; }
+.ads-mock__stat strong.down { color: #6fe6a8; }
+
+.ads-mock__chart { width: 100%; height: 34%; }
+
+.ads-mock__row { display: flex; gap: 12px; flex: 1; align-items: stretch; }
+.ads-mock__adcard {
+  flex: 1; background: rgba(255, 255, 255, 0.94); border-radius: 12px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+}
+.ads-mock__adcard-badge {
+  align-self: flex-start; font-size: 9.5px; font-weight: 800; letter-spacing: 0.4px;
+  color: var(--green-deep); background: var(--green-tint); border-radius: 6px; padding: 3px 7px;
+}
+.ads-mock__adcard-thumb { height: 44px; border-radius: 8px; background: linear-gradient(160deg, #e7fbf0 0%, #cdf3de 100%); }
+.ads-mock__adcard-line { display: block; height: 7px; border-radius: 4px; background: var(--line); }
+
+.ads-mock__budget {
+  flex: 1; background: rgba(255, 255, 255, 0.08); border-radius: 12px;
+  padding: 14px; display: flex; flex-direction: column; justify-content: center; gap: 10px;
+}
+.ads-mock__budget-label { font-size: 11px; font-weight: 700; color: rgba(255, 255, 255, 0.6); }
+.ads-mock__budget-bar { display: block; height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.15); overflow: hidden; }
+.ads-mock__budget-bar i { display: block; height: 100%; border-radius: 999px; background: var(--green); }
+.ads-mock__budget-value { font-size: 12px; font-weight: 700; color: #fff; }
+
+.ads-hero__float {
+  position: absolute;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  animation: adsFloat 4s ease-in-out infinite;
+}
+.ads-hero__float-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--green-tint); color: var(--green-dark);
+  flex-shrink: 0;
+}
+.ads-hero__float-icon svg { width: 17px; height: 17px; }
+.ads-hero__float strong { display: block; font-size: 15px; line-height: 1.2; }
+.ads-hero__float span:not(.ads-hero__float-icon) { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.ads-hero__float--a { top: -18px; right: -18px; animation-delay: 0s; }
+.ads-hero__float--b { bottom: -18px; left: -24px; animation-delay: 1.6s; }
+@keyframes adsFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ------------------------------ Dải nền tảng ------------------------------ */
+.ads-platforms { padding: 28px 0; border-bottom: 1px solid var(--line); }
+.ads-platforms__inner {
+  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+}
+.ads-platforms__label { font-size: 12.5px; font-weight: 800; color: var(--muted); white-space: nowrap; }
+.ads-platforms__list { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.ads-platforms__list span {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 700; color: var(--text);
+}
+.ads-platforms__list svg { width: 18px; height: 18px; color: var(--green-dark); flex-shrink: 0; }
+
+/* ------------------------------ So sánh: tự chạy vs vận hành ------------------------------ */
+.ads-compare { padding: 96px 0; background: var(--bg-alt); }
+.ads-compare .section-head { text-align: center; justify-content: center; }
+.ads-compare .section-head > div { max-width: 620px; margin: 0 auto; }
+.ads-compare .eyebrow { justify-content: center; }
+.ads-compare .section-desc { margin: 14px auto 0; }
+
+.ads-compare__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.ads-compare-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--line);
+}
+.ads-compare-card--good {
+  border-color: var(--green);
+  box-shadow: 0 20px 44px -20px rgba(7, 140, 70, 0.28);
+}
+.ads-compare-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.ads-compare-card__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+}
+.ads-compare-card--bad .ads-compare-card__icon { background: rgba(220, 60, 60, 0.1); color: #c0392b; }
+.ads-compare-card--good .ads-compare-card__icon { background: var(--green-tint); color: var(--green-dark); }
+.ads-compare-card__icon svg { width: 20px; height: 20px; }
+.ads-compare-card h3 { font-size: 18px; }
+.ads-compare-card ul { display: flex; flex-direction: column; gap: 14px; }
+.ads-compare-card li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); }
+.ads-compare-card li svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+.ads-compare-card--bad li svg { color: #c0392b; }
+.ads-compare-card--good li svg { color: var(--green-dark); }
+
+/* ------------------------------ Lợi ích ------------------------------ */
+.ads-benefits { padding: 96px 0; }
+.ads-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.ads-benefit-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.ads-benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.ads-benefit-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--green-tint); color: var(--green-dark);
+  margin-bottom: 18px;
+}
+.ads-benefit-icon svg { width: 20px; height: 20px; }
+.ads-benefit-card h3 { font-size: 16.5px; margin-bottom: 8px; }
+.ads-benefit-card p { font-size: 13.5px; color: var(--muted); }
+
+/* ------------------------------ Dải số liệu ------------------------------ */
+.ads-stats {
+  padding: 64px 0;
+  background: linear-gradient(135deg, var(--ink) 0%, #14342a 100%);
+}
+.ads-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.ads-stats__item strong { display: block; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.ads-stats__item span { font-size: 13.5px; color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 1100px) {
+  .ads-hero__copy h1 { font-size: 36px; }
+}
+
+@media (max-width: 900px) {
+  .ads-hero .container { grid-template-columns: 1fr; gap: 64px; }
+  .ads-hero__visual { max-width: 440px; margin: 0 auto; }
+  .ads-platforms__inner { justify-content: center; text-align: center; }
+  .ads-compare__grid { grid-template-columns: 1fr; }
+  .ads-benefit-grid { grid-template-columns: repeat(2, 1fr); }
+  .ads-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+}
+
+@media (max-width: 700px) {
+  .ads-hero { padding: 40px 0 72px; }
+  .ads-hero__copy h1 { font-size: 28px; }
+  .ads-mock__stat-row { flex-wrap: wrap; }
+  .ads-mock__row { flex-direction: column; }
+  .ads-hero__float { padding: 10px 12px; gap: 8px; }
+  .ads-hero__float strong { font-size: 13.5px; }
+  .ads-hero__float--a { top: -14px; right: -10px; }
+  .ads-hero__float--b { bottom: -14px; left: -10px; }
+  .ads-platforms__inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .ads-platforms__list { gap: 16px 20px; }
+  .ads-compare, .ads-benefits { padding: 64px 0; }
+  .ads-benefit-grid { grid-template-columns: 1fr; }
+  .ads-stats__grid { grid-template-columns: 1fr; gap: 24px; }
+}

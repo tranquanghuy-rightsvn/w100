@@ -1,0 +1,144 @@
+/* ==========================================================================
+   website-doanh-nghiep.css — trang dịch vụ "Website doanh nghiệp, chuyên
+   nghiệp & đáng tin" (html/website-doanh-nghiep/index.html). Dùng chung biến
+   màu/khoảng cách/thành phần (container, btn, eyebrow, section-head,
+   service-slide, process, faq, cta-band...) đã khai báo trong css/style.css —
+   file này chỉ chứa CSS riêng cho hero, lưới tính năng và dải số liệu của trang.
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.wdn-hero {
+  position: relative;
+  padding: 64px 0 96px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%);
+}
+.wdn-hero::before,
+.wdn-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(70px); pointer-events: none;
+}
+.wdn-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
+.wdn-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.wdn-hero .container {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 56px;
+}
+.wdn-hero__copy { max-width: 520px; }
+.wdn-hero__copy h1 { font-size: 42px; line-height: 1.18; margin-bottom: 18px; }
+.wdn-hero__copy .section-desc { max-width: 480px; margin: 0; font-size: 16.5px; }
+.wdn-hero__actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+.wdn-hero__trust {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.wdn-hero__trust span {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.wdn-hero__trust svg { width: 15px; height: 15px; color: var(--green-dark); flex-shrink: 0; }
+
+.wdn-hero__visual { position: relative; }
+.wdn-hero__frame { aspect-ratio: 4 / 3.4; }
+.wdn-hero__float {
+  position: absolute;
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  animation: wdnFloat 4s ease-in-out infinite;
+}
+.wdn-hero__float-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--green-tint); color: var(--green-dark);
+  flex-shrink: 0;
+}
+.wdn-hero__float-icon svg { width: 17px; height: 17px; }
+.wdn-hero__float strong { display: block; font-size: 15px; line-height: 1.2; }
+.wdn-hero__float span:not(.wdn-hero__float-icon) { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.wdn-hero__float--a { top: -18px; right: -18px; animation-delay: 0s; }
+.wdn-hero__float--b { bottom: -18px; left: -24px; animation-delay: 1.6s; }
+@keyframes wdnFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ------------------------------ Tính năng nổi bật ------------------------------ */
+.wdn-features { padding: 96px 0; background: var(--bg-alt); }
+.wdn-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.wdn-feature-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.wdn-feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.wdn-feature-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--green-tint); color: var(--green-dark);
+  margin-bottom: 18px;
+}
+.wdn-feature-icon svg { width: 20px; height: 20px; }
+.wdn-feature-card h3 { font-size: 16.5px; margin-bottom: 8px; }
+.wdn-feature-card p { font-size: 13.5px; color: var(--muted); }
+
+/* ------------------------------ Showcase (dùng lại service-slide) ------------------------------ */
+.wdn-showcase { padding: 96px 0; }
+.wdn-showcase .service-slide { padding: 6px 0; gap: 64px; }
+.wdn-showcase .service-slide + .service-slide { margin-top: 72px; }
+
+/* ------------------------------ Dải số liệu ------------------------------ */
+.wdn-stats {
+  padding: 64px 0;
+  background: linear-gradient(135deg, var(--ink) 0%, #14342a 100%);
+}
+.wdn-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.wdn-stats__item strong { display: block; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.wdn-stats__item span { font-size: 13.5px; color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 1100px) {
+  .wdn-hero__copy h1 { font-size: 36px; }
+}
+
+@media (max-width: 1080px) {
+  .wdn-showcase .service-slide { grid-template-columns: 1fr; gap: 32px; }
+  .wdn-showcase .service-slide--reverse .service-visual,
+  .wdn-showcase .service-slide--reverse .service-copy { order: initial; }
+  .wdn-showcase .service-copy { max-width: none; }
+}
+
+@media (max-width: 900px) {
+  .wdn-hero .container { grid-template-columns: 1fr; gap: 64px; }
+  .wdn-hero__visual { max-width: 440px; margin: 0 auto; }
+  .wdn-features-grid { grid-template-columns: repeat(2, 1fr); }
+  .wdn-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+}
+
+@media (max-width: 700px) {
+  .wdn-hero { padding: 40px 0 72px; }
+  .wdn-hero__copy h1 { font-size: 28px; }
+  .wdn-hero__float { padding: 10px 12px; gap: 8px; }
+  .wdn-hero__float strong { font-size: 13.5px; }
+  .wdn-hero__float--a { top: -14px; right: -10px; }
+  .wdn-hero__float--b { bottom: -14px; left: -10px; }
+  .wdn-features { padding: 64px 0; }
+  .wdn-features-grid { grid-template-columns: 1fr; }
+  .wdn-showcase { padding: 64px 0; }
+  .wdn-stats__grid { grid-template-columns: 1fr; gap: 24px; }
+}
