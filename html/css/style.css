@@ -148,7 +148,7 @@ button { font: inherit; cursor: pointer; }
 }
 .header-inner { display: flex; align-items: center; gap: 32px; }
 .logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; }
-.logo img { height: 30px; width: auto; }
+.logo img { height: 45px; width: auto; }
 
 .main-nav { position: relative; display: flex; align-items: center; gap: 30px; padding-bottom: 4px; }
 .nav-item { position: relative; }
@@ -339,17 +339,28 @@ button { font: inherit; cursor: pointer; }
   align-items: flex-start;
   overflow: hidden;
   padding: 30px 0 56px;
+  background: #fff;
 }
-.hero-media {
+/* Nền caro dạng lưới chấm (dot grid) thay cho ảnh chụp — chấm mờ dần ra
+   rìa bằng mask-image để không bị cắt cứng ở viền hero. */
+.hero::before {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
   z-index: 0;
+  background-image: radial-gradient(rgba(11, 15, 20, 0.16) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, #000 40%, transparent 88%);
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, #000 40%, transparent 88%);
 }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% top; }
 .hero-waves {
   position: absolute;
-  left: 0; right: 0; bottom: -1px;
+  /* bottom: 0 chứ KHÔNG phải -1px: đẩy SVG thò 1px xuống dưới đáy hero sẽ
+     khiến mép sóng bị clip ngay tại biên, ở DPR lẻ (1.25/1.5/1.75/2.5…)
+     hàng pixel biên bị trộn màu và để lộ một vạch xanh mảnh chạy hết
+     chiều ngang. Khe hở 1px mà -1px định bù đã được .features
+     (margin-top:-1px) xử lý. */
+  left: 0; right: 0; bottom: 0;
   z-index: 1;
   width: 100%;
   height: clamp(70px, 10vw, 160px);
@@ -357,41 +368,209 @@ button { font: inherit; cursor: pointer; }
 }
 .hero-wave--back { fill: var(--green); opacity: 0.6; }
 .hero-wave--front { fill: var(--bg-alt); }
-.hero-inner { position: relative; z-index: 2; }
-.hero-copy {
-  position: relative;
-  max-width: 480px;
-  padding: 0;
-}
-.hero-copy::before {
+/* Bịt mối nối hero → .features: mép đáy SVG sóng có thể để lộ một vạch
+   xanh mảnh (pixel khử răng cưa của lớp sóng sau không được lớp sóng
+   trước che hết, tuỳ DPR/zoom của từng máy). Phủ hẳn một dải nền đặc
+   đúng màu .features đè LÊN TRÊN dải sóng (z-index cao hơn) ở sát đáy
+   hero, cao 4px — vùng này vốn đã là màu nền nên không đổi giao diện,
+   nhưng loại bỏ triệt để mọi khả năng rò màu ở mối nối. */
+.hero::after {
   content: "";
   position: absolute;
-  inset: -40px;
-  background: #fff;
-  filter: blur(40px);
-  z-index: -1;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: var(--bg-alt);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 2; display: flex; justify-content: center; width: 100%; }
+.hero-copy {
+  position: relative;
+  max-width: 640px;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .hero h1 { font-size: 40px; margin-bottom: 20px; }
-.hero .lead { font-size: 16.5px; max-width: 420px; }
-.hero-actions { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+.hero .lead { font-size: 16.5px; max-width: 460px; margin: 0 auto; }
+.hero-actions { display: flex; justify-content: center; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
 
-/* ------------------------------ Features strip ------------------------------ */
-.features { border-bottom: 1px solid var(--line); padding: 36px 0; background: var(--bg-alt); }
-.features-grid {
+/* Gạch nháy (caret) ở cuối "...là..." lúc mới hiện — nháy đúng 5 lần
+   (iteration-count: 5, mỗi lần 0.5s = 2.5s, khớp với sleep(2500) bên JS)
+   rồi mới bắt đầu các bước gõ/xoá tiếp theo. steps(1) để nháy dứt khoát
+   (bật/tắt hẳn) thay vì mờ dần. */
+.lead-caret {
+  display: inline-block;
+  margin-left: 1px;
+  font-weight: 400;
+  color: var(--ink);
+  animation: leadCaretBlink 0.5s steps(1) 5;
+}
+@keyframes leadCaretBlink { 50% { opacity: 0; } }
+
+/* "???" tạm thời trong hiệu ứng gõ chữ của lead — highlight màu cho nổi bật. */
+.lead-highlight {
+  color: var(--green-dark);
+  background: var(--green-tint);
+  padding: 0 4px;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+/* Khối chữ nhật xanh lá nhạt nghiêng 10° rơi xuống mắc vào "tối thượng.".
+   Chữ thật GIỮ NGUYÊN màu bình thường (không tô trắng sẵn) nên không bao
+   giờ bị "biến mất" lúc khối chưa tới; phần chữ trông thành màu trắng là
+   do lớp bản sao .hero-copy-ghost (chữ trắng) nằm trên cùng, được JS cắt
+   (clip-path) đúng bằng hình khối ở từng khung hình — khối đi tới đâu thì
+   chữ trắng hiện tới đó, kể cả chữ phía trên mà nó đi ngang qua.
+   Vị trí rơi do JS điều khiển (rơi nhanh dần đều, không nảy). */
+.lead-mark { position: relative; display: inline-block; }
+.lead-mark__text { font-weight: 800; padding: 0 4px; }
+.lead-mark__block {
+  position: absolute;
+  inset: -3px -6px;
+  background: #7fe3ac; /* xanh lá nhạt hơn của brand (var(--green): #0bcb68), không phải xanh dương */
+  border-radius: 3px;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateY(-175px) rotate(3deg); /* khớp mốc đầu của JS, tránh nhảy hình */
+}
+/* Bản sao chữ màu trắng, phủ khít lên .hero-copy thật, nằm trên khối. */
+.hero .hero-copy-ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+}
+.hero .hero-copy-ghost,
+.hero .hero-copy-ghost * { color: #fff; }
+.hero .hero-copy-ghost .badge-pill { background: transparent; }
+
+/* Nhãn dán trang trí quanh title — nghiêng sẵn, lần đầu rơi từ trên cao
+   xuống (có nảy nhẹ), xong nối liền sang bồng bềnh lên xuống vô hạn. Toàn
+   bộ bằng CSS animation thuần (không JS): mỗi nhãn gồm 2 animation nối
+   nhau — heroTagDrop* (rơi + nảy, chạy 1 lần) rồi tới heroTagFloat* (lặp
+   vô hạn) bắt đầu đúng lúc animation rơi kết thúc, cùng giá trị nghỉ nên
+   không bị giật khi chuyển giao. Mỗi nhãn có độ trễ rơi riêng để tạo hiệu
+   ứng rơi lần lượt (cascade), không rơi cùng lúc. */
+.hero-tags { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-tag {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.hero-tag__pin { font-size: 12px; line-height: 1; }
+/* 6 nhãn rải theo hình vòng cung quanh khối title, so le trái/phải và
+   trên/dưới để không có 2 nhãn nào nằm thẳng cùng cột (tránh xếp chồng). */
+.hero-tag--1 {
+  top: 6%; left: 15%;
+  animation:
+    heroTagDrop1 1.05s cubic-bezier(.34, 1.56, .64, 1) 0s both,
+    heroTagFloat1 6.5s ease-in-out 1.05s infinite;
+}
+.hero-tag--2 {
+  top: 3%; right: 16%;
+  animation:
+    heroTagDrop2 1.05s cubic-bezier(.34, 1.56, .64, 1) 0.12s both,
+    heroTagFloat2 7.2s ease-in-out 1.17s infinite;
+}
+.hero-tag--3 {
+  top: 38%; left: 4%;
+  animation:
+    heroTagDrop3 1.05s cubic-bezier(.34, 1.56, .64, 1) 0.24s both,
+    heroTagFloat3 5.8s ease-in-out 1.29s infinite;
+}
+.hero-tag--4 {
+  top: 42%; right: 5%;
+  animation:
+    heroTagDrop4 1.05s cubic-bezier(.34, 1.56, .64, 1) 0.36s both,
+    heroTagFloat4 6.8s ease-in-out 1.41s infinite;
+}
+.hero-tag--5 {
+  /* .hero-tags co theo đúng chiều cao .hero-copy (phần tử absolute không
+     tính vào flex layout), nên muốn nằm thấp hơn chiều cao nút phải neo
+     theo mép dưới thực (100% + khoảng cách cố định) — vẫn ở cột trái
+     (left:), không phải nằm giữa/ngay dưới nút. */
+  top: calc(100% + 20px); left: 10%;
+  animation:
+    heroTagDrop5 1.05s cubic-bezier(.34, 1.56, .64, 1) 0.48s both,
+    heroTagFloat5 6s ease-in-out 1.53s infinite;
+}
+.hero-tag--6 {
+  top: calc(100% + 16px); right: 12%;
+  animation:
+    heroTagDrop6 1.05s cubic-bezier(.34, 1.56, .64, 1) 0.6s both,
+    heroTagFloat6 6.4s ease-in-out 1.65s infinite;
+}
+
+@keyframes heroTagDrop1 { 0% { transform: translateY(-190px) rotate(-10deg); opacity: 0; } 100% { transform: translateY(0) rotate(-10deg); opacity: 1; } }
+@keyframes heroTagDrop2 { 0% { transform: translateY(-220px) rotate(9deg); opacity: 0; } 100% { transform: translateY(0) rotate(9deg); opacity: 1; } }
+@keyframes heroTagDrop3 { 0% { transform: translateY(-260px) rotate(7deg); opacity: 0; } 100% { transform: translateY(0) rotate(7deg); opacity: 1; } }
+@keyframes heroTagDrop4 { 0% { transform: translateY(-290px) rotate(-8deg); opacity: 0; } 100% { transform: translateY(0) rotate(-8deg); opacity: 1; } }
+@keyframes heroTagDrop5 { 0% { transform: translateY(-320px) rotate(5deg); opacity: 0; } 100% { transform: translateY(0) rotate(5deg); opacity: 1; } }
+@keyframes heroTagDrop6 { 0% { transform: translateY(-350px) rotate(-6deg); opacity: 0; } 100% { transform: translateY(0) rotate(-6deg); opacity: 1; } }
+
+@keyframes heroTagFloat1 { 0%, 100% { transform: rotate(-10deg) translateY(0); } 50% { transform: rotate(-10deg) translateY(-10px); } }
+@keyframes heroTagFloat2 { 0%, 100% { transform: rotate(9deg) translateY(0); } 50% { transform: rotate(9deg) translateY(-14px); } }
+@keyframes heroTagFloat3 { 0%, 100% { transform: rotate(7deg) translateY(0); } 50% { transform: rotate(7deg) translateY(-9px); } }
+@keyframes heroTagFloat4 { 0%, 100% { transform: rotate(-8deg) translateY(0); } 50% { transform: rotate(-8deg) translateY(-12px); } }
+@keyframes heroTagFloat5 { 0%, 100% { transform: rotate(5deg) translateY(0); } 50% { transform: rotate(5deg) translateY(-11px); } }
+@keyframes heroTagFloat6 { 0%, 100% { transform: rotate(-6deg) translateY(0); } 50% { transform: rotate(-6deg) translateY(-13px); } }
+
+/* ------------------------------ Thành tựu (stats) ------------------------------ */
+/* margin-top: -1px — .hero thường cao lẻ (vd 791.34px) nên tuỳ mức zoom /
+   DPR, mép dưới hero và mép trên section kế có thể lệch nhau chưa tới 1px,
+   để hở một vạch mảnh. Cho section chồm lên 1px là bịt kín mối nối. */
+.stats {
+  border-bottom: 1px solid var(--line);
+  padding: 19px 0 56px;
+  background: var(--bg-alt);
+  margin-top: -1px;
+}
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
 }
-.feature-item { display: flex; align-items: flex-start; gap: 12px; }
-.feature-icon {
-  display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; border-radius: 12px;
-  background: var(--green-tint); color: var(--green-deep);
-  flex-shrink: 0;
+/* align-items: center — KHÔNG dùng baseline: baseline sẽ ghim dòng nhỏ
+   ("năm") thẳng hàng với chân số, đẩy dòng lớn ("kinh nghiệm") tụt hẳn
+   xuống dưới số. Căn giữa để khối nhãn 2 dòng nằm cân đối với con số. */
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: left;
 }
-.feature-icon svg { width: 19px; height: 19px; }
-.feature-item h3 { font-size: 14.5px; margin-bottom: 3px; }
-.feature-item p { font-size: 13px; color: var(--muted); line-height: 1.4; }
+/* Con số là điểm nhấn lớn nhất; dùng tabular-nums để không bị nhảy bề
+   ngang trong lúc chạy hiệu ứng đếm tăng dần. */
+.stat__num {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--green-dark);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+/* Hậu tố ("+", "%") nhỏ bằng 1/2 con số, ghim theo mép trên cho giống ký
+   hiệu số mũ thay vì lơ lửng giữa dòng. */
+.stat__suffix { font-size: 0.5em; vertical-align: top; }
+.stat__label { display: flex; flex-direction: column; line-height: 1.15; }
+.stat__label-sm { font-size: 13px; color: var(--muted); font-weight: 600; }
+.stat__label-lg { font-size: 19px; color: var(--ink); font-weight: 800; }
 
 /* ------------------------------ Process ------------------------------ */
 .process { padding: 96px 0; }
@@ -908,23 +1087,30 @@ button { font: inherit; cursor: pointer; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ============================ Responsive ============================ */
-@media (max-width: 972px) {
-  .hero-copy::before { display: none; }
-  .hero-media::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .hero .lead { color: var(--ink); }
-}
-
 @media (max-width: 1100px) {
   .main-nav { display: none; }
   .header-cta { display: none; }
   .nav-toggle { display: flex; }
-  .features-grid { grid-template-columns: repeat(3, 1fr); row-gap: 28px; }
-  .hero { min-height: 560px; padding: 24px 0 48px; }
+  .stats { padding: 15px 0 44px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; }
+  .stat__num { font-size: 40px; }
+  /* padding-bottom phải lớn hơn chiều cao dải sóng (.hero-waves cao
+     clamp(70px,10vw,160px), nằm đè ở đáy hero) thì nhãn mới không bị sóng
+     đè lên. */
+  .hero { min-height: 560px; padding: 24px 0 clamp(96px, 12vw, 180px); }
+  .hero-inner { flex-direction: column; align-items: center; gap: 16px; }
+  .hero-copy { order: 1; }
+  .hero-tags {
+    position: static;
+    order: 2;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 14px;
+    pointer-events: auto;
+  }
+  .hero-tag { position: static; top: auto; left: auto; right: auto; animation: none; transform: none; }
   .about-inner { grid-template-columns: 1fr; }
   .process-steps { flex-wrap: wrap; gap: 16px; }
   .process-step { flex: 1 1 calc(33.33% - 11px); min-width: 200px; }
@@ -942,10 +1128,15 @@ button { font: inherit; cursor: pointer; }
 @media (max-width: 700px) {
   :root { --header-h: 72px; }
   .container { padding: 0 18px; }
-  .hero { min-height: 480px; padding: 20px 0 40px; }
+  .hero { min-height: 480px; padding: 20px 0 100px; }
   .hero h1 { font-size: 32px; }
   .hero-actions .btn { flex: 1 1 auto; }
-  .features-grid { grid-template-columns: 1fr 1fr; }
+  .stats { padding: 12px 0 36px; }
+  .stats-grid { gap: 26px 14px; }
+  .stat { gap: 9px; }
+  .stat__num { font-size: 34px; }
+  .stat__label-lg { font-size: 16px; }
+  .stat__label-sm { font-size: 12px; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .process, .services, .projects, .about, .why, .tools { padding: 64px 0; }
   .process h2, .services h2, .projects h2, .about-copy h2, .why h2, .tools h2 { font-size: 27px; }

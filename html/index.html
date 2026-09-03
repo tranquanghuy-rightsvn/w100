@@ -315,13 +315,16 @@
     <main id="top">
       <!-- ============================ HERO ============================ -->
       <section class="hero">
-        <div class="hero-media">
-          <img
-            src="images/hero-banner-cropped.png"
-            alt="Báo cáo Lighthouse điểm 100/100 hiển thị trên laptop và điện thoại"
-          />
-        </div>
         <div class="container hero-inner">
+          <!-- Nhãn dán trang trí quanh title, nội dung tạm — sẽ sửa lại sau -->
+          <div class="hero-tags" aria-hidden="true">
+            <span class="hero-tag hero-tag--1"><span class="hero-tag__pin">📌</span>Thiết kế chuẩn SEO</span>
+            <span class="hero-tag hero-tag--2"><span class="hero-tag__pin">📌</span>Tải trang siêu nhanh</span>
+            <span class="hero-tag hero-tag--3"><span class="hero-tag__pin">📌</span>Lên top từ khoá</span>
+            <span class="hero-tag hero-tag--4"><span class="hero-tag__pin">📌</span>Giao diện bắt mắt</span>
+            <span class="hero-tag hero-tag--5"><span class="hero-tag__pin">📌</span>Hiển thị tốt mọi thiết bị</span>
+            <span class="hero-tag hero-tag--6"><span class="hero-tag__pin">📌</span>Quản trị dễ dàng</span>
+          </div>
           <div class="hero-copy">
             <span class="badge-pill">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -331,10 +334,9 @@
               </svg>
               Websites with a human touch
             </span>
-            <h1>Thiết kế website<br />chuẩn SEO,<br />tốc độ chớp mắt</h1>
-            <p class="lead">
-              Không nói suông, chúng tôi cam kết bằng kết quả đo được của Google
-              Lighthouse
+            <h1>Dịch vụ thiết kế website <br>chuyên nghiệp</h1>
+            <p class="lead" id="heroLead">
+              Thành công của khách hàng là mục tiêu tối thượng!
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#lien-he">
@@ -370,185 +372,55 @@
 
         <svg
           class="hero-waves"
-          viewBox="0 0 1440 180"
+          viewBox="0 0 1440 205"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
           <path
             class="hero-wave hero-wave--back"
-            d="M0,20 C60,55 140,43 260,50 C440,60 500,120 660,140 C820,160 900,110 1040,100 C1180,90 1300,150 1440,130 L1440,180 L0,180 Z"
+            d="M0,-10 C60,25 140,13 260,20 C440,30 500,90 660,110 C820,130 900,80 1040,70 C1180,60 1300,120 1440,100 L1440,175 L0,175 Z"
           />
           <path
             class="hero-wave hero-wave--front"
-            d="M0,45 C60,78 110,66 220,75 C400,90 460,143 620,160 C760,175 820,140 980,130 C1140,120 1280,170 1440,150 L1440,180 L0,180 Z"
+            d="M0,15 C60,48 110,36 220,45 C400,60 460,113 620,130 C760,145 820,110 980,100 C1140,90 1280,140 1440,120 L1440,210 L0,210 Z"
           />
         </svg>
       </section>
 
       <!-- ============================ FEATURES STRIP ============================ -->
-      <section class="features">
-        <div class="container features-grid">
-          <div class="feature-item">
-            <span class="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
-              </svg>
+      <!-- ============================ THÀNH TỰU ============================ -->
+      <section class="stats">
+        <div class="container stats-grid">
+          <div class="stat">
+            <span class="stat__num" data-count-to="10">0</span>
+            <span class="stat__label">
+              <span class="stat__label-sm">năm</span>
+              <span class="stat__label-lg">KINH NGHIỆM</span>
             </span>
-            <div>
-              <h3>Tốc độ tối ưu</h3>
-              <p>Điểm 100/100 trên Lighthouse</p>
-            </div>
           </div>
-          <div class="feature-item">
-            <span class="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
+          <div class="stat">
+            <span class="stat__num" data-count-to="500" data-suffix="+">0</span>
+            <span class="stat__label">
+              <span class="stat__label-sm">dự án</span>
+              <span class="stat__label-lg">WEBSITE</span>
             </span>
-            <div>
-              <h3>Chuẩn SEO</h3>
-              <p>Tối ưu toàn diện cho công cụ tìm kiếm</p>
-            </div>
           </div>
-          <div class="feature-item">
-            <span class="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect x="6" y="2" width="8" height="16" rx="1.5" />
-                <rect x="16" y="7" width="6" height="12" rx="1.2" />
-                <path d="M9 16h2" />
-              </svg>
+          <div class="stat">
+            <span class="stat__num" data-count-to="100" data-suffix="+">0</span>
+            <span class="stat__label">
+              <span class="stat__label-sm">dự án</span>
+              <span class="stat__label-lg">SEO</span>
             </span>
-            <div>
-              <h3>Responsive</h3>
-              <p>Hiển thị hoàn hảo mọi thiết bị</p>
-            </div>
           </div>
-          <div class="feature-item">
-            <span class="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect x="4" y="10" width="16" height="10" rx="2" />
-                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-              </svg>
+          <div class="stat">
+            <span class="stat__num" data-count-to="99" data-suffix="%">0</span>
+            <span class="stat__label">
+              <span class="stat__label-sm">khách hàng</span>
+              <span class="stat__label-lg">HÀI LÒNG</span>
             </span>
-            <div>
-              <h3>Bảo mật cao</h3>
-              <p>An toàn dữ liệu, chống tấn công</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="m9 18-6-6 6-6M15 6l6 6-6 6" />
-              </svg>
-            </span>
-            <div>
-              <h3>Dễ dàng quản lý</h3>
-              <p>Giao diện thân thiện, tự do chỉnh sửa</p>
-            </div>
           </div>
         </div>
       </section>
-
-      <!-- ============================ QUY TRÌNH ============================ -->
-      <!-- <section class="process" id="quy-trinh">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">
-          Dịch vụ của chúng tôi
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-        <h2>Quy trình làm việc</h2>
-        <p class="section-desc">Một quy trình rõ ràng giúp chúng tôi tạo ra những website hiệu quả và khác biệt.</p>
-      </div>
-      <a class="text-link" href="#dich-vu">
-        Tìm hiểu thêm
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-
-    <div class="process-steps">
-      <div class="process-step reveal">
-        <span class="step-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
-        </span>
-        <span class="step-num">01</span>
-        <h3>Chiến lược</h3>
-        <p>Nghiên cứu thị trường, đối thủ và khách hàng để xây dựng chiến lược hiệu quả.</p>
-      </div>
-      <span class="step-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
-      <div class="process-step reveal">
-        <span class="step-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        </span>
-        <span class="step-num">02</span>
-        <h3>Thiết kế</h3>
-        <p>Thiết kế UI/UX độc đáo, đậm dấu ấn thương hiệu và tập trung vào trải nghiệm người dùng.</p>
-      </div>
-      <span class="step-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
-      <div class="process-step reveal">
-        <span class="step-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>
-        </span>
-        <span class="step-num">03</span>
-        <h3>Phát triển</h3>
-        <p>Lập trình chuẩn web, tối ưu tốc độ, bảo mật và khả năng mở rộng.</p>
-      </div>
-      <span class="step-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
-      <div class="process-step reveal">
-        <span class="step-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="M12 15l-3-3a22 22 0 0 1 6.5-11c2.5-1 5.5-1 7.5 1s2 5 1 7.5A22 22 0 0 1 13 17l-1-2Z"/><path d="M9 12 6 9M15 12l3 3"/></svg>
-        </span>
-        <span class="step-num">04</span>
-        <h3>Triển khai</h3>
-        <p>Kiểm thử kỹ lưỡng, triển khai và tối ưu SEO kỹ thuật.</p>
-      </div>
-      <span class="step-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
-      <div class="process-step reveal">
-        <span class="step-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15v-3a8 8 0 1 1 16 0v3"/><rect x="2.5" y="14" width="4" height="6" rx="1.5"/><rect x="17.5" y="14" width="4" height="6" rx="1.5"/><path d="M18 20a4 4 0 0 1-4 2h-1"/></svg>
-        </span>
-        <span class="step-num">05</span>
-        <h3>Đồng hành</h3>
-        <p>Hỗ trợ, bảo trì và nâng cấp website để phát triển lâu dài.</p>
-      </div>
-    </div>
-  </div>
-</section> -->
 
       <!-- ============================ DỊCH VỤ ============================ -->
       <section class="services" id="dich-vu">
