@@ -8,12 +8,13 @@
 <meta property="og:title" content="Web100 — Website doanh nghiệp, chuyên nghiệp & đáng tin">
 <meta property="og:description" content="Truyền tải đúng hình ảnh thương hiệu, xây dựng niềm tin với khách hàng và đối tác ngay từ lần ghé thăm đầu tiên.">
 <meta property="og:image" content="../images/preview.png">
-<link rel="icon" type="image/png" href="../images/logo.png">
+<link rel="icon" type="image/png" href="../images/preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/website-doanh-nghiep.css">
+<link rel="stylesheet" href="../css/pricing.css">
 </head>
 <body>
 
@@ -26,12 +27,13 @@
 
     <nav>
       <ul class="main-nav">
+        <li class="nav-item"><a class="nav-link" href="../ve-chung-toi/index.html">Về Web100</a></li>
         <li class="nav-item has-dropdown">
           <button class="nav-link nav-trigger" type="button" aria-expanded="false">
             Dịch vụ
             <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div class="nav-panel">
+          <div class="nav-panel nav-panel--services">
             <a class="nav-panel-link" href="index.html">
               <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
               Website doanh nghiệp
@@ -63,7 +65,7 @@
           </div>
         </li>
         <li class="nav-item"><a class="nav-link" href="../kho-templates/index.html">Kho templates</a></li>
-        <li class="nav-item"><a class="nav-link" href="../khach-hang-cua-chung-toi/index.html">Khách hàng của chúng tôi</a></li>
+        <li class="nav-item"><a class="nav-link" href="../khach-hang-cua-chung-toi/index.html">Khách hàng</a></li>
         <li class="nav-item has-dropdown">
           <button class="nav-link nav-trigger" type="button" aria-expanded="false">
             Tool
@@ -86,14 +88,11 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="../hieu-ung-dep/index.html">Hiệu ứng đẹp</a></li>
         <li class="nav-item"><a class="nav-link" href="../blog/index.html">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="../lien-he/index.html">Liên hệ</a></li>
         <li class="nav-indicator" aria-hidden="true"></li>
       </ul>
     </nav>
 
-    <a class="btn btn-primary btn-sm header-cta" href="../index.html#lien-he">
-      Liên hệ
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
 
     <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -102,6 +101,7 @@
 </header>
 
 <div class="mobile-nav-drawer" id="drawer">
+  <a href="../ve-chung-toi/index.html">Về Web100</a>
   <div class="drawer-item">
     <button class="drawer-trigger" type="button" aria-expanded="false">
       Dịch vụ
@@ -120,7 +120,7 @@
     </div>
   </div>
   <a href="../kho-templates/index.html">Kho templates</a>
-  <a href="../khach-hang-cua-chung-toi/index.html">Khách hàng của chúng tôi</a>
+  <a href="../khach-hang-cua-chung-toi/index.html">Khách hàng</a>
   <div class="drawer-item">
     <button class="drawer-trigger" type="button" aria-expanded="false">
       Tool
@@ -136,7 +136,7 @@
   </div>
   <a href="../hieu-ung-dep/index.html">Hiệu ứng đẹp</a>
   <a href="../blog/index.html">Blog</a>
-  <a class="btn btn-primary drawer-cta" href="../index.html#lien-he">Liên hệ</a>
+  <a href="../lien-he/index.html">Liên hệ</a>
 </div>
 <div class="nav-overlay"></div>
 
@@ -476,6 +476,71 @@
   </div>
 </section>
 
+<!-- ============================ BẢNG GIÁ ============================ -->
+<section class="pricing" id="bang-gia">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <div>
+        <h2>Chi phí thiết kế website doanh nghiệp</h2>
+        <p class="section-sub">Chọn gói phù hợp với quy mô và ngân sách — báo giá minh bạch, không phát sinh chi phí ẩn.</p>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Normal</h3>
+        <p class="price-card__desc">Khởi đầu tinh gọn cho doanh nghiệp mới, đầy đủ tính năng cơ bản.</p>
+        <div class="price-card__price"><span>1.500.000</span> đ</div>
+        <ul class="price-card__list">
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Thiết kế 1 trang chủ + tối đa 5 trang nội dung</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Giao diện responsive trên mọi thiết bị</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Tối ưu SEO cơ bản (thẻ tiêu đề, mô tả)</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Form liên hệ tích hợp email</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Bàn giao trong 5-7 ngày làm việc</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Hỗ trợ kỹ thuật 1 tháng sau bàn giao</li>
+        </ul>
+        <a class="btn btn-outline" href="../index.html#lien-he">Chọn gói Normal</a>
+      </div>
+
+      <div class="price-card price-card--featured">
+        <span class="price-card__badge">Được chọn nhiều</span>
+        <h3>Chuyên nghiệp</h3>
+        <p class="price-card__desc">Cân bằng nhất giữa chi phí và tính năng cho doanh nghiệp đang tăng trưởng.</p>
+        <div class="price-card__price"><span>3.500.000</span> đ</div>
+        <ul class="price-card__list">
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Thiết kế tối đa 12 trang nội dung</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Giao diện độc bản theo bộ nhận diện thương hiệu</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Chuẩn SEO onpage đầy đủ + khai báo Google Search Console</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Tích hợp trang blog/tin tức tự quản trị</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Tối ưu tốc độ tải trang (Lighthouse 90+)</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Hỗ trợ đa ngôn ngữ (Việt - Anh)</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Bàn giao trong 10-14 ngày làm việc</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Hỗ trợ kỹ thuật 6 tháng sau bàn giao</li>
+        </ul>
+        <a class="btn btn-primary" href="../index.html#lien-he">Chọn gói Chuyên nghiệp</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Cao cấp</h3>
+        <p class="price-card__desc">Giải pháp toàn diện cho doanh nghiệp lớn, nhiều phòng ban và yêu cầu tuỳ biến sâu.</p>
+        <div class="price-card__price"><span>7.500.000</span> đ</div>
+        <ul class="price-card__list">
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Không giới hạn số trang nội dung</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Thiết kế độc quyền, tư vấn UX/UI chuyên sâu</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Chuẩn SEO kỹ thuật nâng cao + chiến lược từ khoá</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Trang tuyển dụng, blog, đa ngôn ngữ không giới hạn</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Tích hợp CRM/ERP hoặc hệ thống nội bộ theo yêu cầu</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Bảo mật nâng cao (SSL, tường lửa ứng dụng)</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Quản trị viên riêng, phản hồi ưu tiên trong 2 giờ</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Bàn giao trong 3-4 tuần làm việc</li>
+          <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Hỗ trợ kỹ thuật trọn đời website</li>
+        </ul>
+        <a class="btn btn-outline" href="../index.html#lien-he">Chọn gói Cao cấp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ FAQ ============================ -->
 <section class="faq">
   <div class="container">
@@ -488,8 +553,8 @@
     </div>
 
     <div class="faq-list">
-      <div class="faq-item reveal open">
-        <button class="faq-trigger" aria-expanded="true">
+      <div class="faq-item reveal">
+        <button class="faq-trigger" aria-expanded="false">
           <span>Website doanh nghiệp khác gì với landing page?</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
@@ -569,7 +634,7 @@
     </div>
     <div class="footer-col">
       <h4>Công ty</h4>
-      <a href="../index.html#ve-chung-toi">Về chúng tôi</a>
+      <a href="../ve-chung-toi/index.html">Về Web100</a>
       <a href="../blog/index.html">Blog</a>
       <a href="../index.html#lien-he">Liên hệ</a>
     </div>
@@ -585,9 +650,14 @@
   </div>
 </footer>
 
-<button class="to-top" type="button" aria-label="Lên đầu trang">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
+<div class="contact-float">
+  <a class="contact-float__btn contact-float__phone" href="tel:+84900000000" aria-label="Gọi điện thoại">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+  </a>
+  <a class="contact-float__btn contact-float__zalo" href="https://zalo.me/84900000000" target="_blank" rel="noopener" aria-label="Chat qua Zalo">
+    <span class="contact-float__zalo-text">Zalo</span>
+  </a>
+</div>
 
 <script src="../js/main.js"></script>
 </body>

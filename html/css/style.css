@@ -88,6 +88,13 @@ button { font: inherit; cursor: pointer; }
   margin-bottom: 48px;
 }
 .section-desc { max-width: 460px; margin-top: 14px; }
+.section-sub { margin-top: 12px; font-size: 17px; font-weight: 600; color: var(--muted); }
+
+/* Biến thể căn giữa — dùng cho các section mà tiêu đề đứng một mình, không
+   có nút/link đối trọng bên phải (VD: "Dịch vụ" ở trên carousel thẻ). */
+.section-head--center { justify-content: center; text-align: center; }
+.section-head--center .section-desc { margin-left: auto; margin-right: auto; }
+.section-head--center .text-link { margin-top: 20px; }
 
 /* ------------------------------ Buttons ------------------------------ */
 .btn {
@@ -222,6 +229,17 @@ button { font: inherit; cursor: pointer; }
   visibility: visible;
   transform: translate(-50%, 0);
 }
+/* Dropdown "Dịch vụ" có 7 mục — xếp 2 cột cho gọn thay vì 1 cột dài lê thê
+   như mặc định (.nav-panel dùng chung cho cả "Tool" chỉ 3 mục nên vẫn giữ
+   1 cột). Chỉ áp dụng ở PC — trên mobile dùng .drawer-panel riêng, không
+   liên quan tới class này. */
+.nav-panel--services {
+  min-width: 480px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px 6px;
+}
+
 .nav-panel-link {
   display: flex;
   align-items: center;
@@ -604,20 +622,99 @@ button { font: inherit; cursor: pointer; }
 }
 .step-arrow svg { width: 16px; height: 16px; }
 
-/* ------------------------------ Services (slide trượt) ------------------------------ */
+/* ------------------------------ Services (carousel thẻ) ------------------------------ */
 .services { padding: 96px 0; overflow: hidden; background: var(--bg-alt);}
 .services h2 { font-size: 34px; }
 
-.service-track-wrap { position: relative; }
-.service-track {
+/* Carousel thẻ dịch vụ — theo ĐÚNG cơ chế của mvngroup.vn (".carousel__viewport"
+   + ".carousel__track"): viewport chỉ overflow:hidden để cắt khung nhìn (KHÔNG
+   phải overflow:auto/scroll — tức trình duyệt không bao giờ coi nó là một
+   scrollport), còn việc "lướt" qua từng thẻ là do JS trượt cả track bằng
+   transform: translateX(), không liên quan gì đến bánh xe cuộn của chuột.
+   Nhờ vậy cuộn dọc lúc hover trong carousel luôn thuộc về trang, không thể
+   bị "nuốt" nữa — khác hẳn cách cũ (overflow-x:auto) vốn biến track thành
+   một scrollport thật, dễ bị trình duyệt cướp mất cuộn dọc khi có sai số. */
+.svc-track-wrap { position: relative; }
+.svc-viewport { overflow: hidden; }
+.svc-track {
   display: flex;
-  align-items: stretch;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  gap: 24px;
+  width: max-content;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.3, 1);
 }
-.service-track::-webkit-scrollbar { display: none; }
+
+.svc-card {
+  flex: 0 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.svc-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ink); /* lộ ra trong lúc ảnh chưa tải xong */
+}
+.svc-card__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.svc-card:hover .svc-card__media img { transform: scale(1.06); }
+.svc-card__icon {
+  position: absolute;
+  top: 16px; left: 16px;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  color: #fff;
+}
+.svc-card__icon svg { width: 20px; height: 20px; }
+.svc-card__num {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.2px;
+  color: #fff;
+  background: rgba(11, 15, 20, 0.4);
+  backdrop-filter: blur(6px);
+}
+
+.svc-card__title { margin-top: 22px; font-size: 17px; }
+.svc-card__desc { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--muted); flex: 1; }
+.svc-card__link {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 16px;
+  font-size: 13.5px; font-weight: 700; color: var(--green-dark);
+  transition: gap 0.2s ease;
+}
+.svc-card__link svg { width: 15px; height: 15px; }
+.svc-card:hover .svc-card__link { gap: 11px; }
+
+.svc-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.svc-nav svg { width: 18px; height: 18px; }
+.svc-nav--prev { left: -22px; }
+.svc-nav--next { right: -22px; background: var(--green); border-color: transparent; color: #fff; }
+.svc-nav--prev:hover { background: var(--ink); color: #fff; }
+.svc-nav--next:hover { background: var(--green-deep); }
 
 .service-slide {
   flex: 0 0 100%;
@@ -661,6 +758,7 @@ button { font: inherit; cursor: pointer; }
 
 .sv-news { background: linear-gradient(160deg, #0e161c 0%, #1c2a33 100%); }
 .sv-corporate { background: linear-gradient(160deg, #0e2a24 0%, #0b5c40 100%); }
+.sv-market { background: linear-gradient(160deg, #1c2410 0%, #3d5c1f 100%); }
 
 /* -- thành phần mockup chi tiết: nav giả, ảnh giả, nút CTA, thẻ tính năng -- */
 .svc-navbar { display: flex; align-items: center; justify-content: space-between; }
@@ -804,23 +902,6 @@ button { font: inherit; cursor: pointer; }
 .svc-adcard .svc-line { background: var(--line); }
 .svc-adcard__cta { height: 30px; width: 96px; background: var(--green); border-radius: 8px; margin-top: 4px; }
 
-/* -- điều hướng slide -- */
-.service-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--ink); z-index: 2;
-}
-.service-arrow svg { width: 18px; height: 18px; }
-.service-arrow:hover { background: var(--ink); color: #fff; }
-.service-arrow--prev { left: -24px; }
-.service-arrow--next { right: -24px; }
-
-.service-dots { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
-.service-dot { width: 8px; height: 8px; padding: 0; border: none; border-radius: 999px; background: var(--line); transition: width 0.25s ease, background 0.25s ease; }
-.service-dot.active { width: 24px; background: var(--green); }
-
 /* ------------------------------ Free tools ------------------------------ */
 .tools { padding: 96px 0; }
 .tools h2 { font-size: 34px; }
@@ -861,19 +942,20 @@ button { font: inherit; cursor: pointer; }
 /* ------------------------------ Projects ------------------------------ */
 .projects { padding: 96px 0; background: var(--bg-alt); }
 .projects h2 { font-size: 34px; }
+/* Cùng cơ chế trượt bằng transform như .svc-track (xem ghi chú ở đó) — viewport
+   chỉ overflow:hidden để cắt khung nhìn, không phải scrollport, nên cuộn dọc
+   của trang không bao giờ bị "nuốt" khi hover trong carousel dự án. */
 .project-track-wrap { position: relative; }
+.project-viewport { overflow: hidden; }
 .project-track {
   display: flex;
   gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding-bottom: 4px;
+  width: max-content;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.3, 1);
 }
-.project-track::-webkit-scrollbar { display: none; }
 .project-card {
   position: relative;
-  flex: 0 0 calc(25% - 15px);
+  flex: 0 0 auto;
   aspect-ratio: 3 / 4;
   border-radius: var(--radius);
   overflow: hidden;
@@ -886,7 +968,6 @@ button { font: inherit; cursor: pointer; }
   justify-content: space-between;
   padding: 18px;
   color: #fff;
-  scroll-snap-align: start;
   transition: transform 0.3s ease;
 }
 .project-card:hover { transform: translateY(-6px); }
@@ -915,9 +996,12 @@ button { font: inherit; cursor: pointer; }
 .project-info { display: flex; flex-direction: column; gap: 3px; }
 .project-info strong { font-size: 19px; font-weight: 800; }
 .project-info span { font-size: 12.5px; opacity: 0.75; }
-.project-next {
+
+.projects-more { display: flex; justify-content: center; margin-top: 40px; }
+
+.project-next, .project-prev {
   position: absolute;
-  top: 50%; right: -22px;
+  top: 50%;
   transform: translateY(-50%);
   width: 48px; height: 48px;
   border-radius: 50%;
@@ -927,8 +1011,156 @@ button { font: inherit; cursor: pointer; }
   display: flex; align-items: center; justify-content: center;
   color: var(--ink);
 }
-.project-next svg { width: 18px; height: 18px; }
-.project-next:hover { background: var(--ink); color: #fff; }
+.project-next { right: -22px; }
+.project-prev { left: -22px; }
+.project-next svg, .project-prev svg { width: 18px; height: 18px; }
+.project-next:hover, .project-prev:hover { background: var(--ink); color: #fff; }
+
+/* --------------------- Khách hàng của chúng tôi ---------------------
+   Cố ý không dùng ảnh chụp giao diện ở đây (xem ghi chú trong index.html):
+   thẻ trình bày theo kiểu hồ sơ khách hàng — logo, domain, địa chỉ, lĩnh vực,
+   giới thiệu — nên không bị nhìn lẫn với "Kho giao diện" nằm ngay phía trên.
+   Thẻ cố tình dùng chung một tông xanh thương hiệu Web100 cho vạch nhấn và
+   nhãn lĩnh vực — không gán màu riêng theo từng khách hàng, vì màu đó không
+   phản ánh nhận diện thật của họ. */
+.clients { padding: 96px 0; background: var(--bg-alt); }
+.clients h2 { font-size: 34px; }
+
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.client-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 28px 26px 26px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 30px -22px rgba(11, 15, 20, 0.28);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.client-card:hover {
+  transform: translateY(-4px);
+  border-color: transparent;
+  box-shadow: 0 26px 50px -26px rgba(11, 15, 20, 0.32);
+}
+/* Vạch nhấn dọc mép trái, bo theo góc thẻ */
+.client-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 24px; bottom: 24px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--green);
+}
+
+/* --- Ô logo: img thật nếu có, không thì rơi về wordmark chữ --- */
+.client-card__logo {
+  display: flex;
+  align-items: center;
+  height: 44px;
+}
+.client-card__logo img {
+  display: none; /* initClientLogos() mới bật lên khi file logo tải được */
+  max-height: 44px;
+  max-width: 170px;
+  object-fit: contain;
+}
+.client-card__logo.has-logo img { display: block; }
+.client-card__logo.has-logo .client-card__wordmark { display: none; }
+.client-card__wordmark {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--ink);
+}
+.client-card__wordmark em {
+  font-style: normal;
+  font-weight: 700;
+  opacity: 0.45;
+}
+
+/* --- Tên website: cố tình để text thuần, KHÔNG bọc <a> ra site khách, tránh
+   chia sẻ tín hiệu link ra ngoài làm loãng SEO của trang chủ --- */
+.client-card__domain {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+/* --- Địa chỉ: nằm ngay dưới tên website --- */
+.client-card__addr {
+  margin: -6px 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.client-card__addr svg {
+  flex: 0 0 auto;
+  width: 15px; height: 15px;
+  margin-top: 1px;
+}
+
+/* --- Nhãn lĩnh vực --- */
+.client-card__cat {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: var(--green-tint);
+  border: 1px solid color-mix(in srgb, var(--green) 22%, #fff);
+}
+
+/* --- Giới thiệu --- */
+.client-card__desc {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* --- Nút "Xem chi tiết": neo ở góc dưới bên PHẢI thẻ. margin-top:auto đẩy
+   xuống đáy nên các nút thẳng hàng nhau dù phần mô tả dài ngắn khác nhau;
+   align-self:flex-end đưa ra mép phải (thẻ mặc định align-items:flex-start) --- */
+.client-card__more {
+  margin-top: auto;
+  align-self: flex-end;
+  padding-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-dark);
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+.client-card__more svg { width: 16px; height: 16px; flex-shrink: 0; }
+.client-card:hover .client-card__more { gap: 12px; color: var(--green); }
+
+.clients-more { display: flex; justify-content: center; margin-top: 40px; }
+
+@media (max-width: 1080px) {
+  .client-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .clients { padding: 72px 0; }
+  .client-grid { grid-template-columns: 1fr; gap: 18px; }
+  .client-card { padding: 24px 22px; }
+}
 
 /* ------------------------------ About ------------------------------ */
 .about { padding: 96px 0; }
@@ -938,7 +1170,7 @@ button { font: inherit; cursor: pointer; }
   align-items: center;
   gap: 48px;
 }
-.about-copy h2 { font-size: 34px; margin-bottom: 20px; }
+.about-copy h1, .about-copy h2 { font-size: 34px; margin-bottom: 20px; }
 .about-copy p { margin-bottom: 10px; }
 .about-copy .text-link { margin-top: 22px; }
 .about-media {
@@ -1045,6 +1277,103 @@ button { font: inherit; cursor: pointer; }
 .cta-inner h2 { color: #fff; font-size: 30px; margin-bottom: 12px; }
 .cta-inner p { color: rgba(255, 255, 255, 0.65); max-width: 420px; }
 
+/* ------------------------------ Hiệu ứng đẹp (banner) ------------------------------ */
+/* Dùng lại đúng khối .cta-inner (banner nền tối bo góc) — cùng cơ chế với
+   banner "Kho giao diện" trước đây. */
+.fx-band { padding: 0 0 96px; }
+
+/* ------------------------------ Blog (4 bài cố định) ------------------------------ */
+.home-blog { padding: 0 0 96px; }
+.home-blog h2 { font-size: 34px; }
+.home-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* ------------------------------ Kho giao diện (gallery thật) ------------------------------ */
+/* Carousel xem trước giao diện — cùng cơ chế transform với .svc-track/
+   .project-track (xem ghi chú ở đó): viewport chỉ overflow:hidden để cắt
+   khung nhìn, JS trượt track, không có scrollport để "nuốt" cuộn dọc. Thẻ
+   dùng lại nguyên .svc-card, chỉ thay phần media bằng mockup ".service-visual"
+   thật (giống hệt trang Kho templates) thay vì ảnh chụp tĩnh. */
+.gallery { padding: 96px 0; background: #fff; }
+.gallery h2 { font-size: 34px; }
+.gallery .service-visual { aspect-ratio: 4 / 3; margin-bottom: 0; }
+.gallery .svc-card__title { margin-top: 18px; }
+
+.gallery-track-wrap { position: relative; }
+.gallery-viewport { overflow: hidden; }
+.gallery-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+/* -- Chế độ coverflow 3D (chỉ bật ở PC, do initGalleryCoverflow() gắn class
+   .is-coverflow): thẻ giữa to và nằm thẳng, các thẻ hai bên nhỏ hơn và nghiêng
+   vào giữa theo trục Y. Mỗi thẻ được JS đặt transform riêng theo khoảng cách
+   tới thẻ đang ở giữa, nên phải thoát khỏi flow (position: absolute) và cần
+   perspective ở khung ngoài để phép quay rotateY có chiều sâu thật. -- */
+.gallery-track-wrap.is-coverflow .gallery-viewport {
+  overflow: hidden;
+  perspective: 1500px;
+  padding: 10px 0 24px;
+}
+.gallery-track-wrap.is-coverflow .gallery-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 452px;
+  transform: none;
+  transition: none;
+  transform-style: preserve-3d;
+}
+.gallery-track-wrap.is-coverflow .svc-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 340px;
+  margin: 0;
+  transform-origin: center center;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.3, 1), opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+/* Thẻ ở giữa nổi lên bằng khối bóng mềm, hai bên phẳng hơn cho ra chiều sâu. */
+.gallery-track-wrap.is-coverflow .svc-card .service-visual { box-shadow: 0 24px 48px -18px rgba(11, 15, 20, 0.45); }
+.gallery-track-wrap.is-coverflow .svc-card:not(.is-center) { cursor: pointer; }
+/* Chỉ thẻ giữa hiện phần chữ — nếu để cả các thẻ nghiêng hiện thì chữ của
+   chúng đổ chồng lên chữ thẻ giữa, rất rối. */
+.gallery-track-wrap.is-coverflow .svc-card__title,
+.gallery-track-wrap.is-coverflow .svc-card__desc,
+.gallery-track-wrap.is-coverflow .svc-card__link {
+  transition: opacity 0.4s ease;
+}
+.gallery-track-wrap.is-coverflow .svc-card:not(.is-center) .svc-card__title,
+.gallery-track-wrap.is-coverflow .svc-card:not(.is-center) .svc-card__desc,
+.gallery-track-wrap.is-coverflow .svc-card:not(.is-center) .svc-card__link {
+  opacity: 0;
+}
+
+.gallery-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.gallery-nav svg { width: 18px; height: 18px; }
+.gallery-nav--prev { left: -22px; }
+.gallery-nav--next { right: -22px; background: var(--green); border-color: transparent; color: #fff; }
+.gallery-nav--prev:hover { background: var(--ink); color: #fff; }
+.gallery-nav--next:hover { background: var(--green-deep); }
+
 /* ------------------------------ Footer ------------------------------ */
 .site-footer { background: var(--dark); color: rgba(255, 255, 255, 0.6); padding: 64px 0 0; }
 .footer-inner {
@@ -1064,23 +1393,72 @@ button { font: inherit; cursor: pointer; }
   padding: 24px 0; font-size: 13px; flex-wrap: wrap;
 }
 
-/* ------------------------------ To top ------------------------------ */
-.to-top {
+/* ------------------------------ Liên hệ nhanh (nổi góc phải) ------------------------------ */
+/* Cụm nút gọi điện + Zalo luôn hiện cố định góc phải màn hình, thay cho nút
+   "Liên hệ" trên header. */
+.contact-float {
   position: fixed;
   right: 24px; bottom: 24px;
-  width: 46px; height: 46px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transform: translateY(10px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  z-index: 90;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.to-top svg { width: 18px; height: 18px; }
+.contact-float__btn {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+.contact-float__btn:hover { transform: scale(1.08); }
+
+.contact-float__phone {
+  position: relative;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+}
+.contact-float__phone svg { width: 23px; height: 23px; }
+.contact-float__phone::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  opacity: 0.55;
+  animation: contact-pulse 1.8s ease-out infinite;
+}
+@keyframes contact-pulse {
+  0% { transform: scale(0.85); opacity: 0.55; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* -- Zalo: bo góc vuông (không phải hình tròn) + chữ "Zalo" nghiêng đậm màu
+   trắng trên nền xanh đặc trưng, có "cái đuôi" nhỏ dưới-trái mô phỏng bong
+   bóng chat — đúng đặc điểm nhận diện của logo Zalo thật. -- */
+.contact-float__zalo {
+  position: relative;
+  border-radius: 16px;
+  background: #0068ff;
+}
+.contact-float__zalo-text {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 800;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.contact-float__zalo::after {
+  content: "";
+  position: absolute;
+  left: 10px; bottom: -5px;
+  width: 12px; height: 10px;
+  background: #0068ff;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  border-radius: 0 0 0 3px;
+}
 
 /* ------------------------------ Reveal ------------------------------ */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -1115,14 +1493,35 @@ button { font: inherit; cursor: pointer; }
   .process-steps { flex-wrap: wrap; gap: 16px; }
   .process-step { flex: 1 1 calc(33.33% - 11px); min-width: 200px; }
   .step-arrow { display: none; }
-  .project-card { flex: 0 0 calc(50% - 10px); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .home-blog-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .service-slide, .service-slide--reverse { grid-template-columns: 1fr; gap: 28px; padding: 6px 2px; }
   .service-slide--reverse .service-visual, .service-slide--reverse .service-copy { order: initial; }
   .service-copy { max-width: none; }
-  .service-arrow { display: none; }
+}
+
+/* Carousel dịch vụ: bề rộng từng thẻ (.svc-card) giờ do JS tính bằng px và
+   gán trực tiếp — xem initEdgeCarousel() trong main.js — vì track không còn
+   overflow:auto để percentage flex-basis tự "tràn" ra ngoài như trước, phải
+   trượt bằng transform nên cần biết chính xác bề rộng từng thẻ. Số thẻ hiện
+   cùng lúc theo từng breakpoint (3 → 2 → hé mép ~82%) khai báo trong main.js,
+   phải khớp với các mốc 900px/700px dưới đây. */
+/* Ở màn hẹp, 2 nút mũi tên vẫn ghim giữa theo chiều dọc của thẻ (không rơi
+   xuống dưới track nữa) — chỉ thu nhỏ lại và lùi vào trong mép để không tràn
+   khỏi màn hình. Áp dụng chung cho cả 3 carousel. */
+@media (max-width: 700px) {
+  .svc-nav,
+  .gallery-nav,
+  .project-next,
+  .project-prev { width: 40px; height: 40px; }
+  .svc-nav svg,
+  .gallery-nav svg,
+  .project-next svg,
+  .project-prev svg { width: 16px; height: 16px; }
+  .svc-nav--prev, .gallery-nav--prev, .project-prev { left: 4px; right: auto; }
+  .svc-nav--next, .gallery-nav--next, .project-next { right: 4px; left: auto; }
 }
 
 @media (max-width: 700px) {
@@ -1138,14 +1537,14 @@ button { font: inherit; cursor: pointer; }
   .stat__label-lg { font-size: 16px; }
   .stat__label-sm { font-size: 12px; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .section-head--center { align-items: center; }
   .process, .services, .projects, .about, .why, .tools { padding: 64px 0; }
-  .process h2, .services h2, .projects h2, .about-copy h2, .why h2, .tools h2 { font-size: 27px; }
+  .process h2, .services h2, .projects h2, .about-copy h1, .about-copy h2, .why h2, .tools h2, .home-blog h2 { font-size: 27px; }
+  .home-blog-grid { grid-template-columns: 1fr; }
   .process-step { flex: 1 1 100%; }
   .service-copy h3 { font-size: 21px; }
   .service-visual { aspect-ratio: 16 / 11; }
   .svc-builder { grid-template-columns: 96px 1fr; }
-  .project-card { flex: 0 0 78%; }
-  .project-next { right: 8px; bottom: -60px; top: auto; transform: none; }
   .why-grid { grid-template-columns: 1fr; }
   .tools-grid { grid-template-columns: 1fr; }
   .cta-inner { padding: 36px 24px; flex-direction: column; text-align: center; }

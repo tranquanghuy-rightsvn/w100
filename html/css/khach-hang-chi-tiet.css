@@ -1,0 +1,376 @@
+/* ==========================================================================
+   khach-hang-chi-tiet.css — trang hồ sơ chi tiết của một khách hàng
+   (html/khach-hang/<slug>/index.html). Dùng lại container, eyebrow, btn,
+   section-head, client-card, cta-band... đã khai báo trong css/style.css;
+   file này chỉ chứa phần riêng của trang chi tiết.
+
+   Không có màu thương hiệu riêng cho từng khách hàng: toàn bộ trang dùng
+   chung tông xanh Web100 (xem ghi chú ở khối .clients trong style.css).
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.khd-hero {
+  position: relative;
+  padding: 32px 0 56px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #eefcf4 0%, #ffffff 100%);
+}
+.khd-hero::before {
+  content: ""; position: absolute; z-index: 0;
+  top: -180px; left: -140px; width: 420px; height: 420px;
+  border-radius: 50%; filter: blur(70px); pointer-events: none;
+  background: rgba(11, 203, 104, 0.2);
+}
+.khd-hero > .container { position: relative; z-index: 1; }
+
+/* Breadcrumb — đường về trang danh sách khách hàng */
+.khd-crumb {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  font-size: 13px; color: var(--muted); margin-bottom: 32px;
+}
+.khd-crumb a { transition: color 0.2s ease; }
+.khd-crumb a:hover { color: var(--green-dark); }
+.khd-crumb strong { color: var(--ink); font-weight: 700; }
+
+.khd-hero__inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 48px;
+}
+.khd-hero__text { flex: 1 1 560px; max-width: 640px; }
+.khd-hero h1 { font-size: 40px; }
+.khd-hero__addr {
+  display: flex; align-items: center; gap: 7px;
+  margin-top: 14px; font-size: 14px; color: var(--muted);
+}
+.khd-hero__addr svg { flex: 0 0 auto; width: 16px; height: 16px; }
+.khd-hero__desc { margin-top: 16px; font-size: 16.5px; line-height: 1.75; color: var(--text); }
+
+/* Ô logo bên phải — nền trắng để logo nhiều màu nào cũng đọc được */
+.khd-hero__logo {
+  flex: 0 0 260px;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 150px; padding: 32px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.khd-hero__logo .client-card__logo { height: auto; }
+.khd-hero__logo .client-card__logo img { max-height: 76px; max-width: 190px; }
+
+/* --- Thông tin tóm tắt --- */
+.khd-meta {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin: 48px 0 0; padding-top: 28px; border-top: 1px solid var(--line);
+}
+.khd-meta dt {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--muted);
+}
+.khd-meta dd {
+  margin: 6px 0 0; font-size: 16px; font-weight: 700; color: var(--ink);
+}
+
+/* ------------------------------ Bài toán & triển khai ------------------------------ */
+.khd-body { padding: 72px 0 96px; }
+.khd-body__inner {
+  display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start;
+}
+.khd-block p { font-size: 16px; line-height: 1.8; color: var(--text); }
+
+.khd-list { display: flex; flex-direction: column; gap: 14px; }
+.khd-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 15.5px; line-height: 1.65; color: var(--text);
+}
+.khd-list svg {
+  flex: 0 0 auto; width: 20px; height: 20px; margin-top: 3px;
+  padding: 3px; border-radius: 50%;
+  color: var(--green-dark); background: var(--green-tint);
+}
+
+/* Hạng mục triển khai — dải nhãn dưới hai cột nội dung */
+.khd-tags {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line);
+}
+.khd-tags span {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  padding: 8px 16px; border-radius: 999px;
+  background: var(--bg-alt); border: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   BỐ CỤC HỒ SƠ DỰ ÁN — ảnh trái / bảng thông số phải
+   (dùng ở html/khach-hang/trustcommedia/index.html, sẽ nhân ra các khách
+   hàng còn lại). Nằm trong .khd-hero nên dùng chung nền chuyển sắc xanh
+   nhạt và breadcrumb đã khai báo ở trên.
+   ========================================================================== */
+/* Tiêu đề + mô tả chung của cả khối hồ sơ */
+.khd-intro { max-width: 760px; margin-bottom: 40px; }
+.khd-intro h1 { font-size: 40px; }
+.khd-intro__desc {
+  margin-top: 16px;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.khd-showcase {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Mockup xếp lớp: 5 lớp ảnh chồng lên nhau thay vì một file ghép sẵn.
+     z 1  khung máy tính            desktop-customer.webp
+     z 2  ảnh web trên màn hình PC  *-screen-desktop.webp
+     z 3  khung điện thoại          mobile-customer.webp   (chéo góc dưới-phải)
+     z 4  ảnh web trên màn hình ĐT  *-screen-mobile.webp
+     z 5  đảo camera                mobile-customer-island.webp
+   Hai lớp ảnh web đã warp phối cảnh sẵn trên đúng khung ảnh của khung máy nên
+   chỉ cần inset:0 — khớp chính xác ở mọi kích thước, không cần transform.
+   KHÔNG dùng box-shadow ở bất kỳ lớp nào: bóng và ánh sáng đã nằm sẵn trong
+   ảnh render, thêm shadow CSS vào là lộ ngay hình giả.
+   -------------------------------------------------------------------------- */
+.mock { position: relative; width: 100%; aspect-ratio: 1536 / 1024; }
+.mock__layer {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+.mock__pc-frame  { z-index: 1; }
+.mock__pc-screen { z-index: 2; }
+
+/* Điện thoại đặt chéo ở góc dưới-phải, đè lên góc màn hình máy tính.
+   Vị trí/kích thước tính từ hộp thân máy đo được trong mobile-customer.webp
+   (thân máy 836x1441 trong khung ảnh 1024x1536). */
+.mock__phone {
+  position: absolute;
+  left: 68.22%;
+  top: 25.30%;
+  width: 33.17%;
+  aspect-ratio: 1024 / 1536;
+  z-index: 3;
+}
+.mock__ph-frame  { z-index: 1; }
+.mock__ph-screen { z-index: 2; }
+.mock__ph-island { z-index: 3; }
+
+.khd-showcase__media {
+  margin: 0;
+  /* Ảnh thấp hơn bảng thông số nên dính lại khi cuộn, tránh khoảng trống
+     hẫng bên trái lúc người xem đọc tới cuối bảng. */
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+}
+.khd-showcase__media img { width: 100%; height: auto; }
+
+/* --- Bảng thông số: mỗi dòng một cặp nhãn / giá trị, kẻ mảnh phân cách --- */
+.khd-specs {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.khd-specs > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.khd-specs dt {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.khd-specs dd {
+  margin: 0;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+/* Domain để text thuần, KHÔNG bọc <a> ra site khách — cùng lý do đã ghi ở
+   khối .clients trong style.css: tránh chia sẻ tín hiệu link ra ngoài. */
+.khd-specs__domain { color: var(--green-dark); }
+.khd-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: var(--green-tint);
+  border: 1px solid color-mix(in srgb, var(--green) 22%, #fff);
+}
+
+/* ==========================================================================
+   THÔNG TIN DỰ ÁN — vùng nội dung tự do (chữ + ảnh do chủ site tự viết)
+   Style đặt theo thẻ HTML thuần thay vì class, để người viết chỉ cần gõ
+   <p>, <h3>, <ul>, <figure>... là ra đúng trình bày.
+   ========================================================================== */
+.khd-story { padding: 88px 0 96px; }
+/* Nội dung dự án bên trái, danh sách dự án khác bên phải */
+.khd-story__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 64px;
+  align-items: start;
+}
+.khd-story__inner { max-width: 760px; }
+.khd-story h2 { font-size: 32px; margin-bottom: 24px; }
+.khd-story h3 { font-size: 21px; margin: 44px 0 16px; }
+.khd-story p {
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.khd-story ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.khd-story ul li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+}
+.khd-story ul li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 11px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.khd-figure { margin: 32px 0; }
+.khd-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+.khd-figure figcaption {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--muted);
+  text-align: center;
+}
+/* Hai ảnh nằm cạnh nhau */
+.khd-figure-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 32px 0;
+}
+.khd-figure-row .khd-figure { margin: 0; }
+
+.khd-story blockquote {
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-left: 3px solid var(--green);
+  border-radius: 0 12px 12px 0;
+  background: var(--bg-alt);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Cột phải "Dự án khác" — bản rút gọn của thẻ khách hàng: chỉ logo, tên
+   website và link Xem chi tiết. Ô logo dùng lại class .client-card__logo để
+   initClientLogos() trong js/main.js vẫn tự bật <img> khi file logo tải được
+   và rơi về wordmark chữ khi không có.
+   -------------------------------------------------------------------------- */
+/* .khd-story h2 (32px) có specificity cao hơn nên phải viết kèm .khd-story
+   thì cỡ chữ nhãn cột phải mới ăn. */
+.khd-story .khd-aside__title {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  margin-bottom: 18px;
+}
+.khd-aside__list { display: flex; flex-direction: column; gap: 12px; }
+
+.khd-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.khd-mini:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: 0 20px 40px -24px rgba(11, 15, 20, 0.32);
+}
+.khd-mini__logo { height: 32px; }
+.khd-mini__logo img { max-height: 32px; max-width: 130px; }
+.khd-mini__logo .client-card__wordmark { font-size: 15px; }
+.khd-mini__name { font-size: 15.5px; font-weight: 800; color: var(--ink); }
+.khd-mini__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--green-dark);
+  transition: gap 0.2s ease;
+}
+.khd-mini__more svg { width: 15px; height: 15px; flex-shrink: 0; }
+.khd-mini:hover .khd-mini__more { gap: 12px; color: var(--green); }
+
+.khd-aside__all { margin-top: 20px; font-size: 14px; }
+
+/* ------------------------------ Khách hàng khác ------------------------------ */
+.khd-others { padding: 96px 0; background: var(--bg-alt); }
+.khd-others h2 { font-size: 34px; }
+
+@media (max-width: 1080px) {
+  .khd-hero__inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .khd-hero__logo { flex: none; width: 100%; min-height: 130px; }
+  .khd-body__inner { grid-template-columns: 1fr; gap: 40px; }
+  .khd-story__grid { grid-template-columns: 1fr; gap: 56px; }
+  .khd-story__inner { max-width: none; }
+  .khd-aside__list { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .khd-showcase { grid-template-columns: 1fr; gap: 32px; }
+  .khd-showcase__media { position: static; }
+  .khd-intro h1 { font-size: 32px; }
+}
+
+@media (max-width: 700px) {
+  .khd-hero { padding: 24px 0 40px; }
+  .khd-crumb { margin-bottom: 24px; }
+  .khd-hero h1 { font-size: 27px; }
+  .khd-hero__desc { font-size: 15.5px; }
+  .khd-meta { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; }
+  .khd-body { padding: 56px 0 72px; }
+  .khd-showcase { gap: 24px; }
+  .khd-intro { margin-bottom: 28px; }
+  .khd-intro h1 { font-size: 27px; }
+  .khd-intro__desc { font-size: 15.5px; }
+  .khd-specs > div { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .khd-specs dd { text-align: left; }
+  .khd-story { padding: 56px 0 72px; }
+  .khd-story h2 { font-size: 25px; }
+  .khd-story h3 { font-size: 19px; margin-top: 36px; }
+  .khd-story p, .khd-story ul li { font-size: 15.5px; }
+  .khd-figure-row { grid-template-columns: 1fr; }
+  .khd-story__grid { gap: 44px; }
+  .khd-aside__list { grid-template-columns: 1fr; }
+  .khd-others { padding: 64px 0; }
+  .khd-others h2 { font-size: 26px; }
+}

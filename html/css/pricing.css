@@ -1,0 +1,82 @@
+/* ==========================================================================
+   pricing.css — khối "Bảng giá" (3 gói + checklist), dùng chung giữa trang
+   chủ (html/index.html) và trang Website doanh nghiệp
+   (html/website-doanh-nghiep/index.html). Dùng chung biến màu/khoảng cách/
+   thành phần (container, btn, section-head...) đã khai báo trong
+   css/style.css.
+   ========================================================================== */
+
+.pricing { padding: 96px 0; background: var(--bg-alt); }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+.price-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 32px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.price-card h3 { font-size: 21px; }
+.price-card__desc { font-size: 13.5px; color: var(--muted); margin-top: 8px; min-height: 42px; }
+.price-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 20px 0 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.price-card__price span { font-size: 32px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
+.price-card__list { display: flex; flex-direction: column; gap: 13px; flex: 1; margin-bottom: 28px; }
+.price-card__list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.5; color: var(--text); }
+.price-card__check { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: var(--green-dark); }
+.price-card .btn { width: 100%; }
+
+/* -- Gói giữa ("Chuyên nghiệp") nổi bật hơn 2 gói còn lại: nền tối, phóng to
+   nhẹ, kèm nhãn "Được chọn nhiều" ghim nổi phía trên thẻ. -- */
+.price-card--featured {
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: scale(1.03);
+  box-shadow: var(--shadow);
+  z-index: 1;
+}
+.price-card--featured:hover { transform: scale(1.03) translateY(-4px); }
+.price-card--featured h3 { color: #fff; }
+.price-card--featured .price-card__desc { color: rgba(255, 255, 255, 0.6); }
+.price-card--featured .price-card__price { border-color: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.6); }
+.price-card--featured .price-card__price span { color: #fff; }
+.price-card--featured .price-card__list li { color: rgba(255, 255, 255, 0.85); }
+.price-card--featured .price-card__check { color: var(--green); }
+.price-card__badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 8px 16px -6px rgba(7, 140, 70, 0.5);
+}
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+  .price-card--featured { transform: none; order: -1; }
+  .price-card--featured:hover { transform: translateY(-4px); }
+}

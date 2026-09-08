@@ -8,12 +8,272 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavIndicator();
   initFaqAccordion();
   initReveal();
-  initToTop();
-  initProjectNext();
-  initServiceSlider();
+  initEdgeCarousels();
   initBeforeAfter();
   initStatCounters();
+  initClientLogos();
 });
+
+/* --------------------------------------------------------------------------
+   Logo khách hàng — mỗi ô logo chứa sẵn 2 lớp: thẻ <img> trỏ tới
+   images/khach-hang/<slug>.png và một wordmark bằng chữ làm lớp đỡ. CSS ẩn
+   <img> mặc định, hàm này chỉ bật nó lên (class .has-logo) khi file logo thật
+   sự tải được — nhờ vậy lúc chưa có file thì thẻ hiện wordmark gọn gàng chứ
+   không lòi ra icon ảnh lỗi, và khi bỏ file vào là tự đổi, không cần sửa code.
+   -------------------------------------------------------------------------- */
+function initClientLogos() {
+  document.querySelectorAll('.client-card__logo').forEach((box) => {
+    const img = box.querySelector('img');
+    if (!img) return;
+    const show = () => box.classList.add('has-logo');
+    if (img.complete) {
+      if (img.naturalWidth > 0) show();
+      return;
+    }
+    img.addEventListener('load', show);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Carousel dịch vụ + dự án — cùng cơ chế "What We Do" của mvngroup.vn: viewport
+   chỉ overflow:hidden để cắt khung nhìn (KHÔNG phải overflow:auto/scroll —
+   trình duyệt không bao giờ coi nó là scrollport), việc lướt qua từng thẻ là
+   JS tự trượt track bằng transform: translateX(). Cách cũ (overflow-x:auto +
+   scroll-snap) biến track thành một scrollport thật: bất kỳ chênh lệch nào
+   giữa scrollHeight/clientHeight (ảnh chưa load, hiệu ứng reveal, làm tròn số
+   px...) đều khiến Chrome coi track là "có thể cuộn dọc" và cướp mất cuộn
+   chuột của trang khi hover vào — dù đã vá nhiều lớp (overflow-y hidden/clip,
+   bỏ hiệu ứng reveal...) vẫn còn tái diễn. Bỏ hẳn cơ chế scroll-container là
+   cách duy nhất triệt để: không có scrollport thì không có gì để "nuốt" cuộn
+   dọc của trang nữa. */
+function initEdgeCarousel({ trackId, viewportClass, prevClass, nextClass, gap, breakpoints }) {
+  const track = document.querySelector(trackId);
+  const viewport = document.querySelector(viewportClass);
+  const prevBtn = document.querySelector(prevClass);
+  const nextBtn = document.querySelector(nextClass);
+  if (!track || !viewport) return;
+
+  const cards = Array.from(track.children);
+  let index = 0;
+  let cardWidth = 0;
+  let visible = breakpoints[breakpoints.length - 1].visible;
+
+  function getVisible() {
+    const w = window.innerWidth;
+    const bp = breakpoints.find((b) => !b.maxWidth || w <= b.maxWidth);
+    return bp.visible;
+  }
+
+  function layout() {
+    visible = getVisible();
+    cardWidth = (viewport.clientWidth - gap * (visible - 1)) / visible;
+    cards.forEach((card) => { card.style.width = `${cardWidth}px`; });
+    const maxIndex = Math.max(0, cards.length - visible);
+    index = Math.min(index, maxIndex);
+    applyTransform();
+  }
+
+  function applyTransform() {
+    track.style.transform = `translateX(${-index * (cardWidth + gap)}px)`;
+  }
+
+  function go(delta) {
+    const maxIndex = Math.max(0, cards.length - visible);
+    if (delta > 0 && index >= maxIndex) index = 0;
+    else if (delta < 0 && index <= 0) index = maxIndex;
+    else index = Math.min(Math.max(index + delta, 0), maxIndex);
+    applyTransform();
+  }
+
+  nextBtn?.addEventListener('click', () => go(1));
+  prevBtn?.addEventListener('click', () => go(-1));
+
+  /* overflow:hidden ẩn thanh cuộn nhưng Chrome vẫn cho phép scrollLeft/Top bị
+     đẩy lệch trong vài trường hợp hiếm (rê chuột ngang trên trackpad...) — vị
+     trí hiển thị của track chỉ nên do transform quyết định, nên hễ viewport
+     lệch khỏi (0,0) thì kéo về ngay, tránh cộng dồn lệch hình với transform. */
+  viewport.addEventListener('scroll', () => {
+    viewport.scrollLeft = 0;
+    viewport.scrollTop = 0;
+  });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 120);
+  });
+
+  layout();
+}
+
+function initEdgeCarousels() {
+  initEdgeCarousel({
+    trackId: '#svcTrack',
+    viewportClass: '.svc-viewport',
+    prevClass: '.svc-nav--prev',
+    nextClass: '.svc-nav--next',
+    gap: 24,
+    breakpoints: [
+      { maxWidth: 700, visible: 1 },
+      { maxWidth: 900, visible: 2 },
+      { visible: 3 },
+    ],
+  });
+
+  initEdgeCarousel({
+    trackId: '.project-track',
+    viewportClass: '.project-viewport',
+    prevClass: '.project-prev',
+    nextClass: '.project-next',
+    gap: 20,
+    breakpoints: [
+      { maxWidth: 700, visible: 1 },
+      { maxWidth: 900, visible: 2 },
+      { visible: 4 },
+    ],
+  });
+
+  initGalleryCoverflow();
+}
+
+/* --------------------------------------------------------------------------
+   Kho giao diện — carousel riêng, 2 chế độ theo bề rộng màn hình:
+
+   • PC (> 900px): coverflow 3D. Toàn bộ thẻ được đặt absolute trong cùng một
+     "sân khấu" có perspective; mỗi thẻ nhận transform riêng theo khoảng cách
+     tới thẻ đang ở giữa (offset): thẻ giữa nằm thẳng + to nhất, hai thẻ kề
+     nghiêng vào giữa và nhỏ lại, các thẻ xa hơn mờ dần rồi ẩn. Bấm prev/next
+     chỉ đổi chỉ số thẻ giữa — CSS transition lo phần trượt/nghiêng mượt.
+   • Tablet/mobile (<= 900px): giữ cơ chế trượt phẳng như 2 carousel còn lại
+     (dịch cả track bằng translateX), vì coverflow 3D trên màn hẹp vừa chật
+     vừa khó chạm.
+
+   Hai chế độ dùng chung state currentIndex và chung 2 nút bấm; khi đổi
+   breakpoint, style inline của chế độ cũ được xoá sạch trước khi bố cục lại.
+   -------------------------------------------------------------------------- */
+function initGalleryCoverflow() {
+  const wrap = document.querySelector('.gallery-track-wrap');
+  const viewport = document.querySelector('.gallery-viewport');
+  const track = document.querySelector('#galleryTrack');
+  const prevBtn = document.querySelector('.gallery-nav--prev');
+  const nextBtn = document.querySelector('.gallery-nav--next');
+  if (!wrap || !viewport || !track) return;
+
+  const cards = Array.from(track.children);
+  if (!cards.length) return;
+
+  const GAP = 24;
+  const isDesktop = () => window.matchMedia('(min-width: 901px)').matches;
+  let index = 0;
+  let mode = null;
+
+  function clearInlineStyles() {
+    track.style.width = '';
+    track.style.transform = '';
+    cards.forEach((card) => {
+      card.style.width = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+      card.style.zIndex = '';
+      card.style.pointerEvents = '';
+      card.classList.remove('is-center');
+    });
+  }
+
+  /* -- Chế độ PC: coverflow 3D -- */
+  function layoutCoverflow() {
+    /* Dùng offsetWidth (bề rộng layout, không đổi) thay vì
+       getBoundingClientRect() — hàm kia trả về bề rộng SAU transform, nên khi
+       thẻ này đang nghiêng + thu nhỏ thì số đo bị hụt, step ngắn lại và cả dàn
+       thẻ nép dần vào giữa mỗi lần bấm next. */
+    const cardWidth = cards[0].offsetWidth || 340;
+    const step = cardWidth * 0.62; // hai thẻ kề chỉ nhô ra một phần
+    const half = Math.floor(cards.length / 2);
+    cards.forEach((card, i) => {
+      /* Offset tính theo vòng tròn: thẻ ở cuối danh sách được coi là nằm ngay
+         bên trái thẻ đầu, nhờ vậy hai bên thẻ giữa luôn có thẻ nghiêng — kể cả
+         khi đang ở thẻ đầu hoặc thẻ cuối. */
+      let offset = i - index;
+      if (offset > half) offset -= cards.length;
+      else if (offset < -half) offset += cards.length;
+      const dist = Math.abs(offset);
+      const rotate = offset === 0 ? 0 : (offset > 0 ? -32 : 32);
+      const scale = dist === 0 ? 1 : Math.max(0.68, 0.84 - (dist - 1) * 0.08);
+      const depth = dist === 0 ? 0 : -120 - (dist - 1) * 60;
+      const opacity = dist === 0 ? 1 : dist === 1 ? 0.85 : dist === 2 ? 0.4 : 0;
+
+      card.style.transform =
+        `translate(-50%, 0) translateX(${offset * step}px) translateZ(${depth}px) rotateY(${rotate}deg) scale(${scale})`;
+      card.style.opacity = String(opacity);
+      card.style.zIndex = String(20 - dist);
+      card.style.pointerEvents = dist > 2 ? 'none' : 'auto';
+      card.classList.toggle('is-center', dist === 0);
+    });
+  }
+
+  /* -- Chế độ tablet/mobile: trượt phẳng cả track -- */
+  function layoutFlat() {
+    const visible = window.matchMedia('(max-width: 700px)').matches ? 1 : 2;
+    const cardWidth = (viewport.clientWidth - GAP * (visible - 1)) / visible;
+    cards.forEach((card) => { card.style.width = `${cardWidth}px`; });
+    track.style.width = 'max-content';
+    const maxIndex = Math.max(0, cards.length - visible);
+    if (index > maxIndex) index = Math.floor(maxIndex);
+    track.style.transform = `translateX(${-index * (cardWidth + GAP)}px)`;
+  }
+
+  function layout() {
+    const wantMode = isDesktop() ? 'coverflow' : 'flat';
+    if (wantMode !== mode) {
+      clearInlineStyles();
+      wrap.classList.toggle('is-coverflow', wantMode === 'coverflow');
+      mode = wantMode;
+    }
+    if (mode === 'coverflow') layoutCoverflow();
+    else layoutFlat();
+  }
+
+  function go(delta) {
+    if (mode === 'coverflow') {
+      index = (index + delta + cards.length) % cards.length; // quay vòng
+      layoutCoverflow();
+      return;
+    }
+    const visible = window.matchMedia('(max-width: 700px)').matches ? 1 : 2;
+    const maxIndex = Math.max(0, cards.length - visible);
+    if (delta > 0 && index >= maxIndex) index = 0;
+    else if (delta < 0 && index <= 0) index = Math.floor(maxIndex);
+    else index = Math.min(Math.max(index + delta, 0), maxIndex);
+    layoutFlat();
+  }
+
+  nextBtn?.addEventListener('click', () => go(1));
+  prevBtn?.addEventListener('click', () => go(-1));
+
+  /* Ở chế độ coverflow, bấm vào thẻ nghiêng hai bên là đưa nó vào giữa chứ
+     không mở link ngay — chỉ thẻ giữa mới thực sự dẫn sang trang kho giao diện. */
+  cards.forEach((card, i) => {
+    card.addEventListener('click', (e) => {
+      if (mode !== 'coverflow' || i === index) return;
+      e.preventDefault();
+      index = i;
+      layoutCoverflow();
+    });
+  });
+
+  viewport.addEventListener('scroll', () => {
+    viewport.scrollLeft = 0;
+    viewport.scrollTop = 0;
+  });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 120);
+  });
+
+  layout();
+}
 
 /* --------------------------------------------------------------------------
    Thành tựu: số đếm tăng dần từ 0 lên giá trị đích, chạy 1 lần duy nhất khi
@@ -400,102 +660,6 @@ function initReveal() {
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   items.forEach((el) => observer.observe(el));
-}
-
-/* -------------------------------------------------------------------------- */
-function initToTop() {
-  const btn = document.querySelector('.to-top');
-  if (!btn) return;
-
-  let ticking = false;
-  const apply = () => {
-    ticking = false;
-    btn.classList.toggle('show', window.scrollY > 500);
-  };
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(apply);
-  }, { passive: true });
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   Nút "dự án tiếp theo": trượt danh sách dự án sang phải một thẻ, quay lại
-   đầu khi đã hết.
-   -------------------------------------------------------------------------- */
-function initProjectNext() {
-  const btn = document.querySelector('.project-next');
-  const track = document.querySelector('.project-track');
-  if (!btn || !track) return;
-
-  btn.addEventListener('click', () => {
-    const card = track.querySelector('.project-card');
-    if (!card) return;
-    const step = card.getBoundingClientRect().width + 20;
-    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-    track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + step, behavior: 'smooth' });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   Slide dịch vụ: mỗi lần 1 slide toàn chiều rộng (scroll-snap), có nút
-   trái/phải + dấu chấm đồng bộ theo slide đang hiển thị.
-   -------------------------------------------------------------------------- */
-function initServiceSlider() {
-  const track = document.querySelector('#serviceTrack');
-  const dotsWrap = document.querySelector('#serviceDots');
-  if (!track || !dotsWrap) return;
-
-  const slides = Array.from(track.querySelectorAll('.service-slide'));
-  if (!slides.length) return;
-
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = 'service-dot';
-    dot.setAttribute('aria-label', `Đến dịch vụ ${i + 1}`);
-    dotsWrap.appendChild(dot);
-  });
-  const dots = Array.from(dotsWrap.children);
-
-  const currentIndex = () => {
-    let closest = 0;
-    let minDist = Infinity;
-    slides.forEach((slide, i) => {
-      const dist = Math.abs(slide.offsetLeft - track.scrollLeft);
-      if (dist < minDist) { minDist = dist; closest = i; }
-    });
-    return closest;
-  };
-
-  const setActiveDot = (i) => {
-    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
-  };
-
-  const goTo = (i) => {
-    const clamped = Math.max(0, Math.min(slides.length - 1, i));
-    track.scrollTo({ left: slides[clamped].offsetLeft, behavior: 'smooth' });
-  };
-
-  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-
-  const prevBtn = document.querySelector('.service-arrow--prev');
-  const nextBtn = document.querySelector('.service-arrow--next');
-  if (prevBtn) prevBtn.addEventListener('click', () => goTo(currentIndex() - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goTo(currentIndex() + 1));
-
-  let ticking = false;
-  track.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => { setActiveDot(currentIndex()); ticking = false; });
-  }, { passive: true });
-
-  setActiveDot(0);
 }
 
 /* --------------------------------------------------------------------------

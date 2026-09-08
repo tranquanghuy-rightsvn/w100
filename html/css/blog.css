@@ -33,7 +33,11 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .blog-featured__card:hover { transform: translateY(-4px); }
-.blog-featured__cover { min-height: 280px; }
+.blog-featured__cover {
+  min-height: 280px;
+  aspect-ratio: auto;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
 .blog-featured__body { padding: 40px 44px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .blog-featured__body h2 { font-size: 26px; line-height: 1.25; }
 .blog-featured__body p { font-size: 14.5px; color: var(--muted); }
@@ -72,7 +76,10 @@
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  overflow: hidden;
+  /* KHÔNG overflow:hidden ở đây nữa — badge ngày (.blog-date) cần lòi nửa ra
+     ngoài mép trái thẻ, phần bo góc ảnh bìa được chuyển sang chính .blog-cover
+     tự lo (xem bên dưới) để không còn phụ thuộc overflow của thẻ cha. */
+  position: relative;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
@@ -80,21 +87,47 @@
 .blog-card__body h3 { font-size: 17.5px; line-height: 1.3; }
 .blog-card__body p { font-size: 13.5px; color: var(--muted); flex: 1; }
 
-/* -- ảnh bìa dạng gradient + icon minh hoạ (không cần ảnh thật, đồng bộ
-   ngôn ngữ hình ảnh với .project-card ở các trang khác) -- */
+/* -- ảnh bìa thật -- */
 .blog-cover {
   position: relative;
   aspect-ratio: 16 / 10;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff;
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow: hidden;
+  background: var(--bg-alt);
 }
-.blog-cover svg { width: 30%; height: 30%; opacity: 0.28; }
-.blog-cover--design { background: linear-gradient(160deg, #1c1024 0%, #7a2f9e 100%); }
-.blog-cover--seo { background: linear-gradient(160deg, #0e1624 0%, #1f6c9e 100%); }
-.blog-cover--performance { background: linear-gradient(160deg, #241a10 0%, #c4621f 100%); }
-.blog-cover--case-study { background: linear-gradient(160deg, #0e2a1c 0%, #0bab63 100%); }
-.blog-cover--business { background: linear-gradient(160deg, #10141c 0%, #34455e 100%); }
-.blog-cover--tools { background: linear-gradient(160deg, #0e2422 0%, #14877a 100%); }
+.blog-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* -- badge ngày đăng: ô vuông ghim cách mép trên ảnh bìa 40px, lệch trái sao
+   cho đúng một nửa lòi ra ngoài mép thẻ. Ngày tháng chỉ hiện ở đây — không
+   lặp lại dạng chữ trong .blog-meta nữa. -- */
+.blog-date {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  transform: translate(-33.333%, -50%);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.05;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  box-shadow: var(--shadow);
+}
+.blog-date strong { font-size: 14px; font-weight: 800; color: var(--ink); }
+.blog-date em {
+  font-style: normal;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-top: 1px;
+}
 
 .blog-tag {
   align-self: flex-start;

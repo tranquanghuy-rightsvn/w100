@@ -1,0 +1,82 @@
+/* ==========================================================================
+   lien-he.css — trang "Liên hệ" (html/lien-he/index.html). Dùng chung biến
+   màu/khoảng cách/thành phần (container, btn, eyebrow, contact-float...) đã
+   khai báo trong css/style.css — file này chỉ chứa CSS riêng cho hero và
+   lưới 3 cách liên hệ (điện thoại, email, Zalo).
+   ========================================================================== */
+
+/* ------------------------------ Hero ------------------------------ */
+.lh-hero { position: relative; padding: 88px 0 56px; text-align: center; overflow: hidden; }
+.lh-hero::before,
+.lh-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(80px); pointer-events: none;
+}
+.lh-hero::before { top: -140px; left: -100px; width: 360px; height: 360px; background: rgba(11, 203, 104, 0.18); }
+.lh-hero::after { bottom: -160px; right: -120px; width: 400px; height: 400px; background: rgba(11, 203, 104, 0.12); }
+.lh-hero .container { position: relative; z-index: 1; }
+.lh-hero .eyebrow { justify-content: center; }
+.lh-hero h1 { font-size: 38px; margin-bottom: 16px; }
+.lh-hero .section-desc { max-width: 540px; margin: 0 auto; }
+
+/* ------------------------------ Lưới cách liên hệ ------------------------------ */
+.lh-methods { padding: 24px 0 96px; }
+.lh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.lh-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.lh-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+.lh-card__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--green-tint); color: var(--green-dark);
+  margin-bottom: 14px;
+}
+.lh-card__icon svg { width: 24px; height: 24px; }
+.lh-card h3 { font-size: 18px; margin-top: 2px; }
+.lh-card p { font-size: 14px; color: var(--muted); margin-top: 2px; margin-bottom: 10px; }
+
+/* -- ô icon riêng cho thẻ Zalo: bo góc vuông + chữ "Zalo" nghiêng, đồng bộ
+   với .contact-float__zalo (nút nổi góc phải) thay vì icon chat chung. -- */
+.lh-card__icon--zalo {
+  background: #0068ff;
+  border-radius: 12px;
+}
+.lh-card__icon--zalo span {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 800;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* ------------------------------ Giờ làm việc ------------------------------ */
+.lh-hours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.lh-hours div { display: flex; flex-direction: column; gap: 2px; }
+.lh-hours strong { font-size: 14px; color: var(--ink); }
+.lh-hours span { font-size: 13.5px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .lh-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .lh-hero { padding: 56px 0 40px; }
+  .lh-hero h1 { font-size: 28px; }
+  .lh-grid { grid-template-columns: 1fr; }
+}
