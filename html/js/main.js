@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initEdgeCarousels();
   initBeforeAfter();
+  initTemplateActions();
   initStatCounters();
   initClientLogos();
 });
@@ -660,6 +661,71 @@ function initReveal() {
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   items.forEach((el) => observer.observe(el));
+}
+
+/* --------------------------------------------------------------------------
+   Trang chi tiết kho templates: nút "Xem live" mở URL thật bằng JS (không
+   dùng thẻ <a href>) ở tab mới, và popup "Chọn mẫu này" ([data-open-modal]
+   trỏ tới id của .modal-overlay). Dùng chung .modal-overlay/.modal trong
+   style.css nên tái sử dụng được cho mọi trang có popup dạng form.
+   -------------------------------------------------------------------------- */
+function initTemplateActions() {
+  document.querySelectorAll('[data-live-url]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.open(btn.dataset.liveUrl, '_blank', 'noopener');
+    });
+  });
+
+  const openModal = (modal) => {
+    modal.hidden = false;
+    document.body.classList.add('no-scroll');
+    requestAnimationFrame(() => modal.classList.add('is-open'));
+  };
+  const closeModal = (modal) => {
+    modal.classList.remove('is-open');
+    document.body.classList.remove('no-scroll');
+    setTimeout(() => { modal.hidden = true; }, 250);
+  };
+
+  document.querySelectorAll('[data-open-modal]').forEach((btn) => {
+    const modal = document.getElementById(btn.dataset.openModal);
+    if (modal) btn.addEventListener('click', () => openModal(modal));
+  });
+
+  document.querySelectorAll('.modal-overlay').forEach((overlay) => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal(overlay);
+    });
+    overlay.querySelectorAll('[data-close-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => closeModal(overlay));
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.modal-overlay.is-open').forEach(closeModal);
+  });
+
+  // Site tĩnh, chưa có backend nhận form — chặn submit thật, đổi sang
+  // trạng thái "đã gửi" ngay trong popup.
+  document.querySelectorAll('.modal__form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const modal = form.closest('.modal');
+      const body = form.closest('.modal__body');
+      const done = modal && modal.querySelector('.modal__done');
+      if (body) body.hidden = true;
+      if (done) done.hidden = false;
+    });
+  });
+
+  // Cho phép link ngoài (VD: nút "Chọn mẫu này" ở trang /demo/) tự mở popup
+  // qua ?modal=<id> thay vì phải bấm lại nút trên trang đích.
+  const autoModalId = new URLSearchParams(window.location.search).get('modal');
+  if (autoModalId) {
+    const autoModal = document.getElementById(autoModalId);
+    if (autoModal) openModal(autoModal);
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không? — Web100</title>
+<meta name="description" content="Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản thân.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?">
+<meta property="og:description" content="Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản thân.">
+<meta property="og:image" content="/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp">
+<meta property="article:published_time" content="2024-09-25T22:22:00+07:00">
+<meta property="article:section" content="Kinh nghiệm SEO website">
+<link rel="icon" type="image/png" href="/images/preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/blog-chi-tiet.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?",
+      "description": "Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện…",
+      "image": "https://web100.vn/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp",
+      "datePublished": "2024-09-25T22:22:00+07:00",
+      "dateModified": "2024-09-25T22:22:00+07:00",
+      "author": {
+        "@type": "Organization",
+        "name": "Web100"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Web100",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://web100.vn/images/logo.png"
+        }
+      },
+      "articleSection": "Kinh nghiệm SEO website",
+      "inLanguage": "vi-VN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "https://web100.vn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://web100.vn/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kinh nghiệm SEO website",
+          "item": "https://web100.vn/blog/kinh-nghiem-seo-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <img src="/images/logo.png" alt="Web100">
+    </a>
+
+    <nav>
+      <ul class="main-nav">
+        <li class="nav-item"><a class="nav-link" href="/ve-chung-toi/">Về Web100</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Dịch vụ
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel nav-panel--services">
+            <a class="nav-panel-link" href="/website-doanh-nghiep/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
+              Website doanh nghiệp
+            </a>
+            <a class="nav-panel-link" href="/website-ban-hang/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>
+              Website bán hàng
+            </a>
+            <a class="nav-panel-link" href="/website-tin-tuc/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13l3 3v13H4Z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+              Website tin tức
+            </a>
+            <a class="nav-panel-link" href="/landing-page/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+              Landing page
+            </a>
+            <a class="nav-panel-link" href="/cai-tao-website/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></svg></span>
+              Cải tạo website cũ
+            </a>
+            <a class="nav-panel-link" href="/seo-ben-vung/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+              SEO bền vững
+            </a>
+            <a class="nav-panel-link" href="/chay-quang-cao/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              Chạy quảng cáo
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/mau-website-dep/">Mẫu web đẹp</a></li>
+        <li class="nav-item"><a class="nav-link" href="/khach-hang/">Khách hàng</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Tool
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel">
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg></span>
+              Check thứ hạng từ khóa
+            </a>
+            <a class="nav-panel-link" href="/tool-landing-builder/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6v6H3z"/></svg></span>
+              Tạo Landing Page kéo thả
+            </a>
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
+              Kiểm tra tốc độ website
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/hieu-ung-dep/">Hiệu ứng đẹp</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/blog/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/lien-he/">Liên hệ</a></li>
+        <li class="nav-indicator" aria-hidden="true"></li>
+      </ul>
+    </nav>
+
+
+    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav-drawer" id="drawer">
+  <a href="/ve-chung-toi/">Về Web100</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Dịch vụ
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="/website-doanh-nghiep/">Website doanh nghiệp</a>
+        <a href="/website-ban-hang/">Website bán hàng</a>
+        <a href="/website-tin-tuc/">Website tin tức</a>
+        <a href="/landing-page/">Landing page</a>
+        <a href="/cai-tao-website/">Cải tạo website cũ</a>
+        <a href="/seo-ben-vung/">SEO bền vững</a>
+        <a href="/chay-quang-cao/">Chạy quảng cáo</a>
+      </div>
+    </div>
+  </div>
+  <a href="/mau-website-dep/">Mẫu web đẹp</a>
+  <a href="/khach-hang/">Khách hàng</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Tool
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="#">Check thứ hạng từ khóa</a>
+        <a href="/tool-landing-builder/">Tạo Landing Page kéo thả</a>
+        <a href="#">Kiểm tra tốc độ website</a>
+      </div>
+    </div>
+  </div>
+  <a href="/hieu-ung-dep/">Hiệu ứng đẹp</a>
+  <a href="/blog/">Blog</a>
+  <a href="/lien-he/">Liên hệ</a>
+</div>
+<div class="nav-overlay"></div>
+
+<main id="top">
+
+<article class="post">
+
+  <!-- ============================ ĐẦU BÀI VIẾT ============================ -->
+  <header class="post-head">
+    <div class="container post-head__inner">
+      <nav class="post-crumbs" aria-label="Breadcrumb">
+        <a href="/">Trang chủ</a>
+        <span>/</span>
+        <a href="/blog/">Blog</a>
+        <span>/</span>
+        <a href="/blog/kinh-nghiem-seo-website/">Kinh nghiệm SEO website</a>
+      </nav>
+      <span class="blog-tag">Kinh nghiệm SEO website</span>
+      <h1>Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?</h1>
+      <p class="post-head__lead">Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản </p>
+      <div class="post-head__meta">
+        <img src="/images/logo.png" alt="" class="blog-meta__avatar">
+        <span>Web100 Team</span>
+        <span class="blog-meta__dot">•</span>
+        <time datetime="2024-09-25">25/09/2024</time>
+        <span class="blog-meta__dot">•</span>
+        <span>6 phút đọc</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container post-cover">
+    <img src="/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp" alt="Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?" width="480" height="320" fetchpriority="high">
+  </div>
+
+  <!-- ============================ NỘI DUNG ============================ -->
+  <div class="container post-layout">
+    <div class="post-body">
+      <nav class="post-toc" aria-label="Mục lục bài viết">
+        <p class="post-toc__title">Nội dung bài viết</p>
+        <ol>
+          <li><a href="#1-performance">1. Performance</a></li>
+          <li><a href="#2-accessibility">2. Accessibility</a></li>
+          <li><a href="#3-best-practice">3. Best Practice</a></li>
+          <li><a href="#4-seo">4. SEO</a></li>
+        </ol>
+      </nav>
+<p>Nếu các bạn chưa biết (hoặc biết rồi) thì mình xin giải thích một chút về Lighthouse. Đây là công cụ được Google Chrome tích hợp vào trình duyệt để đo lường các chỉ số liên quan đến SEO của Website. Vì Chrome do Google phát hành nên những chỉ số này hoàn toàn có thể tin tưởng được.</p>
+<p>Cách sử dụng rất đơn giản, các bạn chỉ cần truy cập vào website cần kiểm tra, bấm nút F12 trên bàn phím (hoặc click chuột phải -&gt; chọn Inspect), truy cập vào tab Lighthouse trên thanh điều hướng của Chrome DevTools và bấm nút "Generate reports" để tiến hành đo lường. Thời gian đo lường khoảng 15 giây, kết quả sẽ cho ra 4 chỉ số trên thang điểm 100 của 4 mục: Performance, Accessibility, Best Practice và SEO.</p>
+<p>Ngoài đánh giá điểm số, công cụ này còn chỉ ra các lỗi còn gặp phải đồng thời đưa ra các giải pháp để tăng các chỉ số điểm này lên. Quả là một công cụ tuyệt vời!</p>
+<p>Hãy cùng WEB100 cùng điểm qua 4 chỉ số này và xem chúng có ý nghĩa gì, chúng có quan trọng cho SEO không nhé.</p>
+<h2 id="1-performance">1. Performance</h2>
+<p>Đây là chỉ số mà mình đánh giá là cực kỳ, cực kỳ quan trọng cho SEO. Chỉ số này phản ánh chính xác thời gian tải trang khi người dùng bắt đầu truy cập vào website. Hay nói đơn giản là <strong>tốc độ tải trang</strong>. Website tải càng nhanh thì chỉ số này càng cao.</p>
+<p>Ngoài kia hàng triệu chuyên gia làm website hằng ngày vẫn miệt mài tìm cách cải thiện chỉ số này, bởi nó không chỉ ảnh hưởng tích cực tới SEO mà còn giúp tăng trải nghiệm tích cực của người dùng.</p>
+<p>Các bạn biết tại sao các website được xây dựng bằng <strong>WEB100 </strong>lại có thể đạt được con số 100 (tối đa) không? Là bởi vì website của WEB100 hoàn toàn là website tĩnh, chỉ chứa HTML và CSS (không có js luôn).</p>
+<p>Hiểu đơn giản là các website thông thường cần chờ phía Server trả về HTML CSS rồi phía trình duyệt render ra cho người dùng thấy, nhưng website tĩnh thì bản thân nó đã chứa đầy đủ nội dung rồi, do đó tiết kiệm được thời gian kha khá cho việc kết nối với Server, truy cập vào database, xử lý request ....</p>
+<p>Nhược điểm của website tĩnh là rất khó thay đổi nội dung trên trang, nhưng, đó là các website tĩnh thông thường, còn website tĩnh của WEB100 các bạn có thể thay đổi tại phía Server của WEB100 như 1 trang quản lý thông thường.</p>
+<p>Việc chỉ số này đạt 100 điểm không đồng nghĩa với việc website đã tối ưu hoàn toàn rồi, không có gì cần cải thiện nữa, mà nó có ý nghĩa là: tốc độ của trang đã đạt được ở mốc "hoàn toàn chấp nhận được"</p>
+<p>Quay trở lại với chỉ số Performance, không chỉ lý thuyết mà thực tế cũng chứng minh rằng Google cực kỳ ưu ái các website có tốc độ tải trang nhanh. Tóm lại chỉ số này quan trọng, rất quan trọng, siêu quan trọng, vô cùng quan trọng, hay tóm gọn lại là:<strong> quan trọng nhất!</strong></p>
+<p>Chấm điểm quan trọng:<strong> 11/10</strong></p>
+<h2 id="2-accessibility">2. Accessibility</h2>
+<p>Chỉ số này thể hiện khả năng sử dụng dễ dàng của người dùng trên website. Website càng dễ sử dùng thì điểm số càng cao. Chỉ số này hầu hết nhằm vào thao tác và hành vi của người có khiếm khuyết trên cơ thể, ví dụ người già, trẻ nhỏ, người khuyết tật, người mù màu, người IQ thấp ....</p>
+<p>Chính vì nhắm vào số nhỏ phạm vi người dùng nên mình không đánh giá cao chỉ số này, thậm chí cá nhân mình còn thấy nó phản tác dụng với SEO (Không phải mình kỳ thị người khuyết tật đâu nhé, chỉ là mình đang nói trên phương diện SEO)</p>
+<p>Phản tác dụng thế nào thì mình sẽ đưa ra 1 ví dụ nhỏ sau các bạn sẽ rõ. Ví dụ phông chữ trắng trên nền màu cam là một cách phối màu nhìn rất bắt mắt, đặc biệt phù hợp với các site về công nghệ hoặc game. Nhưng đó là dưới phương diện thẩm mỹ của người dùng, còn đối với Lighthouse chỉ số này vi phạm quy tắc phông chữ và màu nền không đủ độ tương phản, khiến cho một số người bị khiếm khuyết về hình ảnh hoặc mù màu rất khó phân biệt. Vậy là chúng ta phải đứng giữa 2 lựa chọn: 1 là tuân thủ quy tắc của google và chuyển sang dùng font trắng nền đen (hoặc xám), còn 2 là bạn chấp nhận bị trừ điểm Lighthouse và giữ nguyên cách phối màu đẹp mắt. 99% lập trình viên chọn cách thứ hai.</p>
+<figure class="post-figure"><img src="/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-1.webp" alt="Nói vậy thôi chứ WEB100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse" loading="lazy" decoding="async" width="660" height="287"><figcaption>Nói vậy thôi chứ WEB100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse</figcaption></figure>
+<p>Do đó chỉ số này là chỉ số mình đánh giá thấp nhất, ít quan trọng nhất và chúng ta có thể xem xét bỏ qua trong một vài trường hợp.</p>
+<p>Chấm điểm quan trọng:<strong> 3/10</strong></p>
+<h2 id="3-best-practice">3. Best Practice</h2>
+<p>Gần giống với Accessibility, Best practice đưa ra 1 số tiêu chuẩn thiết kế mà Google xem là tốt đối với trải nghiệm của người dùng, nhưng thiên về bảo mật và tối ưu tài nguyên. Ví dụ website nên sử dụng HTTPS, không sử dụng API bên ngoài, không sử dụng thư viện không an toàn...</p>
+<p>Các chỉ số này không trực tiếp ảnh hưởng tới SEO nhưng đây là các tiêu chuẩn hiện đại mà chúng ta nên tuân thủ để người dùng cảm thấy an toàn khi sử dụng website.</p>
+<p>Chấm điểm quan trọng:<strong> 7/10</strong></p>
+<h2 id="4-seo">4. SEO</h2>
+<p>Nghe chữ SEO là biết quan trọng rồi. Thì đúng là nó quan trọng thật nhưng thực tế cũng không nên thần thánh nó quá đâu. Chỉ số này đánh giá 1 Website chuẩn SEO theo tiêu chuẩn của Google. Ví dụ như: 1 trang cần có 1 và chỉ 1 thẻ h1, các hình ảnh cần có thẻ Alt, các đường link cần có title, ...</p>
+<p>Đây là tiêu chuẩn quá cơ bản mà một lập trình viên nào cũng được dạy ngay từ năm đầu đại học, do đó việc thiết kế 1 website chuẩn SEO là trách nhiệm cơ bản của lập trình viên rồi. Ấy thế mà rất nhiều người lấy chỉ số này ra lòe thiên hạ, cam kết thiết kế chuẩn SEO, xong rồi chứng minh bằng cách show điểm này ra để nói rằng "website này đã chuẩn SEO" mà quên mất rằng còn có nhiều thứ quan trọng hơn.</p>
+<p>Nhìn theo góc nhìn lập trình viên là thế nhưng nhìn theo hướng của người làm SEO thì chỉ số này xứng đáng được đánh giá là quan trọng.</p>
+<p>Chấm điểm quan trọng:<strong> 9/10</strong></p>
+
+      <div class="post-cta">
+        <div>
+          <h2>Muốn website của bạn đạt 100 điểm SEO?</h2>
+          <p>Web100 thiết kế website tĩnh siêu nhẹ, chuẩn SEO ngay từ dòng code đầu tiên — không plugin, không phụ thuộc backend.</p>
+        </div>
+        <a class="btn btn-primary" href="/lien-he/">
+          Nhận tư vấn miễn phí
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ BÀI VIẾT LIÊN QUAN ============================ -->
+<section class="blog-gallery post-related">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Đọc tiếp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h2>Bài viết liên quan</h2>
+      </div>
+      <a class="text-link" href="/blog/kinh-nghiem-seo-website/">Xem tất cả <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="blog-grid">
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/huong-dan-viet-content-len-top-tim-kiem-cover.webp" alt="Hướng dẫn cách viết content lên top tìm kiếm" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>29</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Hướng dẫn cách viết content lên top tìm kiếm</h3>
+          <p>Việc viết bài lên top cao google là một điều mà mọi người làm SEO luôn mong muốn. Vậy bạn đã thực sự biết cách google…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>7 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/tam-quan-trong-cua-sitemap-trong-seo-cover.webp" alt="Tầm quan trọng của Sitemap trong SEO" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>26</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Tầm quan trọng của Sitemap trong SEO</h3>
+          <p>Sitemap là gì? Tầm quan trọng của nó đối với SEO website, hãy cùng WEB 100 đi tìm hiểu nhé</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp" alt="10 mẹo cải thiện chỉ số CLS cho website" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>14</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>10 mẹo cải thiện chỉ số CLS cho website</h3>
+          <p>Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA BAND ============================ -->
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>Cần tư vấn cho<br>dự án website của bạn?</h2>
+      <p>Đội ngũ Web100 sẵn sàng lắng nghe và đề xuất giải pháp phù hợp nhất với mục tiêu của bạn.</p>
+    </div>
+    <a class="btn btn-primary btn-lg" href="/#lien-he">
+      Liên hệ ngay
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.png" alt="Web100">
+      <p>Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Điều hướng</h4>
+      <a href="/#top">Trang chủ</a>
+      <a href="/#du-an">Dự án</a>
+      <a href="/#dich-vu">Dịch vụ</a>
+      <a href="/#quy-trinh">Quy trình</a>
+    </div>
+    <div class="footer-col">
+      <h4>Công ty</h4>
+      <a href="/ve-chung-toi/">Về Web100</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#lien-he">Liên hệ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Liên hệ</h4>
+      <a href="mailto:web100.vn@gmail.com">web100.vn@gmail.com</a>
+      <a href="tel:+84964074043">+84 964 074 043</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Web100. All rights reserved.</span>
+    <span>Thành công khách hàng là mục tiêu tối thượng.</span>
+  </div>
+</footer>
+
+<div class="contact-float">
+  <a class="contact-float__btn contact-float__phone" href="tel:+84964074043" aria-label="Gọi điện thoại">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+  </a>
+  <a class="contact-float__btn contact-float__zalo" href="https://zalo.me/84964074043" target="_blank" rel="noopener" aria-label="Chat qua Zalo">
+  </a>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/blog.js"></script>
+</body>
+</html>
+

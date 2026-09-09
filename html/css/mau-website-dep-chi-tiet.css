@@ -1,0 +1,142 @@
+/* ==========================================================================
+   mau-website-dep-chi-tiet.css — trang chi tiết 1 mẫu trong kho giao diện
+   (html/mau-website-dep/<slug>/index.html). Dùng chung container, eyebrow,
+   btn, why-icon, cta-band, modal (khai báo trong css/style.css) — file này
+   chỉ chứa khung xem trước dạng trình duyệt, khối giá/thông tin và mô tả.
+
+   Danh mục ngành (data-categories trên section, hiển thị qua hàng "Danh
+   mục:" trong .ktd-meta — dùng lại đúng .ktd-stack/.ktd-chip như hàng
+   "Công nghệ:") — 1 mẫu có thể gắn NHIỀU ngành cùng lúc. Dùng đúng 30 slug
+   này cho mọi mẫu để đồng bộ, phòng khi sau này nối vào bộ lọc trang danh sách:
+     ban-hang            Bán hàng / TMĐT
+     spa                 Spa & làm đẹp
+     doanh-nghiep        Doanh nghiệp
+     dien-tu             Điện tử
+     cong-nghe           Công nghệ
+     khach-san           Khách sạn
+     bat-dong-san        Bất động sản
+     kien-truc           Kiến trúc
+     nha-hang            Nhà hàng
+     giao-duc            Giáo dục
+     y-te                Y tế
+     nha-khoa            Nha khoa
+     tham-my-vien        Thẩm mỹ viện
+     thoi-trang          Thời trang
+     noi-that            Nội thất
+     du-lich             Du lịch
+     van-tai             Vận tải
+     tai-chinh           Tài chính
+     bao-hiem            Bảo hiểm
+     luat                Luật
+     su-kien             Sự kiện
+     gym                 Gym
+     nong-san            Nông sản
+     thuc-pham           Thực phẩm
+     me-va-be            Mẹ và bé
+     my-pham             Mỹ phẩm
+     o-to                Ô tô
+     co-khi              Cơ khí
+     in-an               In ấn
+     van-phong-pham      Văn phòng phẩm
+   ========================================================================== */
+
+.ktd-hero { padding: 40px 0 72px; }
+.ktd-crumb { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); margin-bottom: 28px; }
+.ktd-crumb a { color: var(--muted); }
+.ktd-crumb a:hover { color: var(--green-dark); }
+.ktd-crumb strong { color: var(--ink); font-weight: 700; }
+
+/* Khung 2 cột trên desktop: mẫu xem trước chiếm 2/3, thông tin chiếm 1/3 —
+   mô tả chi tiết vẫn nằm riêng, full-width phía dưới (.ktd-story). */
+.ktd-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Ảnh chụp desktop thật của site (đã chụp sẵn theo tỉ lệ dọc 9:16) — hiện
+   nguyên tỉ lệ gốc, không crop: width 100%, height auto. */
+.ktd-frame {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.ktd-frame__shot { background: var(--bg-alt); }
+.ktd-frame__shot img { width: 100%; height: auto; display: block; }
+
+.ktd-info { max-width: 560px; padding-top: 4px; }
+.ktd-info h1 { font-size: 32px; margin: 14px 0 16px; }
+.ktd-desc { font-size: 15.5px; color: var(--text); margin-bottom: 28px; }
+
+/* Ghi chú minh bạch: đây là site thật sưu tầm để tham khảo, không phải sản
+   phẩm Web100 bán hay đại diện thương hiệu — tránh gây hiểu nhầm. */
+.ktd-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.ktd-notice svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: var(--green-dark); }
+.ktd-notice a { color: var(--green-dark); font-weight: 700; text-decoration: underline; }
+
+.ktd-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px 28px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.ktd-stack { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ktd-stack__label { font-size: 13px; font-weight: 700; color: var(--muted); }
+.ktd-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--green-tint);
+  color: var(--green-dark);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.ktd-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ------------------------------ Mô tả chi tiết ------------------------------ */
+.ktd-story { padding: 0 0 96px; }
+.ktd-story .container { max-width: 760px; }
+.ktd-story h2 { font-size: 28px; margin: 14px 0 20px; }
+.ktd-story p { margin-bottom: 16px; font-size: 15.5px; }
+.ktd-story h3 { font-size: 19px; margin: 28px 0 14px; }
+.ktd-story ul { display: flex; flex-direction: column; gap: 10px; }
+.ktd-story li { position: relative; padding-left: 24px; font-size: 15px; color: var(--text); }
+.ktd-story li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+@media (max-width: 900px) {
+  .ktd-layout { grid-template-columns: 1fr; gap: 32px; }
+  .ktd-frame { position: static; }
+  .ktd-info { max-width: none; }
+}
+
+@media (max-width: 700px) {
+  .ktd-info h1 { font-size: 26px; }
+  .ktd-meta { gap: 14px 20px; }
+  .ktd-actions .btn { flex: 1 1 auto; }
+}

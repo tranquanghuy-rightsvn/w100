@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bí mật để website có tốc độ tải trang cực nhanh — Web100</title>
+<meta name="description" content="Website tĩnh có tốc độ tải trang nhanh vượt trội, giúp tối ưu SEO và mang lại trải nghiệm người dùng tốt hơn. Với việc không cần xử lý server-side, giảm thiểu các yêu cầu HTTP, tích hợp CDN, loại bỏ tương tác với cơ sở dữ liệu, cùng khả năng caching hiệu quả và mã nguồn đơn giản dễ tối ưu hóa, websi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bí mật để website có tốc độ tải trang cực nhanh">
+<meta property="og:description" content="Website tĩnh có tốc độ tải trang nhanh vượt trội, giúp tối ưu SEO và mang lại trải nghiệm người dùng tốt hơn. Với việc không cần xử lý server-side, giảm thiểu các yêu cầu HTTP, tích hợp CDN, loại bỏ tương tác với cơ sở dữ liệu, cùng khả năng caching hiệu quả và mã nguồn đơn giản dễ tối ưu hóa, websi">
+<meta property="og:image" content="/images/blog/bi-mat-website-toc-do-tai-trang-cuc-nhanh-cover.webp">
+<meta property="article:published_time" content="2024-09-22T21:05:00+07:00">
+<meta property="article:section" content="Kinh nghiệm SEO website">
+<link rel="icon" type="image/png" href="/images/preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/blog-chi-tiet.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Bí mật để website có tốc độ tải trang cực nhanh",
+      "description": "Website tĩnh có tốc độ tải trang nhanh vượt trội, giúp tối ưu SEO và mang lại trải nghiệm người dùng tốt hơn. Với việc không cần xử lý server-side, giảm…",
+      "image": "https://web100.vn/images/blog/bi-mat-website-toc-do-tai-trang-cuc-nhanh-cover.webp",
+      "datePublished": "2024-09-22T21:05:00+07:00",
+      "dateModified": "2024-09-22T21:05:00+07:00",
+      "author": {
+        "@type": "Organization",
+        "name": "Web100"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Web100",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://web100.vn/images/logo.png"
+        }
+      },
+      "articleSection": "Kinh nghiệm SEO website",
+      "inLanguage": "vi-VN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "https://web100.vn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://web100.vn/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kinh nghiệm SEO website",
+          "item": "https://web100.vn/blog/kinh-nghiem-seo-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Bí mật để website có tốc độ tải trang cực nhanh"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <img src="/images/logo.png" alt="Web100">
+    </a>
+
+    <nav>
+      <ul class="main-nav">
+        <li class="nav-item"><a class="nav-link" href="/ve-chung-toi/">Về Web100</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Dịch vụ
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel nav-panel--services">
+            <a class="nav-panel-link" href="/website-doanh-nghiep/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
+              Website doanh nghiệp
+            </a>
+            <a class="nav-panel-link" href="/website-ban-hang/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>
+              Website bán hàng
+            </a>
+            <a class="nav-panel-link" href="/website-tin-tuc/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13l3 3v13H4Z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+              Website tin tức
+            </a>
+            <a class="nav-panel-link" href="/landing-page/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+              Landing page
+            </a>
+            <a class="nav-panel-link" href="/cai-tao-website/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></svg></span>
+              Cải tạo website cũ
+            </a>
+            <a class="nav-panel-link" href="/seo-ben-vung/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+              SEO bền vững
+            </a>
+            <a class="nav-panel-link" href="/chay-quang-cao/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              Chạy quảng cáo
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/mau-website-dep/">Mẫu web đẹp</a></li>
+        <li class="nav-item"><a class="nav-link" href="/khach-hang/">Khách hàng</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Tool
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel">
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg></span>
+              Check thứ hạng từ khóa
+            </a>
+            <a class="nav-panel-link" href="/tool-landing-builder/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6v6H3z"/></svg></span>
+              Tạo Landing Page kéo thả
+            </a>
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
+              Kiểm tra tốc độ website
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/hieu-ung-dep/">Hiệu ứng đẹp</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/blog/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/lien-he/">Liên hệ</a></li>
+        <li class="nav-indicator" aria-hidden="true"></li>
+      </ul>
+    </nav>
+
+
+    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav-drawer" id="drawer">
+  <a href="/ve-chung-toi/">Về Web100</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Dịch vụ
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="/website-doanh-nghiep/">Website doanh nghiệp</a>
+        <a href="/website-ban-hang/">Website bán hàng</a>
+        <a href="/website-tin-tuc/">Website tin tức</a>
+        <a href="/landing-page/">Landing page</a>
+        <a href="/cai-tao-website/">Cải tạo website cũ</a>
+        <a href="/seo-ben-vung/">SEO bền vững</a>
+        <a href="/chay-quang-cao/">Chạy quảng cáo</a>
+      </div>
+    </div>
+  </div>
+  <a href="/mau-website-dep/">Mẫu web đẹp</a>
+  <a href="/khach-hang/">Khách hàng</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Tool
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="#">Check thứ hạng từ khóa</a>
+        <a href="/tool-landing-builder/">Tạo Landing Page kéo thả</a>
+        <a href="#">Kiểm tra tốc độ website</a>
+      </div>
+    </div>
+  </div>
+  <a href="/hieu-ung-dep/">Hiệu ứng đẹp</a>
+  <a href="/blog/">Blog</a>
+  <a href="/lien-he/">Liên hệ</a>
+</div>
+<div class="nav-overlay"></div>
+
+<main id="top">
+
+<article class="post">
+
+  <!-- ============================ ĐẦU BÀI VIẾT ============================ -->
+  <header class="post-head">
+    <div class="container post-head__inner">
+      <nav class="post-crumbs" aria-label="Breadcrumb">
+        <a href="/">Trang chủ</a>
+        <span>/</span>
+        <a href="/blog/">Blog</a>
+        <span>/</span>
+        <a href="/blog/kinh-nghiem-seo-website/">Kinh nghiệm SEO website</a>
+      </nav>
+      <span class="blog-tag">Kinh nghiệm SEO website</span>
+      <h1>Bí mật để website có tốc độ tải trang cực nhanh</h1>
+      <p class="post-head__lead">Website tĩnh có tốc độ tải trang nhanh vượt trội, giúp tối ưu SEO và mang lại trải nghiệm người dùng tốt hơn. Với việc không cần xử lý server-side, giảm thiểu các yêu cầu HTTP, tích hợp CDN, loại bỏ tương tác với cơ sở dữ liệu, cù</p>
+      <div class="post-head__meta">
+        <img src="/images/logo.png" alt="" class="blog-meta__avatar">
+        <span>Web100 Team</span>
+        <span class="blog-meta__dot">•</span>
+        <time datetime="2024-09-22">22/09/2024</time>
+        <span class="blog-meta__dot">•</span>
+        <span>7 phút đọc</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container post-cover">
+    <img src="/images/blog/bi-mat-website-toc-do-tai-trang-cuc-nhanh-cover.webp" alt="Bí mật để website có tốc độ tải trang cực nhanh" width="480" height="320" fetchpriority="high">
+  </div>
+
+  <!-- ============================ NỘI DUNG ============================ -->
+  <div class="container post-layout">
+    <div class="post-body">
+      <nav class="post-toc" aria-label="Mục lục bài viết">
+        <p class="post-toc__title">Nội dung bài viết</p>
+        <ol>
+          <li><a href="#1-khong-can-xu-ly-server-side">1. Không cần xử lý server-side</a></li>
+          <li><a href="#2-giam-thieu-cac-yeu-cau-http">2. Giảm thiểu các yêu cầu HTTP</a></li>
+          <li><a href="#3-su-dung-cdn-content-delivery-network">3. Sử dụng CDN (Content Delivery Network)</a></li>
+          <li><a href="#4-khong-can-tuong-tac-voi-co-so-du-lieu">4. Không cần tương tác với cơ sở dữ liệu</a></li>
+          <li><a href="#5-kha-nang-caching-tuyet-voi">5. Khả năng caching tuyệt vời</a></li>
+          <li><a href="#6-toi-uu-hoa-ma-nguon-don-gian">6. Tối ưu hóa mã nguồn đơn giản</a></li>
+          <li><a href="#ket-luan">Kết luận</a></li>
+        </ol>
+      </nav>
+<p>Tốc độ tải trang đã trở thành một yếu tố quan trọng không chỉ đối với trải nghiệm người dùng mà còn là một yếu tố xếp hạng quan trọng trong SEO. Bạn có bao giờ thắc mắc công nghệ mà WEB100 sử dụng là gì mà khiến website có thể tải trang nhanh đến như vậy, khiến hệ thống Lighthouse chấm điểm tuyệt đối 100 Performance.</p>
+<p>Câu trả lời đó chính là <strong>Website tĩnh. </strong></p>
+<p>Nhưng điều gì đã khiến website tĩnh có thể đạt được tốc độ vượt trội như vậy? Hãy cùng WEB100 tìm hiểu chi tiết về lý do tại sao website tĩnh có thể tải nhanh hơn so với các loại website khác.</p>
+<p><em>Từ thuở sơ khai, người ta làm website chỉ có HTML, CSS và Javscript. Mỗi lần muốn thay đổi nội dung trên web phải vào dò sửa từng dòng code, nhưng đó là thời kì đầu những năm 90 của thế kỉ trước khi mà công nghệ chưa phát triển, các ngôn ngữ Back end chưa ra đời. Website chỉ có HTML, CSS và Javascript gọi là Website tĩnh. Nhược điểm của nó, như đã nói ở trên, rất khó thay đổi nội dung, nhưng bù lại ưu điểm tuyệt vời là tải trang cực nhanh. Ngày nay người ta tạo ra hàng ngàn ngôn ngữ back end giúp việc tạo website dễ dàng và đơn giản hơn biết bao nhiêu, bên cạnh đó càng ngày càng nhiều thư viện và Framework mới ra đời giúp website chúng ta càng trở lên linh hoạt và phức tạp, kéo theo tốc độ trang có xu hướng chậm dần đi. Nhưng với WEB100, sản phẩm của chúng tôi hoàn toàn là HTML, CSS, JS nguyên thủy, hay nói cách khác là những trang web tĩnh, nhưng chúng lại có thể chỉnh sửa dễ dàng. Đó chính là bí mật cốt lõi.<br></em></p>
+<h2 id="1-khong-can-xu-ly-server-side">1. Không cần xử lý server-side</h2>
+<p>Một trong những lý do chính khiến website tĩnh có tốc độ tải nhanh là vì không cần xử lý dữ liệu phức tạp từ máy chủ. Website tĩnh bao gồm các tệp HTML, CSS, và JavaScript đã được dựng sẵn, tức là mỗi trang web tồn tại như một file tĩnh trên máy chủ. Khi người dùng truy cập vào trang web, trình duyệt chỉ cần yêu cầu và tải về các tệp tĩnh mà không cần thực hiện bất kỳ quá trình xử lý nào từ phía máy chủ.</p>
+<p>Điều này khác biệt hoàn toàn với website động, nơi máy chủ phải thực hiện một loạt thao tác như truy vấn cơ sở dữ liệu, xử lý logic backend, và sau đó mới trả về trang HTML cho người dùng. Quá trình này có thể mất thời gian, đặc biệt khi máy chủ phải xử lý nhiều yêu cầu cùng lúc.</p>
+<figure class="post-figure"><img src="/images/blog/bi-mat-website-toc-do-tai-trang-cuc-nhanh-1.webp" alt="Website tĩnh có tốc độ tải trang tuyệt vời" loading="lazy" decoding="async" width="660" height="391"><figcaption>Website tĩnh có tốc độ tải trang tuyệt vời</figcaption></figure>
+<h2 id="2-giam-thieu-cac-yeu-cau-http">2. Giảm thiểu các yêu cầu HTTP</h2>
+<p>Các website tĩnh có xu hướng yêu cầu ít tài nguyên hơn từ máy chủ, nhờ việc <strong>tối giản hóa số lượng yêu cầu HTTP</strong> cần thực hiện. Các tệp tin như HTML, CSS, và hình ảnh đã được tối ưu hóa và lưu trữ sẵn trên máy chủ. Khi người dùng truy cập vào một website tĩnh, trình duyệt chỉ cần gửi một số lượng yêu cầu rất nhỏ tới máy chủ để tải các tài nguyên cần thiết.</p>
+<p>Với website động, khi một trang web được yêu cầu, máy chủ thường phải tạo trang đó từ các thành phần khác nhau như nội dung từ cơ sở dữ liệu, hình ảnh, và các yếu tố giao diện. Điều này tạo ra nhiều yêu cầu HTTP hơn và làm chậm quá trình tải trang.</p>
+<h2 id="3-su-dung-cdn-content-delivery-network">3. Sử dụng CDN (Content Delivery Network)</h2>
+<p>Website tĩnh dễ dàng tích hợp với các dịch vụ <strong>CDN (Content Delivery Network)</strong>, giúp phân phối nội dung nhanh chóng trên toàn cầu. CDN là một mạng lưới máy chủ phân tán khắp thế giới, cho phép nội dung website được lưu trữ tại nhiều địa điểm khác nhau. Khi người dùng yêu cầu trang web, nội dung sẽ được tải từ máy chủ gần nhất, giảm thiểu khoảng cách địa lý và thời gian truyền tải.</p>
+<p>Với website tĩnh, tất cả các tệp tin cần thiết như HTML, CSS, và hình ảnh có thể được lưu trữ trên các máy chủ của CDN, từ đó giúp tăng tốc độ tải trang đáng kể. Trong khi đó, website động thường yêu cầu phải xử lý dữ liệu trên máy chủ chính trước khi có thể phân phối qua CDN, điều này làm chậm tốc độ tải trang.</p>
+<h2 id="4-khong-can-tuong-tac-voi-co-so-du-lieu">4. Không cần tương tác với cơ sở dữ liệu</h2>
+<p>Website động thường cần truy xuất dữ liệu từ cơ sở dữ liệu mỗi khi có yêu cầu tải trang. Việc truy vấn cơ sở dữ liệu có thể mất thời gian, đặc biệt khi trang web phải xử lý một lượng lớn người dùng cùng một lúc hoặc khi cấu trúc cơ sở dữ liệu không được tối ưu. Ngược lại, website tĩnh không yêu cầu bất kỳ sự tương tác nào với cơ sở dữ liệu vì tất cả nội dung đã được viết sẵn và lưu trữ dưới dạng file tĩnh.</p>
+<p>Không có các lệnh truy vấn cơ sở dữ liệu phức tạp giúp loại bỏ độ trễ, giảm tải cho máy chủ, và cho phép trang web phản hồi ngay lập tức với các yêu cầu từ phía người dùng.</p>
+<h2 id="5-kha-nang-caching-tuyet-voi">5. Khả năng caching tuyệt vời</h2>
+<p>Một lợi thế lớn khác của website tĩnh là khả năng <strong>caching</strong> hiệu quả. Khi các trang web tĩnh được tải lần đầu tiên, trình duyệt hoặc hệ thống CDN có thể lưu trữ các tệp tĩnh này vào bộ nhớ đệm (cache). Điều này có nghĩa là khi người dùng quay lại hoặc yêu cầu tải lại trang, các tài nguyên tĩnh không cần phải được tải từ máy chủ nữa mà được phục vụ ngay lập tức từ bộ nhớ đệm của trình duyệt hoặc CDN.</p>
+<figure class="post-figure"><img src="/images/blog/bi-mat-website-toc-do-tai-trang-cuc-nhanh-2.webp" alt="WEB100 thiết kế website hoàn toàn bằng công nghệ website tĩnh" loading="lazy" decoding="async" width="660" height="460"><figcaption>WEB100 thiết kế website hoàn toàn bằng công nghệ website tĩnh</figcaption></figure>
+<p>Việc caching không chỉ làm tăng tốc độ tải trang mà còn giúp giảm tải lượng công việc cho máy chủ, bởi máy chủ không phải phục vụ lại những tài nguyên đã được cache. Đối với website động, việc caching phức tạp hơn và không hiệu quả bằng website tĩnh, bởi nội dung động có thể thay đổi theo thời gian hoặc theo từng người dùng.</p>
+<h2 id="6-toi-uu-hoa-ma-nguon-don-gian">6. Tối ưu hóa mã nguồn đơn giản</h2>
+<p>Website tĩnh có cấu trúc mã nguồn rất đơn giản và dễ tối ưu hóa. Việc giảm dung lượng các tệp tin, nén hình ảnh, và tối ưu mã HTML, CSS, JavaScript có thể dễ dàng thực hiện trên các trang web tĩnh. Các công cụ nén như <strong>Gzip</strong> hay <strong>Brotli</strong> có thể nén file trước khi gửi đến người dùng, giúp giảm kích thước tệp tin và tăng tốc độ tải trang.</p>
+<p>Website động thường phải tạo ra mã nguồn "tức thời" dựa trên yêu cầu của người dùng, làm cho việc tối ưu hóa mã nguồn trở nên phức tạp hơn và không hiệu quả bằng các website tĩnh.</p>
+<h2 id="ket-luan">Kết luận</h2>
+<p>Tóm lại, tốc độ tải trang nhanh chóng của website tĩnh là nhờ vào việc loại bỏ các bước xử lý dữ liệu server-side, giảm thiểu yêu cầu HTTP, sử dụng CDN, không cần tương tác với cơ sở dữ liệu, khả năng caching tuyệt vời, và mã nguồn đơn giản dễ tối ưu hóa. Đây là lý do tại sao các website tĩnh đang ngày càng được sử dụng rộng rãi, đặc biệt là trong các trường hợp không yêu cầu tính tương tác động cao nhưng cần đảm bảo tốc độ tải trang và khả năng phục vụ nhiều người dùng cùng lúc.</p>
+
+      <div class="post-cta">
+        <div>
+          <h2>Muốn website của bạn đạt 100 điểm SEO?</h2>
+          <p>Web100 thiết kế website tĩnh siêu nhẹ, chuẩn SEO ngay từ dòng code đầu tiên — không plugin, không phụ thuộc backend.</p>
+        </div>
+        <a class="btn btn-primary" href="/lien-he/">
+          Nhận tư vấn miễn phí
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ BÀI VIẾT LIÊN QUAN ============================ -->
+<section class="blog-gallery post-related">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Đọc tiếp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h2>Bài viết liên quan</h2>
+      </div>
+      <a class="text-link" href="/blog/kinh-nghiem-seo-website/">Xem tất cả <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="blog-grid">
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/huong-dan-viet-content-len-top-tim-kiem-cover.webp" alt="Hướng dẫn cách viết content lên top tìm kiếm" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>29</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Hướng dẫn cách viết content lên top tìm kiếm</h3>
+          <p>Việc viết bài lên top cao google là một điều mà mọi người làm SEO luôn mong muốn. Vậy bạn đã thực sự biết cách google…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>7 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/tam-quan-trong-cua-sitemap-trong-seo-cover.webp" alt="Tầm quan trọng của Sitemap trong SEO" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>26</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Tầm quan trọng của Sitemap trong SEO</h3>
+          <p>Sitemap là gì? Tầm quan trọng của nó đối với SEO website, hãy cùng WEB 100 đi tìm hiểu nhé</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp" alt="10 mẹo cải thiện chỉ số CLS cho website" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>14</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>10 mẹo cải thiện chỉ số CLS cho website</h3>
+          <p>Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA BAND ============================ -->
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>Cần tư vấn cho<br>dự án website của bạn?</h2>
+      <p>Đội ngũ Web100 sẵn sàng lắng nghe và đề xuất giải pháp phù hợp nhất với mục tiêu của bạn.</p>
+    </div>
+    <a class="btn btn-primary btn-lg" href="/#lien-he">
+      Liên hệ ngay
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.png" alt="Web100">
+      <p>Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Điều hướng</h4>
+      <a href="/#top">Trang chủ</a>
+      <a href="/#du-an">Dự án</a>
+      <a href="/#dich-vu">Dịch vụ</a>
+      <a href="/#quy-trinh">Quy trình</a>
+    </div>
+    <div class="footer-col">
+      <h4>Công ty</h4>
+      <a href="/ve-chung-toi/">Về Web100</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#lien-he">Liên hệ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Liên hệ</h4>
+      <a href="mailto:web100.vn@gmail.com">web100.vn@gmail.com</a>
+      <a href="tel:+84964074043">+84 964 074 043</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Web100. All rights reserved.</span>
+    <span>Thành công khách hàng là mục tiêu tối thượng.</span>
+  </div>
+</footer>
+
+<div class="contact-float">
+  <a class="contact-float__btn contact-float__phone" href="tel:+84964074043" aria-label="Gọi điện thoại">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+  </a>
+  <a class="contact-float__btn contact-float__zalo" href="https://zalo.me/84964074043" target="_blank" rel="noopener" aria-label="Chat qua Zalo">
+  </a>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/blog.js"></script>
+</body>
+</html>
+

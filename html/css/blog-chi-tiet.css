@@ -1,0 +1,251 @@
+/* ==========================================================================
+   blog-chi-tiet.css — trang chi tiết bài viết (html/blog/<chuyên-mục>/<bài>/)
+   và trang chuyên mục. Dùng chung biến màu/khoảng cách và các thành phần
+   (container, btn, eyebrow, text-link, blog-card, blog-grid…) đã khai báo ở
+   css/style.css + css/blog.css — file này chỉ chứa CSS riêng cho phần đầu
+   bài, mục lục, thân bài viết, khối CTA cuối bài và breadcrumb.
+   ========================================================================== */
+
+/* ------------------------------ Breadcrumb ------------------------------ */
+.post-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.post-crumbs a { transition: color 0.2s ease; }
+.post-crumbs a:hover { color: var(--green-dark); }
+.post-crumbs span { opacity: 0.5; }
+
+/* trên trang chuyên mục breadcrumb nằm trong hero nền tối */
+.blog-hero .post-crumbs { justify-content: center; color: rgba(255, 255, 255, 0.6); }
+.blog-hero .post-crumbs a:hover { color: var(--green); }
+
+/* ------------------------------ Đầu bài viết ------------------------------ */
+.post-head {
+  position: relative;
+  padding: 44px 0 140px;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--line);
+}
+.post-head__inner { max-width: 820px; }
+.post-head .blog-tag { margin-bottom: 16px; }
+.post-head h1 {
+  font-size: 42px;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+.post-head__lead {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  max-width: 680px;
+}
+.post-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.post-head__meta .blog-meta__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 4px;
+}
+.post-head__meta time { font-variant-numeric: tabular-nums; }
+
+/* ------------------------------ Ảnh bìa ------------------------------ */
+/* Ảnh gốc chỉ 480×320 nên khung được giới hạn ở 720px để không bị vỡ nét. */
+.post-cover {
+  max-width: 720px;
+  margin-top: -100px;
+  margin-bottom: 56px;
+  position: relative;
+  z-index: 1;
+}
+.post-cover img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #fff;
+}
+
+/* ------------------------------ Bố cục thân bài ------------------------------ */
+.post-layout { padding-bottom: 88px; }
+.post-body {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+/* ------------------------------ Mục lục ------------------------------ */
+.post-toc {
+  margin: 0 0 44px;
+  padding: 24px 28px;
+  background: var(--green-tint);
+  border: 1px solid rgba(11, 203, 104, 0.28);
+  border-radius: 16px;
+}
+.post-toc__title {
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  margin-bottom: 12px;
+}
+.post-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+  display: grid;
+  gap: 8px;
+}
+.post-toc li { counter-increment: toc; font-size: 15px; line-height: 1.5; }
+.post-toc li::before {
+  content: counter(toc) ".";
+  display: inline-block;
+  min-width: 22px;
+  font-weight: 800;
+  color: var(--green-dark);
+}
+.post-toc a { font-weight: 600; color: var(--ink); transition: color 0.2s ease; }
+.post-toc a:hover { color: var(--green-dark); }
+
+/* ------------------------------ Chữ trong bài ------------------------------ */
+.post-body p { margin: 0 0 22px; }
+.post-body strong { color: var(--ink); font-weight: 700; }
+/* :not(.btn) để nút CTA cuối bài không bị gạch chân như link trong bài */
+.post-body a:not(.btn) { color: var(--green-dark); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.post-body a:not(.btn):hover { color: var(--green-deep); }
+
+.post-body h2 {
+  font-size: 27px;
+  line-height: 1.28;
+  margin: 48px 0 18px;
+  scroll-margin-top: 110px;
+}
+.post-body h2::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--green);
+  margin-bottom: 16px;
+}
+.post-body h3 { font-size: 20px; margin: 34px 0 12px; scroll-margin-top: 110px; }
+
+.post-body ul,
+.post-body ol { margin: 0 0 24px; padding-left: 0; display: grid; gap: 12px; }
+.post-body ul li,
+.post-body ol li { position: relative; padding-left: 30px; }
+.post-body ul > li::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.post-body ol { counter-reset: post-ol; }
+.post-body ol > li { counter-increment: post-ol; }
+.post-body ol > li::before {
+  content: counter(post-ol);
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--green-deep);
+  background: var(--green-tint);
+  border-radius: 50%;
+}
+/* danh sách lồng nhau */
+.post-body li ul,
+.post-body li ol { margin: 12px 0 0; }
+
+/* ------------------------------ Ảnh minh hoạ ------------------------------ */
+.post-figure { margin: 32px 0; }
+.post-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--bg-alt);
+}
+.post-figure figcaption {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ------------------------------ CTA cuối bài ------------------------------ */
+.post-cta {
+  margin-top: 56px;
+  padding: 34px 36px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+.post-cta h2 { font-size: 22px; color: #fff; margin: 0 0 8px; }
+.post-cta h2::before { display: none; }
+.post-cta p { font-size: 14.5px; line-height: 1.65; margin: 0; }
+.post-cta .btn { flex-shrink: 0; }
+
+/* ------------------------------ Bài viết liên quan ------------------------------ */
+.post-related { padding-top: 72px; border-top: 1px solid var(--line); }
+.post-related .section-head { margin-bottom: 36px; }
+
+/* ------------------------------ Responsive ------------------------------ */
+@media (max-width: 900px) {
+  .post-head { padding: 32px 0 120px; }
+  .post-head h1 { font-size: 32px; }
+  .post-cover { margin-top: -88px; margin-bottom: 44px; }
+  .post-body { font-size: 16.5px; }
+  .post-body h2 { font-size: 23px; margin-top: 40px; }
+  .post-cta { flex-direction: column; align-items: flex-start; padding: 28px; }
+}
+
+@media (max-width: 640px) {
+  .post-head h1 { font-size: 26px; }
+  .post-head__lead { font-size: 15.5px; }
+  .post-cover { margin-top: -72px; }
+  .post-toc { padding: 20px; }
+  .post-body { font-size: 16px; }
+  .post-body h2 { font-size: 21px; }
+  .post-related { padding-top: 56px; }
+}

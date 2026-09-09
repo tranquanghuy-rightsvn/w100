@@ -60,6 +60,10 @@
 .blog-filter:hover { border-color: var(--green); color: var(--ink); }
 .blog-filter.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
 
+/* liên kết sang trang chuyên mục, đặt ngay dưới hàng chip lọc */
+.blog-filters__link { display: flex; justify-content: center; margin-top: 18px; font-size: 14px; }
+.blog-filters__link:hover { color: var(--green-dark); gap: 12px; }
+
 /* ------------------------------ Lưới bài viết ------------------------------ */
 .blog-gallery { padding: 0 0 96px; }
 .blog-grid {

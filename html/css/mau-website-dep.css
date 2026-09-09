@@ -1,0 +1,194 @@
+/* ==========================================================================
+   mau-website-dep.css — trang "Kho templates" (html/mau-website-dep/index.html).
+   Dùng chung biến màu/khoảng cách/thành phần (container, btn, eyebrow,
+   text-link, cta-band...) đã khai báo trong css/style.css — file này chỉ
+   chứa CSS riêng cho intro, bộ lọc, lưới thẻ template và popup xem demo.
+   ========================================================================== */
+
+/* ------------------------------ Intro ------------------------------ */
+.tpl-hero {
+  position: relative;
+  padding: 88px 0 72px;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2fbf6 0%, #ffffff 100%);
+}
+.tpl-hero::before,
+.tpl-hero::after {
+  content: ""; position: absolute; z-index: 0; border-radius: 50%;
+  filter: blur(70px); pointer-events: none;
+}
+.tpl-hero::before { top: -160px; left: -120px; width: 380px; height: 380px; background: rgba(11, 203, 104, 0.22); }
+.tpl-hero::after { bottom: -200px; right: -140px; width: 440px; height: 440px; background: rgba(11, 203, 104, 0.14); }
+.tpl-hero .container { position: relative; z-index: 1; }
+.tpl-hero .eyebrow { justify-content: center; }
+.tpl-hero h1 { font-size: 38px; margin-bottom: 16px; line-height: 1.25; }
+.tpl-hero .section-desc { max-width: 560px; margin: 0 auto; }
+
+.tpl-hero-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin-top: 40px;
+}
+.tpl-hero-stat strong { display: block; font-size: 26px; font-weight: 800; color: var(--green-dark); }
+.tpl-hero-stat span { font-size: 13px; color: var(--muted); }
+
+/* ------------------------------ Layout ------------------------------ */
+.tpl-gallery { padding: 40px 0 96px; }
+
+/* ------------------------------ Bộ lọc danh mục ------------------------------ */
+/* Dạng nhãn (pill), nằm ngang, nổi bật ở TRÊN ĐẦU lưới mẫu (không phải
+   sidebar) — 1 mẫu có thể thuộc nhiều danh mục cùng lúc (data-category cách
+   nhau bằng dấu cách trên .tpl-card), xem initTplFilters() trong
+   mau-website-dep.js. Hỗ trợ mở thẳng 1 danh mục qua ?category=<slug> trên
+   URL — dùng khi gửi link cho khách hàng tham khảo riêng 1 ngành. */
+.tpl-filter-bar { margin-bottom: 40px; }
+.tpl-filter-bar__heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.tpl-filter-bar__heading::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px var(--green-tint);
+}
+
+.tpl-filters { position: relative; display: flex; flex-wrap: wrap; gap: 10px; }
+.tpl-filter-indicator {
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #101820 0%, #182a22 100%);
+  box-shadow: 0 8px 20px -6px rgba(7, 140, 70, 0.35);
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1), width 0.35s cubic-bezier(0.65, 0, 0.35, 1), height 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+.tpl-filter {
+  position: relative;
+  z-index: 1;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.tpl-filter:hover:not(.is-active) { color: var(--ink); border-color: var(--green); }
+/* .tpl-filter tự đặt display:flex nên phải chặn lại tường minh, không thì
+   thắng luôn quy tắc [hidden] mặc định của trình duyệt (author > UA). */
+.tpl-filter[hidden] { display: none; }
+
+.tpl-filters__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: none;
+  border: none;
+  padding: 9px 6px;
+  cursor: pointer;
+}
+.tpl-filters__toggle:hover { color: var(--green-deep); }
+.tpl-filters__toggle svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+.tpl-filters__toggle.is-open svg { transform: rotate(180deg); }
+.tpl-filter__count {
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--bg-alt);
+  color: var(--muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.tpl-filter.is-active { color: #fff; background: transparent; border-color: transparent; }
+.tpl-filter.is-active .tpl-filter__count { background: rgba(255, 255, 255, 0.14); color: #fff; }
+
+/* ------------------------------ Lưới mẫu ------------------------------ */
+.tpl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.tpl-empty { display: none; text-align: center; color: var(--muted); padding: 40px 0; }
+.tpl-empty.is-visible { display: block; }
+
+.tpl-card {
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.tpl-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green); }
+
+.tpl-card .tpl-thumb.service-visual {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Ảnh chụp thật (không dùng mockup .service-visual/.svc-frame) — hiện
+   nguyên, không khung trình duyệt giả, không bo góc. */
+.tpl-thumb { aspect-ratio: 4 / 3; background: var(--bg-alt); }
+.tpl-thumb__shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+.tpl-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.tpl-tag {
+  align-self: flex-start;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+  background: var(--green-tint); color: var(--green-deep);
+  margin-bottom: 6px;
+}
+.tpl-body h3 { font-size: 19px; }
+/* Thẻ rút gọn: chỉ tên mẫu, không tag/mô tả — tên căn giữa. */
+.tpl-body--simple { align-items: center; text-align: center; }
+.tpl-body--simple h3 { margin-bottom: 4px; }
+.tpl-body--simple .tpl-actions { width: 100%; }
+.tpl-desc { font-size: 13.5px; color: var(--muted); flex: 1; margin-bottom: 6px; }
+.tpl-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.tpl-demo-btn {
+  font-family: inherit; background: none; border: none; padding: 0;
+  cursor: pointer; font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .tpl-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .tpl-hero { padding: 48px 0 32px; }
+  .tpl-hero h1 { font-size: 27px; }
+  .tpl-hero-stats { gap: 24px; margin-top: 28px; }
+  .tpl-hero-stat strong { font-size: 22px; }
+  .tpl-filters { gap: 8px; }
+  .tpl-filter { padding: 7px 13px; font-size: 13px; }
+  .tpl-grid { grid-template-columns: 1fr; }
+}

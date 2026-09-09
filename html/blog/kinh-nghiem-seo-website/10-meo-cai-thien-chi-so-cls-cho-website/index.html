@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 mẹo cải thiện chỉ số CLS cho website — Web100</title>
+<meta name="description" content="Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà khô">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10 mẹo cải thiện chỉ số CLS cho website">
+<meta property="og:description" content="Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà khô">
+<meta property="og:image" content="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp">
+<meta property="article:published_time" content="2024-10-14T21:50:00+07:00">
+<meta property="article:section" content="Kinh nghiệm SEO website">
+<link rel="icon" type="image/png" href="/images/preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/blog-chi-tiet.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "10 mẹo cải thiện chỉ số CLS cho website",
+      "description": "Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt…",
+      "image": "https://web100.vn/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp",
+      "datePublished": "2024-10-14T21:50:00+07:00",
+      "dateModified": "2024-10-14T21:50:00+07:00",
+      "author": {
+        "@type": "Organization",
+        "name": "Web100"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Web100",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://web100.vn/images/logo.png"
+        }
+      },
+      "articleSection": "Kinh nghiệm SEO website",
+      "inLanguage": "vi-VN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "https://web100.vn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://web100.vn/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kinh nghiệm SEO website",
+          "item": "https://web100.vn/blog/kinh-nghiem-seo-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "10 mẹo cải thiện chỉ số CLS cho website"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <img src="/images/logo.png" alt="Web100">
+    </a>
+
+    <nav>
+      <ul class="main-nav">
+        <li class="nav-item"><a class="nav-link" href="/ve-chung-toi/">Về Web100</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Dịch vụ
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel nav-panel--services">
+            <a class="nav-panel-link" href="/website-doanh-nghiep/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
+              Website doanh nghiệp
+            </a>
+            <a class="nav-panel-link" href="/website-ban-hang/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>
+              Website bán hàng
+            </a>
+            <a class="nav-panel-link" href="/website-tin-tuc/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13l3 3v13H4Z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+              Website tin tức
+            </a>
+            <a class="nav-panel-link" href="/landing-page/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+              Landing page
+            </a>
+            <a class="nav-panel-link" href="/cai-tao-website/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></svg></span>
+              Cải tạo website cũ
+            </a>
+            <a class="nav-panel-link" href="/seo-ben-vung/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+              SEO bền vững
+            </a>
+            <a class="nav-panel-link" href="/chay-quang-cao/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              Chạy quảng cáo
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/mau-website-dep/">Mẫu web đẹp</a></li>
+        <li class="nav-item"><a class="nav-link" href="/khach-hang/">Khách hàng</a></li>
+        <li class="nav-item has-dropdown">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false">
+            Tool
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="nav-panel">
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg></span>
+              Check thứ hạng từ khóa
+            </a>
+            <a class="nav-panel-link" href="/tool-landing-builder/">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h6v6H3z"/></svg></span>
+              Tạo Landing Page kéo thả
+            </a>
+            <a class="nav-panel-link" href="#">
+              <span class="nav-panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></span>
+              Kiểm tra tốc độ website
+            </a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/hieu-ung-dep/">Hiệu ứng đẹp</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/blog/">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/lien-he/">Liên hệ</a></li>
+        <li class="nav-indicator" aria-hidden="true"></li>
+      </ul>
+    </nav>
+
+
+    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav-drawer" id="drawer">
+  <a href="/ve-chung-toi/">Về Web100</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Dịch vụ
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="/website-doanh-nghiep/">Website doanh nghiệp</a>
+        <a href="/website-ban-hang/">Website bán hàng</a>
+        <a href="/website-tin-tuc/">Website tin tức</a>
+        <a href="/landing-page/">Landing page</a>
+        <a href="/cai-tao-website/">Cải tạo website cũ</a>
+        <a href="/seo-ben-vung/">SEO bền vững</a>
+        <a href="/chay-quang-cao/">Chạy quảng cáo</a>
+      </div>
+    </div>
+  </div>
+  <a href="/mau-website-dep/">Mẫu web đẹp</a>
+  <a href="/khach-hang/">Khách hàng</a>
+  <div class="drawer-item">
+    <button class="drawer-trigger" type="button" aria-expanded="false">
+      Tool
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="drawer-panel">
+      <div class="drawer-panel-inner">
+        <a href="#">Check thứ hạng từ khóa</a>
+        <a href="/tool-landing-builder/">Tạo Landing Page kéo thả</a>
+        <a href="#">Kiểm tra tốc độ website</a>
+      </div>
+    </div>
+  </div>
+  <a href="/hieu-ung-dep/">Hiệu ứng đẹp</a>
+  <a href="/blog/">Blog</a>
+  <a href="/lien-he/">Liên hệ</a>
+</div>
+<div class="nav-overlay"></div>
+
+<main id="top">
+
+<article class="post">
+
+  <!-- ============================ ĐẦU BÀI VIẾT ============================ -->
+  <header class="post-head">
+    <div class="container post-head__inner">
+      <nav class="post-crumbs" aria-label="Breadcrumb">
+        <a href="/">Trang chủ</a>
+        <span>/</span>
+        <a href="/blog/">Blog</a>
+        <span>/</span>
+        <a href="/blog/kinh-nghiem-seo-website/">Kinh nghiệm SEO website</a>
+      </nav>
+      <span class="blog-tag">Kinh nghiệm SEO website</span>
+      <h1>10 mẹo cải thiện chỉ số CLS cho website</h1>
+      <p class="post-head__lead">Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (nh</p>
+      <div class="post-head__meta">
+        <img src="/images/logo.png" alt="" class="blog-meta__avatar">
+        <span>Web100 Team</span>
+        <span class="blog-meta__dot">•</span>
+        <time datetime="2024-10-14">14/10/2024</time>
+        <span class="blog-meta__dot">•</span>
+        <span>5 phút đọc</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container post-cover">
+    <img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp" alt="10 mẹo cải thiện chỉ số CLS cho website" width="480" height="320" fetchpriority="high">
+  </div>
+
+  <!-- ============================ NỘI DUNG ============================ -->
+  <div class="container post-layout">
+    <div class="post-body">
+      <nav class="post-toc" aria-label="Mục lục bài viết">
+        <p class="post-toc__title">Nội dung bài viết</p>
+        <ol>
+          <li><a href="#cls-la-gi">CLS là gì?</a></li>
+          <li><a href="#lam-sao-de-cai-thien-chi-so-cls">Làm sao để cải thiện chỉ số CLS?</a></li>
+          <li><a href="#mot-so-meo-khac-tu-chatgpt">Một số mẹo khác từ chatGPT</a></li>
+        </ol>
+      </nav>
+<h2 id="cls-la-gi">CLS là gì?</h2>
+<p>Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà không có sự tương tác của người dùng.</p>
+<p>CLS càng thấp thì càng tốt, cho thấy trang web có bố cục ổn định, không làm người dùng khó chịu hoặc bấm nhầm do các phần tử di chuyển. Một trang web lý tưởng sẽ có CLS dưới 0.1 để đảm bảo trải nghiệm người dùng tốt.</p>
+<h2 id="lam-sao-de-cai-thien-chi-so-cls">Làm sao để cải thiện chỉ số CLS?</h2>
+<p>Có rất nhiều mẹo để cải thiện chỉ số CLS xuống thấp, hôm nay Web100 sẽ chỉ cho bạn kinh nghiệm giảm thiểu chỉ số này xuống con số cực thấp, qua đó tăng chất lượng website của mình.</p>
+<p>Đầu tiên đối với hình ảnh, các bạn cần xác định trước khi tải xong thì không gian của ảnh sẽ chiếm kích thước bao nhiêu, từ đó set trước giá trị của <strong>width</strong> và <strong>height</strong> cho thẻ <strong>img</strong>. Bằng cách này sẽ giúp bố cục ảnh không bị thay đổi. Ngoài <strong>image</strong> thì <strong>video</strong> và <strong>iframe</strong> cũng áp dụng được mẹo này.</p>
+<p>Đối với font chữ, các bạn cần tải font chữ càng sớm càng tốt. Cách đơn giản nhất là các bạn thêm thuộc tính async cho font chữ để tải font cùng lúc với tải website. Font chữ là yếu tố ảnh hướng rất lớn tới chỉ số CLS mà nhiều bạn thường bỏ qua.</p>
+<p>Đối với các css khác, một mẹo mà mình học được từ một đàn anh trong ngành, đó là hãy load css internal, có nghĩa là thay vì dùng link tới file css thì hãy tải trực tiếp css trong file html. Khi đó css sẽ được tải rất nhanh và giúp chỉ số CLS giảm xuống tối đa.</p>
+<figure class="post-figure"><img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-1.webp" alt="Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống 0-5 ms" loading="lazy" decoding="async" width="660" height="321"><figcaption>Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống 0-5 ms</figcaption></figure>
+<p>Nhiều bạn sẽ nói rằng cách trên khiến cho file html nặng thêm. Đúng vậy, nhưng tổng thể thì kích thước nó không hề thay đổi. Bằng cách này bạn còn giúp tăng tốc độ tải trang nhờ việc hạn chế request tới các file tĩnh ở lần tải lần đầu tiên. Còn ở lần sau, vì không tận dụng cơ chế cache của trình duyệt nên đúng là tốc độ sẽ chậm đi, tuy nhiên theo như mình thấy là không đáng kể.</p>
+<p>Cách này còn đặc biệt hữu hiệu với google bot, vì google bot chỉ truy cập không sử dụng cache, do đó nó sẽ được google đánh giá cao. Còn đối với người dùng, như mình nói ở trên, ở lần request 2 3 có thể sẽ bị chậm. (nhưng khó lòng mà nhận ra)</p>
+<p>Hiện tại website tại hệ thống Web100 đang sử dụng cả 3 cách này và CLS đạt chỉ số cực thấp, chỉ từ<strong> 0-5ms</strong>.</p>
+<h2 id="mot-so-meo-khac-tu-chatgpt">Một số mẹo khác từ chatGPT</h2>
+<p>1. Đối với các quảng cáo hoặc các phần tử được chèn động, hãy dành một không gian cố định đủ lớn để chứa chúng, tránh việc thay đổi bố cục khi chúng tải.</p>
+<p>2. Tránh chèn nội dung động vào giữa trang:<br> - Khi chèn nội dung mới, hãy đảm bảo nó không đẩy các phần tử khác xuống hoặc sang một bên. Nội dung này nên được chèn ở cuối trang hoặc ở những khu vực đã có không gian trống.</p>
+<p>3. Tải phông chữ một cách hợp lý <br>- Sử dụng các phông chữ hiển thị mặc định (fallback fonts) cho đến khi phông chữ chính được tải xong, tránh việc thay đổi kiểu dáng và kích thước phông khi tải phông chữ tùy chỉnh.<br>- Sử dụng CSS như `<strong>font-display: swap;</strong>` để giảm tác động của việc tải phông.</p>
+<figure class="post-figure"><img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-2.webp" alt="Core web vitals là các chỉ số rất quan trọng trong SEO-onpage" loading="lazy" decoding="async" width="660" height="363"><figcaption>Core web vitals là các chỉ số rất quan trọng trong SEO-onpage</figcaption></figure>
+<p>4. Tải trước các tài nguyên quan trọng: <br>- Sử dụng thẻ `<strong>&lt;link rel="preload"&gt;</strong>` cho các tài nguyên quan trọng (như phông chữ, hình ảnh hoặc CSS) để chúng tải nhanh hơn và giảm thiểu sự thay đổi bố cục.</p>
+<p>5. Tránh thêm các phần tử hoặc lớp CSS muộn:<br>- Tránh thay đổi hoặc thêm các phần tử hoặc lớp CSS thông qua JavaScript sau khi trang đã tải xong. Nếu bắt buộc phải thay đổi, hãy đảm bảo không làm ảnh hưởng đến bố cục tổng thể.</p>
+<p>6. Kiểm tra và tối ưu hóa hoạt động của quảng cáo và các tiện ích bên thứ ba:<br>- Đảm bảo các quảng cáo hoặc tiện ích được nhúng từ bên thứ ba có kích thước cố định và không thay đổi kích thước sau khi tải xong.<br>- Kiểm tra để chắc chắn rằng việc tải các quảng cáo không ảnh hưởng tiêu cực đến bố cục trang.</p>
+<p>Trên đây là các mẹo mà chúng tôi đã áp dụng và tham khảo từ nhiều nguồn, nếu bạn quan tâm về các kinh nghiệm SEO đặc biệt là SEO onpage thì hãy theo dõi trang blog của WEB100 thường xuyên nhé!</p>
+
+      <div class="post-cta">
+        <div>
+          <h2>Muốn website của bạn đạt 100 điểm SEO?</h2>
+          <p>Web100 thiết kế website tĩnh siêu nhẹ, chuẩn SEO ngay từ dòng code đầu tiên — không plugin, không phụ thuộc backend.</p>
+        </div>
+        <a class="btn btn-primary" href="/lien-he/">
+          Nhận tư vấn miễn phí
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ BÀI VIẾT LIÊN QUAN ============================ -->
+<section class="blog-gallery post-related">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Đọc tiếp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h2>Bài viết liên quan</h2>
+      </div>
+      <a class="text-link" href="/blog/kinh-nghiem-seo-website/">Xem tất cả <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="blog-grid">
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/huong-dan-viet-content-len-top-tim-kiem-cover.webp" alt="Hướng dẫn cách viết content lên top tìm kiếm" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>29</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Hướng dẫn cách viết content lên top tìm kiếm</h3>
+          <p>Việc viết bài lên top cao google là một điều mà mọi người làm SEO luôn mong muốn. Vậy bạn đã thực sự biết cách google…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>7 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/tam-quan-trong-cua-sitemap-trong-seo-cover.webp" alt="Tầm quan trọng của Sitemap trong SEO" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>26</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Tầm quan trọng của Sitemap trong SEO</h3>
+          <p>Sitemap là gì? Tầm quan trọng của nó đối với SEO website, hãy cùng WEB 100 đi tìm hiểu nhé</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+      <a class="blog-card reveal" href="/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/" data-category="kinh-nghiem-seo-website">
+        <div class="blog-cover">
+          <img src="/images/blog/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile-cover.webp" alt="Cách tối ưu hình ảnh cho website giúp tăng tốc độ tải trang cho mobile" loading="lazy" width="480" height="320" />
+        </div>
+        <span class="blog-date"><strong>06</strong><em>Th 10</em></span>
+        <div class="blog-card__body">
+          <span class="blog-tag">Kinh nghiệm SEO website</span>
+          <h3>Cách tối ưu hình ảnh cho website giúp tăng tốc độ tải trang cho mobile</h3>
+          <p>Tốc độ tải trang là một chỉ số được google đánh giá là rất quan trọng trong việc website có chuẩn SEO hay không, do đó…</p>
+          <div class="blog-meta">
+            <span>Web100 Team</span>
+            <span class="blog-meta__dot">•</span>
+            <span>5 phút đọc</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA BAND ============================ -->
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>Cần tư vấn cho<br>dự án website của bạn?</h2>
+      <p>Đội ngũ Web100 sẵn sàng lắng nghe và đề xuất giải pháp phù hợp nhất với mục tiêu của bạn.</p>
+    </div>
+    <a class="btn btn-primary btn-lg" href="/#lien-he">
+      Liên hệ ngay
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.png" alt="Web100">
+      <p>Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Điều hướng</h4>
+      <a href="/#top">Trang chủ</a>
+      <a href="/#du-an">Dự án</a>
+      <a href="/#dich-vu">Dịch vụ</a>
+      <a href="/#quy-trinh">Quy trình</a>
+    </div>
+    <div class="footer-col">
+      <h4>Công ty</h4>
+      <a href="/ve-chung-toi/">Về Web100</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#lien-he">Liên hệ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Liên hệ</h4>
+      <a href="mailto:web100.vn@gmail.com">web100.vn@gmail.com</a>
+      <a href="tel:+84964074043">+84 964 074 043</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Web100. All rights reserved.</span>
+    <span>Thành công khách hàng là mục tiêu tối thượng.</span>
+  </div>
+</footer>
+
+<div class="contact-float">
+  <a class="contact-float__btn contact-float__phone" href="tel:+84964074043" aria-label="Gọi điện thoại">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+  </a>
+  <a class="contact-float__btn contact-float__zalo" href="https://zalo.me/84964074043" target="_blank" rel="noopener" aria-label="Chat qua Zalo">
+  </a>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/blog.js"></script>
+</body>
+</html>
+

@@ -44,19 +44,12 @@
 .lh-card h3 { font-size: 18px; margin-top: 2px; }
 .lh-card p { font-size: 14px; color: var(--muted); margin-top: 2px; margin-bottom: 10px; }
 
-/* -- ô icon riêng cho thẻ Zalo: bo góc vuông + chữ "Zalo" nghiêng, đồng bộ
-   với .contact-float__zalo (nút nổi góc phải) thay vì icon chat chung. -- */
+/* -- ô icon riêng cho thẻ Zalo: logo Zalo bo tròn, đồng bộ với
+   .contact-float__zalo (nút nổi góc phải) thay vì icon chat chung. -- */
 .lh-card__icon--zalo {
-  background: #0068ff;
-  border-radius: 12px;
-}
-.lh-card__icon--zalo span {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 800;
-  font-style: italic;
-  color: #fff;
-  letter-spacing: -0.02em;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff url("../images/zalo.png") center / cover no-repeat;
 }
 
 /* ------------------------------ Giờ làm việc ------------------------------ */

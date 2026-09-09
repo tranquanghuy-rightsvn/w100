@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xem thử giao diện — Web100</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="/images/preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/demo.css">
+</head>
+<body>
+
+<div class="demo-bar" id="demoBar" hidden>
+  <span class="demo-bar__badge">
+    <span class="demo-bar__dot" aria-hidden="true"></span>
+    Demo
+  </span>
+  <div class="demo-bar__view" role="group" aria-label="Chế độ xem">
+    <button class="demo-bar__view-btn is-active" type="button" data-view="desktop" aria-pressed="true" title="Xem dạng máy tính">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    </button>
+    <button class="demo-bar__view-btn" type="button" data-view="mobile" aria-pressed="false" title="Xem dạng điện thoại">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+    </button>
+  </div>
+  <button class="btn btn-primary" type="button" data-open-modal="tplModal">
+    Chọn mẫu này
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<div class="demo-frame-wrap" id="demoFrameWrap" hidden>
+  <iframe id="demoFrame" title="Xem thử giao diện website" referrerpolicy="no-referrer"></iframe>
+</div>
+
+<div class="demo-empty" id="demoEmpty">
+  <p>Không tìm thấy mẫu để xem thử.</p>
+  <a class="btn btn-outline" href="/mau-website-dep/">Quay lại mẫu web đẹp</a>
+</div>
+
+<div class="modal-overlay" id="tplModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tplModalTitle">
+    <button class="modal__close" type="button" data-close-modal aria-label="Đóng">×</button>
+
+    <div class="modal__body">
+      <h3 id="tplModalTitle">Yêu cầu tư vấn</h3>
+      <p>Để lại thông tin liên hệ, Web100 sẽ tư vấn thiết kế website theo phong cách bạn thích trong 24 giờ.</p>
+
+      <form class="modal__form">
+        <label>
+          Họ tên
+          <input type="text" name="hoten" placeholder="Nhập họ tên" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="Nhập email của bạn" required>
+        </label>
+        <label>
+          Số điện thoại
+          <input type="tel" name="dienthoai" placeholder="Nhập số điện thoại liên lạc" required>
+        </label>
+        <label>
+          Phong cách tham khảo
+          <input type="text" name="mau" id="tplModalStyle" readonly>
+        </label>
+        <label>
+          Mô tả sơ bộ về website bạn cần
+          <textarea name="mota" rows="3" placeholder="VD: Tôi cần website tương tự nhưng đổi màu thương hiệu và thêm mục..."></textarea>
+        </label>
+        <button class="btn btn-primary" type="submit">Gửi yêu cầu</button>
+      </form>
+    </div>
+
+    <div class="modal__done" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+      <h4>Đã gửi yêu cầu!</h4>
+      <p>Web100 sẽ liên hệ lại với bạn trong 24 giờ.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var rawSite = (params.get('site') || '').trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
+  // Chỉ cho phép domain thuần (khong scheme/path/query lồng bên trong) để
+  // tránh nhúng javascript:/data: hay chuỗi lạ vào src iframe.
+  var isValidHost = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/i.test(rawSite);
+
+  var bar = document.getElementById('demoBar');
+  var frameWrap = document.getElementById('demoFrameWrap');
+  var empty = document.getElementById('demoEmpty');
+
+  // Toggle Desktop/Mobile: chỉ đổi kích thước khung xem (CSS), iframe vẫn
+  // trỏ đúng 1 URL đó — không load lại trang.
+  document.querySelectorAll('.demo-bar__view-btn').forEach((btn) => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.demo-bar__view-btn').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      frameWrap.classList.toggle('is-mobile', btn.dataset.view === 'mobile');
+    });
+  });
+
+  if (!isValidHost) return; // giữ nguyên trạng thái .demo-empty (hiện sẵn)
+
+  var name = params.get('name') || rawSite;
+
+  document.getElementById('demoFrame').src = 'https://' + rawSite;
+  document.getElementById('tplModalStyle').value = name;
+  document.title = 'Xem thử ' + name + ' — Web100';
+
+  empty.hidden = true;
+  bar.hidden = false;
+  frameWrap.hidden = false;
+})();
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>

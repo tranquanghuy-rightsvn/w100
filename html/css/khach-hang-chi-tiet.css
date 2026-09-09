@@ -156,6 +156,58 @@
 .mock__ph-screen { z-index: 2; }
 .mock__ph-island { z-index: 3; }
 
+/* --- Cách 2: ảnh chụp web nguyên bản (chữ nhật phẳng, không warp phối
+   cảnh), gắn đúng vị trí màn hình bằng position + rotate. Toạ độ % dưới đây
+   đo từ đúng khung ảnh dùng chung (desktop-customer.webp / mobile-customer
+   .webp) nên áp dụng được cho mọi khách hàng, chỉ đổi src ảnh. Dùng khi
+   không muốn tiền xử lý ảnh (warp) bằng Python — chỉ cần ảnh chụp gốc. --- */
+.mock__pc-screen-rect {
+  position: absolute;
+  z-index: 2;
+  left: 49.98%;
+  top: 38.92%;
+  width: 75.93%;
+  height: 60.95%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  /* Box co du de PHU HET 4 goc man hinh thuc te (khong dung canh trung binh
+     nua vi co the hut goc), roi clip-path cat gon dung hinh - luon co du
+     pixel anh de cat, khong bao gio ho o goc. */
+  clip-path: polygon(1.321% 0.249%, 0.292% 99.751%, 99.751% 99.751%, 98.637% 0.249%);
+}
+/* Dien thoai: anh phu TRAN het mat kinh (khong de ho vien), bo 4 goc dung
+   ban kinh man hinh that roi moi xoay theo do nghieng cua may -> nhin tu
+   nhien nhu anh nam trong man hinh, khong bi goc nhon "dan de len". */
+/* Dien thoai trong anh khung KHONG chi xoay 2D - no nghieng trong khong gian:
+   truc ngang cua may lech 3.85deg, truc doc lech 10.40deg (do tu dynamic
+   island va 2 canh ben cua man hinh). Hai truc lech nhau 75.75deg chu khong
+   vuong goc, nen phai dung matrix() (affine co truot) - chi rotate() thi
+   khong bao gio khop, anh se luon trong nhu dan de len. */
+.mock__ph-screen-rect {
+  position: absolute;
+  z-index: 2;
+  /* Man hinh dien thoai KHONG phai hinh chu nhat xoay: no co phoi canh nen
+     matrix() (affine) van lech ~20px o goc tren-phai / duoi-trai -> ho khe
+     trang. Cach xu ly: cho hop rong hon 6% (chac chan phu het) roi cat dung
+     hinh tu giac 4 goc bo tron bang clip-path SVG (objectBoundingBox nen
+     scale theo container, khong can px). Toa do lay tu #phone-screen-clip. */
+  left: 34.88%;
+  top: 1.59%;
+  width: 54.38%;
+  height: 93.16%;
+  transform-origin: 0 0;
+  transform: matrix(0.99442, 0.10545, -0.18146, 0.98340, 0, 0);
+  clip-path: url(#phone-screen-clip);
+  overflow: hidden;
+}
+.mock__pc-screen-rect img,
+.mock__ph-screen-rect img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .khd-showcase__media {
   margin: 0;
   /* Ảnh thấp hơn bảng thông số nên dính lại khi cuộn, tránh khoảng trống

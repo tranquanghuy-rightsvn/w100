@@ -14,7 +14,7 @@
           "label": "Menu — logo trái, nav phải",
           "html": "<header class=\"blk blk-menu blk-menu--basic\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -37,7 +37,7 @@
           "label": "Menu — logo trái, nav giữa",
           "html": "<header class=\"blk blk-menu blk-menu--nav-center\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -60,7 +60,7 @@
           "label": "Menu — logo giữa, nav 2 bên",
           "html": "<header class=\"blk blk-menu blk-menu--split-center\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsLeft\"></ul><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsRight\"></ul><template data-list-template=\"navItemsLeft\"><li><a data-item-field=\"label\">{{label}}</a></li></template><template data-list-template=\"navItemsRight\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -95,7 +95,7 @@
             { "key": "lead", "type": "text", "default": "Mô tả ngắn gọn, thu hút, nói rõ giá trị bạn mang lại cho khách hàng." },
             { "key": "ctaPrimary", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "ctaOutline", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
-            { "key": "image", "type": "image", "default": "images/hero-full-1600x900.jpg" }
+            { "key": "image", "type": "image", "default": "/images/hero-full-1600x900.jpg" }
           ],
           "style": [
             { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
@@ -114,7 +114,7 @@
             { "key": "lead", "type": "text", "default": "Mô tả ngắn gọn, thu hút, nói rõ giá trị bạn mang lại cho khách hàng." },
             { "key": "ctaPrimary", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "ctaOutline", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
-            { "key": "image", "type": "image", "default": "images/hero-full-2-1600x900.jpg" }
+            { "key": "image", "type": "image", "default": "/images/hero-full-2-1600x900.jpg" }
           ],
           "style": [
             { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
@@ -133,7 +133,7 @@
             { "key": "lead", "type": "text", "default": "Mô tả ngắn gọn, thu hút, nói rõ giá trị bạn mang lại cho khách hàng." },
             { "key": "ctaPrimary", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "ctaOutline", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
-            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "images/hero-banner.png" } ], "default": [ { "image": "images/hero-slide-1-1600x900.jpg" }, { "image": "images/hero-slide-2-1600x900.jpg" }, { "image": "images/hero-slide-3-1600x900.jpg" } ] }
+            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "/images/hero-banner.png" } ], "default": [ { "image": "/images/hero-slide-1-1600x900.jpg" }, { "image": "/images/hero-slide-2-1600x900.jpg" }, { "image": "/images/hero-slide-3-1600x900.jpg" } ] }
           ],
           "style": [
             { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
@@ -153,7 +153,7 @@
             { "key": "lead", "type": "text", "default": "Mô tả ngắn gọn, thu hút, nói rõ giá trị bạn mang lại cho khách hàng." },
             { "key": "ctaPrimary", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "ctaOutline", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
-            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "images/hero-banner.png" } ], "default": [ { "image": "images/hero-slide-2-1600x900.jpg" }, { "image": "images/hero-slide-3-1600x900.jpg" }, { "image": "images/hero-slide-1-1600x900.jpg" } ] }
+            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "/images/hero-banner.png" } ], "default": [ { "image": "/images/hero-slide-2-1600x900.jpg" }, { "image": "/images/hero-slide-3-1600x900.jpg" }, { "image": "/images/hero-slide-1-1600x900.jpg" } ] }
           ],
           "style": [
             { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
@@ -169,21 +169,21 @@
           "html": "<section class=\"blk blk-hero blk-hero--split34 blk-hero--split34-slidecontent\"><div class=\"blk-hero__slidecol\"><div class=\"blk-hero__slides\" data-list-container=\"slides\"></div></div><div class=\"blk-hero__sidecol\"><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage1\" src=\"{{sideImage1}}\" alt=\"\"><div class=\"blk-hero__sidebody\"><h3 data-field=\"sideTitle1\">{{sideTitle1}}</h3><p data-field=\"sideDesc1\">{{sideDesc1}}</p><a class=\"blk-hero__sidecta\" data-field=\"sideCta1\" href=\"#\">{{sideCta1}}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a></div></div><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage2\" src=\"{{sideImage2}}\" alt=\"\"><div class=\"blk-hero__sidebody\"><h3 data-field=\"sideTitle2\">{{sideTitle2}}</h3><p data-field=\"sideDesc2\">{{sideDesc2}}</p><a class=\"blk-hero__sidecta\" data-field=\"sideCta2\" href=\"#\">{{sideCta2}}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a></div></div></div><template data-list-template=\"slides\"><div class=\"blk-hero__slide\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"><div class=\"blk-hero__slidebody\"><span class=\"blk-hero__eyebrow\" data-item-field=\"eyebrow\">{{eyebrow}}</span><h2 class=\"blk-hero__slidetitle\" data-item-field=\"title\">{{title}}</h2><p class=\"blk-hero__slidetext\" data-item-field=\"text\">{{text}}</p><a class=\"blk-btn blk-hero__slidecta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></div></div></template></section>",
           "fields": [
             { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "slide", "itemFields": [
-              { "key": "image", "type": "image", "default": "images/hero-banner.png" },
+              { "key": "image", "type": "image", "default": "/images/hero-banner.png" },
               { "key": "eyebrow", "type": "text", "default": "Điểm nhấn" },
               { "key": "title", "type": "text", "default": "TIÊU ĐỀ NỔI BẬT CỦA SLIDE" },
               { "key": "text", "type": "text", "default": "Mô tả ngắn gọn, thu hút cho slide này — đổi được riêng theo từng ảnh." },
               { "key": "cta", "type": "text", "default": "Xem thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 0, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 26, "paddingY": 14, "radius": 24, "borderWidth": 1.5, "borderColor": "#ffffff", "hoverEffect": "none" } }
             ], "default": [
-              { "image": "images/hero-slide-1-1600x900.jpg", "eyebrow": "Thiết kế độc bản", "title": "MỖI WEBSITE MỘT CÂU CHUYỆN", "text": "Không dùng mẫu đại trà — mỗi dự án được thiết kế riêng theo đúng bản sắc thương hiệu của bạn.", "cta": "Xem dự án" },
-              { "image": "images/hero-slide-2-1600x900.jpg", "eyebrow": "Tốc độ vượt trội", "title": "ĐIỂM 100/100 LIGHTHOUSE", "text": "Tối ưu từng chi tiết kỹ thuật để website của bạn tải nhanh trên mọi thiết bị.", "cta": "Kiểm tra tốc độ" },
-              { "image": "images/hero-slide-3-1600x900.jpg", "eyebrow": "Chuẩn SEO", "title": "SẴN SÀNG LÊN TOP GOOGLE", "text": "Cấu trúc chuẩn SEO ngay từ đầu, giúp khách hàng dễ dàng tìm thấy bạn.", "cta": "Bắt đầu ngay" }
+              { "image": "/images/hero-slide-1-1600x900.jpg", "eyebrow": "Thiết kế độc bản", "title": "MỖI WEBSITE MỘT CÂU CHUYỆN", "text": "Không dùng mẫu đại trà — mỗi dự án được thiết kế riêng theo đúng bản sắc thương hiệu của bạn.", "cta": "Xem dự án" },
+              { "image": "/images/hero-slide-2-1600x900.jpg", "eyebrow": "Tốc độ vượt trội", "title": "ĐIỂM 100/100 LIGHTHOUSE", "text": "Tối ưu từng chi tiết kỹ thuật để website của bạn tải nhanh trên mọi thiết bị.", "cta": "Kiểm tra tốc độ" },
+              { "image": "/images/hero-slide-3-1600x900.jpg", "eyebrow": "Chuẩn SEO", "title": "SẴN SÀNG LÊN TOP GOOGLE", "text": "Cấu trúc chuẩn SEO ngay từ đầu, giúp khách hàng dễ dàng tìm thấy bạn.", "cta": "Bắt đầu ngay" }
             ] },
-            { "key": "sideImage1", "type": "image", "default": "images/hero-side-square-1-800x800.jpg" },
+            { "key": "sideImage1", "type": "image", "default": "/images/hero-side-square-1-800x800.jpg" },
             { "key": "sideTitle1", "type": "text", "default": "Landing Page" },
             { "key": "sideDesc1", "type": "text", "default": "Trang đích chuyển đổi cao, tối ưu riêng cho từng chiến dịch quảng cáo." },
             { "key": "sideCta1", "type": "text", "default": "Xem mẫu" },
-            { "key": "sideImage2", "type": "image", "default": "images/hero-side-square-2-800x800.jpg" },
+            { "key": "sideImage2", "type": "image", "default": "/images/hero-side-square-2-800x800.jpg" },
             { "key": "sideTitle2", "type": "text", "default": "Cải tạo website cũ" },
             { "key": "sideDesc2", "type": "text", "default": "Nâng cấp giao diện và tốc độ cho website đang hoạt động của bạn." },
             { "key": "sideCta2", "type": "text", "default": "Nhận tư vấn" }
@@ -207,9 +207,9 @@
             { "key": "lead", "type": "text", "default": "Mô tả ngắn gọn, thu hút, nói rõ giá trị bạn mang lại cho khách hàng." },
             { "key": "ctaPrimary", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "ctaOutline", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
-            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "images/hero-banner.png" } ], "default": [ { "image": "images/hero-slide-1-1600x900.jpg" }, { "image": "images/hero-slide-2-1600x900.jpg" }, { "image": "images/hero-slide-3-1600x900.jpg" } ] },
-            { "key": "sideImage1", "type": "image", "default": "images/hero-side-square-1-800x800.jpg" },
-            { "key": "sideImage2", "type": "image", "default": "images/hero-side-square-2-800x800.jpg" }
+            { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "ảnh slide", "itemFields": [ { "key": "image", "type": "image", "default": "/images/hero-banner.png" } ], "default": [ { "image": "/images/hero-slide-1-1600x900.jpg" }, { "image": "/images/hero-slide-2-1600x900.jpg" }, { "image": "/images/hero-slide-3-1600x900.jpg" } ] },
+            { "key": "sideImage1", "type": "image", "default": "/images/hero-side-square-1-800x800.jpg" },
+            { "key": "sideImage2", "type": "image", "default": "/images/hero-side-square-2-800x800.jpg" }
           ],
           "style": [
             { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
@@ -234,13 +234,13 @@
           "fields": [
             { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
             { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
-              { "key": "image", "type": "image", "default": "images/logo.png" }
+              { "key": "image", "type": "image", "default": "/images/logo.png" }
             ], "default": [
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" }
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" }
             ] }
           ],
           "style": [
@@ -258,12 +258,12 @@
             { "key": "heading", "type": "text", "default": "Đối tác đồng hành cùng chúng tôi" },
             { "key": "desc", "type": "text", "default": "Tự hào hợp tác với nhiều thương hiệu ở đa dạng lĩnh vực." },
             { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
-              { "key": "image", "type": "image", "default": "images/logo.png" }
+              { "key": "image", "type": "image", "default": "/images/logo.png" }
             ], "default": [
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" },
-              { "image": "images/logo.png" }
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" },
+              { "image": "/images/logo.png" }
             ] }
           ],
           "style": [
@@ -285,7 +285,7 @@
           "label": "Giới thiệu — ảnh + nội dung",
           "html": "<section class=\"blk blk-about\"><div class=\"blk-about__media\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-about__body\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
           "fields": [
-            { "key": "image", "type": "image", "default": "images/hero-side-square-1-800x800.jpg" },
+            { "key": "image", "type": "image", "default": "/images/hero-side-square-1-800x800.jpg" },
             { "key": "badge", "type": "text", "default": "Về chúng tôi" },
             { "key": "heading", "type": "richtext", "default": "Câu chuyện đằng sau<br>thương hiệu của bạn" },
             { "key": "desc", "type": "text", "default": "Chia sẻ ngắn gọn hành trình, giá trị cốt lõi và lý do khách hàng nên tin tưởng lựa chọn bạn ngay từ lần ghé thăm đầu tiên." },
@@ -503,13 +503,13 @@
             { "key": "heading", "type": "text", "default": "Khách hàng nói gì về chúng tôi" },
             { "key": "items", "type": "list", "itemLabel": "đánh giá", "itemFields": [
               { "key": "quote", "type": "text", "default": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao." },
-              { "key": "avatar", "type": "image", "default": "images/hero-side-square-2-800x800.jpg" },
+              { "key": "avatar", "type": "image", "default": "/images/hero-side-square-2-800x800.jpg" },
               { "key": "name", "type": "text", "default": "Nguyễn Văn A" },
               { "key": "role", "type": "text", "default": "Chủ doanh nghiệp" }
             ], "default": [
-              { "quote": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao.", "avatar": "images/hero-side-square-2-800x800.jpg", "name": "Nguyễn Văn A", "role": "Chủ doanh nghiệp" },
-              { "quote": "Landing page mới giúp tỉ lệ chuyển đổi tăng rõ rệt chỉ sau vài tuần ra mắt.", "avatar": "images/hero-side-square-1-800x800.jpg", "name": "Trần Thị B", "role": "Trưởng phòng Marketing" },
-              { "quote": "Tốc độ tải trang rất nhanh, thao tác chỉnh sửa nội dung cũng cực kỳ dễ dùng.", "avatar": "images/hero-side-square-2-800x800.jpg", "name": "Lê Văn C", "role": "Founder Startup" }
+              { "quote": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao.", "avatar": "/images/hero-side-square-2-800x800.jpg", "name": "Nguyễn Văn A", "role": "Chủ doanh nghiệp" },
+              { "quote": "Landing page mới giúp tỉ lệ chuyển đổi tăng rõ rệt chỉ sau vài tuần ra mắt.", "avatar": "/images/hero-side-square-1-800x800.jpg", "name": "Trần Thị B", "role": "Trưởng phòng Marketing" },
+              { "quote": "Tốc độ tải trang rất nhanh, thao tác chỉnh sửa nội dung cũng cực kỳ dễ dùng.", "avatar": "/images/hero-side-square-2-800x800.jpg", "name": "Lê Văn C", "role": "Founder Startup" }
             ] }
           ],
           "style": [
@@ -525,7 +525,7 @@
           "html": "<section class=\"blk blk-testi blk-testi--spotlight\"><div class=\"blk-testi__spotlight\"><p class=\"blk-testi__quote\" data-field=\"quote\">{{quote}}</p><div class=\"blk-testi__person\"><img data-field=\"avatar\" src=\"{{avatar}}\" alt=\"\"><div><strong data-field=\"name\">{{name}}</strong><span data-field=\"role\">{{role}}</span></div></div></div></section>",
           "fields": [
             { "key": "quote", "type": "text", "default": "Web100 đã giúp chúng tôi có một landing page chuyển đổi vượt mong đợi chỉ trong vài ngày. Đội ngũ hỗ trợ tận tâm từ đầu đến cuối." },
-            { "key": "avatar", "type": "image", "default": "images/hero-side-square-1-800x800.jpg" },
+            { "key": "avatar", "type": "image", "default": "/images/hero-side-square-1-800x800.jpg" },
             { "key": "name", "type": "text", "default": "Phạm Thị D" },
             { "key": "role", "type": "text", "default": "Giám đốc Marketing" }
           ],

@@ -1277,6 +1277,75 @@ button { font: inherit; cursor: pointer; }
 .cta-inner h2 { color: #fff; font-size: 30px; margin-bottom: 12px; }
 .cta-inner p { color: rgba(255, 255, 255, 0.65); max-width: 420px; }
 
+/* ------------------------------ Modal (popup form) ------------------------------ */
+/* Dùng chung cho mọi popup dạng form (VD: "Chọn mẫu này" ở trang chi tiết kho
+   templates) — mở/đóng bằng JS (initTemplateActions trong main.js) qua
+   [data-open-modal]/[data-close-modal], hiệu ứng bằng class .is-open. */
+body.no-scroll { overflow: hidden; }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 15, 20, 0.55);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-overlay.is-open { opacity: 1; }
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  box-shadow: var(--shadow);
+  transform: translateY(16px);
+  transition: transform 0.25s ease;
+}
+.modal-overlay.is-open .modal { transform: translateY(0); }
+.modal__close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-alt);
+  color: var(--muted);
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+}
+.modal__close:hover { background: var(--line); color: var(--ink); }
+.modal h3 { font-size: 20px; margin-bottom: 8px; padding-right: 28px; }
+.modal p { font-size: 14px; color: var(--muted); margin-bottom: 22px; }
+.modal__form { display: flex; flex-direction: column; gap: 14px; }
+.modal__form label { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.modal__form input,
+.modal__form textarea {
+  font: inherit;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-alt);
+  color: var(--ink);
+  resize: vertical;
+}
+.modal__form input:focus,
+.modal__form textarea:focus { outline: none; border-color: var(--green); background: #fff; }
+.modal__form input[readonly] { color: var(--muted); background: var(--line); }
+.modal__form .btn { margin-top: 6px; width: 100%; }
+.modal__done { text-align: center; padding: 8px 0 4px; }
+.modal__done svg { width: 44px; height: 44px; color: var(--green-dark); margin-bottom: 12px; }
+.modal__done h4 { font-size: 18px; margin-bottom: 6px; }
+.modal__done p { color: var(--muted); margin-bottom: 0; }
+
 /* ------------------------------ Hiệu ứng đẹp (banner) ------------------------------ */
 /* Dùng lại đúng khối .cta-inner (banner nền tối bo góc) — cùng cơ chế với
    banner "Kho giao diện" trước đây. */
@@ -1434,30 +1503,12 @@ button { font: inherit; cursor: pointer; }
   100% { transform: scale(1.4); opacity: 0; }
 }
 
-/* -- Zalo: bo góc vuông (không phải hình tròn) + chữ "Zalo" nghiêng đậm màu
-   trắng trên nền xanh đặc trưng, có "cái đuôi" nhỏ dưới-trái mô phỏng bong
-   bóng chat — đúng đặc điểm nhận diện của logo Zalo thật. -- */
+/* -- Zalo: dùng logo Zalo (ảnh) bo tròn 50% giống nút Zalo bên dự án
+   baovelonghaison, thay cho khối bong bóng chat vẽ bằng CSS trước đây. -- */
 .contact-float__zalo {
-  position: relative;
-  border-radius: 16px;
-  background: #0068ff;
-}
-.contact-float__zalo-text {
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 800;
-  font-style: italic;
-  color: #fff;
-  letter-spacing: -0.02em;
-}
-.contact-float__zalo::after {
-  content: "";
-  position: absolute;
-  left: 10px; bottom: -5px;
-  width: 12px; height: 10px;
-  background: #0068ff;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  border-radius: 0 0 0 3px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff url("../images/zalo.png") center / cover no-repeat;
 }
 
 /* ------------------------------ Reveal ------------------------------ */

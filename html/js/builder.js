@@ -1816,6 +1816,15 @@ function populateFontSelects() {
 }
 
 /* ------------------------------ Export ------------------------------ */
+/* Trong lúc chỉnh sửa, ảnh dùng đường dẫn gốc (/images/…) để trang builder
+   chạy được ở /tool-landing-builder/. Bản xuất ra là site độc lập nên phải
+   đổi ngược về images/… cho khớp cấu trúc thư mục trong file ZIP. */
+function toRelativeAssets(htmlStr) {
+  return htmlStr
+    .replace(/(src|href|srcset)="\/images\//g, '$1="images/')
+    .replace(/url\((["\']?)\/images\//g, 'url($1images/');
+}
+
 function buildExportDocument() {
   const usedFontIds = new Set();
   state.blocks.forEach((inst) => { if (inst.style && inst.style.font) usedFontIds.add(inst.style.font); });
@@ -1827,8 +1836,9 @@ function buildExportDocument() {
     stripEditorArtifacts(el);
     return el.outerHTML;
   }).join('\n');
+  const bodyOut = toRelativeAssets(bodyHtml);
   return '<!DOCTYPE html>\n<html lang="vi">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>Trang của bạn</title>\n' +
-    fontLinks + '\n<link rel="stylesheet" href="css/blocks.css">\n</head>\n<body>\n' + bodyHtml + '\n</body>\n</html>\n';
+    fontLinks + '\n<link rel="stylesheet" href="css/blocks.css">\n</head>\n<body>\n' + bodyOut + '\n</body>\n</html>\n';
 }
 
 /* Mở tab mới thuần HTML/CSS đã build — không dính script/DOM của editor,
@@ -1839,10 +1849,10 @@ function previewSite() {
     window.alert('Chưa có khối nào để xem trước — hãy thêm khối trước đã.');
     return;
   }
-  // Chèn <base> trỏ về đúng thư mục hiện tại: trang preview nạp qua blob URL
-  // (không có "thư mục" thật) nên các đường dẫn tương đối như css/blocks.css,
-  // images/... trong buildExportDocument() cần điểm neo này mới load được.
-  const baseHref = new URL('.', location.href).href;
+  // Chèn <base> trỏ về gốc site: trang preview nạp qua blob URL (không có
+  // "thư mục" thật) nên các đường dẫn tương đối như css/blocks.css, images/...
+  // trong buildExportDocument() cần điểm neo này mới load được.
+  const baseHref = location.origin + '/';
   const html = buildExportDocument().replace('<head>', '<head>\n<base href="' + baseHref + '">');
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
@@ -1872,7 +1882,7 @@ async function exportZip() {
   await ensureJsZip();
   const zip = new window.JSZip();
   zip.file('index.html', buildExportDocument());
-  zip.file('css/blocks.css', await fetch('css/blocks.css').then((r) => r.text()));
+  zip.file('css/blocks.css', await fetch('/css/blocks.css').then((r) => r.text()));
 
   const staticImagePaths = new Set();
   state.blocks.forEach((inst) => {
@@ -2067,10 +2077,10 @@ function wireGlobalHandlers() {
 
 /* ------------------------------ Init ------------------------------ */
 async function init() {
-  const res = await fetch('data/blocks-catalog.json');
+  const res = await fetch('/data/blocks-catalog.json');
   CATALOG = await res.json();
   try {
-    const iconsRes = await fetch('data/icons-catalog.json');
+    const iconsRes = await fetch('/data/icons-catalog.json');
     ICONS_CATALOG = (await iconsRes.json()).icons || [];
   } catch (e) { ICONS_CATALOG = []; }
   loadCatalogFonts();
