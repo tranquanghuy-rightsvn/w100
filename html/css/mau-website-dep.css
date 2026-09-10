@@ -154,11 +154,32 @@
   box-shadow: none;
 }
 
-/* Ảnh chụp thật (không dùng mockup .service-visual/.svc-frame) — cắt theo
-   chiều cao cố định 780px (ảnh full-page rất dài, không cần hiện hết),
-   không khung trình duyệt giả, không bo góc. */
-.tpl-thumb { height: 780px; overflow: hidden; background: var(--bg-alt); }
+/* Ảnh chụp thật (không dùng mockup .service-visual/.svc-frame) — ảnh gốc
+   chụp dọc theo tỉ lệ 9:16 (xem ghi chú capture trong images/mau-website-dep),
+   giữ nguyên tỉ lệ dọc này cho khung xem trước thay vì cắt ngắn thành 4:3,
+   không khung trình duyệt giả, không bo góc. Hover vào thẻ: ảnh tối lại,
+   2 nút "Chi tiết"/"Xem demo" hiện ra giữa ảnh (.tpl-thumb__overlay). */
+.tpl-thumb { position: relative; aspect-ratio: 8 / 12; overflow: hidden; background: var(--bg-alt); }
 .tpl-thumb__shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.tpl-thumb__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: rgba(11, 15, 20, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+.tpl-card:hover .tpl-thumb__overlay {
+  opacity: 1;
+  background: rgba(11, 15, 20, 0.6);
+  pointer-events: auto;
+}
 
 .tpl-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .tpl-tag {
@@ -171,10 +192,9 @@
 .tpl-body h3 { font-size: 19px; }
 /* Thẻ rút gọn: chỉ tên mẫu, không tag/mô tả — tên căn giữa. */
 .tpl-body--simple { align-items: center; text-align: center; }
-.tpl-body--simple h3 { margin-bottom: 4px; }
-.tpl-body--simple .tpl-actions { width: 100%; }
+.tpl-body--simple h3 { margin-bottom: 0; }
 .tpl-desc { font-size: 13.5px; color: var(--muted); flex: 1; margin-bottom: 6px; }
-.tpl-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.tpl-actions { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .tpl-demo-btn {
   font-family: inherit; background: none; border: none; padding: 0;
   cursor: pointer; font-size: 14px;
