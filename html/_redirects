@@ -1,0 +1,15 @@
+# 301 redirects: bài viết & chuyên mục blog cũ (web100.vn hiện tại) -> URL mới
+# trong source code này. Định dạng Cloudflare Pages / Netlify: <source> <destination> <status>
+# Đối chiếu 1:1 theo tiêu đề bài viết giữa site cũ (web100-remake/html) và site mới (blog/kinh-nghiem-seo-website/).
+
+# Chuyên mục "Kinh nghiệm SEO website"
+/kinh-nghiem-seo.html /blog/kinh-nghiem-seo-website/ 301
+
+# Các bài viết trong chuyên mục
+/10-mẹo-cải-thiện-chỉ-số-cls-cho-website.html /blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/ 301
+/bí-mật-để-có-1-website-có-tốc-độ-tải-trang-cực-nhanh.html /blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/ 301
+/cách-tối-ưu-hình-ảnh-cho-website-giúp-tăng-tốc-độ-tải-trang-cho-mobile.html /blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/ 301
+/giải-thích-các-chỉ-số-của-lighthouse-trên-google-chrome-có-quan-trọng-cho-seo-không.html /blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/ 301
+/hướng-dẫn-cách-viết-content-lên-top-tìm-kiếm.html /blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/ 301
+/tầm-quan-trọng-của-seo-onpage-trong-chiến-lược-digital-marketing.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/ 301
+/tầm-quan-trọng-của-sitemap-trong-seo.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/ 301
