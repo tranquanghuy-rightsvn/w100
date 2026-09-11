@@ -1177,25 +1177,29 @@ button { font: inherit; cursor: pointer; }
   position: relative;
   aspect-ratio: 16 / 10;
   border-radius: var(--radius);
-  background: linear-gradient(150deg, #0e2a24 0%, #0b0f14 60%, #078c46 130%);
-  display: flex; align-items: center; justify-content: center;
+  background: #0b0f14;
+  display: flex; align-items: flex-end; justify-content: flex-start;
   overflow: hidden;
 }
+.about-media__photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
+.about-media::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 1;
+  background: linear-gradient(0deg, rgba(11, 15, 20, 0.55) 0%, rgba(11, 15, 20, 0) 45%);
+  pointer-events: none;
+}
 .about-badge {
-  width: 88px; height: 88px;
+  position: relative;
+  z-index: 2;
+  margin: 20px;
+  width: 64px; height: 64px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.94);
   display: flex; align-items: center; justify-content: center;
-  z-index: 2;
+  box-shadow: var(--shadow);
 }
-.about-badge img { height: 22px; width: auto; }
-.about-people {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: space-around;
-  padding: 0 40px;
-  color: rgba(255, 255, 255, 0.14);
-}
-.about-people svg { width: 120px; height: 120px; }
+.about-badge img { height: 18px; width: auto; }
 
 /* ------------------------------ Why ------------------------------ */
 .why { padding: 96px 0; background: var(--bg-alt); }
@@ -1457,6 +1461,18 @@ body.no-scroll { overflow: hidden; }
 .footer-col h4 { color: #fff; font-size: 14px; margin-bottom: 16px; }
 .footer-col a { display: block; font-size: 14px; padding: 6px 0; transition: color 0.2s ease; }
 .footer-col a:hover { color: #fff; }
+.footer-col a.footer-contact-link, .footer-contact-link { display: flex; align-items: center; gap: 10px; line-height: 1.3; padding: 9px 0; }
+.footer-contact-link svg { width: 20px; height: 20px; flex-shrink: 0; display: block; color: var(--green); }
+.footer-contact-link--address { align-items: flex-start; font-size: 14px; }
+.footer-contact-link--address svg { margin-top: 2px; }
+.footer-fb-badge {
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+}
+.footer-fb-badge svg { width: 12px; height: 12px; color: var(--green); }
 .footer-bottom {
   display: flex; justify-content: space-between; gap: 12px;
   padding: 24px 0; font-size: 13px; flex-wrap: wrap;

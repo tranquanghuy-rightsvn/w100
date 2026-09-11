@@ -152,6 +152,52 @@
   </div>
 </section>
 
+<!-- ============================ FORM LIÊN HỆ & BẢN ĐỒ ============================ -->
+<section class="lh-form">
+  <div class="container lh-form-grid">
+    <div class="modal lh-form-card reveal">
+      <div class="modal__body">
+        <h3>Gửi yêu cầu tư vấn</h3>
+        <p>Điền thông tin bên dưới, đội ngũ Web100 sẽ liên hệ lại với bạn trong vòng 24 giờ.</p>
+        <form class="modal__form">
+          <label>
+            Họ tên
+            <input type="text" name="hoten" placeholder="Nhập họ tên của bạn" required>
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+          </label>
+          <label>
+            Số điện thoại
+            <input type="tel" name="dienthoai" placeholder="Nhập số điện thoại liên lạc" required>
+          </label>
+          <label>
+            Lời nhắn
+            <textarea name="mota" rows="4" placeholder="Bạn cần hỗ trợ gì? VD: Tư vấn thiết kế website bán hàng..."></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Gửi yêu cầu</button>
+        </form>
+      </div>
+      <div class="modal__done" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <h4>Đã gửi yêu cầu!</h4>
+        <p>Web100 sẽ liên hệ lại với bạn trong 24 giờ.</p>
+      </div>
+    </div>
+
+    <div class="lh-map reveal">
+      <iframe
+        src="https://www.google.com/maps?q=85+H%C3%B3i+Ki%E1%BB%83ng+22%2C+Ng%C5%A9+H%C3%A0nh+S%C6%A1n%2C+%C4%90%C3%A0+N%E1%BA%B5ng&output=embed"
+        title="Bản đồ vị trí văn phòng Web100"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ CÁC CÁCH LIÊN HỆ ============================ -->
 <section class="lh-methods">
   <div class="container">
@@ -161,9 +207,31 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
         </span>
         <h3>Điện thoại</h3>
-        <p>+84 964 074 043</p>
+        <p>Nghe máy ngay</p>
         <span class="text-link">
           Gọi ngay
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="lh-card" href="https://zalo.me/84964074043" target="_blank" rel="noopener">
+        <span class="lh-card__icon lh-card__icon--zalo"></span>
+        <h3>Zalo</h3>
+        <p>Thường trả lời trong 1 tiếng</p>
+        <span class="text-link">
+          Nhắn Zalo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="lh-card" href="https://fb.com/gindeptrai" target="_blank" rel="noopener">
+        <span class="lh-card__icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9C16.5 3.8 15.3 3.7 14 3.7c-2.7 0-4.5 1.6-4.5 4.6v2.2H6.7v3.2h2.8V22h4Z"/></svg>
+        </span>
+        <h3>Facebook</h3>
+        <p>Thường trả lời ngay</p>
+        <span class="text-link">
+          Nhắn tin
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </span>
       </a>
@@ -173,19 +241,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         </span>
         <h3>Email</h3>
-        <p>web100.vn@gmail.com</p>
+        <p>Phản hồi trong 1–3 tiếng</p>
         <span class="text-link">
           Gửi email
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <a class="lh-card" href="https://zalo.me/84964074043" target="_blank" rel="noopener">
-        <span class="lh-card__icon lh-card__icon--zalo"></span>
-        <h3>Zalo</h3>
-        <p>Chat trực tiếp, phản hồi nhanh</p>
-        <span class="text-link">
-          Nhắn Zalo
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </span>
       </a>
@@ -198,7 +256,7 @@
       </div>
       <div>
         <strong>Địa chỉ</strong>
-        <span>TP. Hồ Chí Minh, Việt Nam</span>
+        <span>Số nhà 85, đường Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng</span>
       </div>
     </div>
   </div>
@@ -211,14 +269,14 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <img src="/images/logo.png" alt="Web100">
-      <p>Web100 thiết kế và phát triển website độc bản, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
+      <p>Dịch vụ thiết kế và phát triển website chuyên nghiệp, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
     </div>
     <div class="footer-col">
       <h4>Điều hướng</h4>
-      <a href="/#top">Trang chủ</a>
-      <a href="/#du-an">Dự án</a>
+      <a href="/">Trang chủ</a>
       <a href="/#dich-vu">Dịch vụ</a>
-      <a href="/#quy-trinh">Quy trình</a>
+      <a href="/mau-website-dep/">Mẫu web đẹp</a>
+      <a href="/khach-hang/">Khách hàng</a>
     </div>
     <div class="footer-col">
       <h4>Công ty</h4>
@@ -228,8 +286,24 @@
     </div>
     <div class="footer-col">
       <h4>Liên hệ</h4>
-      <a href="mailto:web100.vn@gmail.com">web100.vn@gmail.com</a>
-      <a href="tel:+84964074043">+84 964 074 043</a>
+      <a class="footer-contact-link" href="mailto:web100.vn@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        web100.vn@gmail.com
+      </a>
+      <a class="footer-contact-link" href="tel:+84964074043">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        096.407.4043
+      </a>
+      <a class="footer-contact-link" href="https://fb.com/gindeptrai" target="_blank" rel="noopener">
+        <span class="footer-fb-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.3h2.8l.4-3.2h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9C16.5 3.8 15.3 3.7 14 3.7c-2.7 0-4.5 1.6-4.5 4.6v2.2H6.7v3.2h2.8V22h4Z"/></svg>
+        </span>
+        fb.com/gindeptrai
+      </a>
+      <span class="footer-contact-link footer-contact-link--address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Số nhà 85, đường Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng
+      </span>
     </div>
   </div>
   <div class="container footer-bottom">

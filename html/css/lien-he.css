@@ -20,8 +20,8 @@
 .lh-hero .section-desc { max-width: 540px; margin: 0 auto; }
 
 /* ------------------------------ Lưới cách liên hệ ------------------------------ */
-.lh-methods { padding: 24px 0 96px; }
-.lh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.lh-methods { padding: 0 0 96px; }
+.lh-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .lh-card {
   display: flex;
   flex-direction: column;
@@ -41,8 +41,30 @@
   margin-bottom: 14px;
 }
 .lh-card__icon svg { width: 24px; height: 24px; }
-.lh-card h3 { font-size: 18px; margin-top: 2px; }
-.lh-card p { font-size: 14px; color: var(--muted); margin-top: 2px; margin-bottom: 10px; }
+.lh-card h3 { font-size: 18px; margin-top: 2px; margin-bottom: 10px; }
+/* -- Dòng "phản hồi nhanh" hiển thị dạng pill có chấm xanh, thay cho chữ
+   xám đơn thuần — nhấn mạnh tốc độ phản hồi của từng kênh liên hệ. -- */
+.lh-card p {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: var(--green-tint);
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  margin-bottom: 16px;
+}
+.lh-card p::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
 
 /* -- ô icon riêng cho thẻ Zalo: logo Zalo bo tròn, đồng bộ với
    .contact-float__zalo (nút nổi góc phải) thay vì icon chat chung. -- */
@@ -65,8 +87,33 @@
 .lh-hours strong { font-size: 14px; color: var(--ink); }
 .lh-hours span { font-size: 13.5px; color: var(--muted); }
 
+/* ------------------------------ Form liên hệ & bản đồ ------------------------------ */
+/* Tái sử dụng đúng khối .modal/.modal__form/.modal__done (vốn dùng cho popup
+   "Yêu cầu tư vấn") nhưng đặt tĩnh ngay trên trang thay vì trong overlay —
+   main.js đã tự nhận .modal__form và xử lý submit (chặn thật, hiện .modal__done). */
+.lh-form { padding: 24px 0 72px; }
+.lh-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+.lh-form-card {
+  position: static;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+.lh-map {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  min-height: 360px;
+}
+.lh-map iframe { width: 100%; height: 100%; min-height: 360px; border: 0; display: block; }
+
 @media (max-width: 900px) {
   .lh-grid { grid-template-columns: repeat(2, 1fr); }
+  .lh-form-grid { grid-template-columns: 1fr; }
+  .lh-map { min-height: 320px; }
+  .lh-map iframe { min-height: 320px; }
 }
 @media (max-width: 700px) {
   .lh-hero { padding: 56px 0 40px; }
