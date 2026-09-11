@@ -60,6 +60,11 @@ function initTplFilters() {
       toggleBtn.classList.toggle('is-open', open);
       toggleBtn.querySelector('span').textContent = open ? 'Thu gọn' : 'Xem thêm danh mục';
     }
+    // Ẩn/hiện các nút "Xem thêm" làm nút đang active trôi sang vị trí khác
+    // trong layout flex-wrap — phải định vị lại khối tô nền theo vị trí mới,
+    // nếu không nó đứng yên ở toạ độ cũ và đè lên nút khác (xem ảnh lỗi).
+    const activeBtn = document.querySelector('.tpl-filter.is-active');
+    if (activeBtn) moveIndicator(activeBtn, true);
   };
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => setMoreOpen(!toggleBtn.classList.contains('is-open')));
