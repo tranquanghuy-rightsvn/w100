@@ -2,6 +2,9 @@
 # trong source code này. Định dạng Cloudflare Pages / Netlify: <source> <destination> <status>
 # Đối chiếu 1:1 theo tiêu đề bài viết giữa site cũ (web100-remake/html) và site mới (blog/kinh-nghiem-seo-website/).
 
+# Trang danh sách dự án cũ -> trang Khách hàng mới
+/du-an.html /khach-hang/ 301
+
 # Chuyên mục "Kinh nghiệm SEO website"
 /kinh-nghiem-seo.html /blog/kinh-nghiem-seo-website/ 301
 
