@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Trang /thiet-ke-website-da-nang/ — landing page ngách địa phương.
+   Phần lớn khối (hero, lưới tính năng, khách hàng, quy trình, bảng giá, FAQ,
+   CTA) dùng lại class có sẵn trong style.css, website-doanh-nghiep.css và
+   pricing.css. File này chỉ chứa những khối riêng của trang: breadcrumb,
+   lưới loại website, lưới mẫu tĩnh (không carousel) và khu vực + bản đồ.
+   ========================================================================== */
+
+/* ------------------------------ Breadcrumb ------------------------------ */
+.tkdn-crumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.tkdn-crumb a { color: var(--muted); transition: color 0.2s ease; }
+.tkdn-crumb a:hover { color: var(--green-dark); }
+.tkdn-crumb svg { width: 14px; height: 14px; flex-shrink: 0; }
+.tkdn-crumb span { color: var(--ink); }
+
+/* ------------------------------ Khoảng cách các section riêng ------------------------------ */
+.tkdn-why,
+.tkdn-types,
+.tkdn-samples,
+.tkdn-area { padding: 88px 0; }
+.tkdn-types,
+.tkdn-area { background: var(--bg-alt); }
+
+/* ------------------------------ Loại website theo ngành ------------------------------ */
+.tkdn-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.tkdn-type {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.tkdn-type h3 { font-size: 18px; color: var(--ink); margin-bottom: 10px; }
+.tkdn-type p { font-size: 15px; line-height: 1.7; }
+.tkdn-type a { color: var(--green-dark); font-weight: 600; }
+.tkdn-type a:hover { text-decoration: underline; }
+
+/* ------------------------------ Mẫu website — lưới tĩnh ------------------------------ */
+.tkdn-sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.tkdn-sample-grid .svc-card { width: auto; }
+
+/* ------------------------------ Khu vực phục vụ + bản đồ ------------------------------ */
+.tkdn-area__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.tkdn-area__copy h2 { margin: 14px 0 16px; }
+.tkdn-area__copy > p { font-size: 16px; line-height: 1.75; }
+.tkdn-area__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 28px;
+  padding: 0;
+  list-style: none;
+}
+.tkdn-area__list li {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tkdn-area__nap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-style: normal;
+  font-size: 15px;
+}
+.tkdn-area__nap strong { color: var(--ink); font-size: 16px; }
+.tkdn-area__nap a { color: var(--green-dark); font-weight: 600; }
+.tkdn-map {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  min-height: 380px;
+  background: #fff;
+}
+.tkdn-map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
+
+.faq-panel a { color: var(--green-dark); font-weight: 600; }
+
+/* ------------------------------ Responsive ------------------------------ */
+@media (max-width: 1080px) {
+  .tkdn-type-grid,
+  .tkdn-sample-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .tkdn-area__grid { grid-template-columns: 1fr; gap: 32px; }
+  .tkdn-map, .tkdn-map iframe { min-height: 320px; }
+}
+@media (max-width: 700px) {
+  .tkdn-why,
+  .tkdn-types,
+  .tkdn-samples,
+  .tkdn-area { padding: 60px 0; }
+  .tkdn-type-grid,
+  .tkdn-sample-grid { grid-template-columns: 1fr; gap: 18px; }
+  .tkdn-type { padding: 22px; }
+}
