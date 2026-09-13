@@ -21,6 +21,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/blog/kinh-nghiem-seo-website/huong-dan-tro-domain-vao-dia-chi-ip/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -42,6 +47,11 @@
   </url>
   <url>
     <loc>https://web100.vn/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://web100.vn/blog/kinh-nghiem-seo-website/web100-tich-hop-seomath-viet-bai-chuan-seo/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
