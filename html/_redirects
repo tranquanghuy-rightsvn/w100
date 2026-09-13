@@ -1,12 +1,18 @@
 # 301 redirects: bài viết & chuyên mục blog cũ (web100.vn hiện tại) -> URL mới
 # trong source code này. Định dạng Cloudflare Pages / Netlify: <source> <destination> <status>
 # Đối chiếu 1:1 theo tiêu đề bài viết giữa site cũ (web100-remake/html) và site mới (blog/kinh-nghiem-seo-website/).
+#
+# LƯU Ý: Cloudflare Pages so khớp source theo đúng path đã percent-encode
+# (không tự giải mã UTF-8 như Netlify). Mọi source có dấu tiếng Việt PHẢI
+# được percent-encode (VD: "í" -> %C3%AD), nếu không rule sẽ không khớp và
+# trả 404 thay vì redirect — đã từng bị lỗi này với toàn bộ rule bên dưới.
 
 # Trang danh sách dự án cũ -> trang Khách hàng mới
 /du-an.html /khach-hang/ 301
 
 # Trang giới thiệu cũ -> trang Về chúng tôi mới
 /gioi-thieu.html /ve-chung-toi/ 301
+/web100.html /ve-chung-toi/ 301
 
 # Chính sách bảo mật -> khôi phục lại đúng URL, giữ nguyên vị trí (chỉ đổi .html -> /)
 /chinh-sach-bao-mat-thong-tin.html /chinh-sach-bao-mat-thong-tin/ 301
@@ -15,12 +21,12 @@
 /kinh-nghiem-seo.html /blog/kinh-nghiem-seo-website/ 301
 
 # Các bài viết trong chuyên mục
-/10-mẹo-cải-thiện-chỉ-số-cls-cho-website.html /blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/ 301
-/bí-mật-để-có-1-website-có-tốc-độ-tải-trang-cực-nhanh.html /blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/ 301
-/cách-tối-ưu-hình-ảnh-cho-website-giúp-tăng-tốc-độ-tải-trang-cho-mobile.html /blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/ 301
-/giải-thích-các-chỉ-số-của-lighthouse-trên-google-chrome-có-quan-trọng-cho-seo-không.html /blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/ 301
-/hướng-dẫn-cách-trỏ-domain-vào-địa-chỉ-ip-cực-kỳ-dễ-dàng.html /blog/kinh-nghiem-seo-website/huong-dan-tro-domain-vao-dia-chi-ip/ 301
-/hướng-dẫn-cách-viết-content-lên-top-tìm-kiếm.html /blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/ 301
-/tầm-quan-trọng-của-seo-onpage-trong-chiến-lược-digital-marketing.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/ 301
-/tầm-quan-trọng-của-sitemap-trong-seo.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/ 301
-/web100-tích-hợp-seomath-giúp-viết-bài-chuẩn-seo.html /blog/kinh-nghiem-seo-website/web100-tich-hop-seomath-viet-bai-chuan-seo/ 301
+/10-m%E1%BA%B9o-c%E1%BA%A3i-thi%E1%BB%87n-ch%E1%BB%89-s%E1%BB%91-cls-cho-website.html /blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/ 301
+/b%C3%AD-m%E1%BA%ADt-%C4%91%E1%BB%83-c%C3%B3-1-website-c%C3%B3-t%E1%BB%91c-%C4%91%E1%BB%99-t%E1%BA%A3i-trang-c%E1%BB%B1c-nhanh.html /blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/ 301
+/c%C3%A1ch-t%E1%BB%91i-%C6%B0u-h%C3%ACnh-%E1%BA%A3nh-cho-website-gi%C3%BAp-t%C4%83ng-t%E1%BB%91c-%C4%91%E1%BB%99-t%E1%BA%A3i-trang-cho-mobile.html /blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/ 301
+/gi%E1%BA%A3i-th%C3%ADch-c%C3%A1c-ch%E1%BB%89-s%E1%BB%91-c%E1%BB%A7a-lighthouse-tr%C3%AAn-google-chrome-c%C3%B3-quan-tr%E1%BB%8Dng-cho-seo-kh%C3%B4ng.html /blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/ 301
+/h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A1ch-tr%E1%BB%8F-domain-v%C3%A0o-%C4%91%E1%BB%8Ba-ch%E1%BB%89-ip-c%E1%BB%B1c-k%E1%BB%B3-d%E1%BB%85-d%C3%A0ng.html /blog/kinh-nghiem-seo-website/huong-dan-tro-domain-vao-dia-chi-ip/ 301
+/h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A1ch-vi%E1%BA%BFt-content-l%C3%AAn-top-t%C3%ACm-ki%E1%BA%BFm.html /blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/ 301
+/t%E1%BA%A7m-quan-tr%E1%BB%8Dng-c%E1%BB%A7a-seo-onpage-trong-chi%E1%BA%BFn-l%C6%B0%E1%BB%A3c-digital-marketing.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/ 301
+/t%E1%BA%A7m-quan-tr%E1%BB%8Dng-c%E1%BB%A7a-sitemap-trong-seo.html /blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/ 301
+/web100-t%C3%ADch-h%E1%BB%A3p-seomath-gi%C3%BAp-vi%E1%BA%BFt-b%C3%A0i-chu%E1%BA%A9n-seo.html /blog/kinh-nghiem-seo-website/web100-tich-hop-seomath-viet-bai-chuan-seo/ 301
