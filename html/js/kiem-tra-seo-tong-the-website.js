@@ -163,7 +163,19 @@ function initSeoCheckTool() {
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const PHONE_RE = /^[0-9+\s.()-]{8,15}$/;
-  const DOMAIN_RE = /^(?!https?:\/\/)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
+  const DOMAIN_RE = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
+
+  // Cho phép người dùng dán nguyên URL (https://www.web100.vn/abc?x=1) — tự
+  // bóc tách chỉ lấy phần domain trước khi validate, tránh báo lỗi vô lý.
+  function normalizeDomain(raw) {
+    let value = raw.trim();
+    value = value.replace(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//, ''); // bỏ scheme (http://, https://...)
+    value = value.split(/[/?#]/)[0]; // bỏ path/query/hash
+    value = value.replace(/^www\./i, ''); // bỏ tiền tố www.
+    value = value.split('@').pop(); // phòng trường hợp dạng user@host
+    value = value.split(':')[0]; // bỏ port nếu có
+    return value.toLowerCase();
+  }
 
   function setFieldError(name, message) {
     const input = form.querySelector(`[name="${name}"]`);
@@ -210,12 +222,13 @@ function initSeoCheckTool() {
 
     const data = new FormData(form);
     const hoten = (data.get('hoten') || '').toString().trim();
-    const domain = (data.get('domain') || '').toString().trim();
+    const domain = normalizeDomain((data.get('domain') || '').toString());
     const email = (data.get('email') || '').toString().trim();
     const dienthoai = (data.get('dienthoai') || '').toString().trim();
 
     if (!validateForm({ hoten, domain, email, dienthoai })) return;
 
+    form.querySelector('[name="domain"]').value = domain;
     domainLabelEl.textContent = domain;
     summaryEl.innerHTML = `
       <span><strong>Họ tên:</strong> ${hoten}</span>
