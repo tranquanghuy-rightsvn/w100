@@ -2001,7 +2001,7 @@ async function submitAdminExport(form) {
     const json = await res.json().catch(() => null);
     if (!json || json.ok !== true) throw new Error((json && json.error) || 'Gửi thất bại');
 
-    note.textContent = 'Đã gửi! Web100 sẽ liên hệ lại để đưa trang này lên hosting.';
+    note.textContent = 'Đã gửi! Web100 sẽ liên hệ tư vấn thiết kế website thật theo đúng mẫu này.';
     note.className = 'export-admin-note is-success';
     form.reset();
   } catch (err) {
