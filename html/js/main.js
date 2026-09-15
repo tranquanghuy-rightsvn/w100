@@ -771,7 +771,10 @@ function initTemplateActions() {
             trang: location.pathname,
           };
 
-      if (submitBtn) submitBtn.disabled = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+      }
 
       fetch(window.WEB100_FORM_URL, {
         method: 'POST',
@@ -780,7 +783,10 @@ function initTemplateActions() {
       })
         .catch((err) => console.error('Gửi form thất bại:', err))
         .finally(() => {
-          if (submitBtn) submitBtn.disabled = false;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+          }
           if (body) body.hidden = true;
           if (done) done.hidden = false;
         });

@@ -1975,6 +1975,7 @@ async function submitAdminExport(form) {
   }
 
   btn.disabled = true;
+  btn.classList.add('is-loading');
   note.textContent = 'Đang đóng gói và gửi trang của bạn…';
   note.className = 'export-admin-note';
 
@@ -2008,6 +2009,7 @@ async function submitAdminExport(form) {
     note.className = 'export-admin-note is-error';
   } finally {
     btn.disabled = false;
+    btn.classList.remove('is-loading');
   }
 }
 
@@ -2135,7 +2137,10 @@ function wireGlobalHandlers() {
   document.getElementById('btnExportZip').addEventListener('click', (e) => {
     const btn = e.currentTarget;
     btn.disabled = true;
-    exportZip().catch((err) => window.alert('Xuất ZIP thất bại: ' + err.message)).finally(() => { btn.disabled = false; });
+    btn.classList.add('is-loading');
+    exportZip()
+      .catch((err) => window.alert('Xuất ZIP thất bại: ' + err.message))
+      .finally(() => { btn.disabled = false; btn.classList.remove('is-loading'); });
   });
   document.getElementById('btnExportAdmin').addEventListener('click', openAdminExportForm);
   document.getElementById('exportAdminForm').addEventListener('submit', (e) => {
