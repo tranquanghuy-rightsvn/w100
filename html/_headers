@@ -1,0 +1,6 @@
+# Cloudflare Pages — headers. Trang quản trị /admin/ không được lộ ra ngoài mọi công cụ tìm
+# kiếm/preview — meta robots trong <head> đã có, thêm header X-Robots-Tag để chắc chắn ngay cả
+# khi bot bỏ qua <meta>. TUYỆT ĐỐI KHÔNG khai Disallow cho đường dẫn này trong robots.txt —
+# Disallow là 1 file public, khai vào đó vô tình công bố sự tồn tại của trang quản trị.
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex

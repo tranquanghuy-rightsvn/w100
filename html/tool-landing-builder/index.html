@@ -325,14 +325,28 @@
       <button class="export-option" type="button" id="btnExportAdmin">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4Z"/><path d="m4 6 8 7 8-7"/></svg>
         <strong>Gửi cho admin</strong>
-        <span>Sao chép mã, gửi qua email/Zalo để được lên hosting</span>
+        <span>Để lại thông tin, Web100 nhận file và liên hệ đưa trang lên hosting</span>
       </button>
     </div>
 
     <div class="export-admin-box" id="exportAdminBox">
-      <textarea id="exportAdminCode" readonly></textarea>
-      <button class="builder-btn" type="button" id="btnCopyAdminCode">Sao chép mã</button>
-      <span class="export-copied" id="exportCopiedNote">Đã sao chép!</span>
+      <form id="exportAdminForm" novalidate>
+        <input type="text" name="_hp" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+        <label>
+          Họ tên
+          <input type="text" name="hoten" placeholder="Nhập họ tên của bạn" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="Nhập email của bạn" required>
+        </label>
+        <label>
+          Số điện thoại
+          <input type="tel" name="dienthoai" placeholder="Nhập số điện thoại liên lạc" required>
+        </label>
+        <button class="builder-btn builder-btn--primary" type="submit" id="btnSendAdminZip">Gửi trang cho Web100</button>
+      </form>
+      <p class="export-admin-note" id="exportAdminNote"></p>
     </div>
   </div>
 </div>

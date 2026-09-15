@@ -1158,7 +1158,7 @@ Website truyện chữ ngôn tình, cung cấp trải nghiệm đọc mượt m�
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Bàn giao trong 5-7 ngày làm việc</li>
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Hỗ trợ kỹ thuật 1 tháng sau bàn giao</li>
               </ul>
-              <a class="btn btn-outline" href="#lien-he">Chọn gói Normal</a>
+              <button class="btn btn-outline" type="button" data-open-modal="modalBaoGia" data-package="Cơ bản">Chọn gói Normal</button>
             </div>
 
             <div class="price-card price-card--featured">
@@ -1176,7 +1176,7 @@ Website truyện chữ ngôn tình, cung cấp trải nghiệm đọc mượt m�
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Bàn giao trong 10-14 ngày làm việc</li>
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Hỗ trợ kỹ thuật 6 tháng sau bàn giao</li>
               </ul>
-              <a class="btn btn-primary" href="#lien-he">Chọn gói Chuyên nghiệp</a>
+              <button class="btn btn-primary" type="button" data-open-modal="modalBaoGia" data-package="Chuyên nghiệp">Chọn gói Chuyên nghiệp</button>
             </div>
 
             <div class="price-card">
@@ -1190,7 +1190,7 @@ Website truyện chữ ngôn tình, cung cấp trải nghiệm đọc mượt m�
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Bàn giao trong 3-4 tuần làm việc</li>
                 <li><svg class="price-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" /></svg> Hỗ trợ kỹ thuật trọn đời website</li>
               </ul>
-              <a class="btn btn-outline" href="#lien-he">Chọn gói Cao cấp</a>
+              <button class="btn btn-outline" type="button" data-open-modal="modalBaoGia" data-package="Cao cấp">Chọn gói Cao cấp</button>
             </div>
           </div>
         </div>
@@ -1343,6 +1343,48 @@ Website truyện chữ ngôn tình, cung cấp trải nghiệm đọc mượt m�
         </div>
       </section>
     </main>
+
+    <!-- ============================ MODAL YÊU CẦU BÁO GIÁ ============================ -->
+    <div class="modal-overlay" id="modalBaoGia" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalBaoGiaTitle">
+        <button class="modal__close" type="button" data-close-modal aria-label="Đóng">×</button>
+
+        <div class="modal__body">
+          <h3 id="modalBaoGiaTitle">Yêu cầu báo giá</h3>
+          <p>Điền thông tin bên dưới, đội ngũ Web100 sẽ gửi báo giá chi tiết theo đúng gói bạn chọn trong vòng 24 giờ.</p>
+
+          <form class="modal__form" data-form-action="quote">
+            <label>
+              Họ tên
+              <input type="text" name="hoten" placeholder="Nhập họ tên của bạn" required>
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="Nhập email của bạn" required>
+            </label>
+            <label>
+              Số điện thoại
+              <input type="tel" name="dienthoai" placeholder="Nhập số điện thoại liên lạc" required>
+            </label>
+            <label>
+              Gói dịch vụ
+              <input type="text" name="goi_dich_vu" readonly>
+            </label>
+            <label>
+              Ghi chú thêm (không bắt buộc)
+              <textarea name="mota" rows="3" placeholder="VD: Website cần thêm chức năng đặt lịch..."></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit">Gửi yêu cầu báo giá</button>
+          </form>
+        </div>
+
+        <div class="modal__done" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <h4>Đã gửi yêu cầu!</h4>
+          <p>Web100 sẽ gửi báo giá chi tiết qua email/điện thoại bạn để lại trong 24 giờ.</p>
+        </div>
+      </div>
+    </div>
 
     <!-- ============================ FOOTER ============================ -->
     <footer class="site-footer">

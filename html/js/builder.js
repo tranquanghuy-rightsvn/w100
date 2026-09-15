@@ -2,6 +2,12 @@
    Thêm 1 kiểu khối/variant mới = thêm entry vào file JSON đó, không cần sửa
    file này (trừ khi cần 1 field "type" hoàn toàn mới chưa từng có). */
 
+// Endpoint GAS nhận form (action=landing) — gas/README.md ở gốc repo. Trang này
+// không nạp js/main.js (app toàn màn hình riêng) nên khai lại hằng số tại đây
+// thay vì dùng chung window.WEB100_FORM_URL.
+const WEB100_FORM_URL = 'https://script.google.com/macros/s/AKfycbwgxqNs8MfhlObqxMmBL88CVvG_hQOTXffH3mlflBzDLSosukMKzsv7PLreUQjMp9E/exec';
+const ADMIN_ZIP_MAX_BYTES = 15 * 1024 * 1024; // 15MB — base64 hoá sẽ phình thêm ~33%, cộng giới hạn đính kèm email
+
 const STORAGE_KEY = 'web100_builder_state_v2';
 const ICON_HANDLE = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.3"/><circle cx="16" cy="6" r="1.3"/><circle cx="8" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="8" cy="18" r="1.3"/><circle cx="16" cy="18" r="1.3"/></svg>';
 const ICON_DELETE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>';
@@ -1878,7 +1884,7 @@ function ensureJsZip() {
     document.head.appendChild(s);
   });
 }
-async function exportZip() {
+async function buildZipBlob() {
   await ensureJsZip();
   const zip = new window.JSZip();
   zip.file('index.html', buildExportDocument());
@@ -1915,7 +1921,11 @@ async function exportZip() {
     }));
   }
 
-  const blob = await zip.generateAsync({ type: 'blob' });
+  return zip.generateAsync({ type: 'blob' });
+}
+
+async function exportZip() {
+  const blob = await buildZipBlob();
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1925,11 +1935,80 @@ async function exportZip() {
   a.remove();
   URL.revokeObjectURL(url);
 }
-function showAdminExport() {
-  const payload = { app: 'web100-builder', state };
-  const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-  document.getElementById('exportAdminCode').value = base64;
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = () => reject(new Error('Không đọc được file ZIP'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+function openAdminExportForm() {
+  const form = document.getElementById('exportAdminForm');
+  const note = document.getElementById('exportAdminNote');
+  form.reset();
+  note.textContent = '';
+  note.className = 'export-admin-note';
   document.getElementById('exportAdminBox').classList.add('is-open');
+}
+
+async function submitAdminExport(form) {
+  const note = document.getElementById('exportAdminNote');
+  const btn = form.querySelector('button[type="submit"]');
+  const data = new FormData(form);
+  if (data.get('_hp')) return; // bot dính bẫy — im lặng, không gửi
+
+  const hoten = (data.get('hoten') || '').toString().trim();
+  const email = (data.get('email') || '').toString().trim();
+  const dienthoai = (data.get('dienthoai') || '').toString().trim();
+  if (!hoten || !email || !dienthoai) {
+    note.textContent = 'Vui lòng điền đủ họ tên, email và số điện thoại.';
+    note.className = 'export-admin-note is-error';
+    return;
+  }
+  if (!state.blocks.length) {
+    note.textContent = 'Chưa có khối nào để gửi — hãy thêm khối trước đã.';
+    note.className = 'export-admin-note is-error';
+    return;
+  }
+
+  btn.disabled = true;
+  note.textContent = 'Đang đóng gói và gửi trang của bạn…';
+  note.className = 'export-admin-note';
+
+  try {
+    const blob = await buildZipBlob();
+    if (blob.size > ADMIN_ZIP_MAX_BYTES) {
+      note.textContent = 'Trang của bạn quá nặng để gửi qua đây (nhiều ảnh dung lượng lớn) — hãy dùng "Tải file ZIP" rồi gửi tay qua email/Zalo.';
+      note.className = 'export-admin-note is-error';
+      return;
+    }
+    const zip_base64 = await blobToBase64(blob);
+    const res = await fetch(WEB100_FORM_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'landing',
+        hoten, email, dienthoai,
+        filename: 'web100-landing.zip',
+        trang: location.pathname,
+        zip_base64,
+      }),
+    });
+    const json = await res.json().catch(() => null);
+    if (!json || json.ok !== true) throw new Error((json && json.error) || 'Gửi thất bại');
+
+    note.textContent = 'Đã gửi! Web100 sẽ liên hệ lại để đưa trang này lên hosting.';
+    note.className = 'export-admin-note is-success';
+    form.reset();
+  } catch (err) {
+    note.textContent = 'Gửi thất bại: ' + err.message + ' — thử lại hoặc dùng "Tải file ZIP".';
+    note.className = 'export-admin-note is-error';
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 /* ------------------------------ Wiring toàn cục ------------------------------ */
@@ -2058,20 +2137,10 @@ function wireGlobalHandlers() {
     btn.disabled = true;
     exportZip().catch((err) => window.alert('Xuất ZIP thất bại: ' + err.message)).finally(() => { btn.disabled = false; });
   });
-  document.getElementById('btnExportAdmin').addEventListener('click', showAdminExport);
-  document.getElementById('btnCopyAdminCode').addEventListener('click', () => {
-    const ta = document.getElementById('exportAdminCode');
-    ta.select();
-    const done = () => {
-      const note = document.getElementById('exportCopiedNote');
-      note.classList.add('show');
-      setTimeout(() => note.classList.remove('show'), 1500);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(ta.value).then(done).catch(() => { document.execCommand('copy'); done(); });
-    } else {
-      document.execCommand('copy'); done();
-    }
+  document.getElementById('btnExportAdmin').addEventListener('click', openAdminExportForm);
+  document.getElementById('exportAdminForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitAdminExport(e.target);
   });
 }
 

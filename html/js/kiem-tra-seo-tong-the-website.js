@@ -1,9 +1,10 @@
 /* --------------------------------------------------------------------------
    kiem-tra-seo-tong-the-website.js — mô phỏng quy trình audit SEO ngay trên trình duyệt.
-   Không có backend thật: mọi bước "kiểm tra" chỉ là hiệu ứng chờ (setTimeout)
-   với thời lượng ngẫu nhiên, tổng thời gian rơi vào khoảng 2 phút. Thông tin
-   người dùng nhập (họ tên, SĐT, email, domain) chỉ hiển thị lại trong tóm tắt
-   kết quả, không được gửi đi bất cứ đâu.
+   Việc "kiểm tra" chỉ là hiệu ứng chờ (setTimeout) với thời lượng ngẫu nhiên,
+   tổng thời gian rơi vào khoảng 2 phút. Thông tin người dùng nhập (họ tên,
+   SĐT, email, domain) chỉ gửi lên backend (gas/README.md, action=seo) SAU KHI
+   mô phỏng chạy xong — tại thời điểm submit form chưa gửi gì cả, vì lúc đó
+   người dùng có thể đóng tab giữa chừng mà chưa thật sự "hoàn tất" 1 lượt kiểm tra.
    -------------------------------------------------------------------------- */
 function initSeoCheckTool() {
   const form = document.getElementById('seotoolForm');
@@ -61,6 +62,7 @@ function initSeoCheckTool() {
   let timerInterval = null;
   let elapsedSeconds = 0;
   let running = false;
+  let pendingSubmission = null;
 
   function showStep(el) {
     [stepFormEl, stepProgressEl].forEach((s) => { s.hidden = s !== el; });
@@ -148,6 +150,20 @@ function initSeoCheckTool() {
     if (progressVerbEl) progressVerbEl.textContent = 'Đã kiểm tra xong domain';
     running = false;
     openDoneModal();
+    submitPending_();
+  }
+
+  // Chỉ gửi lên backend khi mô phỏng đã chạy xong (~2 phút) — không gửi ngay
+  // lúc submit form, tránh tính là "đã kiểm tra" nếu người dùng đóng tab giữa chừng.
+  function submitPending_() {
+    if (!pendingSubmission || !window.WEB100_FORM_URL) return;
+    const payload = { action: 'seo', trang: location.pathname, ...pendingSubmission };
+    pendingSubmission = null;
+    fetch(window.WEB100_FORM_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    }).catch((err) => console.error('Gửi kết quả kiểm tra SEO thất bại:', err));
   }
 
   function resetTool() {
@@ -221,6 +237,8 @@ function initSeoCheckTool() {
     if (running) return;
 
     const data = new FormData(form);
+    if (data.get('_hp')) return; // bot dính bẫy — im lặng, không chạy mô phỏng
+
     const hoten = (data.get('hoten') || '').toString().trim();
     const domain = normalizeDomain((data.get('domain') || '').toString());
     const email = (data.get('email') || '').toString().trim();
@@ -228,6 +246,7 @@ function initSeoCheckTool() {
 
     if (!validateForm({ hoten, domain, email, dienthoai })) return;
 
+    pendingSubmission = { hoten, domain, email, dienthoai };
     form.querySelector('[name="domain"]').value = domain;
     domainLabelEl.textContent = domain;
     summaryEl.innerHTML = `

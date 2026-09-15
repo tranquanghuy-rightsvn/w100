@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản trị — Web100</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0f14; overflow: hidden; }
+  /* Iframe cao hơn khung nhìn 25px rồi kéo lên -25px để cắt mất thanh cảnh báo
+     "This app was created by another user" mà Google tự chèn ở đầu trang HtmlService. */
+  .admin-frame-wrap { position: fixed; inset: 0; overflow: hidden; }
+  .admin-frame-wrap iframe {
+    position: absolute; top: -25px; left: 0; width: 100%; height: calc(100% + 25px);
+    border: none;
+  }
+  .admin-fallback {
+    position: fixed; inset: 0; z-index: 10; display: none;
+    align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+    background: #0b0f14; color: #fff; text-align: center; padding: 24px; font-family: system-ui, sans-serif;
+  }
+  .admin-fallback.is-visible { display: flex; }
+  .admin-fallback a {
+    display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px;
+    border-radius: 999px; background: #0bcb68; color: #0b0f14; font-weight: 700; text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="admin-frame-wrap">
+  <iframe id="adminFrame" title="Trang quản trị Web100" referrerpolicy="no-referrer"></iframe>
+</div>
+
+<div class="admin-fallback" id="adminFallback">
+  <p>Không tải được khung quản trị trong iframe.</p>
+  <a id="adminFallbackLink" href="#" target="_blank" rel="noopener">Mở trang quản trị</a>
+</div>
+
+<script>
+(function () {
+  // URL thật của backend quản trị — xem gas/README.md ở gốc repo.
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwgxqNs8MfhlObqxMmBL88CVvG_hQOTXffH3mlflBzDLSosukMKzsv7PLreUQjMp9E/exec';
+  var frame = document.getElementById('adminFrame');
+  var fallback = document.getElementById('adminFallback');
+  var loaded = false;
+
+  document.getElementById('adminFallbackLink').href = GAS_URL;
+  frame.addEventListener('load', function () { loaded = true; });
+  frame.src = GAS_URL;
+
+  // Không có cách đáng tin cậy để biết iframe cross-origin có render được nội dung
+  // thật hay không (CSP/X-Frame-Options chặn thì trình duyệt vẫn báo "load" xong với
+  // trang rỗng) — nên chỉ dùng mốc 12s: nếu tới lúc đó vẫn chưa từng "load" thì coi
+  // như treo, hiện lớp thông báo đè lên (không gỡ iframe, phòng khi nó load muộn).
+  setTimeout(function () {
+    if (!loaded) fallback.classList.add('is-visible');
+  }, 12000);
+})();
+</script>
+
+</body>
+</html>

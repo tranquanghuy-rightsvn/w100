@@ -1,5 +1,9 @@
 /* Web100 — main.js */
 
+// Endpoint GAS dùng chung cho mọi form của site (liên hệ, kiểm tra SEO, yêu cầu báo giá)
+// — xem gas/README.md ở gốc repo.
+window.WEB100_FORM_URL = 'https://script.google.com/macros/s/AKfycbwgxqNs8MfhlObqxMmBL88CVvG_hQOTXffH3mlflBzDLSosukMKzsv7PLreUQjMp9E/exec';
+
 document.addEventListener('DOMContentLoaded', () => {
   initHeroLeadTyping();
   initMobileNav();
@@ -689,7 +693,16 @@ function initTemplateActions() {
 
   document.querySelectorAll('[data-open-modal]').forEach((btn) => {
     const modal = document.getElementById(btn.dataset.openModal);
-    if (modal) btn.addEventListener('click', () => openModal(modal));
+    if (!modal) return;
+    btn.addEventListener('click', () => {
+      // Nút chọn gói giá mang theo data-package -> điền sẵn vào field ẩn
+      // "goi_dich_vu" của modal báo giá, để form biết đang gửi cho gói nào.
+      if (btn.dataset.package) {
+        const pkgInput = modal.querySelector('[name="goi_dich_vu"]');
+        if (pkgInput) pkgInput.value = btn.dataset.package;
+      }
+      openModal(modal);
+    });
   });
 
   document.querySelectorAll('.modal-overlay').forEach((overlay) => {
@@ -706,16 +719,71 @@ function initTemplateActions() {
     document.querySelectorAll('.modal-overlay.is-open').forEach(closeModal);
   });
 
-  // Site tĩnh, chưa có backend nhận form — chặn submit thật, đổi sang
-  // trạng thái "đã gửi" ngay trong popup.
+  // Honeypot chống bot: field ẩn `_hp`, con người không thấy nên luôn để trống.
+  // Ẩn bằng vị trí off-screen (không display:none) để form tự-điền/bot đọc DOM
+  // vẫn thấy field tồn tại và có khả năng tự điền vào, lộ ra là bot.
+  const addHoneypot = (form) => {
+    if (form.querySelector('[name="_hp"]')) return;
+    const hp = document.createElement('input');
+    hp.type = 'text';
+    hp.name = '_hp';
+    hp.autocomplete = 'off';
+    hp.tabIndex = -1;
+    hp.setAttribute('aria-hidden', 'true');
+    hp.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;';
+    form.appendChild(hp);
+  };
+
+  // Gửi form liên hệ (dùng chung mọi trang) và form yêu cầu báo giá (đánh dấu
+  // bằng data-form-action="quote") thẳng lên GAS — xem gas/README.md.
   document.querySelectorAll('.modal__form').forEach((form) => {
+    addHoneypot(form);
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const modal = form.closest('.modal');
       const body = form.closest('.modal__body');
       const done = modal && modal.querySelector('.modal__done');
-      if (body) body.hidden = true;
-      if (done) done.hidden = false;
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      const data = new FormData(form);
+      if (data.get('_hp')) return; // bot dính bẫy — im lặng, không gửi, không báo lỗi
+
+      const isQuote = form.dataset.formAction === 'quote';
+      const hoten = (data.get('hoten') || '').toString().trim();
+      const email = (data.get('email') || '').toString().trim();
+      const dienthoai = (data.get('dienthoai') || '').toString().trim();
+      const mau = (data.get('mau') || '').toString().trim();
+      const mota = (data.get('mota') || '').toString().trim();
+
+      const payload = isQuote
+        ? {
+            action: 'quote',
+            hoten, email, dienthoai,
+            goi_dich_vu: (data.get('goi_dich_vu') || '').toString().trim(),
+            ghi_chu: mota,
+            trang: location.pathname,
+          }
+        : {
+            action: 'contact',
+            hoten, email, dienthoai,
+            mota: mau ? `[Mẫu tham khảo: ${mau}] ${mota}` : mota,
+            trang: location.pathname,
+          };
+
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch(window.WEB100_FORM_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      })
+        .catch((err) => console.error('Gửi form thất bại:', err))
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+          if (body) body.hidden = true;
+          if (done) done.hidden = false;
+        });
     });
   });
 
