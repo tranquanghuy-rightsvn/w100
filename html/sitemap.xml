@@ -181,11 +181,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://web100.vn/landing-page/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://web100.vn/lien-he/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

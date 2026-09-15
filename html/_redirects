@@ -17,6 +17,10 @@
 # Chính sách bảo mật -> khôi phục lại đúng URL, giữ nguyên vị trí (chỉ đổi .html -> /)
 /chinh-sach-bao-mat-thong-tin.html /chinh-sach-bao-mat-thong-tin/ 301
 
+# Dịch vụ Landing page đã gỡ bỏ, không còn bán riêng -> chuyển hướng sang dịch vụ chạy quảng cáo
+# (nội dung gần nhất, landing page vốn dùng để chạy quảng cáo) để không vỡ link/URL đã index.
+/landing-page/ /chay-quang-cao/ 301
+
 # Chuyên mục "Kinh nghiệm SEO website"
 /kinh-nghiem-seo.html /blog/kinh-nghiem-seo-website/ 301
 
