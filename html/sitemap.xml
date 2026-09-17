@@ -191,6 +191,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/mau-website-dep/archdaily/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://web100.vn/mau-website-dep/ashui/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/mau-website-dep/bamford/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -241,6 +251,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/mau-website-dep/giahanoi/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/mau-website-dep/herbalspa/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -266,6 +281,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/mau-website-dep/kienviet/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/mau-website-dep/kyanon/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -281,6 +301,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/mau-website-dep/madamelan/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/mau-website-dep/marriott/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -291,12 +316,22 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://web100.vn/mau-website-dep/miadesignstudio/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://web100.vn/mau-website-dep/namlongvn/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://web100.vn/mau-website-dep/ngheanpaper/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://web100.vn/mau-website-dep/noma/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -327,6 +362,16 @@
   </url>
   <url>
     <loc>https://web100.vn/mau-website-dep/tailormadevietnam/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://web100.vn/mau-website-dep/tamvi/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://web100.vn/mau-website-dep/thedecksaigon/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
