@@ -22,6 +22,31 @@
 .tkdn-crumb svg { width: 14px; height: 14px; flex-shrink: 0; }
 .tkdn-crumb span { color: var(--ink); }
 
+/* ------------------------------ Hero: lĩnh vực phục vụ ------------------------------ */
+/* Dạng nhãn để khách lướt qua là thấy ngay lĩnh vực của mình. */
+.tkdn-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  max-width: 540px;
+}
+.tkdn-fields li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px 7px 11px;
+  border: 1px solid rgba(7, 140, 70, 0.22);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.tkdn-fields svg { width: 15px; height: 15px; color: var(--green-dark); flex-shrink: 0; }
+.wdn-hero__copy .tkdn-hero-note { margin-top: 16px; }
+
 /* ------------------------------ Khoảng cách các section riêng ------------------------------ */
 .tkdn-why,
 .tkdn-types,
