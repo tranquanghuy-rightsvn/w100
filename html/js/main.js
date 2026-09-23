@@ -323,8 +323,8 @@ function initStatCounters() {
 
 /* --------------------------------------------------------------------------
    Hiệu ứng gõ chữ 1 LẦN DUY NHẤT cho đoạn lead dưới title (không lặp lại):
-   hiện sẵn "Thành công của khách hàng là", gõ thẳng "mục tiêu tối thượng!"
-   — riêng "tối thượng!" được gõ xong mới bọc thêm 1 khối chữ nhật xanh nhạt
+   hiện sẵn "Thành công của khách hàng là", gõ thẳng "mục tiêu hàng đầu!"
+   — riêng "hàng đầu!" được gõ xong mới bọc thêm 1 khối chữ nhật xanh nhạt
    nghiêng 10°, rơi từ trên cao xuống rồi mắc lại đúng lên chữ (chữ đổi màu
    trắng để đọc được trên khối). Kết thúc đứng yên vĩnh viễn.
    -------------------------------------------------------------------------- */
@@ -346,8 +346,8 @@ function initHeroLeadTyping() {
   async function run() {
     el.textContent = PREFIX;
     await typeAppend(' mục tiêu ');
-    // Gõ "tối thượng!" dạng thường trước, gõ xong mới bọc khối rơi.
-    const finalWord = 'tối thượng!';
+    // Gõ "hàng đầu!" dạng thường trước, gõ xong mới bọc khối rơi.
+    const finalWord = 'hàng đầu!';
     await typeAppend(finalWord);
     const base = el.textContent.slice(0, el.textContent.length - finalWord.length);
     el.innerHTML =

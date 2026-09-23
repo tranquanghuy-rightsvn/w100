@@ -432,7 +432,7 @@ button { font: inherit; cursor: pointer; }
 .hero .lead { font-size: 16.5px; max-width: 460px; margin: 0 auto; }
 .hero-actions { display: flex; justify-content: center; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
 
-/* Khối chữ nhật xanh lá nhạt nghiêng 10° rơi xuống mắc vào "tối thượng.".
+/* Khối chữ nhật xanh lá nhạt nghiêng 10° rơi xuống mắc vào "hàng đầu.".
    Chữ thật GIỮ NGUYÊN màu bình thường (không tô trắng sẵn) nên không bao
    giờ bị "biến mất" lúc khối chưa tới; phần chữ trông thành màu trắng là
    do lớp bản sao .hero-copy-ghost (chữ trắng) nằm trên cùng, được JS cắt
