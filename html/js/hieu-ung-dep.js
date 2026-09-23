@@ -256,7 +256,7 @@ function initFxWaterRipple() {
   if (!canvas || !stage) return;
   const ctx = canvas.getContext('2d');
   const img = new Image();
-  img.src = '../images/hero-full-1600x900.jpg';
+  img.src = '../images/hero-full-1600x900.webp';
 
   const TARGET_CELL = 7;
   let COLS = 0, ROWS = 0, W = 0, H = 0;

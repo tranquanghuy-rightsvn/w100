@@ -426,3 +426,7 @@
   .khd-others { padding: 64px 0; }
   .khd-others h2 { font-size: 26px; }
 }
+
+/* "Gói dịch vụ" trỏ về trang dịch vụ tương ứng */
+.khd-specs__link { color: var(--green-dark); font-weight: 700; }
+.khd-specs__link:hover { text-decoration: underline; }

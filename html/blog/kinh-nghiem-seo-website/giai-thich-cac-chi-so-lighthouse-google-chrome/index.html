@@ -11,28 +11,37 @@
   </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không? — Web100</title>
-<meta name="description" content="Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản thân.">
+<title>Chỉ số Lighthouse là gì, có quan trọng cho SEO? | Web100</title>
+<meta name="description" content="Giải thích 4 nhóm chỉ số Lighthouse (Performance, Accessibility, Best Practices, SEO), cách đọc điểm và mức ảnh hưởng thực tế tới thứ hạng Google.">
 <link rel="canonical" href="https://web100.vn/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/">
 <meta name="robots" content="index, follow">
 <meta property="og:url" content="https://web100.vn/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?">
-<meta property="og:description" content="Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản thân.">
-<meta property="og:image" content="https://web100.vn/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp">
+<meta property="og:description" content="Giải thích 4 nhóm chỉ số Lighthouse (Performance, Accessibility, Best Practices, SEO), cách đọc điểm và mức ảnh hưởng thực tế tới thứ hạng Google.">
+<meta property="og:image" content="https://web100.vn/images/og/blog--kinh-nghiem-seo-website--giai-thich-cac-chi-so-lighthouse-google-chrome.jpg">
+<meta property="og:site_name" content="Web100">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?">
+<meta property="article:modified_time" content="2026-09-23T09:00:00+07:00">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?">
-<meta name="twitter:description" content="Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản thân.">
-<meta name="twitter:image" content="https://web100.vn/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp">
+<meta name="twitter:description" content="Giải thích 4 nhóm chỉ số Lighthouse (Performance, Accessibility, Best Practices, SEO), cách đọc điểm và mức ảnh hưởng thực tế tới thứ hạng Google.">
+<meta name="twitter:image" content="https://web100.vn/images/og/blog--kinh-nghiem-seo-website--giai-thich-cac-chi-so-lighthouse-google-chrome.jpg">
 <meta property="article:published_time" content="2024-09-25T22:22:00+07:00">
 <meta property="article:section" content="Kinh nghiệm SEO website">
-<link rel="icon" type="image/png" href="/images/preview.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/blog.css">
-<link rel="stylesheet" href="/css/blog-chi-tiet.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plus-jakarta-sans-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=20260923b">
+<link rel="stylesheet" href="/css/style.css?v=20260923b">
+<link rel="stylesheet" href="/css/blog.css?v=20260923b">
+<link rel="stylesheet" href="/css/blog-chi-tiet.css?v=20260923b">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,10 +52,11 @@
       "description": "Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện…",
       "image": "https://web100.vn/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-cover.webp",
       "datePublished": "2024-09-25T22:22:00+07:00",
-      "dateModified": "2024-09-25T22:22:00+07:00",
+      "dateModified": "2026-09-23T09:00:00+07:00",
       "author": {
         "@type": "Organization",
-        "name": "Web100"
+        "name": "Web100",
+        "url": "https://web100.vn/ve-chung-toi/"
       },
       "publisher": {
         "@type": "Organization",
@@ -97,7 +107,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="/">
-      <img src="/images/logo.webp" alt="Web100">
+      <img src="/images/logo.webp" alt="Web100" width="200" height="58">
     </a>
 
     <nav>
@@ -226,10 +236,10 @@
       </nav>
       <span class="blog-tag">Kinh nghiệm SEO website</span>
       <h1>Giải thích các chỉ số của Lighthouse trên Google Chrome - có quan trọng cho SEO không?</h1>
-      <p class="post-head__lead">Giải thích ý nghĩa các chỉ số của Lighthouse trên Google Chrome và cùng trả lời câu hỏi chúng có quan trọng cho SEO không. Bên cạnh đó mình sẽ thể hiện một vài quan điểm cá nhân đối với các chỉ số này dựa trên kinh nghiệm của bản </p>
+      <p class="post-head__lead">Giải thích 4 nhóm chỉ số Lighthouse (Performance, Accessibility, Best Practices, SEO), cách đọc điểm và mức ảnh hưởng thực tế tới thứ hạng Google.</p>
       <div class="post-head__meta">
-        <img src="/images/logo.webp" alt="" class="blog-meta__avatar">
-        <span>Web100 Team</span>
+        <img src="/images/logo.webp" alt="" class="blog-meta__avatar" width="200" height="58">
+        <a class="post-head__author" href="/ve-chung-toi/">Web100 Team</a>
         <span class="blog-meta__dot">•</span>
         <time datetime="2024-09-25">25/09/2024</time>
         <span class="blog-meta__dot">•</span>
@@ -255,33 +265,33 @@
         </ol>
       </nav>
 <p>Nếu các bạn chưa biết (hoặc biết rồi) thì mình xin giải thích một chút về Lighthouse. Đây là công cụ được Google Chrome tích hợp vào trình duyệt để đo lường các chỉ số liên quan đến SEO của Website. Vì Chrome do Google phát hành nên những chỉ số này hoàn toàn có thể tin tưởng được.</p>
-<p>Cách sử dụng rất đơn giản, các bạn chỉ cần truy cập vào website cần kiểm tra, bấm nút F12 trên bàn phím (hoặc click chuột phải -&gt; chọn Inspect), truy cập vào tab Lighthouse trên thanh điều hướng của Chrome DevTools và bấm nút "Generate reports" để tiến hành đo lường. Thời gian đo lường khoảng 15 giây, kết quả sẽ cho ra 4 chỉ số trên thang điểm 100 của 4 mục: Performance, Accessibility, Best Practice và SEO.</p>
+<p>Cách sử dụng rất đơn giản, các bạn chỉ cần truy cập vào website cần kiểm tra, bấm nút F12 trên bàn phím (hoặc click chuột phải -&gt; chọn Inspect), truy cập vào tab Lighthouse trên thanh điều hướng của Chrome DevTools và bấm nút "Analyze page load" (ở các phiên bản Chrome cũ là "Generate report") để tiến hành đo lường. Thời gian đo lường khoảng 15 giây, kết quả sẽ cho ra 4 chỉ số trên thang điểm 100 của 4 mục: Performance, Accessibility, Best Practice và SEO.</p>
 <p>Ngoài đánh giá điểm số, công cụ này còn chỉ ra các lỗi còn gặp phải đồng thời đưa ra các giải pháp để tăng các chỉ số điểm này lên. Quả là một công cụ tuyệt vời!</p>
-<p>Hãy cùng WEB100 cùng điểm qua 4 chỉ số này và xem chúng có ý nghĩa gì, chúng có quan trọng cho SEO không nhé.</p>
+<p>Hãy cùng Web100 cùng điểm qua 4 chỉ số này và xem chúng có ý nghĩa gì, chúng có quan trọng cho SEO không nhé.</p>
 <h2 id="1-performance">1. Performance</h2>
-<p>Đây là chỉ số mà mình đánh giá là cực kỳ, cực kỳ quan trọng cho SEO. Chỉ số này phản ánh chính xác thời gian tải trang khi người dùng bắt đầu truy cập vào website. Hay nói đơn giản là <strong>tốc độ tải trang</strong>. Website tải càng nhanh thì chỉ số này càng cao.</p>
-<p>Ngoài kia hàng triệu chuyên gia làm website hằng ngày vẫn miệt mài tìm cách cải thiện chỉ số này, bởi nó không chỉ ảnh hưởng tích cực tới SEO mà còn giúp tăng trải nghiệm tích cực của người dùng.</p>
-<p>Các bạn biết tại sao các website được xây dựng bằng <strong>WEB100 </strong>lại có thể đạt được con số 100 (tối đa) không? Là bởi vì website của WEB100 hoàn toàn là website tĩnh, chỉ chứa HTML và CSS (không có js luôn).</p>
+<p>Đây là chỉ số mà mình đánh giá là cực kỳ, cực kỳ quan trọng cho SEO. Chỉ số này phản ánh chính xác thời gian tải trang khi người dùng bắt đầu truy cập vào website. Hay nói đơn giản là <a href="/blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/"><strong>tốc độ tải trang</strong></a>. Website tải càng nhanh thì chỉ số này càng cao.</p>
+<p>Ngoài kia hàng triệu chuyên gia làm website hằng ngày vẫn miệt mài tìm cách cải thiện chỉ số này, bởi nó không chỉ ảnh hưởng tích cực tới SEO mà còn giúp tăng trải nghiệm tích cực của người dùng. Một chỉ số con hay bị bỏ qua là độ ổn định bố cục, bạn có thể tham khảo <a href="/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/">10 mẹo cải thiện chỉ số CLS cho website</a>.</p>
+<p>Các bạn biết tại sao các website được xây dựng bằng <strong>Web100 </strong>lại có thể đạt được con số 100 (tối đa) không? Là bởi vì website của Web100 hoàn toàn là website tĩnh, chỉ gồm HTML, CSS và một lượng nhỏ JavaScript thuần, không dùng framework hay thư viện nặng.</p>
 <p>Hiểu đơn giản là các website thông thường cần chờ phía Server trả về HTML CSS rồi phía trình duyệt render ra cho người dùng thấy, nhưng website tĩnh thì bản thân nó đã chứa đầy đủ nội dung rồi, do đó tiết kiệm được thời gian kha khá cho việc kết nối với Server, truy cập vào database, xử lý request ....</p>
-<p>Nhược điểm của website tĩnh là rất khó thay đổi nội dung trên trang, nhưng, đó là các website tĩnh thông thường, còn website tĩnh của WEB100 các bạn có thể thay đổi tại phía Server của WEB100 như 1 trang quản lý thông thường.</p>
-<p>Việc chỉ số này đạt 100 điểm không đồng nghĩa với việc website đã tối ưu hoàn toàn rồi, không có gì cần cải thiện nữa, mà nó có ý nghĩa là: tốc độ của trang đã đạt được ở mốc "hoàn toàn chấp nhận được"</p>
+<p>Nhược điểm của website tĩnh là rất khó thay đổi nội dung trên trang, nhưng, đó là các website tĩnh thông thường, còn website tĩnh của Web100 các bạn có thể thay đổi tại phía Server của Web100 như 1 trang quản lý thông thường.</p>
+<p>Việc chỉ số này đạt 100 điểm không đồng nghĩa với việc website đã tối ưu hoàn toàn rồi, không có gì cần cải thiện nữa, mà nó có ý nghĩa là: tốc độ của trang đã đạt được ở mốc "hoàn toàn chấp nhận được". Cũng cần lưu ý: Lighthouse đo trong môi trường giả lập, còn Google xếp hạng dựa trên Core Web Vitals đo từ người dùng thật, gồm LCP, CLS và INP (INP đã thay FID từ tháng 3/2024). Lighthouse không đo được INP khi chỉ tải trang, nên bạn nên xem thêm báo cáo Core Web Vitals trong Google Search Console.</p>
 <p>Quay trở lại với chỉ số Performance, không chỉ lý thuyết mà thực tế cũng chứng minh rằng Google cực kỳ ưu ái các website có tốc độ tải trang nhanh. Tóm lại chỉ số này quan trọng, rất quan trọng, siêu quan trọng, vô cùng quan trọng, hay tóm gọn lại là:<strong> quan trọng nhất!</strong></p>
 <p>Chấm điểm quan trọng:<strong> 11/10</strong></p>
 <h2 id="2-accessibility">2. Accessibility</h2>
-<p>Chỉ số này thể hiện khả năng sử dụng dễ dàng của người dùng trên website. Website càng dễ sử dùng thì điểm số càng cao. Chỉ số này hầu hết nhằm vào thao tác và hành vi của người có khiếm khuyết trên cơ thể, ví dụ người già, trẻ nhỏ, người khuyết tật, người mù màu, người IQ thấp ....</p>
+<p>Chỉ số này thể hiện khả năng sử dụng dễ dàng của người dùng trên website. Website càng dễ sử dụng thì điểm số càng cao. Chỉ số này hầu hết nhằm vào những người gặp khó khăn khi truy cập website, ví dụ người lớn tuổi, người khiếm thị, người mù màu hoặc người khó thao tác bằng chuột....</p>
 <p>Chính vì nhắm vào số nhỏ phạm vi người dùng nên mình không đánh giá cao chỉ số này, thậm chí cá nhân mình còn thấy nó phản tác dụng với SEO (Không phải mình kỳ thị người khuyết tật đâu nhé, chỉ là mình đang nói trên phương diện SEO)</p>
 <p>Phản tác dụng thế nào thì mình sẽ đưa ra 1 ví dụ nhỏ sau các bạn sẽ rõ. Ví dụ phông chữ trắng trên nền màu cam là một cách phối màu nhìn rất bắt mắt, đặc biệt phù hợp với các site về công nghệ hoặc game. Nhưng đó là dưới phương diện thẩm mỹ của người dùng, còn đối với Lighthouse chỉ số này vi phạm quy tắc phông chữ và màu nền không đủ độ tương phản, khiến cho một số người bị khiếm khuyết về hình ảnh hoặc mù màu rất khó phân biệt. Vậy là chúng ta phải đứng giữa 2 lựa chọn: 1 là tuân thủ quy tắc của google và chuyển sang dùng font trắng nền đen (hoặc xám), còn 2 là bạn chấp nhận bị trừ điểm Lighthouse và giữ nguyên cách phối màu đẹp mắt. 99% lập trình viên chọn cách thứ hai.</p>
-<figure class="post-figure"><img src="/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-1.webp" alt="Nói vậy thôi chứ WEB100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse" loading="lazy" decoding="async" width="660" height="287"><figcaption>Nói vậy thôi chứ WEB100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse</figcaption></figure>
+<figure class="post-figure"><img src="/images/blog/giai-thich-cac-chi-so-lighthouse-google-chrome-1.webp" alt="Nói vậy thôi chứ Web100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse" loading="lazy" decoding="async" width="660" height="287"><figcaption>Nói vậy thôi chứ Web100 vẫn thiết kế website đạt 4 điểm số 100 trong Lighthouse</figcaption></figure>
 <p>Do đó chỉ số này là chỉ số mình đánh giá thấp nhất, ít quan trọng nhất và chúng ta có thể xem xét bỏ qua trong một vài trường hợp.</p>
 <p>Chấm điểm quan trọng:<strong> 3/10</strong></p>
 <h2 id="3-best-practice">3. Best Practice</h2>
-<p>Gần giống với Accessibility, Best practice đưa ra 1 số tiêu chuẩn thiết kế mà Google xem là tốt đối với trải nghiệm của người dùng, nhưng thiên về bảo mật và tối ưu tài nguyên. Ví dụ website nên sử dụng HTTPS, không sử dụng API bên ngoài, không sử dụng thư viện không an toàn...</p>
+<p>Gần giống với Accessibility, Best practice đưa ra 1 số tiêu chuẩn thiết kế mà Google xem là tốt đối với trải nghiệm của người dùng, nhưng thiên về bảo mật và tối ưu tài nguyên. Ví dụ website nên sử dụng HTTPS, không dùng các API đã bị trình duyệt loại bỏ (deprecated), không để lỗi hiển thị trong console, hình ảnh hiển thị đúng tỉ lệ...</p>
 <p>Các chỉ số này không trực tiếp ảnh hưởng tới SEO nhưng đây là các tiêu chuẩn hiện đại mà chúng ta nên tuân thủ để người dùng cảm thấy an toàn khi sử dụng website.</p>
 <p>Chấm điểm quan trọng:<strong> 7/10</strong></p>
 <h2 id="4-seo">4. SEO</h2>
-<p>Nghe chữ SEO là biết quan trọng rồi. Thì đúng là nó quan trọng thật nhưng thực tế cũng không nên thần thánh nó quá đâu. Chỉ số này đánh giá 1 Website chuẩn SEO theo tiêu chuẩn của Google. Ví dụ như: 1 trang cần có 1 và chỉ 1 thẻ h1, các hình ảnh cần có thẻ Alt, các đường link cần có title, ...</p>
+<p>Nghe chữ SEO là biết quan trọng rồi. Thì đúng là nó quan trọng thật nhưng thực tế cũng không nên thần thánh nó quá đâu. Chỉ số này đánh giá 1 Website chuẩn SEO theo tiêu chuẩn của Google. Ví dụ như: trang cần có thẻ title và thẻ meta description, các hình ảnh cần có thuộc tính alt, các đường link cần có nội dung mô tả rõ ràng, trang không bị chặn lập chỉ mục, ...</p>
 <p>Đây là tiêu chuẩn quá cơ bản mà một lập trình viên nào cũng được dạy ngay từ năm đầu đại học, do đó việc thiết kế 1 website chuẩn SEO là trách nhiệm cơ bản của lập trình viên rồi. Ấy thế mà rất nhiều người lấy chỉ số này ra lòe thiên hạ, cam kết thiết kế chuẩn SEO, xong rồi chứng minh bằng cách show điểm này ra để nói rằng "website này đã chuẩn SEO" mà quên mất rằng còn có nhiều thứ quan trọng hơn.</p>
-<p>Nhìn theo góc nhìn lập trình viên là thế nhưng nhìn theo hướng của người làm SEO thì chỉ số này xứng đáng được đánh giá là quan trọng.</p>
+<p>Nhìn theo góc nhìn lập trình viên là thế nhưng nhìn theo hướng của người làm SEO thì chỉ số này xứng đáng được đánh giá là quan trọng. Để có bức tranh đầy đủ hơn điểm Lighthouse (backlink, từ khoá, thứ hạng, khả năng lập chỉ mục), bạn có thể dùng <a href="/kiem-tra-seo-tong-the-website/">công cụ kiểm tra SEO tổng thể website miễn phí</a>.</p>
 <p>Chấm điểm quan trọng:<strong> 9/10</strong></p>
 
       <div class="post-cta">
@@ -333,7 +343,7 @@
         <div class="blog-card__body">
           <span class="blog-tag">Kinh nghiệm SEO website</span>
           <h3>Tầm quan trọng của Sitemap trong SEO</h3>
-          <p>Sitemap là gì? Tầm quan trọng của nó đối với SEO website, hãy cùng WEB 100 đi tìm hiểu nhé</p>
+          <p>Sitemap là gì và vì sao quan trọng với SEO? Các loại sitemap phổ biến và cách submit sitemap lên Google từng bước.</p>
           <div class="blog-meta">
             <span>Web100 Team</span>
             <span class="blog-meta__dot">•</span>
@@ -381,11 +391,11 @@
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="/images/logo.webp" alt="Web100">
+      <img src="/images/logo.webp" alt="Web100" width="200" height="58" loading="lazy">
       <p>Dịch vụ thiết kế và phát triển website chuyên nghiệp, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
     </div>
     <div class="footer-col">
-      <h4>Điều hướng</h4>
+      <p class="footer-col__title">Điều hướng</p>
       <a href="/">Trang chủ</a>
       <a href="/#dich-vu">Dịch vụ</a>
       <a href="/mau-website-dep/">Mẫu web đẹp</a>
@@ -393,14 +403,14 @@
       <a href="/thiet-ke-website-da-nang/">Thiết kế website Đà Nẵng</a>
     </div>
     <div class="footer-col">
-      <h4>Công ty</h4>
+      <p class="footer-col__title">Công ty</p>
       <a href="/ve-chung-toi/">Về Web100</a>
       <a href="/blog/">Blog</a>
       <a href="/lien-he/">Liên hệ</a>
       <a href="/chinh-sach-bao-mat-thong-tin/">Chính sách bảo mật</a>
     </div>
     <div class="footer-col">
-      <h4>Liên hệ</h4>
+      <p class="footer-col__title">Liên hệ</p>
       <a class="footer-contact-link" href="mailto:web100.vn@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
         web100.vn@gmail.com
@@ -435,8 +445,8 @@
   </a>
 </div>
 
-<script src="/js/main.js"></script>
-<script src="/js/blog.js"></script>
+<script src="/js/main.js?v=20260923b"></script>
+<script src="/js/blog.js?v=20260923b"></script>
 </body>
 </html>
 

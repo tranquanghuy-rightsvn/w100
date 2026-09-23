@@ -213,3 +213,32 @@
   .tpl-filter { padding: 7px 13px; font-size: 13px; }
   .tpl-grid { grid-template-columns: 1fr; }
 }
+
+/* ------------------------------ Trang hub mẫu theo ngành ------------------------------ */
+/* /mau-website-dep/<nganh>/ — breadcrumb + dải link sang các ngành khác (thẻ <a>
+   thường, KHÔNG dùng .tpl-filter vì initTplFilters() sẽ gắn bộ lọc vào đó). */
+.hub-crumb { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; font-size: 14px; color: var(--muted); }
+.hub-crumb a:hover { color: var(--green-dark); }
+.hub-crumb strong { color: var(--ink); font-weight: 600; }
+.hub-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.hub-chips a {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.hub-chips a:hover { border-color: var(--green-dark); color: var(--green-dark); }
+.hub-chips a[aria-current="page"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.tpl-body__blurb { margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* Dải "Xem mẫu theo ngành" trên trang danh sách chung */
+.tpl-hubs { margin-top: 56px; text-align: center; }
+.tpl-hubs h2 { font-size: 24px; }
+.tpl-hubs p { margin-top: 8px; }

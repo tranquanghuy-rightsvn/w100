@@ -11,28 +11,37 @@
   </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10 mẹo cải thiện chỉ số CLS cho website — Web100</title>
-<meta name="description" content="Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà khô">
+<title>10 mẹo cải thiện chỉ số CLS cho website | Web100</title>
+<meta name="description" content="CLS là gì và vì sao Google chấm điểm nó? 10 mẹo giảm CLS dưới 0,1: khai báo kích thước ảnh, giữ chỗ cho quảng cáo, tối ưu font và nội dung chèn động.">
 <link rel="canonical" href="https://web100.vn/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/">
 <meta name="robots" content="index, follow">
 <meta property="og:url" content="https://web100.vn/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10 mẹo cải thiện chỉ số CLS cho website">
-<meta property="og:description" content="Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà khô">
-<meta property="og:image" content="https://web100.vn/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp">
+<meta property="og:description" content="CLS là gì và vì sao Google chấm điểm nó? 10 mẹo giảm CLS dưới 0,1: khai báo kích thước ảnh, giữ chỗ cho quảng cáo, tối ưu font và nội dung chèn động.">
+<meta property="og:image" content="https://web100.vn/images/og/blog--kinh-nghiem-seo-website--10-meo-cai-thien-chi-so-cls-cho-website.jpg">
+<meta property="og:site_name" content="Web100">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="10 mẹo cải thiện chỉ số CLS cho website">
+<meta property="article:modified_time" content="2026-09-23T09:00:00+07:00">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="10 mẹo cải thiện chỉ số CLS cho website">
-<meta name="twitter:description" content="Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà khô">
-<meta name="twitter:image" content="https://web100.vn/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp">
+<meta name="twitter:description" content="CLS là gì và vì sao Google chấm điểm nó? 10 mẹo giảm CLS dưới 0,1: khai báo kích thước ảnh, giữ chỗ cho quảng cáo, tối ưu font và nội dung chèn động.">
+<meta name="twitter:image" content="https://web100.vn/images/og/blog--kinh-nghiem-seo-website--10-meo-cai-thien-chi-so-cls-cho-website.jpg">
 <meta property="article:published_time" content="2024-10-14T21:50:00+07:00">
 <meta property="article:section" content="Kinh nghiệm SEO website">
-<link rel="icon" type="image/png" href="/images/preview.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/blog.css">
-<link rel="stylesheet" href="/css/blog-chi-tiet.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plus-jakarta-sans-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=20260923b">
+<link rel="stylesheet" href="/css/style.css?v=20260923b">
+<link rel="stylesheet" href="/css/blog.css?v=20260923b">
+<link rel="stylesheet" href="/css/blog-chi-tiet.css?v=20260923b">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,10 +52,11 @@
       "description": "Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt…",
       "image": "https://web100.vn/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-cover.webp",
       "datePublished": "2024-10-14T21:50:00+07:00",
-      "dateModified": "2024-10-14T21:50:00+07:00",
+      "dateModified": "2026-09-23T09:00:00+07:00",
       "author": {
         "@type": "Organization",
-        "name": "Web100"
+        "name": "Web100",
+        "url": "https://web100.vn/ve-chung-toi/"
       },
       "publisher": {
         "@type": "Organization",
@@ -97,7 +107,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="/">
-      <img src="/images/logo.webp" alt="Web100">
+      <img src="/images/logo.webp" alt="Web100" width="200" height="58">
     </a>
 
     <nav>
@@ -226,10 +236,10 @@
       </nav>
       <span class="blog-tag">Kinh nghiệm SEO website</span>
       <h1>10 mẹo cải thiện chỉ số CLS cho website</h1>
-      <p class="post-head__lead">Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (nh</p>
+      <p class="post-head__lead">CLS là gì và vì sao Google chấm điểm nó? 10 mẹo giảm CLS dưới 0,1: khai báo kích thước ảnh, giữ chỗ cho quảng cáo, tối ưu font và nội dung chèn động.</p>
       <div class="post-head__meta">
-        <img src="/images/logo.webp" alt="" class="blog-meta__avatar">
-        <span>Web100 Team</span>
+        <img src="/images/logo.webp" alt="" class="blog-meta__avatar" width="200" height="58">
+        <a class="post-head__author" href="/ve-chung-toi/">Web100 Team</a>
         <span class="blog-meta__dot">•</span>
         <time datetime="2024-10-14">14/10/2024</time>
         <span class="blog-meta__dot">•</span>
@@ -255,16 +265,16 @@
       </nav>
 <h2 id="cls-la-gi">CLS là gì?</h2>
 <p>Chỉ số CLS (Cumulative Layout Shift) là một chỉ số trong Core Web Vitals của Google, đo lường sự thay đổi bố cục của các phần tử trên trang web trong suốt thời gian tải. Nó đánh giá mức độ ổn định của trang web khi các phần tử (như văn bản, hình ảnh, video, hoặc các quảng cáo) thay đổi vị trí mà không có sự tương tác của người dùng.</p>
-<p>CLS càng thấp thì càng tốt, cho thấy trang web có bố cục ổn định, không làm người dùng khó chịu hoặc bấm nhầm do các phần tử di chuyển. Một trang web lý tưởng sẽ có CLS dưới 0.1 để đảm bảo trải nghiệm người dùng tốt.</p>
+<p>CLS càng thấp thì càng tốt, cho thấy trang web có bố cục ổn định, không làm người dùng khó chịu hoặc bấm nhầm do các phần tử di chuyển. Một trang web lý tưởng sẽ có CLS dưới 0.1 để đảm bảo trải nghiệm người dùng tốt. Bạn có thể dùng <a href="/kiem-tra-seo-tong-the-website/">công cụ kiểm tra SEO tổng thể website miễn phí</a> của Web100 để rà tốc độ tải trang và các lỗi kỹ thuật khác.</p>
 <h2 id="lam-sao-de-cai-thien-chi-so-cls">Làm sao để cải thiện chỉ số CLS?</h2>
-<p>Có rất nhiều mẹo để cải thiện chỉ số CLS xuống thấp, hôm nay Web100 sẽ chỉ cho bạn kinh nghiệm giảm thiểu chỉ số này xuống con số cực thấp, qua đó tăng chất lượng website của mình.</p>
-<p>Đầu tiên đối với hình ảnh, các bạn cần xác định trước khi tải xong thì không gian của ảnh sẽ chiếm kích thước bao nhiêu, từ đó set trước giá trị của <strong>width</strong> và <strong>height</strong> cho thẻ <strong>img</strong>. Bằng cách này sẽ giúp bố cục ảnh không bị thay đổi. Ngoài <strong>image</strong> thì <strong>video</strong> và <strong>iframe</strong> cũng áp dụng được mẹo này.</p>
-<p>Đối với font chữ, các bạn cần tải font chữ càng sớm càng tốt. Cách đơn giản nhất là các bạn thêm thuộc tính async cho font chữ để tải font cùng lúc với tải website. Font chữ là yếu tố ảnh hướng rất lớn tới chỉ số CLS mà nhiều bạn thường bỏ qua.</p>
+<p>Có rất nhiều mẹo để cải thiện chỉ số CLS xuống thấp, hôm nay Web100 sẽ chỉ cho bạn kinh nghiệm giảm thiểu chỉ số này xuống con số cực thấp, qua đó tăng chất lượng website của mình. Nếu chưa rõ cách đọc điểm hiệu suất, bạn có thể xem bài <a href="/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/">giải thích các chỉ số Lighthouse trên Google Chrome</a>.</p>
+<p>Đầu tiên đối với hình ảnh, các bạn cần xác định trước khi tải xong thì không gian của ảnh sẽ chiếm kích thước bao nhiêu, từ đó set trước giá trị của <strong>width</strong> và <strong>height</strong> cho thẻ <strong>img</strong>. Bằng cách này sẽ giúp bố cục ảnh không bị thay đổi. Ngoài <strong>image</strong> thì <strong>video</strong> và <strong>iframe</strong> cũng áp dụng được mẹo này. Ngoài khai báo kích thước, bạn nên xem thêm <a href="/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/">cách tối ưu hình ảnh để tăng tốc độ tải trang trên mobile</a>.</p>
+<p>Đối với font chữ, các bạn cần tải font chữ càng sớm càng tốt. Cách đơn giản nhất là tải trước (preload) file font quan trọng, dùng <strong>font-display</strong> phù hợp và chọn font dự phòng có kích thước gần giống font chính để chữ không bị nhảy khi font tải xong. Font chữ là yếu tố ảnh hướng rất lớn tới chỉ số CLS mà nhiều bạn thường bỏ qua.</p>
 <p>Đối với các css khác, một mẹo mà mình học được từ một đàn anh trong ngành, đó là hãy load css internal, có nghĩa là thay vì dùng link tới file css thì hãy tải trực tiếp css trong file html. Khi đó css sẽ được tải rất nhanh và giúp chỉ số CLS giảm xuống tối đa.</p>
-<figure class="post-figure"><img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-1.webp" alt="Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống 0-5 ms" loading="lazy" decoding="async" width="660" height="321"><figcaption>Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống 0-5 ms</figcaption></figure>
+<figure class="post-figure"><img src="/images/blog/10-meo-cai-thien-chi-so-cls-cho-website-1.webp" alt="Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống gần bằng 0" loading="lazy" decoding="async" width="660" height="321"><figcaption>Web100 sử dụng nhiều phương pháp để tối ưu chỉ số CLS xuống gần bằng 0</figcaption></figure>
 <p>Nhiều bạn sẽ nói rằng cách trên khiến cho file html nặng thêm. Đúng vậy, nhưng tổng thể thì kích thước nó không hề thay đổi. Bằng cách này bạn còn giúp tăng tốc độ tải trang nhờ việc hạn chế request tới các file tĩnh ở lần tải lần đầu tiên. Còn ở lần sau, vì không tận dụng cơ chế cache của trình duyệt nên đúng là tốc độ sẽ chậm đi, tuy nhiên theo như mình thấy là không đáng kể.</p>
-<p>Cách này còn đặc biệt hữu hiệu với google bot, vì google bot chỉ truy cập không sử dụng cache, do đó nó sẽ được google đánh giá cao. Còn đối với người dùng, như mình nói ở trên, ở lần request 2 3 có thể sẽ bị chậm. (nhưng khó lòng mà nhận ra)</p>
-<p>Hiện tại website tại hệ thống Web100 đang sử dụng cả 3 cách này và CLS đạt chỉ số cực thấp, chỉ từ<strong> 0-5ms</strong>.</p>
+<p>Lưu ý là Google đánh giá Core Web Vitals (trong đó có CLS) dựa trên dữ liệu đo từ người dùng Chrome thật, không phải từ lượt truy cập của Googlebot, vì vậy trải nghiệm ở lần tải đầu tiên của khách truy cập mới là điều quan trọng. Còn đối với người dùng quay lại, như mình nói ở trên, ở lần request 2 3 có thể sẽ bị chậm. (nhưng khó lòng mà nhận ra)</p>
+<p>Hiện tại website tại hệ thống Web100 đang sử dụng cả 3 cách này và CLS đạt chỉ số cực thấp, gần như bằng <strong>0</strong> (CLS là điểm số không có đơn vị, dưới 0.1 đã được Google xem là tốt).</p>
 <h2 id="mot-so-meo-khac-tu-chatgpt">Một số mẹo khác từ chatGPT</h2>
 <p>1. Đối với các quảng cáo hoặc các phần tử được chèn động, hãy dành một không gian cố định đủ lớn để chứa chúng, tránh việc thay đổi bố cục khi chúng tải.</p>
 <p>2. Tránh chèn nội dung động vào giữa trang:<br> - Khi chèn nội dung mới, hãy đảm bảo nó không đẩy các phần tử khác xuống hoặc sang một bên. Nội dung này nên được chèn ở cuối trang hoặc ở những khu vực đã có không gian trống.</p>
@@ -273,7 +283,7 @@
 <p>4. Tải trước các tài nguyên quan trọng: <br>- Sử dụng thẻ `<strong>&lt;link rel="preload"&gt;</strong>` cho các tài nguyên quan trọng (như phông chữ, hình ảnh hoặc CSS) để chúng tải nhanh hơn và giảm thiểu sự thay đổi bố cục.</p>
 <p>5. Tránh thêm các phần tử hoặc lớp CSS muộn:<br>- Tránh thay đổi hoặc thêm các phần tử hoặc lớp CSS thông qua JavaScript sau khi trang đã tải xong. Nếu bắt buộc phải thay đổi, hãy đảm bảo không làm ảnh hưởng đến bố cục tổng thể.</p>
 <p>6. Kiểm tra và tối ưu hóa hoạt động của quảng cáo và các tiện ích bên thứ ba:<br>- Đảm bảo các quảng cáo hoặc tiện ích được nhúng từ bên thứ ba có kích thước cố định và không thay đổi kích thước sau khi tải xong.<br>- Kiểm tra để chắc chắn rằng việc tải các quảng cáo không ảnh hưởng tiêu cực đến bố cục trang.</p>
-<p>Trên đây là các mẹo mà chúng tôi đã áp dụng và tham khảo từ nhiều nguồn, nếu bạn quan tâm về các kinh nghiệm SEO đặc biệt là SEO onpage thì hãy theo dõi trang blog của WEB100 thường xuyên nhé!</p>
+<p>Trên đây là các mẹo mà chúng tôi đã áp dụng và tham khảo từ nhiều nguồn, nếu bạn quan tâm về các kinh nghiệm SEO đặc biệt là SEO onpage thì hãy theo dõi trang blog của Web100 thường xuyên nhé! Nếu website hiện tại của bạn tải chậm, bố cục hay bị nhảy mà khó sửa trên nền tảng cũ, bạn có thể tham khảo <a href="/cai-tao-website/">dịch vụ cải tạo website cũ</a> — giữ nguyên dữ liệu và thứ hạng SEO, chỉ nâng cấp phần cần thay.</p>
 
       <div class="post-cta">
         <div>
@@ -324,7 +334,7 @@
         <div class="blog-card__body">
           <span class="blog-tag">Kinh nghiệm SEO website</span>
           <h3>Tầm quan trọng của Sitemap trong SEO</h3>
-          <p>Sitemap là gì? Tầm quan trọng của nó đối với SEO website, hãy cùng WEB 100 đi tìm hiểu nhé</p>
+          <p>Sitemap là gì và vì sao quan trọng với SEO? Các loại sitemap phổ biến và cách submit sitemap lên Google từng bước.</p>
           <div class="blog-meta">
             <span>Web100 Team</span>
             <span class="blog-meta__dot">•</span>
@@ -372,11 +382,11 @@
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="/images/logo.webp" alt="Web100">
+      <img src="/images/logo.webp" alt="Web100" width="200" height="58" loading="lazy">
       <p>Dịch vụ thiết kế và phát triển website chuyên nghiệp, tối ưu tốc độ, chuẩn SEO và dễ dàng quản trị.</p>
     </div>
     <div class="footer-col">
-      <h4>Điều hướng</h4>
+      <p class="footer-col__title">Điều hướng</p>
       <a href="/">Trang chủ</a>
       <a href="/#dich-vu">Dịch vụ</a>
       <a href="/mau-website-dep/">Mẫu web đẹp</a>
@@ -384,14 +394,14 @@
       <a href="/thiet-ke-website-da-nang/">Thiết kế website Đà Nẵng</a>
     </div>
     <div class="footer-col">
-      <h4>Công ty</h4>
+      <p class="footer-col__title">Công ty</p>
       <a href="/ve-chung-toi/">Về Web100</a>
       <a href="/blog/">Blog</a>
       <a href="/lien-he/">Liên hệ</a>
       <a href="/chinh-sach-bao-mat-thong-tin/">Chính sách bảo mật</a>
     </div>
     <div class="footer-col">
-      <h4>Liên hệ</h4>
+      <p class="footer-col__title">Liên hệ</p>
       <a class="footer-contact-link" href="mailto:web100.vn@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
         web100.vn@gmail.com
@@ -426,8 +436,8 @@
   </a>
 </div>
 
-<script src="/js/main.js"></script>
-<script src="/js/blog.js"></script>
+<script src="/js/main.js?v=20260923b"></script>
+<script src="/js/blog.js?v=20260923b"></script>
 </body>
 </html>
 

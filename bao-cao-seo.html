@@ -1,0 +1,407 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo SEO Web100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F7F5; --surface:#FFFFFF; --ink:#15201A; --muted:#5A6A61; --line:#DCE3DE;
+  --accent:#1E7F4A; --accent-tint:#E3F2E9;
+  --crit:#B42318; --crit-tint:#FDECEA; --warn:#A35F00; --warn-tint:#FDF1DC; --ok:#2F7D4F; --ok-tint:#E4F3EA; --low:#44607A; --low-tint:#E8EEF4;
+  --code-bg:#EEF2EF;
+  --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1512; --surface:#161E1A; --ink:#E5ECE7; --muted:#9AABA1; --line:#2A3630;
+    --accent:#5CC98A; --accent-tint:#173325;
+    --crit:#F97066; --crit-tint:#3A1A17; --warn:#F2B34C; --warn-tint:#352812; --ok:#6FCF97; --ok-tint:#16301F; --low:#9DB8D3; --low-tint:#1B2733;
+    --code-bg:#1D2722;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1512; --surface:#161E1A; --ink:#E5ECE7; --muted:#9AABA1; --line:#2A3630;
+  --accent:#5CC98A; --accent-tint:#173325;
+  --crit:#F97066; --crit-tint:#3A1A17; --warn:#F2B34C; --warn-tint:#352812; --ok:#6FCF97; --ok-tint:#16301F; --low:#9DB8D3; --low-tint:#1B2733;
+  --code-bg:#1D2722;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15.5px/1.65 var(--sans);padding-inline:16px;padding-block:40px 80px}
+.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:17px;font-weight:700}
+p{margin:0;max-width:68ch}
+a{color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+code{background:var(--code-bg);padding:1px 5px;border-radius:4px;word-break:break-word}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.meta{color:var(--muted);font-size:14px}
+header{display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--line);padding-bottom:28px}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-head{display:flex;flex-direction:column;gap:6px}
+.lede{font-size:17px}
+
+/* scorecard */
+.scores{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.score{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.score b{font-weight:600;font-size:14.5px}
+.score span.note{font-size:13px;color:var(--muted);line-height:1.45}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;width:max-content;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.p-crit{color:var(--crit);background:var(--crit-tint)}
+.p-warn{color:var(--warn);background:var(--warn-tint)}
+.p-ok{color:var(--ok);background:var(--ok-tint)}
+.p-low{color:var(--low);background:var(--low-tint)}
+
+/* stats row */
+.stats{display:flex;flex-wrap:wrap;gap:28px 40px}
+.stat{display:flex;flex-direction:column}
+.stat strong{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* issue blocks */
+.issue{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+.issue-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.issue-head h3{flex:1 1 320px}
+.issue ul,.issue ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.fix{border-top:1px dashed var(--line);padding-top:12px;display:flex;flex-direction:column;gap:6px}
+.fix-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td .mono{white-space:nowrap}
+.good-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px 28px;margin:0;padding:0;list-style:none}
+.good-list li{padding-left:22px;position:relative;font-size:14.5px}
+.good-list li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+
+#trang-thai h3{margin-top:12px}
+.roadmap{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--line);margin-left:6px}
+.step{position:relative;padding:0 0 22px 22px;display:flex;flex-direction:column;gap:6px}
+.step::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.step ul{margin:0;padding-left:20px}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:20px}
+@media (max-width:520px){body{font-size:15px}.issue{padding:16px}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Audit SEO on-page &amp; kỹ thuật · web100.vn</span>
+  <h1>Báo cáo SEO Web100</h1>
+  <p class="lede">Nền tảng kỹ thuật đã khá chắc: canonical, sitemap, robots, schema và redirect đều có. Site <strong>chưa đạt chuẩn</strong> ở ba mảng quyết định thứ hạng: <strong>liên kết nội bộ</strong>, <strong>dung lượng và định dạng ảnh</strong>, và <strong>từ khoá trong title/H1 của trang dịch vụ</strong>. Ngoài ra có vài lỗi dữ liệu cần sửa ngay (description copy nhầm, sitemap lệch với live).</p>
+  <p class="meta"><a href="#trang-thai">Xem trạng thái sau khi sửa ↓</a> · Ngày audit: 23/09/2026 · Phạm vi: toàn bộ <code>html/</code> (88 file HTML, 86 trang được index) + kiểm tra trực tiếp trên web100.vn · Số chữ trong báo cáo đếm theo <em>tiếng</em> (âm tiết) tiếng Việt, 1 từ ≈ 1,5 tiếng.</p>
+</header>
+
+
+<section id="trang-thai">
+  <div class="sec-head"><span class="eyebrow">Cập nhật 23/09/2026 · sau khi sửa</span><h2>Trạng thái xử lý</h2></div>
+  <p>Đã xử lý toàn bộ các mục trong báo cáo, trừ những việc cần dữ liệu hoặc quyết định từ phía bạn (bảng thứ hai). Số liệu dưới đây lấy từ audit chạy lại trên mã nguồn sau khi sửa. Giao diện đã được so pixel với ảnh chụp trước khi sửa trên 106 trang, ở cả desktop và mobile.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Mục</th><th>Trạng thái</th><th>Đã làm</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Internal link</td><td><span class="pill p-ok">Đã sửa</span></td><td>35 link ngữ cảnh trong 9 bài blog cũ. Khối "Tham khảo thêm" (dự án, mẫu, bài viết) trên 6 trang dịch vụ và 50 trang mẫu. 7 trang hub mẫu theo ngành. Trường "Gói dịch vụ" trên trang khách hàng thành link. Trang chủ có link tới Về chúng tôi và các hub. Không còn trang mẫu nào là trang cụt.</td></tr>
+      <tr><td class="num">2</td><td>Ảnh</td><td><span class="pill p-ok">Đã sửa</span></td><td>Chuyển 61 ảnh JPG/PNG sang WebP và thu nhỏ theo kích thước hiển thị thật (17,2 MB → 3,4 MB). Thumbnail riêng cho trang danh sách mẫu (7,8 MB → 3,1 MB). Xoá 7,4 MB ảnh thừa. 100% thẻ img có width/height. 616 ảnh lazy-load, ảnh chính mỗi trang có <code>fetchpriority="high"</code>.</td></tr>
+      <tr><td class="num">3</td><td>Description copy nhầm</td><td><span class="pill p-ok">Đã sửa</span></td><td>Viết lại description cho 5 trang mẫu bất động sản. Rút gọn 32 description dài quá 160 ký tự.</td></tr>
+      <tr><td class="num">4</td><td>Sitemap</td><td><span class="pill p-ok">Đã sửa</span></td><td>Kéo 9 trang mẫu mới từ remote về. Sitemap sinh tự động từ <code>html/</code> gồm 104 URL, có <code>lastmod</code> (<code>scripts/build_sitemap.py</code>).</td></tr>
+      <tr><td class="num">5</td><td>Title &amp; H1</td><td><span class="pill p-ok">Đã sửa</span></td><td>Title/H1 của 11 trang chính chứa từ khoá "thiết kế website…". Title 50 trang mẫu có tên ngành. Title blog không quá 60 ký tự. Thống nhất cách viết "Web100". Trang tool có H1.</td></tr>
+      <tr><td class="num">6</td><td>Description blog</td><td><span class="pill p-ok">Đã sửa</span></td><td>Viết tay 140–160 ký tự cho 7 bài. Sửa luôn đoạn lead trên đầu bài vốn cũng bị cắt ngang.</td></tr>
+      <tr><td class="num">7</td><td>Nội dung mỏng</td><td><span class="pill p-warn">Phần lớn</span></td><td>6 trang dịch vụ: ~800 → 2.100–2.500 tiếng, thêm 3 FAQ mỗi trang. 7 hub ngành, mỗi hub khoảng 750–880 từ. 50 trang mẫu có thêm phần phân tích bố cục dựa trên ảnh chụp. 2 bài blog mới (chi phí thiết kế website, checklist website chuẩn SEO). Sửa 31 chỗ lỗi thời trong 6 bài cũ.</td></tr>
+      <tr><td class="num">8</td><td>OG image</td><td><span class="pill p-ok">Đã sửa</span></td><td>Có ảnh 1200×630 riêng cho từng trang. Thêm og:type, og:site_name, og:locale, kích thước ảnh, favicon.ico, apple-touch-icon, webmanifest.</td></tr>
+      <tr><td class="num">9</td><td>404 &amp; cache</td><td><span class="pill p-ok">Đã sửa</span></td><td>Thêm <code>404.html</code>. Ảnh cache 30 ngày, font 1 năm, CSS/JS 1 ngày kèm <code>?v=</code> (<code>scripts/bump_asset_version.py</code>).</td></tr>
+      <tr><td class="num">10</td><td>Alt ảnh</td><td><span class="pill p-ok">Đã sửa</span></td><td>Không còn ảnh thiếu alt. Ảnh dịch vụ và ảnh chụp website khách hàng đã có alt mô tả.</td></tr>
+      <tr><td class="num">11</td><td>Heading, schema, khác</td><td><span class="pill p-ok">Đã sửa</span></td><td>Footer và form liên hệ không còn nhảy cấp heading. FAQPage schema đồng bộ tự động trên 17 trang (<code>scripts/sync_faq_schema.py</code>). Service schema có tên mới, trang doanh nghiệp có offers. Font tự host thay cho Google Fonts. Sửa 12 trang khách hàng thiếu thẻ <code>&lt;/main&gt;</code>. Byline blog trỏ về Về chúng tôi.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Cần bạn cung cấp hoặc quyết định</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Việc</th><th>Lý do chưa làm</th></tr></thead>
+    <tbody>
+      <tr><td>Số liệu kết quả cho 18 trang khách hàng (vẫn ~370–480 tiếng)</td><td>Không được bịa kết quả. Cần số thật: thời gian tải, lượt liên hệ, từ khoá lên top, lời nhận xét có tên người đại diện.</td></tr>
+      <tr><td>Số liệu quảng cáo trên các trang dịch vụ ("+150%", "4.8x ROAS", "-38% CPA", "+80% tỷ lệ chốt đơn"…)</td><td>Có từ trước, chưa kiểm chứng được. Nếu không có nguồn thì nên bỏ để tránh rủi ro về uy tín và E-E-A-T.</td></tr>
+      <tr><td>Ảnh chụp một số trang mẫu bị lỗi (hoalonginvest, anland, futaland, qpholdings, soliagroup)</td><td>Ảnh gốc bị sọc/lặp khối, nên cần chụp lại. Phần phân tích bố cục của các trang này mới chỉ mô tả phần nhìn thấy được.</td></tr>
+      <tr><td>Tác giả bài blog (Person thay cho "Web100 Team")</td><td>Không rõ ai viết các bài cũ. Nếu là anh Quang Huy thì chỉ cần đổi byline và schema.</td></tr>
+      <tr><td><code>sameAs</code> của Organization đang là fb.com/gindeptrai</td><td>Cần link fanpage công ty hoặc Google Business Profile.</td></tr>
+      <tr><td>Nhịp đăng blog 2–4 bài/tháng</td><td>Là việc làm liên tục. Đã có 2 bài mới làm mẫu.</td></tr>
+      <tr><td>Redirect 307 khi URL thiếu dấu "/"</td><td>Mặc định của Cloudflare Pages, không cấu hình được qua <code>_redirects</code>. Link nội bộ đều đã dùng đúng dạng.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Tổng quan</span><h2>Đánh giá theo từng mảng</h2></div>
+  <div class="scores">
+    <div class="score"><span class="pill p-ok">Tốt</span><b>Kỹ thuật cơ bản</b><span class="note">Canonical, robots, https, www→non-www, 301 URL cũ</span></div>
+    <div class="score"><span class="pill p-ok">Tốt</span><b>Schema</b><span class="note">Breadcrumb, BlogPosting, Service, LocalBusiness, FAQPage</span></div>
+    <div class="score"><span class="pill p-ok">Tốt</span><b>H1</b><span class="note">85/86 trang có đúng 1 H1</span></div>
+    <div class="score"><span class="pill p-warn">Cần sửa</span><b>Title &amp; H1 dịch vụ</b><span class="note">Thiếu từ khoá chính "thiết kế website…"</span></div>
+    <div class="score"><span class="pill p-warn">Cần sửa</span><b>Meta description</b><span class="note">5 bài blog bị cắt ở 300 ký tự; 5 trang copy nhầm</span></div>
+    <div class="score"><span class="pill p-crit">Yếu</span><b>Internal link</b><span class="note">Blog và dịch vụ gần như không link cho nhau</span></div>
+    <div class="score"><span class="pill p-crit">Yếu</span><b>Ảnh</b><span class="note">67 ảnh JPG/PNG, ~16 MB, 88% thẻ img thiếu width/height</span></div>
+    <div class="score"><span class="pill p-warn">Cần sửa</span><b>Nội dung</b><span class="note">41 trang mẫu mỏng; blog dừng từ 10/2024</span></div>
+    <div class="score"><span class="pill p-warn">Cần sửa</span><b>Sitemap</b><span class="note">Lệch với source và live</span></div>
+    <div class="score"><span class="pill p-low">Nhỏ</span><b>Alt ảnh</b><span class="note">4 thiếu alt, ảnh có nghĩa để alt rỗng</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong>86</strong><span>trang index được</span></div>
+    <div class="stat"><strong>79</strong><span>URL trong sitemap local</span></div>
+    <div class="stat"><strong>621</strong><span>thẻ &lt;img&gt;</span></div>
+    <div class="stat"><strong>545</strong><span>img thiếu width/height</span></div>
+    <div class="stat"><strong>0</strong><span>link blog → dịch vụ</span></div>
+    <div class="stat"><strong>−73%</strong><span>dung lượng ảnh nếu đổi WebP</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Giữ nguyên</span><h2>Những gì đã làm đúng</h2></div>
+  <ul class="good-list">
+    <li>100% trang có title, description, canonical trỏ đúng chính nó, <code>lang="vi"</code>, viewport</li>
+    <li>Không có title nào trùng; không có link nội bộ nào bị gãy</li>
+    <li>http → https và www → non-www đều 301; 11 URL cũ đã có 301 trong <code>_redirects</code></li>
+    <li><code>/admin/</code> vừa có meta noindex vừa có header X-Robots-Tag, không lộ trong robots.txt</li>
+    <li>BreadcrumbList trên mọi trang con; BlogPosting có ngày, ảnh, publisher</li>
+    <li>NAP thống nhất: 1 số điện thoại, 1 email, 1 địa chỉ trên toàn site</li>
+    <li>GA4 đã gắn trên mọi trang public</li>
+    <li>86 ảnh (blog, mẫu website) đã là WebP</li>
+    <li>6 trang dịch vụ có nội dung riêng, độ trùng lặp giữa các trang ≤ 5%</li>
+    <li>URL ngắn, không dấu, độ sâu tối đa 3 cấp</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Ưu tiên cao</span><h2>Vấn đề cần xử lý trước</h2></div>
+
+  <article class="issue">
+    <div class="issue-head"><h3>1. Liên kết nội bộ gần như không tồn tại trong thân bài</h3><span class="pill p-crit">Cao</span></div>
+    <p>Mọi trang đều nhận link từ menu và footer (84 link), nhưng Google đánh giá cao nhất link <em>ngữ cảnh</em>, tức link nằm trong nội dung chính. Phần này đang rất thiếu:</p>
+    <ul>
+      <li><strong>9 bài blog không có link nào trong thân bài</strong> tới trang dịch vụ hay bài khác. Trong bài chỉ có breadcrumb, mục lục (#anchor) và <code>/lien-he/</code>. Ví dụ: bài "Tối ưu hình ảnh", "SEO Onpage", "Sitemap" đều không link tới <code>/seo-ben-vung/</code> hay công cụ <code>/kiem-tra-seo-tong-the-website/</code>.</li>
+      <li><strong>Trang dịch vụ không link cho nhau.</strong> <code>/website-ban-hang/</code>, <code>/website-tin-tuc/</code>, <code>/seo-ben-vung/</code>, <code>/cai-tao-website/</code> chỉ có link Zalo và <code>#quy-trinh</code> trong nội dung, không có link tới case study, mẫu website hay bài blog liên quan.</li>
+      <li><strong><code>/ve-chung-toi/</code> nhận 0 link ngữ cảnh</strong>, dù đây là trang E-E-A-T quan trọng.</li>
+      <li><strong>41 trang mẫu website là trang cụt:</strong> không có link nội bộ nào trong nội dung (chỉ link ra site gốc). 30 trang chỉ có đúng 1 link trỏ về (từ trang danh sách).</li>
+      <li>6 trang khách hàng (koseinexus, nguyenthevan, nguyenminhltd, velorakr, tienductransport, trithucworld) chỉ nhận 1 link từ trang <code>/khach-hang/</code>.</li>
+    </ul>
+    <div class="tbl"><table>
+      <thead><tr><th>Nhóm trang</th><th class="num">Link ngữ cảnh trỏ về</th><th>Nhận xét</th></tr></thead>
+      <tbody>
+        <tr><td>Trang dịch vụ (6 trang)</td><td class="num">1–3</td><td>Chỉ từ trang chủ và trang Đà Nẵng</td></tr>
+        <tr><td><code>/ve-chung-toi/</code></td><td class="num">0</td><td>Chỉ có trong menu/footer</td></tr>
+        <tr><td>Bài blog</td><td class="num">2–10</td><td>Chỉ từ trang danh sách và khối "Bài viết liên quan"</td></tr>
+        <tr><td>Mẫu website chi tiết (41)</td><td class="num">1–2</td><td>Trang cụt, không dẫn đi đâu</td></tr>
+        <tr><td>Khách hàng chi tiết (18)</td><td class="num">1–12</td><td>Không đều, 6 trang chỉ có 1 link</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix"><span class="fix-label">Cách sửa</span>
+      <ul>
+        <li><strong>Blog → dịch vụ</strong> (2–3 link/bài, anchor chứa từ khoá): bài tốc độ, CLS, Lighthouse, ảnh → <code>/cai-tao-website/</code> và <code>/kiem-tra-seo-tong-the-website/</code>; bài SEO onpage, content, sitemap → <code>/seo-ben-vung/</code>; bài trỏ domain → <code>/website-doanh-nghiep/</code>.</li>
+        <li><strong>Blog ↔ blog:</strong> chèn 1–2 link trong đoạn văn giữa các bài cùng chủ đề (CLS ↔ Lighthouse ↔ tốc độ ↔ tối ưu ảnh; onpage ↔ content ↔ sitemap ↔ SEOMath).</li>
+        <li><strong>Dịch vụ → bằng chứng:</strong> mỗi trang dịch vụ thêm khối "Dự án tiêu biểu" (2–3 trang <code>/khach-hang/…</code> đúng ngành), "Mẫu tham khảo" và "Bài viết hữu ích".</li>
+        <li><strong>Mẫu website → dịch vụ:</strong> mẫu bất động sản, doanh nghiệp → <code>/website-doanh-nghiep/</code>; 3F Store, Bamford → <code>/website-ban-hang/</code>. Thêm khối "Mẫu cùng ngành" (3–4 link) để thoát trang cụt.</li>
+        <li>Trang khách hàng: thêm link tới dịch vụ đã dùng (trường "Gói dịch vụ" hiện chỉ là chữ, nên chuyển thành link).</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>2. Ảnh quá nặng, nhiều ảnh chưa chuyển WebP</h3><span class="pill p-crit">Cao</span></div>
+    <p>Thư mục <code>images/</code> nặng 35 MB. Có 45 JPG và 22 PNG đang được dùng, tổng khoảng <strong>16,4 MB</strong>. Chạy thử <code>cwebp -q 80</code> (thu về tối đa 1600 px chiều ngang) thì chỉ còn <strong>~4,4 MB</strong>.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Ảnh</th><th class="num">Kích thước</th><th class="num">Hiện tại</th><th class="num">WebP</th><th>Dùng ở</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">hero-banner.png</td><td class="num">1536×1024</td><td class="num">1 733 KB</td><td class="num">80 KB</td><td>/hieu-ung-dep/</td></tr>
+        <tr><td class="mono">quang-huy-web100-crop.png</td><td class="num">884×886</td><td class="num">1 596 KB</td><td class="num">92 KB</td><td>/ve-chung-toi/ (avatar)</td></tr>
+        <tr><td class="mono">ssg.png</td><td class="num">1145×1374</td><td class="num">1 257 KB</td><td class="num">78 KB</td><td>/ve-chung-toi/</td></tr>
+        <tr><td class="mono">dich-vu/page-old.png</td><td class="num">1245×915</td><td class="num">706 KB</td><td class="num">56 KB</td><td>/cai-tao-website/</td></tr>
+        <tr><td class="mono">khach-hang/*-desktop.jpg (6 ảnh)</td><td class="num">3072×1664</td><td class="num">3 349 KB</td><td class="num">564 KB</td><td>Trang khách hàng</td></tr>
+        <tr><td class="mono">khach-hang/tretruc-mobile.jpg</td><td class="num">780×2004</td><td class="num">219 KB</td><td class="num">75 KB</td><td>Trang khách hàng</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><strong><code>/mau-website-dep/</code> tải 43 ảnh chụp toàn trang (cao tới 900×6532 px), tổng 7,2 MB, không có <code>loading="lazy"</code>.</strong> Đây là trang nặng nhất site. <code>/hieu-ung-dep/</code> nặng 4 MB, <code>/ve-chung-toi/</code> 3,1 MB.</li>
+      <li><strong>545/621 thẻ img không khai báo width/height</strong>, gây giật layout (CLS). Chỉ 84 ảnh có lazy load, chủ yếu ở trang chủ; <code>/khach-hang/</code>, <code>/ve-chung-toi/</code> và các trang mẫu không có.</li>
+      <li>Không trang nào dùng <code>srcset</code>, nên điện thoại cũng tải ảnh 1600–3072 px.</li>
+      <li>7,4 MB ảnh <strong>không được dùng</strong> nhưng vẫn deploy: <code>quang-huy-web100.png</code> (3 MB), <code>khach-hang/{mobile,desktop,background}-customer.png</code> (~4 MB), <code>ve-chung-toi-tech.jpg</code>.</li>
+    </ul>
+    <div class="fix"><span class="fix-label">Cách sửa</span>
+      <ul>
+        <li>Chuyển toàn bộ JPG/PNG sang WebP (giữ PNG cho logo nhỏ vì WebP lớn hơn, ví dụ logo khách hàng 6 KB). Thu ảnh desktop khách hàng về 1600 px.</li>
+        <li>Trang danh sách mẫu: tạo thumbnail cắt phần đầu (~600×400, 30–40 KB) thay vì dùng ảnh chụp toàn trang, và thêm <code>loading="lazy"</code> từ ảnh thứ 4 trở đi.</li>
+        <li>Thêm <code>width</code>/<code>height</code> cho mọi <code>&lt;img&gt;</code>. Ảnh đầu trang (LCP) dùng <code>fetchpriority="high"</code>, còn lại dùng <code>loading="lazy"</code>.</li>
+        <li>Xoá 5 ảnh không dùng và các file <code>.DS_Store</code> trong <code>html/</code>.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>3. Description copy nhầm trên 5 trang mẫu bất động sản</h3><span class="pill p-crit">Cao</span><span class="pill p-ok">Sửa 5 phút</span></div>
+    <p><code>namlongvn</code>, <code>sonkimland</code>, <code>keppelland</code>, <code>khangdien</code>, <code>bimland</code> đang dùng nguyên description của trang Hiếu Hưng Paper: <em>"Tham khảo phong cách website bán buôn giấy in &amp; vật tư văn phòng…"</em>. Lỗi nằm ở cả meta description, og:description, twitter:description và JSON-LD. Snippet trên Google sẽ sai ngành, còn 6 trang trùng description thì bị coi là trùng lặp.</p>
+    <div class="fix"><span class="fix-label">Cách sửa</span><p>Viết lại description riêng cho từng trang, ví dụ: "Tham khảo phong cách website chủ đầu tư bất động sản Nam Long — …". Sửa luôn chỗ sinh template trong script tạo trang để lỗi không lặp lại.</p></div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>4. Sitemap lệch với source và với live</h3><span class="pill p-crit">Cao</span></div>
+    <ul>
+      <li><strong>7 trang có trong source nhưng thiếu trong sitemap:</strong> <code>anland</code>, <code>futaland</code>, <code>hoalonginvest</code>, <code>qpholdings</code>, <code>soliagroup</code>, <code>tatiland</code>, <code>weland</code> (thuộc nhóm mẫu bất động sản vừa thêm).</li>
+      <li><strong>Sitemap trên live có 88 URL, còn source chỉ có 79.</strong> 9 trang mẫu đang live (<code>archdaily</code>, <code>ashui</code>, <code>giahanoi</code>, <code>kienviet</code>, <code>madamelan</code>, <code>miadesignstudio</code>, <code>noma</code>, <code>tamvi</code>, <code>thedecksaigon</code>) không có trong source này. Nếu deploy từ repo hiện tại, 9 URL đó sẽ trả 404.</li>
+      <li>Sitemap không có <code>&lt;lastmod&gt;</code>, nên Google không biết trang nào mới cập nhật. <code>changefreq</code>/<code>priority</code> thì Google bỏ qua.</li>
+    </ul>
+    <div class="fix"><span class="fix-label">Cách sửa</span><p>Trước khi deploy, xác nhận 9 trang kia còn giữ hay bỏ. Nếu bỏ, thêm 301 trong <code>_redirects</code> về <code>/mau-website-dep/</code>. Sau đó sinh lại sitemap tự động từ thư mục <code>html/</code> (bỏ qua trang noindex), kèm <code>lastmod</code> lấy theo ngày commit.</p></div>
+  </article>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Ưu tiên trung bình</span><h2>Title, H1, description và nội dung</h2></div>
+
+  <article class="issue">
+    <div class="issue-head"><h3>5. Title và H1 trang dịch vụ thiếu từ khoá chính</h3><span class="pill p-warn">Trung bình</span></div>
+    <p>Người dùng tìm "<em>thiết kế website bán hàng</em>", nhưng title đang là "Web100 — Website bán hàng, chốt đơn nhanh". Thương hiệu đặt đầu title ở 14 trang, đẩy từ khoá ra sau. H1 cũng thiên về slogan.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Trang</th><th>Title hiện tại</th><th>Đề xuất title</th><th>Đề xuất H1</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">/website-ban-hang/</td><td>Web100 — Website bán hàng, chốt đơn nhanh</td><td>Thiết kế website bán hàng chuẩn SEO, chốt đơn nhanh | Web100</td><td>Thiết kế website bán hàng chốt đơn nhanh</td></tr>
+        <tr><td class="mono">/website-doanh-nghiep/</td><td>Web100 — Website doanh nghiệp, chuyên nghiệp &amp; đáng tin</td><td>Thiết kế website doanh nghiệp chuyên nghiệp | Web100</td><td>Thiết kế website doanh nghiệp chuyên nghiệp, đáng tin</td></tr>
+        <tr><td class="mono">/website-tin-tuc/</td><td>Web100 — Website tin tức, cập nhật tức thời</td><td>Thiết kế website tin tức, blog tải nhanh | Web100</td><td>Thiết kế website tin tức, blog cập nhật tức thời</td></tr>
+        <tr><td class="mono">/cai-tao-website/</td><td>Web100 — Cải tạo website cũ, diện mạo mới</td><td>Cải tạo, thiết kế lại website cũ giữ SEO | Web100</td><td>Cải tạo website cũ — diện mạo mới, giữ thứ hạng</td></tr>
+        <tr><td class="mono">/seo-ben-vung/</td><td>Web100 — SEO bền vững, lên top Google tự nhiên</td><td>Dịch vụ SEO website bền vững, lên top Google | Web100</td><td>Dịch vụ SEO bền vững — lên top Google tự nhiên</td></tr>
+        <tr><td class="mono">/chay-quang-cao/</td><td>Web100 — Chạy quảng cáo, tối ưu chi phí…</td><td>Dịch vụ chạy quảng cáo Google, Facebook, TikTok | Web100</td><td>(giữ nguyên, thêm tên nền tảng)</td></tr>
+        <tr><td class="mono">/mau-website-dep/</td><td>Web100 — Mẫu web đẹp (20 ký tự)</td><td>Mẫu website đẹp theo ngành: BĐS, du lịch, spa | Web100</td><td>Mẫu website đẹp</td></tr>
+        <tr><td class="mono">/blog/</td><td>Web100 — Blog (13 ký tự)</td><td>Blog kiến thức thiết kế website &amp; SEO | Web100</td><td>(giữ nguyên)</td></tr>
+        <tr><td class="mono">/lien-he/</td><td>Web100 — Liên hệ (16 ký tự)</td><td>Liên hệ thiết kế website Đà Nẵng — Web100</td><td>Liên hệ Web100</td></tr>
+        <tr><td class="mono">/ve-chung-toi/</td><td>Web100 — Về chúng tôi</td><td>Về Web100 — đội ngũ thiết kế website tại Đà Nẵng</td><td>Về Web100 (slogan để làm dòng phụ)</td></tr>
+        <tr><td class="mono">/hieu-ung-dep/</td><td>Web100 — Hiệu ứng đẹp</td><td>Hiệu ứng website đẹp: nút, thẻ, ảnh, chữ | Web100</td><td>Hiệu ứng website đẹp, tương tác mượt mà</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><strong>3 title blog quá 60 ký tự</strong> và sẽ bị cắt: Lighthouse (95), Tối ưu hình ảnh (79), SEO Onpage (73).</li>
+      <li>Cách viết hoa chưa thống nhất: "Tầm Quan Trọng của SEO Onpage…" viết hoa từng chữ; "WEB100" và "Web100" dùng lẫn lộn.</li>
+      <li><strong><code>/tool-landing-builder/</code> không có H1 và không có <code>&lt;main&gt;</code></strong>, nội dung hoàn toàn do JS dựng.</li>
+    </ul>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>6. Meta description của blog bị cắt cứng</h3><span class="pill p-warn">Trung bình</span></div>
+    <p>5 bài có description đúng 300 ký tự, cắt ngang giữa từ ("…mà khô", "…websi", "…lê"). Google chỉ hiển thị khoảng 150–160 ký tự nên phần sau bị bỏ, còn đoạn đang hiện là câu mở bài chứ không phải lời mời click.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Bài</th><th class="num">Ký tự</th><th>Vấn đề</th></tr></thead>
+      <tbody>
+        <tr><td>10 mẹo cải thiện CLS</td><td class="num">300</td><td>Cắt giữa từ</td></tr>
+        <tr><td>Bí mật website tốc độ cực nhanh</td><td class="num">300</td><td>Cắt giữa từ</td></tr>
+        <tr><td>Viết content lên top</td><td class="num">300</td><td>Cắt giữa từ</td></tr>
+        <tr><td>Tầm quan trọng SEO Onpage</td><td class="num">300</td><td>Cắt giữa từ</td></tr>
+        <tr><td>Tối ưu hình ảnh mobile</td><td class="num">300</td><td>Cắt giữa từ</td></tr>
+        <tr><td>Chỉ số Lighthouse</td><td class="num">235</td><td>Dài, giọng cá nhân ("mình")</td></tr>
+        <tr><td>Sitemap trong SEO</td><td class="num">90</td><td>Quá ngắn, viết "WEB 100"</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix"><span class="fix-label">Cách sửa</span><p>Viết tay 140–160 ký tự cho từng bài: từ khoá chính ở nửa đầu, nói rõ người đọc nhận được gì. Ví dụ bài CLS: "10 mẹo giảm chỉ số CLS dưới 0.1: đặt kích thước ảnh, font-display, chừa chỗ cho quảng cáo… Áp dụng được ngay cho mọi website."</p></div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>7. Nội dung mỏng và blog đứng yên</h3><span class="pill p-warn">Trung bình</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Nhóm trang</th><th class="num">Số trang</th><th class="num">Độ dài nội dung</th><th>Đánh giá</th></tr></thead>
+      <tbody>
+        <tr><td>Mẫu website chi tiết</td><td class="num">41</td><td class="num">230–310 tiếng</td><td><span class="pill p-crit">Mỏng</span></td></tr>
+        <tr><td>Khách hàng chi tiết</td><td class="num">18</td><td class="num">370–480 tiếng</td><td><span class="pill p-warn">Tạm</span></td></tr>
+        <tr><td>Trang dịch vụ</td><td class="num">6</td><td class="num">755–1 150 tiếng</td><td><span class="pill p-warn">Ngắn so với đối thủ</span></td></tr>
+        <tr><td>Bài blog</td><td class="num">9</td><td class="num">880–1 530 tiếng</td><td><span class="pill p-ok">Ổn</span></td></tr>
+        <tr><td><code>/lien-he/</code></td><td class="num">1</td><td class="num">139 tiếng</td><td><span class="pill p-low">Chấp nhận được</span></td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><strong>Trang mẫu website chiếm gần nửa site</strong> (41/86 trang) nhưng mỗi trang chỉ ~150–200 từ. Tên trang là thương hiệu người khác (Marriott, Linear, Raycast, Cheval Blanc), không khớp ý định tìm kiếm của khách Web100, và trang có ghi "không phải sản phẩm Web100". Google dễ xếp nhóm này vào nội dung giá trị thấp, kéo chất lượng chung của site xuống.</li>
+      <li><strong>Trang dịch vụ</strong> cho từ khoá cạnh tranh ("thiết kế website bán hàng") thường cần 1 500–2 500 từ: bảng giá riêng, thời gian bàn giao, case study cùng ngành, FAQ. Hiện chỉ trang chủ, trang Đà Nẵng và <code>/website-doanh-nghiep/</code> có bảng giá; 5 trang dịch vụ còn lại không có.</li>
+      <li><strong>Blog không có bài mới từ 29/10/2024</strong> (gần 11 tháng), chỉ có 1 chuyên mục, 9 bài. <code>dateModified</code> = <code>datePublished</code> ở mọi bài.</li>
+      <li>Trùng chủ đề: trang chủ có khối "Chi phí thiết kế website doanh nghiệp", trùng bảng giá với <code>/website-doanh-nghiep/</code>, nên hai trang cạnh tranh cùng từ khoá. Nên để trang chủ nhắm "thiết kế website" chung, còn bảng giá doanh nghiệp chỉ giữ ở trang dịch vụ (trang chủ đặt link sang).</li>
+    </ul>
+    <div class="fix"><span class="fix-label">Cách sửa</span>
+      <ul>
+        <li>Mẫu website: gom thành các trang hub theo ngành có nhu cầu tìm kiếm thật, như "Mẫu website bất động sản", "Mẫu website du lịch", "Mẫu website spa", "Mẫu website khách sạn". Mỗi hub 800+ từ, có hướng dẫn chọn tính năng và link sang dịch vụ. Trang chi tiết mẫu: hoặc làm giàu (phân tích bố cục, bảng màu, ảnh chụp từng phần), hoặc để <code>noindex, follow</code>.</li>
+        <li>Trang khách hàng: bổ sung số liệu kết quả (thời gian tải, lượt liên hệ, thứ hạng từ khoá) và lời nhận xét có tên người đại diện.</li>
+        <li>Blog: giữ nhịp 2–4 bài/tháng theo cụm từ khoá "chi phí thiết kế website", "thiết kế website Đà Nẵng", "website bán hàng cần gì". Cập nhật lại 9 bài cũ (năm, số liệu) và đổi <code>dateModified</code>.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>8. Ảnh chia sẻ (OG image) chỉ 100×100 px</h3><span class="pill p-warn">Trung bình</span></div>
+    <ul>
+      <li>17 trang (trang chủ, dịch vụ, liên hệ, về chúng tôi…) dùng <code>/images/preview.png</code> làm og:image. File này chỉ <strong>100×100 px</strong> và cũng là favicon, trong khi <code>twitter:card</code> khai <code>summary_large_image</code>. Khi chia sẻ lên Facebook hay Zalo, ảnh sẽ vỡ hoặc không hiện.</li>
+      <li>Trang mẫu website dùng ảnh chụp dài (900×1600 đến 900×6532) làm og:image nên bị crop lung tung.</li>
+      <li>Thiếu <code>og:type</code> trên 100% trang (nên là <code>website</code> hoặc <code>article</code>). Nên thêm <code>og:site_name</code> và <code>og:locale="vi_VN"</code>.</li>
+    </ul>
+    <div class="fix"><span class="fix-label">Cách sửa</span><p>Làm ảnh OG 1200×630 cho trang chủ và từng trang dịch vụ (dưới 150 KB). Thêm <code>apple-touch-icon</code> 180×180 và favicon riêng.</p></div>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>9. Thiếu trang 404 và cache ảnh bằng 0</h3><span class="pill p-warn">Trung bình</span><span class="pill p-ok">Sửa nhanh</span></div>
+    <ul>
+      <li>Không có <code>html/404.html</code>. URL sai trả về 404 với <strong>trang trắng</strong>, người dùng không có đường quay lại.</li>
+      <li>Ảnh, CSS, JS đều trả <code>cache-control: public, max-age=0, must-revalidate</code>, nên lần nào truy cập trình duyệt cũng phải hỏi lại server.</li>
+      <li>URL thiếu dấu <code>/</code> cuối được redirect <strong>307</strong> (tạm thời, mặc định của Cloudflare Pages). Link nội bộ đã dùng đúng dạng có <code>/</code> nên ảnh hưởng thấp.</li>
+    </ul>
+    <div class="fix"><span class="fix-label">Cách sửa</span><p>Tạo <code>404.html</code> có menu, ô tìm kiếm và link tới các dịch vụ. Thêm vào <code>_headers</code>:</p>
+      <div class="tbl"><table><tbody>
+        <tr><td class="mono">/images/*</td><td class="mono">Cache-Control: public, max-age=2592000</td></tr>
+        <tr><td class="mono">/css/*  /js/*</td><td class="mono">Cache-Control: public, max-age=86400</td></tr>
+      </tbody></table></div>
+      <p class="meta">Nếu muốn cache 1 năm (<code>immutable</code>), cần đổi tên file khi cập nhật, ví dụ <code>style.css?v=2</code>.</p>
+    </div>
+  </article>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Ưu tiên thấp</span><h2>Chi tiết nên dọn dẹp</h2></div>
+
+  <article class="issue">
+    <div class="issue-head"><h3>10. Alt ảnh</h3><span class="pill p-low">Thấp</span></div>
+    <ul>
+      <li>4 ảnh <strong>không có thuộc tính alt</strong> ở <code>/hieu-ung-dep/</code> (khối cuộn ảnh <code>hero-full-*</code>, <code>hero-slide-*</code>).</li>
+      <li>6 ảnh dịch vụ trên trang chủ để <code>alt=""</code>. Đây là ảnh có nghĩa nên cần alt, ví dụ "Thiết kế website bán hàng".</li>
+      <li>18 trang khách hàng: ảnh chụp website khách (<code>*-desktop.jpg</code>, <code>*-mobile.jpg</code>) để <code>alt=""</code>. Nên ghi "Giao diện website Tretruc.com.vn trên máy tính". Khung máy tính, điện thoại (mockup) để alt rỗng là đúng.</li>
+      <li>9 ảnh cover trong bài blog để alt rỗng (bản cover đầu bài). Nên dùng tiêu đề bài làm alt.</li>
+    </ul>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head"><h3>11. Heading, schema và các mục nhỏ khác</h3><span class="pill p-low">Thấp</span></div>
+    <ul>
+      <li><strong>Heading nhảy cấp:</strong> footer dùng <code>h4</code> ngay sau <code>h2</code> trên hầu hết trang; <code>/lien-he/</code> đi từ H1 xuống H3. Nên đổi tiêu đề footer thành <code>&lt;p&gt;</code> hoặc <code>h2</code>.</li>
+      <li><strong>Organization <code>sameAs</code></strong> trỏ tới <code>fb.com/gindeptrai</code> (có vẻ là trang cá nhân). Nên dùng fanpage công ty, thêm Zalo OA, Google Business Profile.</li>
+      <li><strong>Tác giả blog</strong> đang là Organization. Nên dùng Person (Quang Huy, kèm link <code>/ve-chung-toi/</code>) và hiện tên tác giả trên bài để tăng E-E-A-T.</li>
+      <li>Cả 6 trang dịch vụ và trang chủ có khối FAQ nhưng không có FAQPage schema. Google đã giới hạn rich result FAQ nên đây là tuỳ chọn; lợi ích chính là cho AI Overviews trích dẫn.</li>
+      <li>Service schema nên thêm <code>areaServed</code>, <code>offers</code> (giá khởi điểm) và <code>provider</code> trỏ về <code>#organization</code>.</li>
+      <li>Trang chủ chặn render bởi Google Fonts + 3 file CSS. Có thể gộp <code>blog.css</code>/<code>pricing.css</code> vào <code>style.css</code> hoặc tự host font.</li>
+    </ul>
+  </article>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Kế hoạch</span><h2>Thứ tự triển khai đề xuất</h2></div>
+  <div class="roadmap">
+    <div class="step"><h3>Tuần 1: sửa lỗi dữ liệu và kỹ thuật nhanh</h3>
+      <ul><li>Sửa 5 description copy nhầm (#3)</li><li>Đồng bộ sitemap, thêm 301 cho 9 trang lệch (#4)</li><li>Thêm <code>404.html</code> và cache header (#9)</li><li>Ảnh OG 1200×630, <code>og:type</code> (#8)</li></ul></div>
+    <div class="step"><h3>Tuần 2: ảnh</h3>
+      <ul><li>Chuyển WebP, thu nhỏ, xoá ảnh thừa (#2)</li><li>Thêm width/height và lazy cho toàn bộ img</li><li>Làm thumbnail cho trang danh sách mẫu</li></ul></div>
+    <div class="step"><h3>Tuần 3: title, H1, description, internal link</h3>
+      <ul><li>Viết lại title/H1 11 trang theo bảng ở #5</li><li>Viết tay description 7 bài blog (#6)</li><li>Chèn link ngữ cảnh blog ↔ dịch vụ ↔ khách hàng ↔ mẫu (#1)</li></ul></div>
+    <div class="step"><h3>Tháng 2 trở đi: nội dung</h3>
+      <ul><li>Hub mẫu website theo ngành, quyết định noindex hay làm giàu trang mẫu (#7)</li><li>Mở rộng 6 trang dịch vụ lên 1 500+ từ, có bảng giá và case study</li><li>Lịch blog 2–4 bài/tháng, cập nhật 9 bài cũ</li></ul></div>
+  </div>
+</section>
+
+<footer>
+  Phương pháp: quét toàn bộ HTML trong <code>html/</code> bằng script (BeautifulSoup + Pillow), đo dung lượng ảnh thực tế, chạy thử <code>cwebp -q 80</code> để ước tính mức giảm, kiểm tra header, redirect và sitemap trực tiếp trên web100.vn ngày 23/09/2026. Link ngữ cảnh là link nằm trong <code>&lt;main&gt;</code>, không tính header, nav, footer. Báo cáo không bao gồm dữ liệu Search Console, backlink hay thứ hạng từ khoá.
+</footer>
+
+</div>

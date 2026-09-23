@@ -41,13 +41,13 @@ HTML_SNIPPET = """
         <div class="mock" role="img" aria-label="Giao dien website {domain} tren may tinh va dien thoai">
           <img class="mock__layer mock__pc-frame" src="../../images/khach-hang/desktop-customer.webp" alt="" />
           <div class="mock__pc-screen-rect">
-            <img src="../../images/khach-hang/{slug}-desktop.jpg" alt="" />
+            <img src="../../images/khach-hang/{slug}-desktop.webp" alt="Giao dien website {domain} tren may tinh" />
           </div>
 
           <div class="mock__phone">
             <img class="mock__layer mock__ph-frame" src="../../images/khach-hang/mobile-customer.webp" alt="" />
             <div class="mock__ph-screen-rect">
-              <img src="../../images/khach-hang/{slug}-mobile.jpg" alt="" />
+              <img src="../../images/khach-hang/{slug}-mobile.webp" alt="Giao dien website {domain} tren dien thoai" />
             </div>
             <img class="mock__layer mock__ph-island" src="../../images/khach-hang/mobile-customer-island.webp" alt="" />
           </div>
@@ -56,7 +56,20 @@ HTML_SNIPPET = """
 """
 
 
-def run(slug: str, url: str, quality: int = 92):
+# Anh chup 2x (3072px / 780px) nhung khung mockup chi hien toi da ~760px /
+# ~156px, nen thu ve 1520px / 400px (du net cho man hinh 2x) va luu WebP.
+DESKTOP_MAX_W = 1520
+MOBILE_MAX_W = 400
+
+
+def _save_webp(src: str, out: Path, max_w: int, quality: int) -> None:
+    im = Image.open(src).convert("RGB")
+    if im.width > max_w:
+        im = im.resize((max_w, round(im.height * max_w / im.width)), Image.LANCZOS)
+    im.save(out, "WEBP", quality=quality, method=6)
+
+
+def run(slug: str, url: str, quality: int = 80):
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         raw_d = str(Path(tmp) / "d.png")
@@ -65,10 +78,10 @@ def run(slug: str, url: str, quality: int = 92):
         capture(url, raw_d, raw_m)
 
         print("[2/2] Luu anh chu nhat nguyen ban ...")
-        out_d = IMAGES_DIR / f"{slug}-desktop.jpg"
-        out_m = IMAGES_DIR / f"{slug}-mobile.jpg"
-        Image.open(raw_d).convert("RGB").save(out_d, "JPEG", quality=quality)
-        Image.open(raw_m).convert("RGB").save(out_m, "JPEG", quality=quality)
+        out_d = IMAGES_DIR / f"{slug}-desktop.webp"
+        out_m = IMAGES_DIR / f"{slug}-mobile.webp"
+        _save_webp(raw_d, out_d, DESKTOP_MAX_W, quality)
+        _save_webp(raw_m, out_m, MOBILE_MAX_W, quality)
 
     for p in (out_d, out_m):
         im = Image.open(p)

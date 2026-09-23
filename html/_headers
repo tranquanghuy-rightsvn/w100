@@ -4,3 +4,16 @@
 # Disallow là 1 file public, khai vào đó vô tình công bố sự tồn tại của trang quản trị.
 /admin/*
   X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
+
+# Cache tài nguyên tĩnh. Tên file ảnh/font không đổi khi cập nhật nội dung nên để 30 ngày;
+# CSS/JS sửa thường xuyên (không có hash trong tên file) nên chỉ cache 1 ngày.
+/images/*
+  Cache-Control: public, max-age=2592000
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/css/*
+  Cache-Control: public, max-age=86400
+/js/*
+  Cache-Control: public, max-age=86400
+/data/*
+  Cache-Control: public, max-age=86400

@@ -76,6 +76,20 @@ body {
 }
 @keyframes builder-btn-spin { to { transform: rotate(360deg); } }
 
+/* H1 của trang chỉ để trình đọc màn hình và công cụ tìm kiếm hiểu trang là gì —
+   giao diện builder đã có toolbar thay cho tiêu đề. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ------------------------------ Shell: sidebar + canvas ------------------------------ */
 .builder-shell {
   display: flex;

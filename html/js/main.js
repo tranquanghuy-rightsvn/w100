@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* --------------------------------------------------------------------------
    Logo khách hàng — mỗi ô logo chứa sẵn 2 lớp: thẻ <img> trỏ tới
-   images/khach-hang/<slug>.png và một wordmark bằng chữ làm lớp đỡ. CSS ẩn
+   images/khach-hang/<slug>.webp và một wordmark bằng chữ làm lớp đỡ. CSS ẩn
    <img> mặc định, hàm này chỉ bật nó lên (class .has-logo) khi file logo thật
    sự tải được — nhờ vậy lúc chưa có file thì thẻ hiện wordmark gọn gàng chứ
    không lòi ra icon ảnh lỗi, và khi bỏ file vào là tự đổi, không cần sửa code.
@@ -323,13 +323,10 @@ function initStatCounters() {
 
 /* --------------------------------------------------------------------------
    Hiệu ứng gõ chữ 1 LẦN DUY NHẤT cho đoạn lead dưới title (không lặp lại):
-   hiện sẵn "...là...", dừng lâu 1 tí, xoá "..." thay bằng "???" (highlight
-   màu), dừng 1 nhịp cho thấy rõ, xoá "???" rồi gõ nháp "đích đến cuối
-   cùng." (câu "sai" ban đầu), dừng 1 nhịp, xoá hết cụm đó rồi sửa lại
-   thành "mục tiêu tối thượng." — riêng "tối thượng." được gõ xong mới bọc
-   thêm 1 khối chữ nhật xanh nhạt nghiêng 10°, rơi từ trên cao xuống, nảy
-   nhẹ rồi mắc lại đúng lên chữ (chữ đổi màu trắng để đọc được trên khối).
-   Kết thúc đứng yên vĩnh viễn, không còn hiệu ứng gì thêm.
+   hiện sẵn "Thành công của khách hàng là", gõ thẳng "mục tiêu tối thượng!"
+   — riêng "tối thượng!" được gõ xong mới bọc thêm 1 khối chữ nhật xanh nhạt
+   nghiêng 10°, rơi từ trên cao xuống rồi mắc lại đúng lên chữ (chữ đổi màu
+   trắng để đọc được trên khối). Kết thúc đứng yên vĩnh viễn.
    -------------------------------------------------------------------------- */
 function initHeroLeadTyping() {
   const el = document.getElementById('heroLead');
@@ -337,57 +334,19 @@ function initHeroLeadTyping() {
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const TYPE_MS = 45;
-  const DEL_MS = 28;
   const PREFIX = 'Thành công của khách hàng là';
 
-  // Gõ/xoá phần ĐUÔI thuần văn bản — chỉ nối/cắt trực tiếp trên
-  // el.textContent hiện có, không quan tâm phần trước đó là gì.
   async function typeAppend(text) {
     for (let i = 0; i < text.length; i++) {
       el.textContent += text[i];
       await sleep(TYPE_MS);
     }
   }
-  async function deleteChars(count) {
-    for (let i = 0; i < count; i++) {
-      el.textContent = el.textContent.slice(0, -1);
-      await sleep(DEL_MS);
-    }
-  }
-  // Gõ/xoá "???" bọc trong span highlight — chỉ gọi khi el.textContent
-  // đang đúng bằng PREFIX (không còn ký tự nào phía sau).
-  async function typeHighlight(text) {
-    for (let i = 1; i <= text.length; i++) {
-      el.innerHTML = PREFIX + `<span class="lead-highlight">${text.slice(0, i)}</span>`;
-      await sleep(TYPE_MS);
-    }
-  }
-  async function deleteHighlight(text) {
-    for (let i = text.length - 1; i >= 0; i--) {
-      el.innerHTML = i > 0 ? PREFIX + `<span class="lead-highlight">${text.slice(0, i)}</span>` : PREFIX;
-      await sleep(DEL_MS);
-    }
-  }
 
   async function run() {
-    // "..." + gạch nháy (caret) ở cuối câu — nháy đúng 5 lần (CSS
-    // animation-iteration-count: 5, mỗi lần 0.5s = 2.5s) rồi mới xoá caret
-    // và bắt đầu các bước tiếp theo.
-    el.innerHTML = PREFIX + '...<span class="lead-caret">|</span>';
-    await sleep(2500);
-    el.textContent = PREFIX + '...'; // bỏ caret, về lại text thường
-
-    await deleteChars(3); // xoá "..."
-    await typeHighlight('???'); // thay bằng "???" có highlight màu
-    await sleep(750);
-    await deleteHighlight('???'); // xoá "???", el.textContent về lại đúng PREFIX
-
-    await typeAppend(' đích đến cuối cùng?'); // gõ nháp câu "sai" ban đầu
-    await sleep(900);
-    await deleteChars(20); // xoá hết cụm vừa gõ để sửa lại
-
-    await typeAppend(' mục tiêu '); // gõ phần đầu của câu đúng
-    // Gõ "tối thượng." dạng thường trước, gõ xong mới bọc khối rơi.
+    el.textContent = PREFIX;
+    await typeAppend(' mục tiêu ');
+    // Gõ "tối thượng!" dạng thường trước, gõ xong mới bọc khối rơi.
     const finalWord = 'tối thượng!';
     await typeAppend(finalWord);
     const base = el.textContent.slice(0, el.textContent.length - finalWord.length);

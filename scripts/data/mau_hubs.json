@@ -1,0 +1,506 @@
+{
+ "hubs": {
+  "bat-dong-san": {
+   "title": "Mẫu website bất động sản đẹp, chuyên nghiệp | Web100",
+   "description": "Tuyển chọn mẫu website bất động sản đẹp từ chủ đầu tư, tập đoàn và đại lý phân phối thật. Tham khảo trang dự án, bộ lọc, ảnh phối cảnh cho website của bạn.",
+   "h1": "Mẫu website bất động sản đẹp",
+   "lead": "Các website bất động sản thật của chủ đầu tư, tập đoàn niêm yết và đại lý phân phối, được Web100 sưu tầm để bạn tham khảo phong cách trình bày dự án, hình ảnh phối cảnh và cách xây dựng niềm tin.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website bất động sản: bắt đầu từ đâu?",
+    "desc": "Khách mua nhà thường xem website nhiều lần trước khi gọi điện. Những ghi chú dưới đây giúp bạn biết website cần có gì để họ tin và để lại thông tin.",
+    "items": [
+     {
+      "h3": "Website bất động sản cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Cấu trúc website phụ thuộc vào vai trò của bạn trên thị trường. Chủ đầu tư cần trang riêng cho từng dự án. Đại lý phân phối cần danh mục nhiều dự án của nhiều chủ đầu tư. Tập đoàn niêm yết còn phải có khu vực quan hệ cổ đông.</p><p>Dù ở vai trò nào, một website bất động sản nên có tối thiểu:</p><ul><li><strong>Trang chủ</strong>: dự án nổi bật, thông điệp thương hiệu, vài con số về quy mô có thật.</li><li><strong>Trang chi tiết dự án</strong>: vị trí trên bản đồ, tiện ích, mặt bằng, loại sản phẩm, tiến độ thi công, pháp lý và form đăng ký nhận bảng giá.</li><li><strong>Danh mục dự án</strong> có bộ lọc theo khu vực, loại hình và tình trạng (đang mở bán, sắp ra mắt, đã bàn giao).</li><li><strong>Tin tức</strong>: cập nhật tiến độ, sự kiện mở bán, thông tin thị trường.</li><li><strong>Giới thiệu và liên hệ</strong>: pháp nhân, văn phòng giao dịch, hotline và Zalo luôn hiển thị.</li></ul><p>Với các doanh nghiệp cần trình bày năng lực và danh mục dự án bài bản, gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a> của Web100 đã có sẵn trang giới thiệu năng lực, dự án và tin tức tự quản trị.</p>"
+     },
+     {
+      "h3": "Người mua nhà tìm gì trước khi liên hệ",
+      "wide": false,
+      "html": "<p>Bất động sản là khoản chi lớn, nên khách thường so sánh rất kỹ. Họ muốn biết ai là chủ đầu tư, dự án nằm ở đâu, pháp lý đến đâu, tiến độ thế nào và khoảng giá ra sao. Nếu website trả lời chung chung, họ sẽ tìm sang trang khác.</p><p>Hãy đưa thông tin cụ thể lên trước: hình ảnh tiến độ thật theo từng tháng, bản đồ kết nối, danh sách tiện ích, tên đối tác thiết kế và thi công. Với đại lý, uy tín thường đến từ các chủ đầu tư mà bạn đang phân phối. Form nhận bảng giá nên ngắn, chỉ cần tên và số điện thoại, đặt ở cuối mỗi khối nội dung chính của trang dự án.</p>"
+     },
+     {
+      "h3": "Ảnh phối cảnh, video và tốc độ tải trang",
+      "wide": false,
+      "html": "<p>Website bất động sản thường dùng rất nhiều ảnh lớn: phối cảnh, flycam, nhà mẫu, video giới thiệu. Đây là điểm mạnh về cảm xúc nhưng cũng là nguyên nhân phổ biến khiến trang tải chậm trên điện thoại.</p><p>Một vài nguyên tắc nên áp dụng: xuất ảnh đúng kích thước hiển thị, dùng định dạng WebP hoặc AVIF, chỉ tải ngay ảnh đầu trang còn các ảnh bên dưới tải dần khi khách cuộn tới. Video nền nên ngắn, không âm thanh và có ảnh thay thế trên mạng yếu. Chỉ số Core Web Vitals của Google (LCP, INP, CLS) phản ánh khá rõ trải nghiệm này; bài <a href=\"/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/\">giải thích các chỉ số Lighthouse</a> sẽ giúp bạn đọc hiểu kết quả đo tốc độ. Website của <a href=\"/khach-hang/mvngroup/\">MVN Group, khách hàng kiến trúc và xây dựng tại Đà Nẵng</a>, là ví dụ thư viện dự án khổ lớn vẫn tải nhanh.</p>"
+     },
+     {
+      "h3": "SEO cho website bất động sản",
+      "wide": false,
+      "html": "<p>Khách thường tìm theo tên dự án, theo khu vực (\"căn hộ quận 2\", \"đất nền Đà Nẵng\") hoặc theo tên chủ đầu tư. Mỗi dự án nên có một trang riêng với tiêu đề chứa tên dự án và vị trí, nội dung viết thật về tiện ích, pháp lý, tiến độ, không sao chép tài liệu bán hàng chung.</p><p>Về kỹ thuật, nên khai báo sitemap để Google phát hiện nhanh trang dự án mới (xem bài <a href=\"/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/\">tầm quan trọng của sitemap trong SEO</a>), tạo Google Business Profile cho văn phòng giao dịch và dùng dữ liệu có cấu trúc: Organization cho doanh nghiệp, RealEstateListing cho trang tin rao, Place kèm địa chỉ cho dự án. Schema giúp Google hiểu nội dung, nhưng không đảm bảo hiển thị kết quả đặc biệt. Nếu muốn đầu tư dài hạn, tham khảo <a href=\"/seo-ben-vung/\">dịch vụ SEO bền vững</a>; còn đợt mở bán cần khách ngay thì <a href=\"/chay-quang-cao/\">chạy quảng cáo Google, Facebook</a> vào trang dự án sẽ nhanh hơn.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu trong bộ sưu tập",
+      "wide": false,
+      "html": "<p>Xem kỹ các website trong trang này, có thể thấy mỗi đơn vị chọn cách thể hiện khác nhau tuỳ vai trò:</p><ul><li><a href=\"/mau-website-dep/tatiland/\">Tati Land</a> là đại lý phân phối tại Đà Nẵng, nên nêu tên các tập đoàn đối tác ngay phần giới thiệu và có lưới dự án đang triển khai để khách dễ so sánh.</li><li><a href=\"/mau-website-dep/khangdien/\">Khang Điền</a> tách riêng khối dự án cho người mua nhà và khối công bố thông tin cho cổ đông.</li><li><a href=\"/mau-website-dep/bimland/\">BIM Land</a> có bộ lọc tìm dự án theo địa điểm, loại hình và tình trạng cho danh mục trải nhiều tỉnh thành.</li><li><a href=\"/mau-website-dep/hoalonginvest/\">Hoa Long Invest</a> làm bất động sản công nghiệp, nên dùng ảnh khu công nghiệp nhìn từ trên cao và huy hiệu tiêu chuẩn xanh LEED thay vì phối cảnh căn hộ.</li></ul><p>Điểm chung: ảnh dự án khổ lớn, thông tin quy mô đặt sớm, nút đăng ký tư vấn luôn trong tầm mắt. Bạn không cần sao chép một mẫu nào, chỉ cần chọn cách thể hiện hợp với vai trò của mình.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí thiết kế website bất động sản phụ thuộc vào yếu tố nào?",
+     "a": "<p>Chi phí phụ thuộc vào số lượng trang dự án, có cần bộ lọc tìm dự án hay không, số ngôn ngữ, mức độ thiết kế riêng theo nhận diện thương hiệu và các tích hợp như CRM để quản lý khách đăng ký. Đại lý vài dự án sẽ gọn hơn tập đoàn cần khu vực cổ đông. Bạn có thể xem các gói có sẵn tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a>.</p>"
+    },
+    {
+     "q": "Mỗi dự án có nên làm một website riêng không?",
+     "a": "<p>Với phần lớn doanh nghiệp, một website chính có trang riêng cho từng dự án là đủ và dễ quản lý hơn. Uy tín tên miền được dồn về một chỗ, khách xem dự án này cũng dễ thấy dự án khác. Website riêng hoặc landing page chỉ nên dùng cho dự án lớn có ngân sách quảng cáo riêng, và vẫn nên liên kết về website chính của chủ đầu tư hoặc đại lý.</p>"
+    },
+    {
+     "q": "Tôi có tự cập nhật dự án, bảng giá và tiến độ được không?",
+     "a": "<p>Được. Website Web100 bàn giao kèm trang quản trị để bạn tự thêm dự án mới, thay ảnh tiến độ, đăng tin mở bán mà không cần biết lập trình. Với bảng giá thay đổi thường xuyên, nhiều đơn vị chọn không đăng giá chi tiết mà dùng form nhận bảng giá, vừa giữ thông tin chính xác vừa thu được số điện thoại khách quan tâm.</p>"
+    },
+    {
+     "q": "Làm sao để trang dự án xuất hiện khi khách tìm tên dự án trên Google?",
+     "a": "<p>Trang dự án cần tiêu đề và mô tả chứa tên dự án cùng khu vực, nội dung viết riêng về vị trí, tiện ích, pháp lý và tiến độ, kèm ảnh có mô tả rõ ràng. Sau đó khai báo trang với Google Search Console và cập nhật tin tức định kỳ. Các đại lý cạnh tranh cùng một tên dự án rất nhiều, nên nội dung thật và tốc độ tải nhanh là lợi thế đáng kể.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "anland": "Nhà phát triển trọn vòng đời dự án: slider dự án đa dạng, trích dẫn lãnh đạo, số liệu dự án.",
+    "bimland": "Bất động sản nghỉ dưỡng Việt Nam, Lào: hero ảnh, video toàn màn hình, bộ lọc tìm dự án.",
+    "futaland": "Thành viên tập đoàn Phương Trang: logo tập đoàn mẹ trên thanh điều hướng, slider phối cảnh khu đô thị khổ lớn.",
+    "hoalonginvest": "Khu công nghiệp xanh: ảnh toàn cảnh từ trên cao, huy hiệu LEED, mục quan hệ cổ đông riêng.",
+    "keppelland": "Bất động sản của tập đoàn Singapore: tông tối sang trọng, sứ mệnh và giá trị cốt lõi đặt trước.",
+    "khangdien": "Tập đoàn niêm yết tại TP.HCM: lưới dự án ảnh lớn, khối công bố thông tin cho cổ đông.",
+    "namlongvn": "Tập đoàn nhiều khu đô thị, nhà ở vừa túi tiền: lưới lĩnh vực kinh doanh, số liệu, tin tức.",
+    "qpholdings": "Tập đoàn đa ngành niêm yết: số liệu vốn đặt ngay hero, ba lĩnh vực hoạt động tách riêng.",
+    "soliagroup": "Khu đô thị vệ tinh kiến trúc Pháp: ảnh phối cảnh toàn màn hình, bố cục tối giản.",
+    "sonkimland": "Bất động sản cao cấp thiên về thiết kế: banner toàn màn hình theo chủ đề thương hiệu, nhiều khoảng trắng.",
+    "tatiland": "Đại lý phân phối tại Đà Nẵng: slider dự án đang bán, tên đối tác lớn, lưới dự án dễ so sánh.",
+    "weland": "Đơn vị tư vấn bất động sản: nền tối, huy hiệu giải thưởng quốc tế đặt cạnh tiêu đề hero."
+   },
+   "name": "Bất động sản",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/",
+    "/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-sitemap-trong-seo/",
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/"
+   ]
+  },
+  "du-lich": {
+   "title": "Mẫu website du lịch đẹp, tour chuyên nghiệp | Web100",
+   "description": "Tuyển chọn mẫu website du lịch đẹp từ công ty tour, DMC và cổng thông tin điểm đến thật. Tham khảo trang tour, bộ lọc hành trình, cách thể hiện uy tín.",
+   "h1": "Mẫu website du lịch đẹp",
+   "lead": "Các website du lịch thật của công ty lữ hành, DMC, tour trải nghiệm và cổng quảng bá điểm đến, được Web100 sưu tầm để bạn tham khảo phong cách trình bày tour, hành trình và hình ảnh điểm đến.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website du lịch: những điều nên biết",
+    "desc": "Du khách thường so sánh vài công ty tour trên điện thoại trước khi nhắn tin hỏi giá. Website cần giúp họ hình dung chuyến đi và tin bạn đủ nhanh.",
+    "items": [
+     {
+      "h3": "Website du lịch cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Một công ty tour, dù bán tour ghép hay tour riêng theo yêu cầu, thường cần các phần sau:</p><ul><li><strong>Trang chủ</strong>: điểm đến nổi bật, các nhóm tour chính và lý do chọn bạn.</li><li><strong>Trang chi tiết tour</strong>: lịch trình từng ngày, thời lượng, điểm đón, giá tham khảo, những gì bao gồm và không bao gồm, chính sách huỷ, ảnh thực tế và form yêu cầu tư vấn.</li><li><strong>Danh mục tour</strong> có bộ lọc theo điểm đến, loại hình và số ngày.</li><li><strong>Blog kinh nghiệm du lịch</strong> để thu hút khách từ Google và giữ chân khách quay lại.</li><li><strong>Giới thiệu, đội ngũ hướng dẫn viên, giấy phép lữ hành</strong> và thông tin liên hệ, Zalo, WhatsApp luôn hiển thị.</li></ul><p>Nếu phục vụ khách quốc tế, nên có ít nhất phiên bản tiếng Anh. Gói Chuyên nghiệp trong dịch vụ <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a> của Web100 có hỗ trợ đa ngôn ngữ Việt – Anh và blog tự quản trị. Doanh nghiệp lữ hành ở miền Trung có thể xem thêm dịch vụ <a href=\"/thiet-ke-website-da-nang/\">thiết kế website Đà Nẵng</a>.</p>"
+     },
+     {
+      "h3": "Du khách tìm gì trước khi đặt tour",
+      "wide": false,
+      "html": "<p>Người đi du lịch muốn biết chuyến đi cụ thể ra sao: đi đâu, ăn ở thế nào, mất bao lâu, giá khoảng bao nhiêu và ai sẽ dẫn đoàn. Khách đi theo gia đình còn quan tâm lịch trình có hợp với trẻ nhỏ, người lớn tuổi hay không. Trang tour càng rõ lịch trình, càng ít câu hỏi lặp lại qua tin nhắn.</p><p>Niềm tin là yếu tố quyết định thứ hai. Đánh giá thật từ Google hoặc Tripadvisor, giấy phép lữ hành, ảnh chụp chuyến đi thật và hồ sơ hướng dẫn viên đều giúp khách yên tâm. Dịch vụ đưa đón cũng vậy: website của <a href=\"/khach-hang/tienductransport/\">Tiến Đức Transport, khách hàng vận tải và du lịch tại Hạ Long</a> đưa danh sách tuyến kèm khoảng giá lên trang chủ để khách xem trước khi gọi.</p>"
+     },
+     {
+      "h3": "Hình ảnh điểm đến và tốc độ tải trên điện thoại",
+      "wide": false,
+      "html": "<p>Ảnh phong cảnh đẹp là thứ bán tour tốt nhất, nhưng du khách thường mở website bằng điện thoại, có khi bằng 4G ở nơi sóng yếu. Một trang tour nặng vài chục MB ảnh sẽ khiến họ thoát ra trước khi thấy giá.</p><p>Nên dùng ảnh chụp thật của đơn vị thay vì ảnh mạng, xuất đúng kích thước, định dạng WebP và cho ảnh bên dưới tải dần khi cuộn tới. Thư viện ảnh lớn có thể mở dạng lightbox thay vì hiển thị hết một lúc. Bài <a href=\"/blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/\">bí mật để website tải trang cực nhanh</a> có thêm các mẹo cụ thể mà chủ doanh nghiệp có thể tự kiểm tra.</p>"
+     },
+     {
+      "h3": "SEO cho website du lịch",
+      "wide": false,
+      "html": "<p>Từ khoá du lịch thường gắn với địa danh: \"tour Hội An 1 ngày\", \"tour Bà Nà từ Đà Nẵng\", \"private tour Hanoi\". Mỗi tour nên có trang riêng, tiêu đề chứa điểm đến và thời lượng, nội dung lịch trình viết riêng thay vì chép từ đối tác. Bài blog kinh nghiệm theo mùa, theo điểm đến giúp website có thêm lượt tìm kiếm tự nhiên; bài <a href=\"/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/\">hướng dẫn viết content lên top tìm kiếm</a> là điểm khởi đầu tốt.</p><p>Đừng bỏ qua Google Business Profile cho văn phòng hoặc điểm đón khách, vì khách hay xem đánh giá trên Google Maps. Dữ liệu có cấu trúc TouristTrip mô tả hành trình, TravelAgency mô tả doanh nghiệp, giúp Google hiểu nội dung rõ hơn dù không phải lúc nào cũng tạo kết quả hiển thị đặc biệt. Muốn đầu tư dài hạn, xem <a href=\"/seo-ben-vung/\">dịch vụ SEO bền vững</a>.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu trong bộ sưu tập",
+      "wide": false,
+      "html": "<p>Các website du lịch trong trang này rất khác nhau về quy mô, nhưng cùng giải một bài toán: giúp khách tìm đúng chuyến đi và tin tưởng đơn vị.</p><ul><li><a href=\"/mau-website-dep/hoiankayaktours/\">Hoian Kayak and Cycling Tours</a> là tour ngách, nên trả lời ngay \"vì sao nên chèo kayak ở Hội An\" trước khi liệt kê dịch vụ.</li><li><a href=\"/mau-website-dep/localvietnam/\">Local Vietnam</a> trình bày quy trình đặt tour riêng từng bước, kèm bảng giá tham khảo và câu hỏi thường gặp.</li><li><a href=\"/mau-website-dep/omegatours/\">Omega Tours</a> có bộ lọc theo loại hình tour và công cụ tìm điểm đến cho danh mục rất rộng.</li><li><a href=\"/mau-website-dep/visitdanang/\">Visit Da Nang</a> không bán tour mà chia nội dung theo chủ đề để du khách tự lên kế hoạch.</li></ul><p>Điểm chung: ảnh điểm đến lớn, huy hiệu đánh giá đặt sớm, lịch trình mẫu có số ngày cụ thể và nút tư vấn luôn sẵn sàng.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí thiết kế website du lịch phụ thuộc vào yếu tố nào?",
+     "a": "<p>Chi phí phụ thuộc vào số lượng tour cần đăng, có cần bộ lọc tìm tour không, số ngôn ngữ, blog kinh nghiệm, mức độ thiết kế riêng và việc có kết nối hệ thống đặt tour, thanh toán hay không. Một đơn vị tour ngách vài sản phẩm sẽ gọn hơn nhiều so với DMC có hàng trăm hành trình. Tham khảo các gói tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a> để có con số khởi điểm.</p>"
+    },
+    {
+     "q": "Website du lịch có cần đa ngôn ngữ không?",
+     "a": "<p>Nếu bạn phục vụ khách quốc tế, nên có ít nhất tiếng Anh, vì khách nước ngoài tìm tour bằng ngôn ngữ của họ. Mỗi ngôn ngữ nên là một phiên bản trang riêng, dịch cẩn thận chứ không chỉ dùng công cụ dịch tự động, để Google hiển thị đúng trang cho đúng người. Nếu chỉ phục vụ khách nội địa, một bản tiếng Việt viết tốt là đủ để bắt đầu.</p>"
+    },
+    {
+     "q": "Có nên đăng giá tour công khai trên website?",
+     "a": "<p>Nên đăng giá tham khảo hoặc giá khởi điểm, kèm ghi rõ giá thay đổi theo số khách và mùa. Du khách thường loại bỏ những trang không có giá vì phải nhắn hỏi thêm một bước. Với tour riêng theo yêu cầu, một bảng giá ví dụ cho vài hành trình mẫu, như cách một số mẫu trong bộ sưu tập này đang làm, giúp khách hình dung ngân sách trước khi liên hệ.</p>"
+    },
+    {
+     "q": "Làm sao để khách đặt tour nhanh hơn trên điện thoại?",
+     "a": "<p>Giữ form yêu cầu tư vấn thật ngắn: tên, số điện thoại hoặc email, ngày đi, số khách. Đặt nút Zalo, WhatsApp hoặc Messenger cố định ở góc màn hình, vì nhiều khách thích nhắn tin hơn điền form. Trang tour cần tải nhanh, chữ đủ lớn, lịch trình chia theo ngày dễ đọc. Khi chạy quảng cáo, hãy dẫn khách thẳng vào trang tour cụ thể thay vì trang chủ.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "danangfantasticity": "Cổng du lịch chính thức Đà Nẵng: nội dung dạng tạp chí về ẩm thực, lễ hội, kèm chatbot AI.",
+    "dngvn": "Lữ hành tại Đà Nẵng: tour khắp các miền, blog du lịch, mảng MICE cho đoàn doanh nghiệp.",
+    "hoiankayaktours": "Tour kayak, đạp xe ở Hội An: giải thích vì sao nên thử, ba nhóm dịch vụ, đánh giá thật.",
+    "localvietnam": "Trang tour riêng theo yêu cầu: quy trình đặt tour từng bước, bảng giá tham khảo, FAQ.",
+    "omegatours": "Tour Việt Nam, Campuchia, Lào: lọc theo loại hình cổ điển, golf, MICE, tìm tour đầu trang.",
+    "planvietnamtour": "Tour địa phương có công cụ AI lên kế hoạch ngay hero, lọc theo phong cách và thời lượng.",
+    "tailormadevietnam": "Tour cao cấp của My Way Travel: gợi ý hành trình theo sở thích, khách sạn tuyển chọn.",
+    "venusvietnamtravel": "DMC du lịch bền vững: lưới điểm đến đầu trang, tour bán chạy kèm đánh giá sao, khối giải thưởng và journal.",
+    "vietnambynomadays": "Đại lý mạng lưới Nomadays: bản đồ mạng lưới toàn cầu, đánh giá Google, hành trình mẫu kèm giá.",
+    "vietnamnowtravel": "DMC inbound cho khách lẻ và đại lý: chỉ số uy tín, lịch trình mẫu, khu vực B2B riêng.",
+    "visitdanang": "Cổng quảng bá du lịch Đà Nẵng: nội dung theo chủ đề, thông tin visa, di chuyển thực dụng.",
+    "yourvietnamtravel": "Tour operator tailor-made tại Hà Nội: hero minh hoạ vẽ tay, công cụ tìm tour và huy hiệu Tripadvisor, Google."
+   },
+   "name": "Du lịch",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/bi-mat-website-toc-do-tai-trang-cuc-nhanh/",
+    "/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/",
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/"
+   ]
+  },
+  "khach-san": {
+   "title": "Mẫu website khách sạn đẹp, sang trọng | Web100",
+   "description": "Tuyển chọn mẫu website khách sạn đẹp từ boutique hotel, resort xa xỉ và chuỗi khách sạn thật. Tham khảo thanh tìm phòng, ảnh phòng, khối đánh giá khách.",
+   "h1": "Mẫu website khách sạn đẹp",
+   "lead": "Các website khách sạn thật, từ boutique hotel ở Bergen, Tokyo đến chuỗi nghỉ dưỡng xa xỉ và tập đoàn đa thương hiệu, được Web100 sưu tầm để bạn tham khảo phong cách trình bày phòng, tiện ích và trải nghiệm lưu trú.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website khách sạn để khách đặt phòng trực tiếp",
+    "desc": "Website khách sạn không chỉ để giới thiệu. Nó là kênh để khách đặt phòng trực tiếp thay vì chỉ qua các sàn đặt phòng trung gian.",
+    "items": [
+     {
+      "h3": "Website khách sạn cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Dù là khách sạn mini, homestay, villa hay resort, website nên có các phần sau:</p><ul><li><strong>Trang chủ</strong> có thanh tìm phòng hoặc nút đặt phòng ngay màn hình đầu, ảnh không gian thật, vị trí và vài lý do chọn bạn.</li><li><strong>Trang từng hạng phòng</strong>: diện tích, loại giường, số khách tối đa, view, tiện nghi, nhiều góc ảnh và giá tham khảo.</li><li><strong>Tiện ích và dịch vụ</strong>: nhà hàng, hồ bơi, spa, đưa đón sân bay, tổ chức sự kiện.</li><li><strong>Vị trí</strong>: bản đồ, khoảng cách tới biển, phố cổ, sân bay, điểm tham quan.</li><li><strong>Ưu đãi, chính sách</strong> nhận trả phòng, huỷ phòng và thông tin liên hệ, Zalo, WhatsApp.</li></ul><p>Khách sạn, homestay tại Đà Nẵng – Hội An có thể xem dịch vụ <a href=\"/thiet-ke-website-da-nang/\">thiết kế website Đà Nẵng</a> của Web100, được thiết kế theo hành vi khách du lịch: xem trên điện thoại, cần thông tin nhanh, đặt chỗ gọn. Nếu cần nhiều trang, đa ngôn ngữ và blog, xem thêm các gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a>.</p>"
+     },
+     {
+      "h3": "Khách lưu trú tìm gì trước khi đặt phòng",
+      "wide": false,
+      "html": "<p>Khách thường xem khách sạn trên sàn đặt phòng trước, rồi tìm tên khách sạn trên Google để kiểm tra lại. Lúc đó website cần trả lời nhanh: phòng thực tế trông thế nào, có đúng như ảnh không, vị trí có thuận tiện không, đặt trực tiếp có lợi gì.</p><p>Với khách công tác, thông tin wifi, bàn làm việc và hoá đơn cũng quan trọng không kém view đẹp.</p><p>Ảnh chụp thật, đánh giá có nguồn (Google, Booking, Tripadvisor), chính sách huỷ rõ ràng và lợi ích khi đặt trực tiếp (giá tốt hơn, bữa sáng, đưa đón) là những thứ giúp khách quyết định. Form đặt phòng hoặc form báo giá càng ít bước càng tốt, tương tự cách website <a href=\"/khach-hang/xevipsanbay/\">Xe VIP Sân Bay, khách hàng đưa đón sân bay của Web100</a>, đặt form kiểm tra giá ngay đầu trang chủ để khách không phải gọi hỏi.</p>"
+     },
+     {
+      "h3": "Ảnh phòng, video và tốc độ tải trang",
+      "wide": false,
+      "html": "<p>Website khách sạn thường có hàng trăm ảnh: phòng, sảnh, hồ bơi, nhà hàng. Hero video toàn màn hình rất đẹp, nhưng nếu không tối ưu, khách trên điện thoại phải chờ lâu và trang dễ bị giật khi ảnh tải chậm đẩy nội dung xuống.</p><p>Nên xuất ảnh đúng kích thước, dùng WebP, khai báo sẵn kích thước khung ảnh để trang không nhảy bố cục, chỉ tải ngay ảnh đầu trang. Video nền ngắn, không âm thanh, có ảnh thay thế. Hai bài <a href=\"/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/\">cách tối ưu hình ảnh để tăng tốc độ tải trang trên mobile</a> và <a href=\"/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/\">10 mẹo cải thiện chỉ số CLS</a> giải thích chi tiết hơn.</p>"
+     },
+     {
+      "h3": "SEO cho website khách sạn",
+      "wide": false,
+      "html": "<p>Khách tìm khách sạn theo khu vực và đặc điểm: \"khách sạn gần biển Mỹ Khê\", \"homestay phố cổ Hội An\", \"resort có hồ bơi riêng\". Trang chủ và trang từng hạng phòng nên dùng tự nhiên các cụm từ này, kèm địa chỉ đầy đủ ở chân trang.</p><p>Google Business Profile là kênh quan trọng nhất với khách sạn: điền đủ ảnh, tiện ích, giờ nhận trả phòng, trả lời đánh giá và gắn đúng link website. Trên website, dữ liệu có cấu trúc Hotel (hoặc LodgingBusiness) kèm địa chỉ, toạ độ, tiện ích, khoảng giá giúp Google hiểu rõ cơ sở lưu trú. Giá phòng hiển thị trên Google thường đến từ các chương trình liên kết giá riêng, không phải chỉ nhờ schema. Muốn tăng lượt tìm kiếm tự nhiên lâu dài, tham khảo <a href=\"/seo-ben-vung/\">dịch vụ SEO bền vững</a>.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu trong bộ sưu tập",
+      "wide": false,
+      "html": "<p>Bốn mẫu khách sạn trong trang này ở những phân khúc rất khác nhau:</p><ul><li><a href=\"/mau-website-dep/bergenharbour/\">Bergen Harbour Hotel</a> là boutique hotel quy mô vừa, dựa vào vị trí, tiện ích thiết thực và khối đánh giá thật của khách đặt ngay giữa trang.</li><li><a href=\"/mau-website-dep/chevalblanc/\">Cheval Blanc</a> dùng hero video chuyển động chậm, bố cục thưa và chữ mảnh để giữ cảm giác xa xỉ, tĩnh lặng.</li><li><a href=\"/mau-website-dep/marriott/\">Marriott Bonvoy</a> ưu tiên thanh tìm điểm đến và ngày nhận trả phòng ngay dưới hero, rồi mới đến ưu đãi và hội viên.</li><li><a href=\"/mau-website-dep/trunkhotel/\">Trunk Hotel Cat Street</a> giới thiệu bar, bếp, cửa hàng như những thương hiệu con, bán cả phong cách sống chứ không chỉ phòng nghỉ.</li></ul><p>Điểm chung: ảnh không gian thật chiếm phần lớn màn hình đầu, lối vào đặt phòng luôn rõ ràng và mỗi khách sạn chọn một câu chuyện riêng thay vì liệt kê tiện nghi.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí thiết kế website khách sạn phụ thuộc vào yếu tố nào?",
+     "a": "<p>Chi phí phụ thuộc vào số hạng phòng và trang dịch vụ, số ngôn ngữ, mức độ thiết kế riêng, có dùng video nền hay không và việc kết nối với hệ thống đặt phòng khách sạn đang dùng. Một homestay vài phòng sẽ gọn hơn nhiều so với resort có nhà hàng, spa, sự kiện. Tham khảo các gói tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a> rồi trao đổi thêm với Web100.</p>"
+    },
+    {
+     "q": "Đã có mặt trên các sàn đặt phòng, khách sạn có cần website riêng không?",
+     "a": "<p>Có. Sàn đặt phòng giúp khách tìm thấy bạn, nhưng mỗi lượt đặt đều mất hoa hồng và bạn khó xây dựng thương hiệu riêng. Website là nơi khách kiểm tra lại thông tin, xem ảnh thật và đặt trực tiếp nếu thấy có lợi. Nhiều khách quay lại cũng thường tìm tên khách sạn trên Google, và website chính chủ là kết quả nên xuất hiện đầu tiên.</p>"
+    },
+    {
+     "q": "Website khách sạn có nhận đặt phòng trực tuyến được không?",
+     "a": "<p>Có nhiều cách tuỳ quy mô. Khách sạn nhỏ thường bắt đầu bằng form yêu cầu đặt phòng và nút Zalo, WhatsApp để chốt nhanh. Khách sạn đã dùng phần mềm quản lý hoặc hệ thống đặt phòng riêng có thể gắn nút đặt phòng dẫn thẳng vào hệ thống đó. Điều quan trọng là khách luôn thấy lối vào đặt phòng ở mọi trang, đặc biệt trên điện thoại.</p>"
+    },
+    {
+     "q": "Nên chuẩn bị những gì trước khi làm website khách sạn?",
+     "a": "<p>Bạn nên chuẩn bị logo, ảnh chụp thật từng hạng phòng và khu vực chung, danh sách tiện ích, chính sách nhận trả phòng và huỷ phòng, giá tham khảo theo mùa và các đánh giá tốt từ khách. Ảnh chụp chuyên nghiệp là khoản đầu tư đáng làm nhất, vì khách quyết định chủ yếu qua hình ảnh. Nội dung giới thiệu Web100 có thể hỗ trợ biên tập lại.</p>"
+    }
+   ],
+   "service": "/thiet-ke-website-da-nang/",
+   "blurbs": {
+    "bergenharbour": "Boutique hotel ở trung tâm Bergen: thanh tìm phòng đầu trang, lưới ảnh phòng dạng masonry và đánh giá thật của khách.",
+    "chevalblanc": "Maison nghỉ dưỡng xa xỉ của LVMH: hero video toàn màn hình, bố cục thưa, mỗi nơi một câu chuyện.",
+    "marriott": "Đặt phòng của tập đoàn đa thương hiệu: thanh tìm kiếm nổi bật, ưu đãi, hội viên Bonvoy.",
+    "trunkhotel": "Boutique hotel ở Shibuya, Tokyo: bar, bếp, cửa hàng trình bày như thương hiệu con, ảnh không gian thật tông ấm."
+   },
+   "name": "Khách sạn",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/",
+    "/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/",
+    "/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/"
+   ]
+  },
+  "spa": {
+   "title": "Mẫu website spa đẹp, sang trọng để tham khảo | Web100",
+   "description": "Tuyển chọn mẫu website spa và làm đẹp đẹp từ các thương hiệu thật: bố cục dịch vụ, bảng giá, đặt lịch, câu chuyện thương hiệu. Tham khảo trước khi làm web.",
+   "h1": "Mẫu website spa đẹp",
+   "lead": "Những website spa, thẩm mỹ và mỹ phẩm dưới đây là website thật do Web100 sưu tầm để bạn tham khảo phong cách, bố cục và cách trình bày dịch vụ — không phải sản phẩm Web100 bán.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website spa: cần gì để khách đặt lịch ngay",
+    "desc": "Website spa không chỉ cần đẹp. Nó phải cho khách thấy không gian, dịch vụ, giá và cách đặt lịch trong vài lần chạm trên điện thoại.",
+    "items": [
+     {
+      "h3": "Website spa cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Một website spa hiệu quả thường xoay quanh bốn câu hỏi của khách: spa trông như thế nào, có dịch vụ gì, giá bao nhiêu và đặt lịch ra sao. Từ đó, bộ khung tối thiểu nên có:</p><ul><li><strong>Trang chủ</strong> với ảnh không gian thật, thông điệp ngắn và nút đặt lịch luôn hiển thị.</li><li><strong>Trang dịch vụ</strong> chia theo nhóm: chăm sóc da mặt, massage body, gội đầu dưỡng sinh, gói trọn gói hoặc VIP. Mỗi dịch vụ có thời lượng, quy trình và giá.</li><li><strong>Trang giới thiệu</strong> về đội ngũ kỹ thuật viên, sản phẩm sử dụng và tiêu chuẩn vệ sinh.</li><li><strong>Trang ưu đãi</strong> hoặc thẻ thành viên nếu spa có chương trình khách quen.</li><li><strong>Trang liên hệ</strong> có bản đồ, giờ mở cửa, số điện thoại và Zalo.</li></ul><p>Nếu spa bán thêm mỹ phẩm, hãy cân nhắc gắn thêm giỏ hàng. Khi đó mô hình gần với <a href=\"/website-ban-hang/\">thiết kế website bán hàng mỹ phẩm</a> hơn là một website giới thiệu đơn thuần.</p>"
+     },
+     {
+      "h3": "Điều khách tìm trước khi quyết định đặt lịch",
+      "wide": false,
+      "html": "<p>Khách spa thường so sánh vài nơi trước khi chọn. Họ muốn thấy <strong>bảng giá rõ ràng</strong>, không phải nhắn tin hỏi từng dịch vụ. Họ muốn biết <strong>đánh giá của người đã dùng</strong>, ảnh thật của phòng trị liệu và tên sản phẩm được dùng trên da.</p><p>Form đặt lịch nên ngắn: tên, số điện thoại, dịch vụ, ngày giờ mong muốn. Thêm nút gọi và Zalo cho khách không thích điền form. Với khách du lịch, bảng giá hai ngôn ngữ và nhiều loại tiền tệ giúp họ quyết định nhanh hơn.</p><p>Một chi tiết hay bị bỏ qua là chính sách: có cần đặt cọc không, huỷ lịch trước bao lâu, spa có phòng riêng cho cặp đôi hay chỗ đỗ xe không. Trả lời sẵn những câu này trên trang dịch vụ giúp lễ tân bớt phải nhắn đi nhắn lại, và khách mới cũng yên tâm hơn khi bấm nút đặt lịch.</p>"
+     },
+     {
+      "h3": "Hình ảnh đẹp nhưng phải tải nhanh",
+      "wide": false,
+      "html": "<p>Ngành spa bán cảm giác thư giãn, nên ảnh là yếu tố quan trọng nhất. Tuy vậy, ảnh nặng làm trang chậm, và khách trên điện thoại sẽ rời đi trước khi thấy nút đặt lịch.</p><p>Nên dùng ảnh chụp thật thay cho ảnh mẫu trên mạng, xuất sang WebP hoặc AVIF, khai báo kích thước để tránh xô lệch bố cục. Bài <a href=\"/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/\">hướng dẫn tối ưu hình ảnh để tăng tốc độ tải trang trên mobile</a> có các bước cụ thể bạn có thể làm ngay.</p><p>Ngoài ảnh, video ngắn quay không gian phòng trị liệu cũng rất hiệu quả, nhưng nên nhúng từ YouTube hoặc nén kỹ, không để tự phát nặng ngay khi mở trang.</p>"
+     },
+     {
+      "h3": "SEO cho spa: từ khoá địa phương và Google Business Profile",
+      "wide": false,
+      "html": "<p>Phần lớn khách tìm spa theo khu vực: \"spa gần đây\", \"massage Ngũ Hành Sơn\", \"chăm sóc da mặt Hải Châu\". Vì vậy mỗi trang dịch vụ nên nhắc tên dịch vụ đi kèm quận, thành phố một cách tự nhiên.</p><ul><li>Tạo và cập nhật <strong>Google Business Profile</strong>: giờ mở cửa, ảnh, dịch vụ, trả lời đánh giá.</li><li>Giữ tên, địa chỉ, số điện thoại giống hệt nhau trên website, Google Maps và mạng xã hội.</li><li>Khai báo dữ liệu có cấu trúc schema.org loại <strong>DaySpa</strong> hoặc <strong>BeautySalon</strong> (đều thuộc HealthAndBeautyBusiness) kèm địa chỉ, giờ mở cửa, khoảng giá.</li></ul><p>Nếu muốn đầu tư dài hạn cho kênh tìm kiếm, xem thêm <a href=\"/seo-ben-vung/\">dịch vụ SEO bền vững cho doanh nghiệp địa phương</a>.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu website spa",
+      "wide": true,
+      "html": "<p>Nhìn qua các mẫu trong bộ sưu tầm, có vài điểm lặp lại đáng học:</p><ul><li><a href=\"/mau-website-dep/senspa/\">Sen Spa</a> đặt form đặt lịch kèm ưu đãi ngay trên trang chủ, sau khối \"vì sao chọn chúng tôi\" — khách vừa có lý do vừa có chỗ hành động.</li><li><a href=\"/mau-website-dep/herbalspa/\">Herbal Spa</a> phục vụ khách du lịch nên hiển thị giá VNĐ và USD, huy hiệu TripAdvisor và thông tin từng chi nhánh.</li><li><a href=\"/mau-website-dep/menard/\">Menard</a> chạy song song bán mỹ phẩm và dịch vụ spa, với nhiều kênh tư vấn như hotline, Zalo, live chat.</li><li><a href=\"/mau-website-dep/bamford/\">Bamford</a> dành chỗ cho câu chuyện người sáng lập và cam kết bền vững, tạo chiều sâu cho thương hiệu cao cấp.</li></ul><p>Bài học chung: ảnh thật, dịch vụ chia nhóm rõ, bằng chứng uy tín đặt gần nút đặt lịch. Web100 có thể dựng website theo phong cách bạn thích qua gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a>, hoặc <a href=\"/thiet-ke-website-da-nang/\">thiết kế website spa tại Đà Nẵng</a> nếu bạn ở khu vực miền Trung.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Làm website spa hết bao nhiêu tiền?",
+     "a": "<p>Chi phí phụ thuộc vào số trang dịch vụ, có cần form đặt lịch, đa ngôn ngữ, giỏ hàng bán mỹ phẩm hay blog tự quản trị không. Spa một chi nhánh thường chỉ cần website giới thiệu gọn, còn chuỗi spa cần nhiều trang chi nhánh hơn. Bạn có thể xem các gói cụ thể ở <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a>.</p>"
+    },
+    {
+     "q": "Web100 có làm được website giống các mẫu spa này không?",
+     "a": "<p>Các mẫu trên là website thật của thương hiệu khác, được sưu tầm để bạn tham khảo phong cách. Web100 không sao chép nguyên mẫu, mà dựa vào bố cục, màu sắc và cách sắp xếp bạn thích để thiết kế một website riêng, dùng hình ảnh, dịch vụ và bảng giá của chính spa bạn.</p>"
+    },
+    {
+     "q": "Website spa có cần chức năng đặt lịch online không?",
+     "a": "<p>Nên có. Một form ngắn gồm tên, số điện thoại, dịch vụ và thời gian mong muốn là đủ cho phần lớn spa. Thông tin gửi về email hoặc Zalo để lễ tân xác nhận lại. Spa đông khách, nhiều kỹ thuật viên có thể cân nhắc kết nối phần mềm quản lý lịch hẹn riêng.</p>"
+    },
+    {
+     "q": "Có Fanpage rồi thì spa còn cần website không?",
+     "a": "<p>Fanpage tốt cho tương tác, nhưng khó hiện khi khách tìm trên Google theo từ khoá như tên dịch vụ và khu vực. Website giúp bạn sở hữu kênh riêng, trình bày bảng giá và dịch vụ gọn gàng, kết hợp với Google Business Profile để xuất hiện trên bản đồ. Hai kênh nên hỗ trợ nhau thay vì thay thế nhau.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "bamford": "Thương hiệu wellness cao cấp: câu chuyện người sáng lập, cam kết bền vững và hệ thống spa liên kết.",
+    "cocoonvietnam": "Bán mỹ phẩm thuần chay, danh mục theo nhu cầu da, tóc, môi, kèm chứng nhận Vegan và blog.",
+    "herbalspa": "Spa massage cho khách du lịch: bảng giá song ngữ VNĐ/USD, huy hiệu TripAdvisor, thông tin 4 chi nhánh.",
+    "menard": "Mỹ phẩm và spa cao cấp Nhật Bản: dòng dưỡng da, spa chuyên sâu, tư vấn chuyên gia, chương trình thành viên.",
+    "senspa": "Spa cao cấp: hero không gian sang trọng, bốn lý do chọn dịch vụ, gói VIP, form đặt lịch ngay trang chủ."
+   },
+   "name": "Spa & làm đẹp",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/",
+    "/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/",
+    "/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/"
+   ]
+  },
+  "nha-hang": {
+   "title": "Mẫu website nhà hàng đẹp, sang trọng | Web100",
+   "description": "Tuyển chọn mẫu website nhà hàng đẹp từ fine dining, nhà hàng đặc sản và nhà hàng ven sông thật. Tham khảo cách trình bày không gian, menu, nút đặt bàn.",
+   "h1": "Mẫu website nhà hàng đẹp",
+   "lead": "Các website nhà hàng thật, từ fine dining ở Hà Nội, nhà hàng ven sông Sài Gòn đến Noma ở Copenhagen, được Web100 sưu tầm để bạn tham khảo cách kể câu chuyện ẩm thực, trình bày không gian và nút đặt bàn.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website nhà hàng để thực khách muốn ghé",
+    "desc": "Thực khách thường quyết định ăn ở đâu chỉ sau vài phút lướt điện thoại. Website nhà hàng cần cho họ thấy không gian, món ăn và cách đặt bàn thật nhanh.",
+    "items": [
+     {
+      "h3": "Website nhà hàng cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Website nhà hàng không cần nhiều trang, nhưng mỗi trang phải trả lời đúng câu hỏi của thực khách:</p><ul><li><strong>Trang chủ</strong>: ảnh không gian hoặc món đặc trưng, một câu giới thiệu ngắn, nút đặt bàn và xem menu.</li><li><strong>Thực đơn</strong> dạng trang web đọc được trên điện thoại, không chỉ là ảnh chụp hay file PDF nặng.</li><li><strong>Không gian và đặt tiệc</strong>: phòng riêng, sức chứa, gói tiệc công ty, sinh nhật.</li><li><strong>Câu chuyện thương hiệu</strong>: đầu bếp, nguồn nguyên liệu, triết lý ẩm thực.</li><li><strong>Địa chỉ, giờ mở cửa, bản đồ chỉ đường</strong>, hotline và Zalo luôn hiển thị.</li></ul><p>Nhà hàng muốn một website chuyên nghiệp, tự cập nhật menu và tin khuyến mãi có thể bắt đầu từ các gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a> của Web100. Nhà hàng, quán ăn ở Đà Nẵng – Hội An có thể xem thêm dịch vụ <a href=\"/thiet-ke-website-da-nang/\">thiết kế website Đà Nẵng</a>.</p>"
+     },
+     {
+      "h3": "Thực khách tìm gì trước khi đặt bàn",
+      "wide": false,
+      "html": "<p>Khi tìm nhà hàng, khách thường muốn biết ngay bốn điều: món có hợp khẩu vị không, giá khoảng bao nhiêu, không gian có hợp dịp (hẹn hò, gia đình, tiếp khách) không và nhà hàng ở đâu, mở cửa lúc nào. Nếu phải cuộn mãi mới thấy menu hoặc giờ mở cửa, họ sẽ chọn nơi khác.</p><p>Ảnh món ăn và không gian thật, menu có giá, đánh giá từ khách và các chứng nhận uy tín nếu có là những thứ giúp khách yên tâm. Nút đặt bàn nên có ở đầu trang và lặp lại dọc trang. Với khách du lịch, bản tiếng Anh hoặc thêm ngôn ngữ của nhóm khách chính là một lợi thế rõ ràng. Nếu nhận đặt tiệc, hãy ghi sức chứa từng phòng và cách liên hệ riêng cho tiệc.</p>"
+     },
+     {
+      "h3": "Ảnh món ăn, không gian và tốc độ tải trang",
+      "wide": false,
+      "html": "<p>Nhà hàng bán bằng hình ảnh, nên website thường dùng ảnh lớn toàn màn hình. Điều cần tránh là ảnh gốc từ máy ảnh nặng vài MB được đưa thẳng lên, khiến khách đứng trước cửa mở trang bằng 4G phải chờ lâu.</p><p>Hãy chọn ít ảnh nhưng đẹp, xuất đúng kích thước, dùng WebP và để ảnh bên dưới tải dần khi cuộn. Menu dạng văn bản vừa nhẹ vừa được Google đọc được, tốt hơn ảnh chụp menu. Bài <a href=\"/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/\">cách tối ưu hình ảnh cho website để tăng tốc độ trên mobile</a> có các bước cụ thể. Website của <a href=\"/khach-hang/mvngroup/\">MVN Group, khách hàng kiến trúc và xây dựng của Web100 tại Đà Nẵng</a>, cho thấy thư viện ảnh khổ lớn vẫn có thể tải nhanh nếu được tối ưu đúng cách.</p>"
+     },
+     {
+      "h3": "SEO cho website nhà hàng",
+      "wide": false,
+      "html": "<p>Phần lớn thực khách tìm nhà hàng trên Google Maps hoặc với cụm từ có địa danh: \"nhà hàng hải sản Sơn Trà\", \"nhà hàng chay quận 1\". Vì vậy Google Business Profile là việc nên làm đầu tiên: đúng tên, địa chỉ, giờ mở cửa, ảnh thật, link menu và link website. Tên, địa chỉ, số điện thoại trên website phải khớp với hồ sơ này.</p><p>Trên website, dữ liệu có cấu trúc Restaurant kèm loại món (servesCuisine), link menu, khoảng giá, giờ mở cửa và thông tin nhận đặt bàn giúp Google hiểu nhà hàng rõ hơn. Tiêu đề, mô tả từng trang cũng cần chứa món chính và khu vực; bài <a href=\"/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/\">tầm quan trọng của SEO Onpage</a> giải thích các yếu tố này. Khi khai trương hoặc ra thực đơn mới, <a href=\"/chay-quang-cao/\">chạy quảng cáo Google, Facebook, TikTok</a> theo bán kính quanh nhà hàng là cách có khách nhanh.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu trong bộ sưu tập",
+      "wide": false,
+      "html": "<p>Năm mẫu nhà hàng trong trang này chọn những cách kể chuyện rất khác nhau:</p><ul><li><a href=\"/mau-website-dep/giahanoi/\">Gia Hanoi</a> kể câu chuyện fine dining theo từng khối cuộn, giới thiệu đội ngũ sáng lập và giữ nút đặt bàn xuyên suốt trang.</li><li><a href=\"/mau-website-dep/madamelan/\">Madame Lân</a> mở đầu bằng bàn tiệc đặc sản, đặt chứng nhận uy tín ngay đầu trang và hỗ trợ tiếng Việt, Anh, Hàn cho khách quốc tế.</li><li><a href=\"/mau-website-dep/thedecksaigon/\">The Deck Saigon</a> để ảnh view sông tự thuyết phục, lời giới thiệu ngắn, kèm khối Instagram trực tiếp.</li><li><a href=\"/mau-website-dep/noma/\">Noma</a> gần như không dùng ảnh trang trí, chỉ thông báo dự án mới, vì thương hiệu đã đủ nổi tiếng.</li></ul><p>Điểm chung: hình ảnh hoặc thông điệp chủ đạo chiếm màn hình đầu, nút đặt bàn và xem menu luôn dễ bấm, thông tin liên hệ và giờ mở cửa rõ ràng.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí thiết kế website nhà hàng phụ thuộc vào yếu tố nào?",
+     "a": "<p>Chi phí phụ thuộc vào số trang (menu, đặt tiệc, câu chuyện thương hiệu, tin khuyến mãi), số ngôn ngữ, mức độ thiết kế riêng theo nhận diện, có cần form đặt bàn hay kết nối hệ thống đặt bàn không và việc bạn có muốn tự cập nhật menu hay không. Một quán nhỏ sẽ gọn hơn chuỗi nhiều chi nhánh. Xem các gói tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a> để có con số khởi điểm.</p>"
+    },
+    {
+     "q": "Nhà hàng đã có fanpage, có cần làm website không?",
+     "a": "<p>Fanpage phù hợp để đăng tin hằng ngày, nhưng khó tìm lại thông tin cũ và phụ thuộc hoàn toàn vào nền tảng. Website là nơi đặt menu, giờ mở cửa, bản đồ và nút đặt bàn cố định, đồng thời là link chính thức gắn vào Google Maps. Khi khách tìm tên nhà hàng trên Google, một website nhanh, rõ ràng tạo cảm giác chuyên nghiệp hơn hẳn một fanpage.</p>"
+    },
+    {
+     "q": "Nên đưa menu lên website dạng ảnh, PDF hay trang web?",
+     "a": "<p>Nên dùng trang web dạng văn bản, chia theo nhóm món, có giá và vài ảnh món tiêu biểu. Dạng này đọc dễ trên điện thoại, tải nhanh, Google đọc được nên hỗ trợ tìm kiếm theo tên món, và bạn tự sửa giá trong trang quản trị mà không cần thiết kế lại file. Nếu vẫn muốn giữ menu in, có thể thêm nút tải bản PDF bên cạnh.</p>"
+    },
+    {
+     "q": "Làm sao để nhà hàng xuất hiện trên Google Maps khi khách tìm quanh đây?",
+     "a": "<p>Hãy tạo và xác minh Google Business Profile với đúng tên, địa chỉ, số điện thoại, giờ mở cửa và danh mục nhà hàng. Đăng ảnh thật thường xuyên, trả lời đánh giá của khách và gắn link website, link menu. Thông tin trên website phải khớp với hồ sơ này. Thứ hạng trên Maps còn phụ thuộc khoảng cách tới người tìm và mức độ nổi bật của nhà hàng, nên không thể cam kết vị trí cụ thể.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "giahanoi": "Fine dining: hero ảnh không gian ấm cúng, kể chuyện theo từng khối cuộn, nút đặt bàn xuyên suốt.",
+    "madamelan": "Nhà hàng đặc sản vùng miền: hero bàn tiệc thịnh soạn, chứng nhận uy tín đầu trang, hỗ trợ Việt, Anh, Hàn.",
+    "noma": "Nhà hàng danh tiếng thế giới: tối giản tuyệt đối, chữ làm trung tâm, thông báo dự án mới.",
+    "tamvi": "Nhà hàng cổ truyền Á Đông: tông trầm ấm, hero kiến trúc cổ, triết lý ẩm thực xen ảnh món.",
+    "thedecksaigon": "Nhà hàng ven sông Sài Gòn: hero view sông, nút đặt bàn, xem menu nổi bật, khối Instagram."
+   },
+   "name": "Nhà hàng",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/",
+    "/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/",
+    "/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/"
+   ]
+  },
+  "kien-truc": {
+   "title": "Mẫu website kiến trúc đẹp, tối giản để tham khảo | Web100",
+   "description": "Tuyển chọn mẫu website kiến trúc đẹp từ studio và tạp chí thật: lưới dự án, ảnh công trình lớn, chuyên mục rõ ràng. Tham khảo trước khi làm website kiến trúc.",
+   "h1": "Mẫu website kiến trúc đẹp",
+   "lead": "Đây là các website thật của studio kiến trúc và tạp chí chuyên ngành, được Web100 sưu tầm để bạn tham khảo cách trình bày dự án, hình ảnh và chuyên mục — không phải sản phẩm Web100 bán.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website kiến trúc: để công trình tự nói",
+    "desc": "Với công ty kiến trúc, nội thất hay xây dựng, website là portfolio trực tuyến. Khách xem dự án trước, đọc chữ sau.",
+    "items": [
+     {
+      "h3": "Website kiến trúc cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Khách tìm đơn vị thiết kế kiến trúc thường đã có nhu cầu cụ thể: nhà phố, biệt thự, văn phòng, quán cà phê. Họ vào website để xem bạn đã làm gì và làm có hợp gu không. Bộ khung nên có:</p><ul><li><strong>Trang chủ</strong> mở bằng ảnh công trình đẹp nhất, một câu định vị ngắn về studio.</li><li><strong>Trang dự án</strong> lọc theo loại công trình, mỗi dự án có trang riêng: ảnh, diện tích, địa điểm, năm hoàn thành, ý tưởng thiết kế.</li><li><strong>Trang dịch vụ</strong>: thiết kế kiến trúc, thiết kế nội thất, thi công trọn gói, giám sát.</li><li><strong>Trang quy trình làm việc</strong> từ khảo sát, lên phương án, triển khai hồ sơ đến thi công.</li><li><strong>Trang đội ngũ và liên hệ</strong> có địa chỉ văn phòng, bản đồ, form gửi yêu cầu.</li></ul><p>Nếu bạn định làm tạp chí hoặc trang tin chuyên ngành như vài mẫu bên dưới, cấu trúc sẽ gần với <a href=\"/website-tin-tuc/\">thiết kế website tin tức, tạp chí điện tử</a> hơn.</p>"
+     },
+     {
+      "h3": "Điều khách xem trước khi liên hệ đơn vị kiến trúc",
+      "wide": false,
+      "html": "<p>Portfolio là yếu tố quyết định. Khách muốn thấy <strong>công trình đã hoàn thiện thật</strong>, không chỉ phối cảnh 3D. Mỗi dự án nên kể ngắn gọn bài toán của chủ nhà và cách studio giải quyết, giống một case study nhỏ.</p><p>Tiếp theo là quy trình, thời gian thực hiện và cách tính phí thiết kế. Không cần công bố giá chi tiết, nhưng nên giải thích phí dựa trên yếu tố nào để khách chuẩn bị tâm lý. Cuối cùng là form gửi yêu cầu có ô mô tả diện tích, vị trí, ngân sách dự kiến.</p><p>Đừng quên thông tin pháp lý và năng lực: năm thành lập, số dự án đã làm, chứng chỉ hành nghề của kiến trúc sư chủ trì. Những chi tiết này nhỏ nhưng giúp chủ nhà yên tâm giao một khoản đầu tư lớn cho bạn.</p>"
+     },
+     {
+      "h3": "Ảnh công trình lớn nhưng không làm chậm trang",
+      "wide": false,
+      "html": "<p>Website kiến trúc dùng rất nhiều ảnh khổ lớn. Đây là lý do phổ biến khiến trang tải chậm và điểm Core Web Vitals thấp, đặc biệt chỉ số LCP và CLS.</p><p>Cách xử lý: xuất ảnh nhiều kích cỡ để điện thoại tải bản nhỏ, dùng định dạng WebP hoặc AVIF, chỉ tải ảnh khi khách cuộn tới, và luôn khai báo tỷ lệ khung ảnh. Bài <a href=\"/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/\">10 mẹo cải thiện chỉ số CLS cho website</a> giải thích vì sao trang hay bị giật khi tải ảnh và cách khắc phục.</p><p>Hiệu ứng cuộn mượt hay chuyển cảnh tạo cảm giác cao cấp, nhưng chỉ nên dùng vừa đủ. Trên điện thoại cấu hình thấp, hiệu ứng nặng làm trang phản hồi chậm và khách khó xem hết dự án.</p>"
+     },
+     {
+      "h3": "SEO cho công ty kiến trúc và nội thất",
+      "wide": false,
+      "html": "<p>Từ khoá ngành này thường gắn với loại công trình và địa phương: \"thiết kế nhà phố Đà Nẵng\", \"thiết kế nội thất biệt thự\", \"công ty kiến trúc Hội An\". Mỗi trang dự án là một cơ hội SEO nếu có tiêu đề, mô tả và chữ thay thế ảnh rõ ràng.</p><ul><li>Cập nhật <strong>Google Business Profile</strong> với ảnh công trình và địa chỉ văn phòng.</li><li>Khai báo schema.org loại <strong>ProfessionalService</strong> hoặc <strong>HomeAndConstructionBusiness</strong> cho doanh nghiệp, và <strong>Article</strong> cho bài viết chia sẻ kinh nghiệm.</li><li>Viết bài giải đáp thắc mắc thật của chủ nhà: chi phí phần thô, phong cách phù hợp khí hậu, vật liệu.</li></ul><p>Tham khảo thêm <a href=\"/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/\">tầm quan trọng của SEO onpage</a> để tối ưu từng trang dự án.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu website kiến trúc",
+      "wide": true,
+      "html": "<ul><li><a href=\"/mau-website-dep/miadesignstudio/\">MIA Design Studio</a> gần như không dùng chữ ở đầu trang: hero toàn màn hình bằng ảnh dự án, lưới dự án xếp so le, cuộn mượt như lật một cuốn portfolio in.</li><li><a href=\"/mau-website-dep/archdaily/\">ArchDaily</a> cho thấy cách tổ chức lượng bài rất lớn: ảnh dự án làm trung tâm, lọc theo vùng miền, ô tìm kiếm đặt ngay đầu trang.</li><li><a href=\"/mau-website-dep/kienviet/\">Kiến Việt</a> và <a href=\"/mau-website-dep/ashui/\">Ashui</a> là tạp chí tiếng Việt với chuyên mục phân tầng rõ, banner đối tác xen kẽ hợp lý giữa các dải nội dung.</li></ul><p>Bài học chung: để ảnh công trình dẫn dắt, chữ chỉ đủ để giải thích, và điều hướng phải giúp khách tìm đúng loại dự án. Bạn có thể xem cách Web100 làm cho một doanh nghiệp cùng ngành tại <a href=\"/khach-hang/mvngroup/\">website kiến trúc và xây dựng MVN Group</a>, hoặc <a href=\"/khach-hang/tretruc/\">website nội thất tre trúc Tretruc</a>. Gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a> phù hợp với studio và công ty thiết kế muốn có portfolio chỉn chu.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí làm website cho công ty kiến trúc gồm những gì?",
+     "a": "<p>Chi phí phụ thuộc vào số trang dự án cần đăng lúc đầu, có cần bộ lọc dự án, hiệu ứng cuộn, đa ngôn ngữ cho khách nước ngoài hay blog tự quản trị không. Website càng nhiều ảnh lớn thì càng cần đầu tư tối ưu tốc độ. Xem các gói và phạm vi cụ thể tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a>.</p>"
+    },
+    {
+     "q": "Tôi có tự đăng thêm dự án mới được không?",
+     "a": "<p>Được. Website sẽ có phần quản trị để bạn tự thêm dự án, tải ảnh, viết mô tả và chọn loại công trình. Việc cập nhật portfolio thường xuyên vừa giúp khách thấy studio đang hoạt động, vừa tạo thêm trang mới để Google lập chỉ mục cho các từ khoá liên quan đến loại công trình và khu vực.</p>"
+    },
+    {
+     "q": "Nên dùng ảnh phối cảnh 3D hay ảnh công trình thật?",
+     "a": "<p>Nên ưu tiên ảnh công trình đã hoàn thiện, vì đó là bằng chứng rõ nhất về năng lực thi công và chất lượng. Ảnh phối cảnh 3D vẫn hữu ích cho dự án đang triển khai, nhưng cần ghi chú rõ là phối cảnh. Kết hợp cả hai, kèm ảnh trước và sau cải tạo nếu có, sẽ thuyết phục hơn.</p>"
+    },
+    {
+     "q": "Web100 có sao chép giống hệt các mẫu kiến trúc này không?",
+     "a": "<p>Không. Các mẫu là website thật của studio và tạp chí khác, được sưu tầm để bạn chọn phong cách mình thích. Web100 dựa vào bố cục, nhịp trình bày và cảm giác bạn muốn để thiết kế một website riêng, dùng ảnh công trình, thông tin và bộ nhận diện của chính công ty bạn.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "archdaily": "Trang tin kiến trúc quy mô lớn: lưới bài dày, ảnh dự án làm trung tâm, lọc theo vùng miền.",
+    "ashui": "Tạp chí kiến trúc, quy hoạch, xây dựng với chuyên mục phân tầng sâu và banner đối tác xen kẽ tự nhiên.",
+    "kienviet": "Trang tin kiến trúc tiếng Việt: tin nổi bật, chuyên mục theo chủ đề, danh bạ kiến trúc sư.",
+    "miadesignstudio": "Studio kiến trúc tối giản: hero ảnh dự án toàn màn hình, lưới dự án so le và hiệu ứng cuộn mượt."
+   },
+   "name": "Kiến trúc",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/10-meo-cai-thien-chi-so-cls-cho-website/",
+    "/blog/kinh-nghiem-seo-website/tam-quan-trong-cua-seo-onpage/",
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/"
+   ]
+  },
+  "cong-nghe": {
+   "title": "Mẫu website công nghệ, công ty phần mềm đẹp | Web100",
+   "description": "Tuyển chọn mẫu website công nghệ, SaaS và công ty phần mềm từ thương hiệu thật: hero súc tích, portfolio, case study, logo khách hàng. Tham khảo trước khi làm.",
+   "h1": "Mẫu website công nghệ đẹp",
+   "lead": "Các website sản phẩm SaaS và công ty phần mềm dưới đây là website thật, được Web100 sưu tầm để bạn tham khảo cách trình bày sản phẩm, năng lực và case study — không phải sản phẩm Web100 bán.",
+   "guide": {
+    "eyebrow": "Kinh nghiệm thiết kế",
+    "h2": "Thiết kế website công nghệ: rõ giá trị, đủ bằng chứng",
+    "desc": "Khách hàng công nghệ đọc nhanh và hoài nghi. Website cần nói rõ bạn làm gì cho ai, rồi chứng minh bằng dự án và con số thật.",
+    "items": [
+     {
+      "h3": "Website công ty công nghệ cần những trang và khối nào",
+      "wide": true,
+      "html": "<p>Website công nghệ có hai dạng chính: website cho <strong>một sản phẩm phần mềm</strong> (SaaS, ứng dụng) và website cho <strong>công ty dịch vụ phần mềm</strong> (outsourcing, tư vấn chuyển đổi số). Dù dạng nào, nên có:</p><ul><li><strong>Hero</strong> một câu nói rõ giá trị, kèm nút hành động chính: dùng thử, đặt lịch demo hoặc gửi yêu cầu báo giá.</li><li><strong>Trang dịch vụ hoặc tính năng</strong> chia theo mảng: web, mobile, AI, tích hợp hệ thống.</li><li><strong>Portfolio và case study</strong> theo ngành, nêu bài toán, giải pháp, công nghệ sử dụng.</li><li><strong>Trang về công ty</strong>: đội ngũ, văn phòng, mô hình hợp tác, chứng chỉ nếu có.</li><li><strong>Trang tuyển dụng và blog kỹ thuật</strong> để thu hút nhân sự và thể hiện chuyên môn.</li></ul><p>Công ty phục vụ khách nước ngoài nên làm song ngữ ngay từ đầu, thay vì dịch sau.</p>"
+     },
+     {
+      "h3": "Điều khách B2B tìm trước khi liên hệ",
+      "wide": false,
+      "html": "<p>Người ra quyết định ở doanh nghiệp muốn giảm rủi ro. Họ tìm <strong>case study giống bài toán của mình</strong>, logo khách hàng đã hợp tác, đánh giá có tên người và công ty, cùng thông tin rõ ràng về quy trình, mô hình hợp tác và cách bảo mật dữ liệu.</p><p>Form liên hệ nên hỏi đủ để phân loại: loại dự án, thời gian mong muốn, ngân sách dự kiến. Với sản phẩm SaaS, trang bảng giá theo gói và nút dùng thử miễn phí là hai điểm chuyển đổi quan trọng nhất.</p><p>Nếu có thể, hãy cho khách biết ai sẽ trả lời họ và trong bao lâu. Một dòng như \"đội ngũ kỹ thuật phản hồi trong một ngày làm việc\" rõ ràng hơn nhiều so với lời hứa chung chung, miễn là bạn làm được đúng như vậy.</p>"
+     },
+     {
+      "h3": "Tốc độ và hình ảnh: nói ít, minh hoạ đúng",
+      "wide": false,
+      "html": "<p>Khách ngành công nghệ đánh giá bạn qua chính website. Một trang chậm, giật hoặc lỗi trên điện thoại gây mất điểm ngay. Hãy ưu tiên ảnh chụp giao diện sản phẩm thật, sơ đồ luồng làm việc, video ngắn thay cho ảnh minh hoạ chung chung.</p><p>Đặt mục tiêu đạt ngưỡng tốt ở cả ba chỉ số Core Web Vitals là LCP, INP và CLS. Bài <a href=\"/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/\">giải thích các chỉ số Lighthouse trên Google Chrome</a> giúp bạn đọc hiểu báo cáo tốc độ trước khi làm việc với đội kỹ thuật.</p><p>Hiệu ứng động, nền tối và minh hoạ 3D đang phổ biến ở các website SaaS, nhưng chỉ nên dùng khi giúp khách hiểu sản phẩm nhanh hơn, không phải để trang trí. Nội dung chính vẫn phải đọc được ngay cả khi hiệu ứng chưa tải xong.</p>"
+     },
+     {
+      "h3": "SEO cho công ty phần mềm và sản phẩm SaaS",
+      "wide": false,
+      "html": "<p>Từ khoá ngành công nghệ thường dài và cụ thể: \"công ty phát triển app mobile\", \"outsourcing phần mềm Đà Nẵng\", \"phần mềm quản lý kho cho doanh nghiệp nhỏ\". Mỗi dịch vụ và mỗi ngành bạn phục vụ nên có trang riêng.</p><ul><li>Khai báo schema.org <strong>Organization</strong> hoặc <strong>ProfessionalService</strong> cho công ty, <strong>SoftwareApplication</strong> cho sản phẩm phần mềm có giá và hệ điều hành rõ ràng.</li><li>Viết case study và bài chuyên môn có tác giả thật, thể hiện kinh nghiệm thực tế.</li><li>Tạo Google Business Profile cho văn phòng để xuất hiện khi khách tìm theo khu vực.</li></ul><p>Xem thêm <a href=\"/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/\">hướng dẫn viết content lên top tìm kiếm</a> hoặc <a href=\"/seo-ben-vung/\">dịch vụ SEO bền vững</a> nếu muốn đầu tư kênh này lâu dài.</p>"
+     },
+     {
+      "h3": "Điểm chung rút ra từ các mẫu website công nghệ",
+      "wide": true,
+      "html": "<ul><li><a href=\"/mau-website-dep/linear/\">Linear</a> chia trang theo từng giai đoạn làm việc — tiếp nhận yêu cầu, lên kế hoạch, tự động hoá, phát hành — giúp khách hình dung ngay cách dùng sản phẩm.</li><li><a href=\"/mau-website-dep/raycast/\">Raycast</a> giữ hero tối giản, hiển thị các công cụ tích hợp quen thuộc và lời chứng thực từ cộng đồng kỹ thuật.</li><li><a href=\"/mau-website-dep/designveloper/\">Designveloper</a> và <a href=\"/mau-website-dep/dwarves/\">Dwarves Foundation</a> đặt portfolio, chuyên môn theo công nghệ và mô hình hợp tác lên trước.</li><li><a href=\"/mau-website-dep/kyanon/\">Kyanon Digital</a> dùng số liệu năng lực, chứng chỉ ISO và case study để thuyết phục khách doanh nghiệp lớn.</li></ul><p>Bài học chung: một thông điệp rõ, bằng chứng cụ thể, lời kêu gọi hành động nhất quán. Bạn có thể xem website Web100 làm cho doanh nghiệp B2B như <a href=\"/khach-hang/koseinexus/\">website gia công CNC Koseinexus tại Nhật Bản</a> hay <a href=\"/khach-hang/trustcommedia/\">website agency marketing Trustcom Media</a>. Gói <a href=\"/website-doanh-nghiep/\">thiết kế website doanh nghiệp</a> có sẵn đa ngôn ngữ và blog tự quản trị cho công ty công nghệ.</p>"
+     }
+    ]
+   },
+   "faqs": [
+    {
+     "q": "Chi phí làm website cho công ty phần mềm phụ thuộc vào đâu?",
+     "a": "<p>Chi phí phụ thuộc vào số trang dịch vụ và case study, số ngôn ngữ, có cần trang tuyển dụng, blog kỹ thuật, tích hợp CRM hay hệ thống nội bộ không, và mức độ tuỳ biến giao diện, hiệu ứng. Bạn có thể đối chiếu nhu cầu với các gói tại <a href=\"/website-doanh-nghiep/#bang-gia\">bảng giá thiết kế website doanh nghiệp</a> trước khi trao đổi.</p>"
+    },
+    {
+     "q": "Website công ty công nghệ có cần song ngữ Việt – Anh không?",
+     "a": "<p>Nếu bạn nhận dự án từ khách nước ngoài hoặc tuyển dụng nhân sự quốc tế, gần như chắc chắn cần. Nên thiết kế song ngữ từ đầu để mỗi ngôn ngữ có đường dẫn riêng, tiêu đề và mô tả riêng, giúp Google hiểu đúng và hiển thị trang phù hợp với từng nhóm khách tìm kiếm.</p>"
+    },
+    {
+     "q": "Chưa có nhiều dự án thì làm portfolio thế nào?",
+     "a": "<p>Hãy chọn vài dự án tiêu biểu nhất và viết kỹ: bài toán của khách, giải pháp, công nghệ, kết quả có thể chia sẻ. Nếu dự án bị ràng buộc bảo mật, có thể ẩn tên khách hàng và chỉ mô tả ngành. Kết hợp thêm dự án nội bộ, sản phẩm thử nghiệm và bài viết kỹ thuật để thể hiện năng lực.</p>"
+    },
+    {
+     "q": "Web100 có làm website giống hệt Linear hay Raycast không?",
+     "a": "<p>Không. Các mẫu là website thật của thương hiệu khác, được sưu tầm để tham khảo phong cách. Web100 lấy cảm hứng từ bố cục, nhịp trình bày và cảm giác bạn thích để thiết kế một website riêng cho công ty hoặc sản phẩm của bạn, dùng nội dung, hình ảnh và nhận diện thương hiệu của chính bạn.</p>"
+    }
+   ],
+   "service": "/website-doanh-nghiep/",
+   "blurbs": {
+    "designveloper": "Công ty phát triển phần mềm: dịch vụ AI, web, mobile, portfolio theo ngành và logo khách hàng quốc tế.",
+    "dwarves": "Công ty phần mềm hướng kỹ thuật: triết lý craftsmanship, chuyên môn theo công nghệ, hợp tác linh hoạt.",
+    "kyanon": "Công ty tư vấn phần mềm quy mô lớn: 5 nhóm dịch vụ, số liệu năng lực, chứng chỉ ISO, case study.",
+    "linear": "Nền tảng quản lý phát triển sản phẩm: hero súc tích, các khối minh hoạ quy trình, tự động hoá bằng AI.",
+    "raycast": "Công cụ năng suất cho dân kỹ thuật: hero tối giản, tích hợp công cụ quen thuộc, tính năng AI."
+   },
+   "name": "Công nghệ",
+   "blog": [
+    "/blog/kinh-nghiem-seo-website/giai-thich-cac-chi-so-lighthouse-google-chrome/",
+    "/blog/kinh-nghiem-seo-website/huong-dan-viet-content-len-top-tim-kiem/",
+    "/blog/kinh-nghiem-seo-website/toi-uu-hinh-anh-tang-toc-do-tai-trang-mobile/"
+   ]
+  }
+ }
+}

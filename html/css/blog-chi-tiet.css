@@ -249,3 +249,7 @@
   .post-body h2 { font-size: 21px; }
   .post-related { padding-top: 56px; }
 }
+
+/* Tên tác giả trỏ về trang Về Web100 */
+.post-head__author { color: inherit; font-weight: 600; }
+.post-head__author:hover { color: var(--green-dark); text-decoration: underline; }
