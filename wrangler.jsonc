@@ -1,0 +1,18 @@
+// Cloudflare Worker (Static Assets) phục vụ web100.vn — thư mục html/ là toàn bộ site,
+// không có code Worker riêng. Mỗi lần push lên master, Cloudflare Workers Builds tự deploy.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Tên Worker THẬT trên Cloudflare (domain web100.vn gắn vào Worker này). Sai tên = wrangler
+  // tạo một Worker mới thay vì cập nhật production.
+  "name": "w100",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./html",
+    // Mọi URL của site kết thúc bằng "/" và nội dung nằm ở <thư-mục>/index.html. Giữ đúng
+    // hành vi mặc định trước đây: "/website-ban-hang" tự chuyển về "/website-ban-hang/".
+    "html_handling": "auto-trailing-slash",
+    // Site nhiều trang tĩnh (không phải SPA): URL không tồn tại trả html/404.html kèm mã
+    // HTTP 404 thật. Không khai dòng này thì mặc định "none" — 404 với trang trắng.
+    "not_found_handling": "404-page"
+  }
+}
