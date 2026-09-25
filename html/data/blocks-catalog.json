@@ -11,7 +11,7 @@
       "variants": [
         {
           "id": "menu-basic",
-          "label": "Menu — logo trái, nav phải",
+          "label": "Menu: logo trái, nav phải",
           "html": "<header class=\"blk blk-menu blk-menu--basic\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
             { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
@@ -34,7 +34,7 @@
         },
         {
           "id": "menu-nav-center",
-          "label": "Menu — logo trái, nav giữa",
+          "label": "Menu: logo trái, nav giữa",
           "html": "<header class=\"blk blk-menu blk-menu--nav-center\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
             { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
@@ -57,7 +57,7 @@
         },
         {
           "id": "menu-split-center",
-          "label": "Menu — logo giữa, nav 2 bên",
+          "label": "Menu: logo giữa, nav 2 bên",
           "html": "<header class=\"blk blk-menu blk-menu--split-center\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsLeft\"></ul><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsRight\"></ul><template data-list-template=\"navItemsLeft\"><li><a data-item-field=\"label\">{{label}}</a></li></template><template data-list-template=\"navItemsRight\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
             { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
@@ -87,7 +87,7 @@
       "variants": [
         {
           "id": "hero-full-left",
-          "label": "Hero — ảnh full màn hình, chữ trái",
+          "label": "Hero: ảnh full màn hình, chữ trái",
           "html": "<section class=\"blk blk-hero blk-hero--full blk-hero--full-left\"><div class=\"blk-hero__bgwrap\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-hero__content\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h1 class=\"blk-heading\" data-field=\"heading\">{{{heading}}}</h1><p class=\"blk-lead\" data-field=\"lead\">{{lead}}</p><div class=\"blk-hero__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaPrimary\" href=\"#\">{{ctaPrimary}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaOutline\" href=\"#\">{{ctaOutline}}</a></div></div></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Websites with a human touch" },
@@ -106,7 +106,7 @@
         },
         {
           "id": "hero-full-center",
-          "label": "Hero — ảnh full màn hình, chữ giữa",
+          "label": "Hero: ảnh full màn hình, chữ giữa",
           "html": "<section class=\"blk blk-hero blk-hero--full blk-hero--full-center\"><div class=\"blk-hero__bgwrap\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-hero__content\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h1 class=\"blk-heading\" data-field=\"heading\">{{{heading}}}</h1><p class=\"blk-lead\" data-field=\"lead\">{{lead}}</p><div class=\"blk-hero__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaPrimary\" href=\"#\">{{ctaPrimary}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaOutline\" href=\"#\">{{ctaOutline}}</a></div></div></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Websites with a human touch" },
@@ -125,7 +125,7 @@
         },
         {
           "id": "hero-slideshow-left",
-          "label": "Hero — slideshow toàn màn hình, chữ trái",
+          "label": "Hero: slideshow toàn màn hình, chữ trái",
           "html": "<section class=\"blk blk-hero blk-hero--full blk-hero--slideshow blk-hero--full-left\"><div class=\"blk-hero__slides\" data-list-container=\"slides\"></div><div class=\"blk-hero__content\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h1 class=\"blk-heading\" data-field=\"heading\">{{{heading}}}</h1><p class=\"blk-lead\" data-field=\"lead\">{{lead}}</p><div class=\"blk-hero__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaPrimary\" href=\"#\">{{ctaPrimary}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaOutline\" href=\"#\">{{ctaOutline}}</a></div></div><template data-list-template=\"slides\"><div class=\"blk-hero__slide\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></div></template></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Websites with a human touch" },
@@ -145,7 +145,7 @@
         },
         {
           "id": "hero-slideshow-center",
-          "label": "Hero — slideshow toàn màn hình, chữ giữa",
+          "label": "Hero: slideshow toàn màn hình, chữ giữa",
           "html": "<section class=\"blk blk-hero blk-hero--full blk-hero--slideshow blk-hero--full-center\"><div class=\"blk-hero__slides\" data-list-container=\"slides\"></div><div class=\"blk-hero__content\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h1 class=\"blk-heading\" data-field=\"heading\">{{{heading}}}</h1><p class=\"blk-lead\" data-field=\"lead\">{{lead}}</p><div class=\"blk-hero__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaPrimary\" href=\"#\">{{ctaPrimary}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaOutline\" href=\"#\">{{ctaOutline}}</a></div></div><template data-list-template=\"slides\"><div class=\"blk-hero__slide\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></div></template></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Websites with a human touch" },
@@ -165,17 +165,17 @@
         },
         {
           "id": "hero-slideshow-split-left",
-          "label": "Hero — slideshow 3/4 + 2 ô ảnh, mỗi slide có nội dung riêng (kiểu khtcard)",
+          "label": "Hero: slideshow 3/4 + 2 ô ảnh, mỗi slide có nội dung riêng (kiểu khtcard)",
           "html": "<section class=\"blk blk-hero blk-hero--split34 blk-hero--split34-slidecontent\"><div class=\"blk-hero__slidecol\"><div class=\"blk-hero__slides\" data-list-container=\"slides\"></div></div><div class=\"blk-hero__sidecol\"><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage1\" src=\"{{sideImage1}}\" alt=\"\"><div class=\"blk-hero__sidebody\"><h3 data-field=\"sideTitle1\">{{sideTitle1}}</h3><p data-field=\"sideDesc1\">{{sideDesc1}}</p><a class=\"blk-hero__sidecta\" data-field=\"sideCta1\" href=\"#\">{{sideCta1}}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a></div></div><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage2\" src=\"{{sideImage2}}\" alt=\"\"><div class=\"blk-hero__sidebody\"><h3 data-field=\"sideTitle2\">{{sideTitle2}}</h3><p data-field=\"sideDesc2\">{{sideDesc2}}</p><a class=\"blk-hero__sidecta\" data-field=\"sideCta2\" href=\"#\">{{sideCta2}}<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a></div></div></div><template data-list-template=\"slides\"><div class=\"blk-hero__slide\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"><div class=\"blk-hero__slidebody\"><span class=\"blk-hero__eyebrow\" data-item-field=\"eyebrow\">{{eyebrow}}</span><h2 class=\"blk-hero__slidetitle\" data-item-field=\"title\">{{title}}</h2><p class=\"blk-hero__slidetext\" data-item-field=\"text\">{{text}}</p><a class=\"blk-btn blk-hero__slidecta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></div></div></template></section>",
           "fields": [
             { "key": "slides", "type": "list", "sidebarAdd": true, "slideshow": true, "itemLabel": "slide", "itemFields": [
               { "key": "image", "type": "image", "default": "/images/hero-banner.webp" },
               { "key": "eyebrow", "type": "text", "default": "Điểm nhấn" },
               { "key": "title", "type": "text", "default": "TIÊU ĐỀ NỔI BẬT CỦA SLIDE" },
-              { "key": "text", "type": "text", "default": "Mô tả ngắn gọn, thu hút cho slide này — đổi được riêng theo từng ảnh." },
+              { "key": "text", "type": "text", "default": "Mô tả ngắn gọn, thu hút cho slide này, đổi được riêng theo từng ảnh." },
               { "key": "cta", "type": "text", "default": "Xem thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 0, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 26, "paddingY": 14, "radius": 24, "borderWidth": 1.5, "borderColor": "#ffffff", "hoverEffect": "none" } }
             ], "default": [
-              { "image": "/images/hero-slide-1-1600x900.webp", "eyebrow": "Thiết kế độc bản", "title": "MỖI WEBSITE MỘT CÂU CHUYỆN", "text": "Không dùng mẫu đại trà — mỗi dự án được thiết kế riêng theo đúng bản sắc thương hiệu của bạn.", "cta": "Xem dự án" },
+              { "image": "/images/hero-slide-1-1600x900.webp", "eyebrow": "Thiết kế độc bản", "title": "MỖI WEBSITE MỘT CÂU CHUYỆN", "text": "Không dùng mẫu đại trà, mỗi dự án được thiết kế riêng theo đúng bản sắc thương hiệu của bạn.", "cta": "Xem dự án" },
               { "image": "/images/hero-slide-2-1600x900.webp", "eyebrow": "Tốc độ vượt trội", "title": "ĐIỂM 100/100 LIGHTHOUSE", "text": "Tối ưu từng chi tiết kỹ thuật để website của bạn tải nhanh trên mọi thiết bị.", "cta": "Kiểm tra tốc độ" },
               { "image": "/images/hero-slide-3-1600x900.webp", "eyebrow": "Chuẩn SEO", "title": "SẴN SÀNG LÊN TOP GOOGLE", "text": "Cấu trúc chuẩn SEO ngay từ đầu, giúp khách hàng dễ dàng tìm thấy bạn.", "cta": "Bắt đầu ngay" }
             ] },
@@ -199,7 +199,7 @@
         },
         {
           "id": "hero-slideshow-split-center",
-          "label": "Hero — slideshow 3/4 + 2 ô ảnh, chữ giữa",
+          "label": "Hero: slideshow 3/4 + 2 ô ảnh, chữ giữa",
           "html": "<section class=\"blk blk-hero blk-hero--split34 blk-hero--split34-center\"><div class=\"blk-hero__slidecol\"><div class=\"blk-hero__slides\" data-list-container=\"slides\"></div><div class=\"blk-hero__content\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h1 class=\"blk-heading\" data-field=\"heading\">{{{heading}}}</h1><p class=\"blk-lead\" data-field=\"lead\">{{lead}}</p><div class=\"blk-hero__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaPrimary\" href=\"#\">{{ctaPrimary}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaOutline\" href=\"#\">{{ctaOutline}}</a></div></div></div><div class=\"blk-hero__sidecol\"><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage1\" src=\"{{sideImage1}}\" alt=\"\"></div><div class=\"blk-hero__sidecell\"><img data-field=\"sideImage2\" src=\"{{sideImage2}}\" alt=\"\"></div></div><template data-list-template=\"slides\"><div class=\"blk-hero__slide\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></div></template></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Websites with a human touch" },
@@ -252,7 +252,7 @@
         },
         {
           "id": "logos-split",
-          "label": "Logo — tiêu đề trái, logo phải",
+          "label": "Logo: tiêu đề trái, logo phải",
           "html": "<section class=\"blk blk-logos blk-logos--split\"><div class=\"blk-logos__intro\"><h2 data-field=\"heading\">{{heading}}</h2><p data-field=\"desc\">{{desc}}</p></div><ul class=\"blk-logos__grid\" data-list-container=\"logos\"></ul><template data-list-template=\"logos\"><li><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></li></template></section>",
           "fields": [
             { "key": "heading", "type": "text", "default": "Đối tác đồng hành cùng chúng tôi" },
@@ -282,7 +282,7 @@
       "variants": [
         {
           "id": "about-split",
-          "label": "Giới thiệu — ảnh + nội dung",
+          "label": "Giới thiệu: ảnh + nội dung",
           "html": "<section class=\"blk blk-about\"><div class=\"blk-about__media\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-about__body\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
           "fields": [
             { "key": "image", "type": "image", "default": "/images/hero-side-square-1-800x800.webp" },
@@ -301,12 +301,12 @@
         },
         {
           "id": "about-centered",
-          "label": "Giới thiệu — chữ giữa, không ảnh",
+          "label": "Giới thiệu: chữ giữa, không ảnh",
           "html": "<section class=\"blk blk-about blk-about--centered\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><ul class=\"blk-about__values\" data-list-container=\"values\"></ul><template data-list-template=\"values\"><li><span data-item-field=\"icon\">{{icon}}</span><strong data-item-field=\"title\">{{title}}</strong></li></template></section>",
           "fields": [
             { "key": "badge", "type": "text", "default": "Về chúng tôi" },
             { "key": "heading", "type": "richtext", "default": "Chúng tôi tin vào<br>những website có tâm" },
-            { "key": "desc", "type": "text", "default": "Mỗi dự án là một câu chuyện riêng — chúng tôi lắng nghe, thấu hiểu và biến ý tưởng của bạn thành website thực thụ chuyển đổi." },
+            { "key": "desc", "type": "text", "default": "Mỗi dự án là một câu chuyện riêng, chúng tôi lắng nghe, thấu hiểu và biến ý tưởng của bạn thành website thực thụ chuyển đổi." },
             { "key": "values", "type": "list", "itemLabel": "giá trị", "itemFields": [
               { "key": "icon", "type": "text", "default": "🎯" },
               { "key": "title", "type": "text", "default": "Tận tâm" }
@@ -355,7 +355,7 @@
         },
         {
           "id": "features-icon-row",
-          "label": "Hàng tính năng — icon nhỏ gọn",
+          "label": "Hàng tính năng: icon nhỏ gọn",
           "html": "<section class=\"blk blk-features blk-features--row\"><ul class=\"blk-features__rowlist\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><span class=\"blk-features__icon\" data-item-field=\"icon\">{{icon}}</span><div><h3 data-item-field=\"title\">{{title}}</h3><p data-item-field=\"desc\">{{desc}}</p></div></li></template></section>",
           "fields": [
             { "key": "items", "type": "list", "itemFields": [
@@ -407,7 +407,7 @@
         },
         {
           "id": "stats-cards",
-          "label": "Số liệu — dạng thẻ nền sáng",
+          "label": "Số liệu: dạng thẻ nền sáng",
           "html": "<section class=\"blk blk-stats blk-stats--cards\"><ul class=\"blk-stats__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"label\">{{label}}</span></li></template></section>",
           "fields": [
             { "key": "items", "type": "list", "itemLabel": "số liệu", "itemFields": [
@@ -436,7 +436,7 @@
       "variants": [
         {
           "id": "pricing-3col",
-          "label": "Bảng giá — 3 gói",
+          "label": "Bảng giá: 3 gói",
           "html": "<section class=\"blk blk-pricing\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-pricing__grid\" data-list-container=\"plans\"></ul><template data-list-template=\"plans\"><li class=\"blk-pricing__plan\"><span class=\"blk-pricing__badge\" data-item-field=\"badge\">{{badge}}</span><h3 data-item-field=\"name\">{{name}}</h3><div class=\"blk-pricing__price\"><strong data-item-field=\"price\">{{price}}</strong><span data-item-field=\"period\">{{period}}</span></div><p class=\"blk-pricing__desc\" data-item-field=\"desc\">{{desc}}</p><ul class=\"blk-pricing__features\"><li data-item-field=\"feature1\">{{feature1}}</li><li data-item-field=\"feature2\">{{feature2}}</li><li data-item-field=\"feature3\">{{feature3}}</li><li data-item-field=\"feature4\">{{feature4}}</li></ul><a class=\"blk-btn blk-btn--outline blk-pricing__cta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></li></template></section>",
           "fields": [
             { "key": "heading", "type": "text", "default": "Bảng giá phù hợp mọi nhu cầu" },
@@ -466,7 +466,7 @@
         },
         {
           "id": "pricing-simple-2col",
-          "label": "Bảng giá — 2 gói tối giản",
+          "label": "Bảng giá: 2 gói tối giản",
           "html": "<section class=\"blk blk-pricing\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-pricing__grid blk-pricing__grid--simple\" data-list-container=\"plans\"></ul><template data-list-template=\"plans\"><li class=\"blk-pricing__plan blk-pricing__plan--simple\"><h3 data-item-field=\"name\">{{name}}</h3><div class=\"blk-pricing__price\"><strong data-item-field=\"price\">{{price}}</strong><span data-item-field=\"period\">{{period}}</span></div><p class=\"blk-pricing__desc\" data-item-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary blk-pricing__cta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></li></template></section>",
           "fields": [
             { "key": "heading", "type": "text", "default": "Chọn gói phù hợp với bạn" },
@@ -521,7 +521,7 @@
         },
         {
           "id": "testimonials-spotlight",
-          "label": "Đánh giá — 1 trích dẫn nổi bật",
+          "label": "Đánh giá: 1 trích dẫn nổi bật",
           "html": "<section class=\"blk blk-testi blk-testi--spotlight\"><div class=\"blk-testi__spotlight\"><p class=\"blk-testi__quote\" data-field=\"quote\">{{quote}}</p><div class=\"blk-testi__person\"><img data-field=\"avatar\" src=\"{{avatar}}\" alt=\"\"><div><strong data-field=\"name\">{{name}}</strong><span data-field=\"role\">{{role}}</span></div></div></div></section>",
           "fields": [
             { "key": "quote", "type": "text", "default": "Web100 đã giúp chúng tôi có một landing page chuyển đổi vượt mong đợi chỉ trong vài ngày. Đội ngũ hỗ trợ tận tâm từ đầu đến cuối." },
@@ -554,7 +554,7 @@
               { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
             ], "default": [
               { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
-              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết — tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
               { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." },
               { "question": "Tôi có thể tự chỉnh sửa nội dung sau này không?", "answer": "Có. Trang được xuất ra ở dạng dễ chỉnh sửa, hoặc bạn có thể quay lại công cụ này để kéo thả chỉnh sửa bất cứ lúc nào." }
             ] }
@@ -568,7 +568,7 @@
         },
         {
           "id": "faq-2col",
-          "label": "Câu hỏi thường gặp — lưới 2 cột",
+          "label": "Câu hỏi thường gặp: lưới 2 cột",
           "html": "<section class=\"blk blk-faq\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-faq__list blk-faq__list--grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><h3 data-item-field=\"question\">{{question}}</h3><p data-item-field=\"answer\">{{answer}}</p></li></template></section>",
           "fields": [
             { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
@@ -577,7 +577,7 @@
               { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
             ], "default": [
               { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
-              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết — tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
               { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." },
               { "question": "Tôi có thể tự chỉnh sửa nội dung sau này không?", "answer": "Có. Trang được xuất ra ở dạng dễ chỉnh sửa, hoặc bạn có thể quay lại công cụ này để kéo thả chỉnh sửa bất cứ lúc nào." }
             ] }
@@ -614,7 +614,7 @@
         },
         {
           "id": "cta-centered",
-          "label": "Băng CTA — chữ giữa, xếp dọc",
+          "label": "Băng CTA: chữ giữa, xếp dọc",
           "html": "<section class=\"blk blk-cta blk-cta--centered\"><h2 data-field=\"heading\">{{{heading}}}</h2><p data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></section>",
           "fields": [
             { "key": "heading", "type": "richtext", "default": "Sẵn sàng bắt đầu<br>dự án của bạn?" },
@@ -654,7 +654,7 @@
         },
         {
           "id": "footer-columns",
-          "label": "Footer — nhiều cột",
+          "label": "Footer: nhiều cột",
           "html": "<footer class=\"blk blk-footer blk-footer--columns\"><div class=\"blk-footer__col blk-footer__col--brand\"><span class=\"blk-footer__logo\" data-field=\"logoText\">{{logoText}}</span><p data-field=\"desc\">{{desc}}</p></div><div class=\"blk-footer__col\"><h4 data-field=\"linksHeading\">{{linksHeading}}</h4><ul class=\"blk-footer__linklist\" data-list-container=\"links\"></ul></div><div class=\"blk-footer__col\"><h4 data-field=\"contactHeading\">{{contactHeading}}</h4><p data-field=\"contactLine1\">{{contactLine1}}</p><p data-field=\"contactLine2\">{{contactLine2}}</p></div><p class=\"blk-footer__copy blk-footer__copy--columns\" data-field=\"copyright\">{{copyright}}</p><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
           "fields": [
             { "key": "logoText", "type": "text", "default": "Thương hiệu" },

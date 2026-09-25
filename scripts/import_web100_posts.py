@@ -9,12 +9,12 @@ Script làm 4 việc:
   1. Tải trang gốc + toàn bộ ảnh trong bài về máy (cache ở scripts/.cache/).
   2. Dọn HTML gốc: bỏ <picture>/srcset, gỡ mã hoá &agrave;…, tách <br><br>
      thành <p>, nâng những dòng in đậm đứng riêng thành <h2> (bài gốc không
-     có heading nào — rất bất lợi cho SEO).
+     có heading nào, rất bất lợi cho SEO).
   3. Sinh trang chi tiết + trang chuyên mục theo đúng design system của site
      (css/style.css, css/blog.css, css/blog-chi-tiet.css) kèm JSON-LD.
   4. Cập nhật lưới bài trên html/blog/index.html và khối Blog ở trang chủ.
 
-Chạy lại nhiều lần cho ra cùng kết quả (idempotent) — các khối bị thay thế
+Chạy lại nhiều lần cho ra cùng kết quả (idempotent), các khối bị thay thế
 được xác định bằng comment mốc trong HTML chứ không nối thêm.
 
 Muốn nhập tiếp chuyên mục khác (Dự án, Hướng dẫn Web100…): đổi CATEGORY và
@@ -148,7 +148,7 @@ def conv_figure(m, title):
 
 
 def normalize_strong(chunk):
-    """bài gốc hay viết <strong>Tiêu đề<br><br></strong>Nội dung… — đẩy các
+    """bài gốc hay viết <strong>Tiêu đề<br><br></strong>Nội dung…, đẩy các
        thẻ xuống dòng ra ngoài <strong> để lát nữa cắt đoạn không đứt thẻ"""
     chunk = re.sub(r'((?:<br\s*/?>\s*)+)</strong>', r'</strong>\1', chunk)
     chunk = re.sub(r'<strong>((?:<br\s*/?>\s*)+)', r'\1<strong>', chunk)
@@ -157,7 +157,7 @@ def normalize_strong(chunk):
 
 
 def rebalance_strong(parts):
-    """có chỗ <strong> mở ở đoạn này mà đóng ở đoạn sau — đóng/mở lại cho khớp"""
+    """có chỗ <strong> mở ở đoạn này mà đóng ở đoạn sau, đóng/mở lại cho khớp"""
     out, carry = [], False
     for p in parts:
         if carry:
@@ -382,7 +382,7 @@ def write_posts(arts, header, tail):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(a['title'])} — Web100</title>
+<title>{esc(a['title'])}, Web100</title>
 <meta name="description" content="{esc(a['desc'][:300])}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{esc(a['title'])}">
@@ -445,7 +445,7 @@ def write_posts(arts, header, tail):
       <div class="post-cta">
         <div>
           <h2>Muốn website của bạn đạt 100 điểm SEO?</h2>
-          <p>Web100 thiết kế website tĩnh siêu nhẹ, chuẩn SEO ngay từ dòng code đầu tiên — không plugin, không phụ thuộc backend.</p>
+          <p>Web100 thiết kế website tĩnh siêu nhẹ, chuẩn SEO ngay từ dòng code đầu tiên, không plugin, không phụ thuộc backend.</p>
         </div>
         <a class="btn btn-primary" href="/lien-he/">
           Nhận tư vấn miễn phí
@@ -494,9 +494,9 @@ def write_category(arts, header, tail):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{CAT_NAME} — Web100</title>
+<title>{CAT_NAME}, Web100</title>
 <meta name="description" content="{CAT_DESC}">
-<meta property="og:title" content="{CAT_NAME} — Web100">
+<meta property="og:title" content="{CAT_NAME}, Web100">
 <meta property="og:description" content="{CAT_DESC}">
 <meta property="og:image" content="/images/blog/{arts[0]['cover']}">
 <link rel="icon" type="image/png" href="/images/preview.png">
@@ -529,7 +529,7 @@ def write_category(arts, header, tail):
       {ARROW}
     </span>
     <h1>{CAT_NAME}</h1>
-    <p class="section-desc">{len(arts)} bài viết đúc kết từ những dự án thật của Web100 — tốc độ tải trang, Core Web Vitals, sitemap, tối ưu hình ảnh, SEO onpage và cách viết content lên top tìm kiếm.</p>
+    <p class="section-desc">{len(arts)} bài viết đúc kết từ những dự án thật của Web100, tốc độ tải trang, Core Web Vitals, sitemap, tối ưu hình ảnh, SEO onpage và cách viết content lên top tìm kiếm.</p>
   </div>
 </section>
 

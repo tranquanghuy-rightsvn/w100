@@ -19,7 +19,7 @@ tải được css/ảnh vì đường dẫn bắt đầu bằng "/"):
 
     python3 -m http.server 8000 --directory html
 
-Script chạy lại nhiều lần vẫn an toàn — đường dẫn đã sạch thì giữ nguyên.
+Script chạy lại nhiều lần vẫn an toàn, đường dẫn đã sạch thì giữ nguyên.
 """
 import os
 import re
@@ -47,7 +47,7 @@ ASSET_ATTRS = ('href', 'src', 'poster', 'content')
 def to_clean_url(ref, base_dir):
     """ref tương đối (đã tách #frag/?query) -> URL gốc tuyệt đối, hoặc None.
 
-    Chỉ đổi khi đường dẫn trỏ tới một file có thật trong html/ — nhờ vậy các
+    Chỉ đổi khi đường dẫn trỏ tới một file có thật trong html/, nhờ vậy các
     thuộc tính content="…" chứa văn bản thường (title, description, viewport)
     không bị hiểu nhầm là đường dẫn."""
     target = os.path.normpath(os.path.join(base_dir, ref))

@@ -1344,6 +1344,20 @@ body.no-scroll { overflow: hidden; }
 .modal__done svg { width: 44px; height: 44px; color: var(--green-dark); margin-bottom: 12px; }
 .modal__done h4 { font-size: 18px; margin-bottom: 6px; }
 .modal__done p { color: var(--muted); margin-bottom: 0; }
+/* Dòng báo lỗi do main.js chèn ngay trên nút gửi (sai SĐT / GAS lỗi). */
+.modal__form .form-error,
+.form-error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fdecec;
+  color: #b42318;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.form-error[hidden] { display: none; }
+.form-error a { color: inherit; text-decoration: underline; }
 
 /* ------------------------------ Hiệu ứng đẹp (banner) ------------------------------ */
 /* Dùng lại đúng khối .cta-inner (banner nền tối bo góc) — cùng cơ chế với

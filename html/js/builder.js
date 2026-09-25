@@ -1068,7 +1068,7 @@ function renderCanvas() {
     const p = document.createElement('p');
     p.className = 'canvas-empty';
     p.id = 'canvasEmpty';
-    p.textContent = 'Canvas trống — thêm khối đầu tiên từ sidebar bên trái.';
+    p.textContent = 'Canvas trống, thêm khối đầu tiên từ sidebar bên trái.';
     canvas.appendChild(p);
   } else {
     state.blocks.forEach((inst) => canvas.appendChild(renderBlockInstance(inst)));
@@ -1105,7 +1105,7 @@ function renderSidebar() {
     const p = document.createElement('p');
     p.className = 'sidebar-empty';
     p.id = 'sidebarEmpty';
-    p.innerHTML = 'Chưa có khối nào — bấm <strong>Thêm khối</strong> để bắt đầu.';
+    p.innerHTML = 'Chưa có khối nào, bấm <strong>Thêm khối</strong> để bắt đầu.';
     list.appendChild(p);
   } else {
     state.blocks.forEach((inst) => {
@@ -1441,7 +1441,7 @@ function updateButtonIconControlsUI() {
   if (!ctx) return;
   const bs = ctx.bs;
   const iconDef = bs.icon ? ICONS_CATALOG.find((ic) => ic.id === bs.icon) : null;
-  document.getElementById('btnStyleIconPickBtn').textContent = iconDef ? iconDef.label + ' — đổi' : 'Chọn icon…';
+  document.getElementById('btnStyleIconPickBtn').textContent = iconDef ? iconDef.label + ' - đổi' : 'Chọn icon…';
   document.getElementById('btnStyleIconGroup').style.display = iconDef ? '' : 'none';
   if (iconDef) {
     document.getElementById('btnStyleIconColor').value = bs.iconColor || bs.text;
@@ -1852,7 +1852,7 @@ function buildExportDocument() {
    1 trang tĩnh độc lập, nạp qua Blob URL thay vì chia sẻ document hiện tại. */
 function previewSite() {
   if (!state.blocks.length) {
-    window.alert('Chưa có khối nào để xem trước — hãy thêm khối trước đã.');
+    window.alert('Chưa có khối nào để xem trước, hãy thêm khối trước đã.');
     return;
   }
   // Chèn <base> trỏ về gốc site: trang preview nạp qua blob URL (không có
@@ -1969,7 +1969,7 @@ async function submitAdminExport(form) {
     return;
   }
   if (!state.blocks.length) {
-    note.textContent = 'Chưa có khối nào để gửi — hãy thêm khối trước đã.';
+    note.textContent = 'Chưa có khối nào để gửi, hãy thêm khối trước đã.';
     note.className = 'export-admin-note is-error';
     return;
   }
@@ -1982,7 +1982,7 @@ async function submitAdminExport(form) {
   try {
     const blob = await buildZipBlob();
     if (blob.size > ADMIN_ZIP_MAX_BYTES) {
-      note.textContent = 'Trang của bạn quá nặng để gửi qua đây (nhiều ảnh dung lượng lớn) — hãy dùng "Tải file ZIP" rồi gửi tay qua email/Zalo.';
+      note.textContent = 'Trang của bạn quá nặng để gửi qua đây (nhiều ảnh dung lượng lớn), hãy dùng "Tải file ZIP" rồi gửi tay qua email/Zalo.';
       note.className = 'export-admin-note is-error';
       return;
     }
@@ -2005,7 +2005,7 @@ async function submitAdminExport(form) {
     note.className = 'export-admin-note is-success';
     form.reset();
   } catch (err) {
-    note.textContent = 'Gửi thất bại: ' + err.message + ' — thử lại hoặc dùng "Tải file ZIP".';
+    note.textContent = 'Gửi thất bại: ' + err.message + ', thử lại hoặc dùng "Tải file ZIP".';
     note.className = 'export-admin-note is-error';
   } finally {
     btn.disabled = false;

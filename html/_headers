@@ -5,6 +5,11 @@
 /admin/*
   X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
 
+# Landing page chạy quảng cáo (scripts/build_lp.py) — không index để khỏi cạnh tranh với trang SEO
+# /thiet-ke-website-da-nang/. Vẫn cho crawl (KHÔNG Disallow trong robots.txt): AdsBot cần vào đánh giá trang đích.
+/lp/*
+  X-Robots-Tag: noindex
+
 # Cache tài nguyên tĩnh. Tên file ảnh/font không đổi khi cập nhật nội dung nên để 30 ngày;
 # CSS/JS sửa thường xuyên (không có hash trong tên file) nên chỉ cache 1 ngày.
 /images/*

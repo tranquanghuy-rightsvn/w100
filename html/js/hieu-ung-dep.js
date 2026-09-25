@@ -491,7 +491,7 @@ function initFxStory() {
   const imgs = document.querySelectorAll('.fx-story-visual img');
   const caption = document.getElementById('fxStoryCaption');
   if (!steps.length) return;
-  const captions = ['Bước 1 — Khởi đầu', 'Bước 2 — Tin tức & cập nhật', 'Bước 3 — Vinh danh & giải thưởng', 'Bước 4 — Dự án nổi bật'];
+  const captions = ['Bước 1: Khởi đầu', 'Bước 2: Tin tức & cập nhật', 'Bước 3: Vinh danh & giải thưởng', 'Bước 4: Dự án nổi bật'];
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {

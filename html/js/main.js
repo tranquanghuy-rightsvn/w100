@@ -17,7 +17,164 @@ document.addEventListener('DOMContentLoaded', () => {
   initTemplateActions();
   initStatCounters();
   initClientLogos();
+  initAttribution();
+  initClickTracking();
+  initPackagePicker();
+  initMessengerLinks();
 });
+
+/* Link Messenger: m.me mở thẳng app trên điện thoại, nhưng trên máy tính lại
+   chuyển sang messenger.com — tên miền riêng, phiên đăng nhập riêng nên khách
+   đã login facebook.com vẫn bị hỏi đăng nhập lại. Máy tính (chuột + màn hình
+   rộng) dùng link facebook.com/messages/... trong data-messenger thay thế. */
+function initMessengerLinks() {
+  const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 901px)').matches;
+  if (!isDesktop) return;
+  document.querySelectorAll('a[data-messenger]').forEach((a) => {
+    a.href = a.dataset.messenger;
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Đo chuyển đổi cho quảng cáo. Mọi sự kiện đi qua gtag (GA4 đã gắn ở <head>
+   mọi trang) — trong GA4 đánh dấu generate_lead / click_call / click_zalo là
+   key event rồi import sang Google Ads. Có Facebook Pixel (fbq) thì bắn luôn.
+     click_call · click_zalo · click_messenger — bấm nút liên hệ
+     form_start      — khách bắt đầu điền một form
+     package_selected — chọn gói (nút "Chọn gói" hoặc ô chọn trong form)
+     generate_lead   — form gửi THÀNH CÔNG (GAS trả ok)
+     form_error      — gửi thất bại (để phát hiện sớm khi GAS lỗi)
+   -------------------------------------------------------------------------- */
+function track(event, params = {}) {
+  try {
+    if (typeof window.gtag === 'function') window.gtag('event', event, params);
+  } catch (e) { /* tracking không được làm hỏng trang */ }
+}
+
+const FB_EVENTS = { generate_lead: 'Lead', click_call: 'Contact', click_zalo: 'Contact', click_messenger: 'Contact' };
+function trackFb(event, params) {
+  try {
+    if (typeof window.fbq === 'function' && FB_EVENTS[event]) window.fbq('track', FB_EVENTS[event], params);
+  } catch (e) { /* bỏ qua */ }
+}
+
+// Bắn generate_lead rồi mới gọi done() — chờ gtag gửi xong (tối đa 1,2s) vì
+// done() có thể chuyển sang trang cảm ơn, rời trang sớm quá là mất sự kiện.
+function trackLead({ form, package: pkg, phone }, done) {
+  let called = false;
+  const once = () => { if (!called) { called = true; done(); } };
+  try {
+    if (typeof window.gtag === 'function') {
+      // Enhanced conversions: gtag tự chuẩn hoá + băm SHA-256 trước khi gửi.
+      if (phone) window.gtag('set', 'user_data', { phone_number: '+84' + phone.slice(1) });
+      window.gtag('event', 'generate_lead', {
+        form, package: pkg, currency: 'VND', value: 1,
+        event_callback: once, event_timeout: 1200,
+      });
+    }
+  } catch (e) { /* bỏ qua */ }
+  trackFb('generate_lead', { content_name: pkg || form });
+  setTimeout(once, 1300);
+}
+
+// 0905 123 456 / +84 905.123.456 / 84905123456 -> "0905123456"; sai định dạng -> "".
+function normalizeVnPhone(raw) {
+  let digits = String(raw || '').replace(/[^\d+]/g, '');
+  if (digits.startsWith('+84')) digits = '0' + digits.slice(3);
+  else if (digits.startsWith('84') && digits.length === 11) digits = '0' + digits.slice(2);
+  // Di động 10 số hoặc máy bàn 11 số (VD: 0236 xxx xxxx).
+  return /^0\d{9,10}$/.test(digits) ? digits : '';
+}
+
+/* Lưu nguồn quảng cáo (gclid/wbraid/gbraid của Google Ads, fbclid, utm_*) ngay
+   khi khách vào trang — khách có thể lướt sang trang khác hoặc quay lại vài hôm
+   sau mới gửi form. Lượt click quảng cáo mới nhất ghi đè lượt cũ (last-click),
+   giữ 90 ngày = thời hạn click-through mặc định của Google Ads. */
+const ATTR_KEY = 'web100_attr';
+const ATTR_PARAMS = ['gclid', 'wbraid', 'gbraid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+const ATTR_TTL = 90 * 24 * 60 * 60 * 1000;
+
+function initAttribution() {
+  const params = new URLSearchParams(location.search);
+  const fresh = {};
+  ATTR_PARAMS.forEach((k) => {
+    const v = params.get(k);
+    if (v) fresh[k] = v.slice(0, 200);
+  });
+  if (!Object.keys(fresh).length) return;
+  fresh.landing = location.pathname;
+  fresh.ts = Date.now();
+  try { localStorage.setItem(ATTR_KEY, JSON.stringify(fresh)); } catch (e) { /* private mode */ }
+}
+
+function attributionNote() {
+  let a = null;
+  try { a = JSON.parse(localStorage.getItem(ATTR_KEY) || 'null'); } catch (e) { /* bỏ qua */ }
+  if (!a || !a.ts || Date.now() - a.ts > ATTR_TTL) return '';
+  const parts = ATTR_PARAMS.filter((k) => a[k]).map((k) => `${k}=${a[k]}`);
+  if (!parts.length) return '';
+  parts.push(`landing=${a.landing}`, `click=${new Date(a.ts).toISOString()}`);
+  return `[Nguồn] ${parts.join(' | ')}`;
+}
+
+function initClickTracking() {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    const area = a.closest('[data-track-area]');
+    const params = { link_location: area ? area.dataset.trackArea : 'other', page: location.pathname };
+    let event = '';
+    if (href.startsWith('tel:')) event = 'click_call';
+    else if (/zalo\.me\//.test(href)) event = 'click_zalo';
+    else if (a.hasAttribute('data-messenger') || /(^|\/\/)(m\.me|www\.messenger\.com)\//.test(href)) event = 'click_messenger';
+    if (!event) return;
+    track(event, params);
+    trackFb(event, params);
+  });
+
+  document.querySelectorAll('.modal__form').forEach((form) => {
+    form.addEventListener('focusin', () => {
+      track('form_start', { form: form.dataset.formAction || 'contact', page: location.pathname });
+    }, { once: true });
+  });
+}
+
+/* Landing page: nút "Chọn gói ..." ([data-pick-package] trỏ href="#id-form")
+   cuộn tới form, tích sẵn gói tương ứng và đặt con trỏ vào ô SĐT — khách chỉ
+   còn nhập số điện thoại. [data-goto-form] (nút "Nhận báo giá") làm y hệt
+   nhưng không chọn gói. */
+function initPackagePicker() {
+  document.querySelectorAll('[data-pick-package], [data-goto-form]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const target = document.querySelector(btn.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const pkg = btn.dataset.pickPackage;
+      if (pkg) {
+        // Form landing giữ gói trong ô ẩn; form có ô chọn gói dạng radio thì tích sẵn.
+        const hidden = target.querySelector('input[type="hidden"][name="goi_dich_vu"]');
+        if (hidden) hidden.value = pkg;
+        const radio = [...target.querySelectorAll('input[type="radio"][name="goi_dich_vu"]')].find((r) => r.value === pkg);
+        if (radio) radio.checked = true;
+        track('package_selected', { package: pkg, source: 'pricing' });
+      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const phone = target.querySelector('[name="dienthoai"]');
+      if (phone) setTimeout(() => phone.focus({ preventScroll: true }), 450);
+    });
+  });
+
+  document.querySelectorAll('.modal__form select[name="loai_website"]').forEach((select) => {
+    select.addEventListener('change', () => track('website_type_selected', { website_type: select.value }));
+  });
+
+  document.querySelectorAll('.modal__form input[name="goi_dich_vu"][type="radio"]').forEach((radio) => {
+    radio.addEventListener('change', () => {
+      if (radio.checked) track('package_selected', { package: radio.value, source: 'form' });
+    });
+  });
+}
 
 /* --------------------------------------------------------------------------
    Logo khách hàng — mỗi ô logo chứa sẵn 2 lớp: thẻ <img> trỏ tới
@@ -693,8 +850,24 @@ function initTemplateActions() {
     form.appendChild(hp);
   };
 
-  // Gửi form liên hệ (dùng chung mọi trang) và form yêu cầu báo giá (đánh dấu
-  // bằng data-form-action="quote") thẳng lên GAS — xem gas/README.md.
+  // Dòng báo lỗi ngay trong form — tạo khi cần, để các form cũ không phải sửa markup.
+  const showFormError = (form, message) => {
+    let el = form.querySelector('.form-error');
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'form-error';
+      el.setAttribute('role', 'alert');
+      const submit = form.querySelector('button[type="submit"]');
+      form.insertBefore(el, submit || null);
+    }
+    el.innerHTML = message;
+    el.hidden = !message;
+  };
+  const SEND_FAIL_MSG = 'Chưa gửi được yêu cầu. Vui lòng thử lại, hoặc gọi <a href="tel:+84964074043">096.407.4043</a> / nhắn <a href="https://zalo.me/84964074043" target="_blank" rel="noopener">Zalo</a> để được tư vấn ngay.';
+
+  // Gửi form liên hệ (dùng chung mọi trang), form yêu cầu báo giá (đánh dấu
+  // bằng data-form-action="quote") và form ngắn của landing page quảng cáo
+  // (data-form-action="lp") thẳng lên GAS — xem gas/README.md.
   document.querySelectorAll('.modal__form').forEach((form) => {
     addHoneypot(form);
 
@@ -708,46 +881,98 @@ function initTemplateActions() {
       const data = new FormData(form);
       if (data.get('_hp')) return; // bot dính bẫy — im lặng, không gửi, không báo lỗi
 
-      const isQuote = form.dataset.formAction === 'quote';
+      const formAction = form.dataset.formAction || 'contact';
       const hoten = (data.get('hoten') || '').toString().trim();
       const email = (data.get('email') || '').toString().trim();
       const dienthoai = (data.get('dienthoai') || '').toString().trim();
       const mau = (data.get('mau') || '').toString().trim();
       const mota = (data.get('mota') || '').toString().trim();
+      const goi = (data.get('goi_dich_vu') || '').toString().trim();
+      const loaiWebsite = (data.get('loai_website') || '').toString().trim();
 
-      const payload = isQuote
-        ? {
-            action: 'quote',
-            hoten, email, dienthoai,
-            goi_dich_vu: (data.get('goi_dich_vu') || '').toString().trim(),
-            ghi_chu: mota,
-            trang: location.pathname,
-          }
-        : {
-            action: 'contact',
-            hoten, email, dienthoai,
-            mota: mau ? `[Mẫu tham khảo: ${mau}] ${mota}` : mota,
-            trang: location.pathname,
-          };
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.classList.add('is-loading');
+      const phone = normalizeVnPhone(dienthoai);
+      if (dienthoai && !phone) {
+        showFormError(form, 'Số điện thoại chưa đúng, vui lòng kiểm tra lại, VD: 0905 123 456.');
+        const input = form.querySelector('[name="dienthoai"]');
+        if (input) input.focus();
+        return;
       }
+      showFormError(form, '');
+
+      // Nguồn quảng cáo (gclid/utm...) ghi kèm vào ghi chú để biết lead đến từ đâu.
+      const source = attributionNote();
+      const withSource = (text) => [text, source].filter(Boolean).join('\n');
+
+      let payload;
+      if (formAction === 'lp') {
+        // Form landing chỉ bắt buộc SĐT; GAS (action quote) vẫn đòi đủ họ tên/email/gói
+        // nên điền giá trị mặc định cho các ô khách không phải nhập.
+        payload = {
+          action: 'quote',
+          hoten: hoten || 'Landing page',
+          email: email || 'web100.vn@gmail.com',
+          dienthoai: phone,
+          goi_dich_vu: goi || 'Chưa chọn',
+          ghi_chu: withSource([loaiWebsite && `Website cần thiết kế: ${loaiWebsite}`, mota].filter(Boolean).join('\n')),
+          trang: location.pathname,
+        };
+      } else if (formAction === 'quote') {
+        payload = {
+          action: 'quote',
+          hoten, email, dienthoai,
+          goi_dich_vu: goi,
+          ghi_chu: withSource(mota),
+          trang: location.pathname,
+        };
+      } else {
+        payload = {
+          action: 'contact',
+          hoten, email, dienthoai,
+          mota: withSource(mau ? `[Mẫu tham khảo: ${mau}] ${mota}` : mota),
+          trang: location.pathname,
+        };
+      }
+
+      const setLoading = (on) => {
+        if (!submitBtn) return;
+        submitBtn.disabled = on;
+        submitBtn.classList.toggle('is-loading', on);
+      };
+      setLoading(true);
 
       fetch(window.WEB100_FORM_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload),
       })
-        .catch((err) => console.error('Gửi form thất bại:', err))
-        .finally(() => {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('is-loading');
-          }
-          if (body) body.hidden = true;
-          if (done) done.hidden = false;
+        .then((res) => res.json())
+        .then((json) => {
+          // rate_limited = cùng số điện thoại vừa gửi xong — yêu cầu trước đã vào Sheet,
+          // coi như thành công nhưng không bắn conversion lần nữa.
+          const duplicate = json && json.error === 'rate_limited';
+          if (!json || (!json.ok && !duplicate)) throw new Error((json && json.error) || 'unknown');
+          return duplicate;
+        })
+        .then((duplicate) => {
+          const finish = () => {
+            if (form.dataset.redirect) {
+              const url = new URL(form.dataset.redirect, location.href);
+              if (payload.goi_dich_vu) url.searchParams.set('goi', payload.goi_dich_vu);
+              location.href = url.toString();
+              return;
+            }
+            setLoading(false);
+            if (body) body.hidden = true;
+            if (done) done.hidden = false;
+          };
+          if (duplicate) { finish(); return; }
+          trackLead({ form: formAction, package: payload.goi_dich_vu || '', phone }, finish);
+        })
+        .catch((err) => {
+          console.error('Gửi form thất bại:', err);
+          setLoading(false);
+          showFormError(form, SEND_FAIL_MSG);
+          track('form_error', { form: formAction, error: String(err && err.message || err).slice(0, 80) });
         });
     });
   });
