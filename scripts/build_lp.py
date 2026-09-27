@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LP_DIR = ROOT / "html" / "lp"
-ASSET_V = "20260926u"
+ASSET_V = "20260927a"
 
 PHONE_TEL = "+84964074043"
 PHONE_TXT = "096.407.4043"
@@ -49,7 +49,7 @@ PACKAGES = [
     # 3 goi viet cung 1 khung: gifts (chu xanh dam) = ho tro -> hosting/ten mien -> bai viet -> san pham;
     # items = so trang -> giao dien -> SEO -> tinh nang -> ban giao. Trang SEO /thiet-ke-website-da-nang/,
     # /website-doanh-nghiep/ va bang so sanh trong blog chi-phi-thiet-ke-website dung chung noi dung nay
-    # (scripts/sync_pricing.py) — sua o day roi chay lai ca 2 script.
+    # (scripts/sync_shared_sections.py) — sua o day roi chay lai ca 2 script.
     {
         "key": "normal", "name": "Normal", "value": "Normal 1.500.000đ", "short": "1,5 triệu",
         "price": "1.500.000",
@@ -263,7 +263,8 @@ def head(title: str, description: str, extra_css: str = "") -> str:
 <link rel="preload" href="/fonts/plus-jakarta-sans-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/fonts.css?v={ASSET_V}">
 <link rel="stylesheet" href="/css/style.css?v={ASSET_V}">
-{extra_css}<link rel="stylesheet" href="/css/lp.css?v={ASSET_V}">
+{extra_css}<link rel="stylesheet" href="/css/lp-sections.css?v={ASSET_V}">
+<link rel="stylesheet" href="/css/lp.css?v={ASSET_V}">
 </head>"""
 
 
@@ -367,37 +368,76 @@ def price_card(p: dict, featured: str, badge: str) -> str:
       </div>"""
 
 
-def landing(v: dict) -> str:
-    points = "".join(f"\n          <li>{I_CHECK}<span>{pt}</span></li>" for pt in v["points"])
-    def case_html(i: int, c: dict) -> str:
-        return f"""
-      <article class="lp-case reveal">
-        <a class="lp-case__shot" href="/images/lp/{c["proof"]}.png" target="_blank" rel="noopener" aria-label="Xem ảnh gốc kết quả Google của {c["name"]}">
-          <span class="lp-case__bar" aria-hidden="true"><i></i><i></i><i></i></span>
-          <img src="/images/lp/{c["proof"]}-full.webp" alt="Kết quả tìm kiếm Google của website {c["name"]}" width="{c["w"]}" height="{c["h"]}" loading="lazy">
-        </a>
-        <div class="lp-case__body">
-          <h3>{c["name"]}</h3>
-          <p class="lp-case__desc">{c["desc"]}</p>{f'<p class="lp-case__desc">{c["desc2"]}</p>' if c.get("desc2") else ""}
-          <button class="lp-case__link" type="button" data-live-url="{c["go"]}">{c["site"]} {I_ARROW}</button>
-        </div>
-      </article>"""
 
+def case_html(i: int, c: dict) -> str:
+    return f"""
+  <article class="lp-case reveal">
+    <a class="lp-case__shot" href="/images/lp/{c["proof"]}.png" target="_blank" rel="noopener" aria-label="Xem ảnh gốc kết quả Google của {c["name"]}">
+      <span class="lp-case__bar" aria-hidden="true"><i></i><i></i><i></i></span>
+      <img src="/images/lp/{c["proof"]}-full.webp" alt="Kết quả tìm kiếm Google của website {c["name"]}" width="{c["w"]}" height="{c["h"]}" loading="lazy">
+    </a>
+    <div class="lp-case__body">
+      <h3>{c["name"]}</h3>
+      <p class="lp-case__desc">{c["desc"]}</p>{f'<p class="lp-case__desc">{c["desc2"]}</p>' if c.get("desc2") else ""}
+      <button class="lp-case__link" type="button" data-live-url="{c["go"]}">{c["site"]} {I_ARROW}</button>
+    </div>
+  </article>"""
+
+
+def top_cases_section() -> str:
+    """Section du an top Google — dung chung cho landing page va /ve-chung-toi/ (sync_shared_sections.py).
+    Can css/lp-sections.css."""
     cases = "".join(case_html(i, c) for i, c in enumerate(CASES, 1))
-    logos = "".join(
-        f'\n      <li><img src="/images/khach-hang/{s}.webp" alt="Logo {n}" width="{w}" height="{h}" loading="lazy"></li>'
-        for s, n, w, h in LOGOS
-    )
-    cards = "\n".join(price_card(p, v["featured"], v["badge"]) for p in PACKAGES)
+    return f"""<!-- ============================ DỰ ÁN THẬT (top Google) ============================ -->
+<section class="lp-cases">
+  <div class="container">
+    <div class="lp-head">
+      <h2>Website Web100 làm, đang đứng top Google</h2>
+      <p class="lp-head__slogan">Thành công của khách hàng là mục tiêu hàng đầu</p>
+    </div>
+    <div class="lp-case-list">{cases}
+    </div>
+  </div>
+</section>"""
+
+def perks_section() -> str:
     perks = "".join(f"""
       <div class="lp-perk reveal">
         <span class="lp-perk__icon">{I_CHECK}</span>
         <h3>{t}</h3>
         <p>{d}</p>
       </div>""" for t, d in PERKS)
+    return f"""<!-- ============================ ƯU ĐÃI & CAM KẾT ============================ -->
+<section class="lp-perks">
+  <div class="container">
+    <div class="lp-head">
+      <span class="eyebrow">Ưu đãi &amp; cam kết</span>
+      <h2>Bắt đầu nhẹ nhàng, không rủi ro</h2>
+    </div>
+    <div class="lp-perk-grid">{perks}
+    </div>
+  </div>
+</section>"""
+
+
+def process_section() -> str:
     steps = "".join(f"""
       <li class="lp-step"><span class="lp-step__num">{i:02d}</span><div><h3>{t}</h3><p>{d}</p></div></li>"""
                     for i, (t, d) in enumerate(STEPS, 1))
+    return f"""<!-- ============================ QUY TRÌNH ============================ -->
+<section class="lp-process">
+  <div class="container">
+    <div class="lp-head">
+      <span class="eyebrow">Quy trình</span>
+      <h2>5 bước là có website</h2>
+    </div>
+    <ol class="lp-steps">{steps}
+    </ol>
+  </div>
+</section>"""
+
+
+def faq_section() -> str:
     faqs = "".join(f"""
       <div class="faq-item">
         <button class="faq-trigger" type="button" aria-expanded="false">
@@ -406,6 +446,26 @@ def landing(v: dict) -> str:
         </button>
         <div class="faq-panel"><p>{a}</p></div>
       </div>""" for q, a in FAQS)
+    return f"""<!-- ============================ FAQ ============================ -->
+<section class="faq lp-faq">
+  <div class="container lp-faq__inner">
+    <div class="lp-head">
+      <span class="eyebrow">Câu hỏi thường gặp</span>
+      <h2>Trước khi làm website, khách thường hỏi</h2>
+    </div>
+    <div class="faq-list">{faqs}
+    </div>
+  </div>
+</section>"""
+
+
+def landing(v: dict) -> str:
+    points = "".join(f"\n          <li>{I_CHECK}<span>{pt}</span></li>" for pt in v["points"])
+    logos = "".join(
+        f'\n      <li><img src="/images/khach-hang/{s}.webp" alt="Logo {n}" width="{w}" height="{h}" loading="lazy"></li>'
+        for s, n, w, h in LOGOS
+    )
+    cards = "\n".join(price_card(p, v["featured"], v["badge"]) for p in PACKAGES)
 
     return f"""{head(v["title"], v["description"], f'<link rel="stylesheet" href="/css/pricing.css?v={ASSET_V}">' + chr(10))}
 <body class="lp">
@@ -443,17 +503,7 @@ def landing(v: dict) -> str:
   </div>
 </section>
 
-<!-- ============================ DỰ ÁN THẬT ============================ -->
-<section class="lp-cases">
-  <div class="container">
-    <div class="lp-head">
-      <h2>Website Web100 làm, đang đứng top Google</h2>
-      <p class="lp-head__slogan">Thành công của khách hàng là mục tiêu hàng đầu</p>
-    </div>
-    <div class="lp-case-list">{cases}
-    </div>
-  </div>
-</section>
+{top_cases_section()}
 
 <!-- ============================ LOGO KHÁCH HÀNG ============================ -->
 <section class="lp-logos">
@@ -481,41 +531,11 @@ def landing(v: dict) -> str:
   </div>
 </section>
 
-<!-- ============================ ƯU ĐÃI & CAM KẾT ============================ -->
-<section class="lp-perks">
-  <div class="container">
-    <div class="lp-head">
-      <span class="eyebrow">Ưu đãi &amp; cam kết</span>
-      <h2>Bắt đầu nhẹ nhàng, không rủi ro</h2>
-    </div>
-    <div class="lp-perk-grid">{perks}
-    </div>
-  </div>
-</section>
+{perks_section()}
 
-<!-- ============================ QUY TRÌNH ============================ -->
-<section class="lp-process">
-  <div class="container">
-    <div class="lp-head">
-      <span class="eyebrow">Quy trình</span>
-      <h2>5 bước là có website</h2>
-    </div>
-    <ol class="lp-steps">{steps}
-    </ol>
-  </div>
-</section>
+{process_section()}
 
-<!-- ============================ FAQ ============================ -->
-<section class="faq lp-faq">
-  <div class="container lp-faq__inner">
-    <div class="lp-head">
-      <span class="eyebrow">Câu hỏi thường gặp</span>
-      <h2>Trước khi làm website, khách thường hỏi</h2>
-    </div>
-    <div class="faq-list">{faqs}
-    </div>
-  </div>
-</section>
+{faq_section()}
 
 <!-- ============================ CTA + FORM CUỐI ============================ -->
 <section class="lp-final">
