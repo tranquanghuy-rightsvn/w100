@@ -14,7 +14,7 @@
           "label": "Menu: logo trái, nav phải",
           "html": "<header class=\"blk blk-menu blk-menu--basic\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -28,7 +28,7 @@
             { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
-            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
             { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
           ]
         },
@@ -37,7 +37,7 @@
           "label": "Menu: logo trái, nav giữa",
           "html": "<header class=\"blk blk-menu blk-menu--nav-center\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -51,7 +51,7 @@
             { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
-            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
             { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
           ]
         },
@@ -60,7 +60,7 @@
           "label": "Menu: logo giữa, nav 2 bên",
           "html": "<header class=\"blk blk-menu blk-menu--split-center\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsLeft\"></ul><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItemsRight\"></ul><template data-list-template=\"navItemsLeft\"><li><a data-item-field=\"label\">{{label}}</a></li></template><template data-list-template=\"navItemsRight\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
           "fields": [
-            { "key": "logo", "type": "image", "default": "/images/logo.png", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [
       { "id": "1:1", "label": "1:1" },
       { "id": "4:3", "label": "4:3" },
       { "id": "16:9", "label": "16:9" },
@@ -74,7 +74,81 @@
             { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
-            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
+          ]
+        },
+        {
+          "id": "menu-minimal",
+          "label": "Menu: tối giản, không nút CTA",
+          "html": "<header class=\"blk blk-menu blk-menu--minimal\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
+          "fields": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [{ "id": "1:1", "label": "1:1" }, { "id": "4:3", "label": "4:3" }, { "id": "16:9", "label": "16:9" }, { "id": "4:1", "label": "4:1" }] } },
+            { "key": "navItems", "type": "list", "sidebarAdd": true, "noReorder": true, "itemLabel": "mục menu", "itemFields": [{ "key": "label", "type": "text", "default": "Mục menu" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Giới thiệu" }, { "label": "Liên hệ" }] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
+          ]
+        },
+        {
+          "id": "menu-two-cta",
+          "label": "Menu: logo trái, nav giữa, 2 nút (Đăng nhập/Đăng ký)",
+          "html": "<header class=\"blk blk-menu blk-menu--nav-center blk-menu--two-cta\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><div class=\"blk-menu__actions\"><a class=\"blk-btn blk-btn--outline blk-btn--sm\" data-field=\"ctaSecondary\">{{ctaSecondary}}</a><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a></div><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
+          "fields": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [{ "id": "1:1", "label": "1:1" }, { "id": "4:3", "label": "4:3" }, { "id": "16:9", "label": "16:9" }, { "id": "4:1", "label": "4:1" }] } },
+            { "key": "navItems", "type": "list", "sidebarAdd": true, "noReorder": true, "itemLabel": "mục menu", "itemFields": [{ "key": "label", "type": "text", "default": "Mục menu" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Giới thiệu" }, { "label": "Liên hệ" }] },
+            { "key": "ctaSecondary", "type": "text", "default": "Đăng nhập", "customStyle": "button", "buttonStyleDefault": { "bg": "#f1f5f4", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 13, "paddingX": 16, "paddingY": 9, "radius": 24, "borderWidth": 0, "borderColor": "#f1f5f4", "hoverEffect": "darken" } },
+            { "key": "cta", "type": "text", "default": "Đăng ký", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 13, "paddingX": 16, "paddingY": 9, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
+          ]
+        },
+        {
+          "id": "menu-search",
+          "label": "Menu: có ô tìm kiếm",
+          "html": "<header class=\"blk blk-menu blk-menu--basic blk-menu--search\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><span class=\"blk-menu__search\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m21 21-4.3-4.3\"/></svg><span data-field=\"searchPlaceholder\">{{searchPlaceholder}}</span></span><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
+          "fields": [
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [{ "id": "1:1", "label": "1:1" }, { "id": "4:3", "label": "4:3" }, { "id": "16:9", "label": "16:9" }, { "id": "4:1", "label": "4:1" }] } },
+            { "key": "navItems", "type": "list", "sidebarAdd": true, "noReorder": true, "itemLabel": "mục menu", "itemFields": [{ "key": "label", "type": "text", "default": "Mục menu" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Giới thiệu" }] },
+            { "key": "searchPlaceholder", "type": "text", "default": "Tìm kiếm..." },
+            { "key": "cta", "type": "text", "default": "Liên hệ", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 13, "paddingX": 16, "paddingY": 9, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
+            { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
+          ]
+        },
+        {
+          "id": "menu-topbar",
+          "label": "Menu: 2 tầng (thanh trên + nav chính)",
+          "html": "<header class=\"blk blk-menu blk-menu--topbar\"><div class=\"blk-menu__topbar\" data-field=\"topbarText\">{{topbarText}}</div><div class=\"blk-menu__mainbar\"><img class=\"blk-menu__logo-img\" data-field=\"logo\" src=\"{{logo}}\" alt=\"Logo\"><ul class=\"blk-menu__nav\" data-list-container=\"navItems\"></ul><a class=\"blk-btn blk-btn--primary blk-btn--sm\" data-field=\"cta\">{{cta}}</a></div><template data-list-template=\"navItems\"><li><a data-item-field=\"label\">{{label}}</a></li></template></header>",
+          "fields": [
+            { "key": "topbarText", "type": "text", "default": "Hotline: 0909 123 456   ·   Email: contact@yourcompany.vn" },
+            { "key": "logo", "type": "image", "default": "/images/logo.webp", "allowOverlay": false, "ratio": { "default": "4:1", "presets": [{ "id": "1:1", "label": "1:1" }, { "id": "4:3", "label": "4:3" }, { "id": "16:9", "label": "16:9" }, { "id": "4:1", "label": "4:1" }] } },
+            { "key": "navItems", "type": "list", "sidebarAdd": true, "noReorder": true, "itemLabel": "mục menu", "itemFields": [{ "key": "label", "type": "text", "default": "Mục menu" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Giới thiệu" }, { "label": "Liên hệ" }] },
+            { "key": "cta", "type": "text", "default": "Liên hệ", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 13, "paddingX": 16, "paddingY": 9, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "navFontSize", "label": "Kích thước chữ menu", "type": "fontSize", "cssVar": "--blk-menu-nav-size", "min": 11, "max": 20, "step": 1, "default": 14 }, { "key": "shadow", "label": "Đổ bóng", "type": "shadow", "min": 0, "max": 30, "step": 1, "default": 0, "lockWhen": { "key": "opacity", "lt": 1 } }, { "key": "floating", "label": "Thanh nổi kiểu viên thuốc (pill nổi)", "type": "toggle", "default": false }, { "key": "glass", "label": "Kính mờ (glassmorphism)", "type": "toggle", "default": false }, { "key": "borderBottom", "label": "Viền dưới phân cách", "type": "toggle", "default": false }, { "key": "navHoverEffect", "label": "Hiệu ứng hover menu", "type": "navHover", "default": "none", "colorDefault": "#0bcb68" },
             { "key": "overlay", "label": "Nền trong suốt, đè lên khối dưới", "type": "toggle", "default": false, "hidden": true, "autoWhen": { "key": "opacity", "lt": 1 } }
           ]
         }
@@ -234,13 +308,13 @@
           "fields": [
             { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
             { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
-              { "key": "image", "type": "image", "default": "/images/logo.png" }
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
             ], "default": [
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" }
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
             ] }
           ],
           "style": [
@@ -258,16 +332,118 @@
             { "key": "heading", "type": "text", "default": "Đối tác đồng hành cùng chúng tôi" },
             { "key": "desc", "type": "text", "default": "Tự hào hợp tác với nhiều thương hiệu ở đa dạng lĩnh vực." },
             { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
-              { "key": "image", "type": "image", "default": "/images/logo.png" }
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
             ], "default": [
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" },
-              { "image": "/images/logo.png" }
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
             ] }
           ],
           "style": [
             { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "logos-marquee",
+          "label": "Logo chạy băng chuyền (tự động cuộn)",
+          "marqueeListKey": "logos",
+          "html": "<section class=\"blk blk-logos blk-logos--marquee\"><p class=\"blk-logos__label\" data-field=\"label\">{{label}}</p><div class=\"blk-logos__marquee-viewport\"><div class=\"blk-logos__marquee-track\"><ul class=\"blk-logos__grid\" data-list-container=\"logos\"></ul></div></div><template data-list-template=\"logos\"><li><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></li></template></section>",
+          "fields": [
+            { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
+            { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
+            ], "default": [
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "logos-cards",
+          "label": "Logo dạng thẻ khung viền",
+          "html": "<section class=\"blk blk-logos blk-logos--cards\"><p class=\"blk-logos__label\" data-field=\"label\">{{label}}</p><ul class=\"blk-logos__grid\" data-list-container=\"logos\"></ul><template data-list-template=\"logos\"><li><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></li></template></section>",
+          "fields": [
+            { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
+            { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
+            ], "default": [
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "logos-stats",
+          "label": "Logo kèm số liệu nổi bật",
+          "html": "<section class=\"blk blk-logos blk-logos--stats\"><p class=\"blk-logos__label\" data-field=\"label\">{{label}}</p><ul class=\"blk-logos__grid\" data-list-container=\"logos\"></ul><ul class=\"blk-logos__stats\" data-list-container=\"stats\"></ul><template data-list-template=\"logos\"><li><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></li></template><template data-list-template=\"stats\"><li><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"caption\">{{caption}}</span></li></template></section>",
+          "fields": [
+            { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
+            { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
+            ], "default": [
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
+            ] },
+            { "key": "stats", "type": "list", "sidebarAdd": true, "itemLabel": "số liệu", "itemFields": [
+              { "key": "number", "type": "text", "default": "500+" },
+              { "key": "caption", "type": "text", "default": "Khách hàng" }
+            ], "default": [
+              { "number": "500+", "caption": "Khách hàng" },
+              { "number": "10+", "caption": "Năm kinh nghiệm" },
+              { "number": "50+", "caption": "Đối tác" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "logos-divided",
+          "label": "Logo dạng lưới có đường kẻ phân cách",
+          "html": "<section class=\"blk blk-logos blk-logos--divided\"><p class=\"blk-logos__label\" data-field=\"label\">{{label}}</p><ul class=\"blk-logos__grid\" data-list-container=\"logos\"></ul><template data-list-template=\"logos\"><li><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></li></template></section>",
+          "fields": [
+            { "key": "label", "type": "text", "default": "Được các thương hiệu hàng đầu tin dùng" },
+            { "key": "logos", "type": "list", "itemLabel": "logo", "itemFields": [
+              { "key": "image", "type": "image", "default": "/images/logo.webp" }
+            ], "default": [
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" },
+              { "image": "/images/logo.webp" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
             { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
@@ -322,6 +498,95 @@
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
           ]
+        },
+        {
+          "id": "about-fullbleed",
+          "label": "Giới thiệu: ảnh nền toàn khối, chữ nổi trên ảnh",
+          "html": "<section class=\"blk blk-about blk-about--fullbleed\"><div class=\"blk-about__bgwrap\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-about__overlaycontent\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
+          "fields": [
+            { "key": "image", "type": "image", "default": "/images/hero-full-1600x900.webp" },
+            { "key": "badge", "type": "text", "default": "Về chúng tôi" },
+            { "key": "heading", "type": "richtext", "default": "Xây dựng thương hiệu<br>bằng sự tận tâm" },
+            { "key": "desc", "type": "text", "default": "Từ những ngày đầu tiên, chúng tôi luôn đặt trải nghiệm khách hàng lên hàng đầu trong từng sản phẩm." },
+            { "key": "cta", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 22, "paddingY": 14, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "about-checklist",
+          "label": "Giới thiệu: ảnh + danh sách ưu điểm",
+          "html": "<section class=\"blk blk-about blk-about--checklist\"><div class=\"blk-about__media\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-about__body\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><ul class=\"blk-about__checklist\" data-list-container=\"features\"></ul><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div><template data-list-template=\"features\"><li><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M20 6 9 17l-5-5\"/></svg><span data-item-field=\"text\">{{text}}</span></li></template></section>",
+          "fields": [
+            { "key": "image", "type": "image", "default": "/images/hero-side-square-1-800x800.webp" },
+            { "key": "badge", "type": "text", "default": "Về chúng tôi" },
+            { "key": "heading", "type": "richtext", "default": "Vì sao khách hàng<br>chọn đồng hành cùng chúng tôi" },
+            { "key": "desc", "type": "text", "default": "Cam kết chất lượng ở từng chi tiết nhỏ nhất, xuyên suốt hành trình hợp tác." },
+            { "key": "features", "type": "list", "sidebarAdd": true, "itemLabel": "ưu điểm", "itemFields": [
+              { "key": "text", "type": "text", "default": "Tư vấn miễn phí 1:1" }
+            ], "default": [
+              { "text": "Tư vấn miễn phí 1:1" },
+              { "text": "Bàn giao đúng tiến độ cam kết" },
+              { "text": "Hỗ trợ bảo trì trọn đời" }
+            ] },
+            { "key": "cta", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 22, "paddingY": 14, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "layout", "label": "Vị trí ảnh", "type": "select", "cssClassPrefix": "blk-about--pos-", "options": [ { "id": "left", "label": "Ảnh bên trái (đang chọn)" }, { "id": "right", "label": "Ảnh bên phải" } ], "default": "left" }
+          ]
+        },
+        {
+          "id": "about-timeline",
+          "label": "Giới thiệu: mốc thời gian phát triển",
+          "html": "<section class=\"blk blk-about blk-about--timeline\"><div class=\"blk-about__intro\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p></div><ul class=\"blk-about__timeline\" data-list-container=\"milestones\"></ul><template data-list-template=\"milestones\"><li><span class=\"blk-about__tlyear\" data-item-field=\"year\">{{year}}</span><strong class=\"blk-about__tltitle\" data-item-field=\"title\">{{title}}</strong><p class=\"blk-about__tldesc\" data-item-field=\"desc\">{{desc}}</p></li></template></section>",
+          "fields": [
+            { "key": "badge", "type": "text", "default": "Hành trình phát triển" },
+            { "key": "heading", "type": "richtext", "default": "Những cột mốc<br>đáng nhớ của chúng tôi" },
+            { "key": "desc", "type": "text", "default": "Mỗi giai đoạn là một bước tiến trong hành trình mang lại giá trị tốt hơn cho khách hàng." },
+            { "key": "milestones", "type": "list", "sidebarAdd": true, "itemLabel": "mốc thời gian", "listAxis": "x", "itemFields": [
+              { "key": "year", "type": "text", "default": "2015" },
+              { "key": "title", "type": "text", "default": "Thành lập" },
+              { "key": "desc", "type": "text", "default": "Bắt đầu hành trình với những thành viên đầu tiên." }
+            ], "default": [
+              { "year": "2015", "title": "Thành lập", "desc": "Bắt đầu hành trình với những thành viên đầu tiên." },
+              { "year": "2018", "title": "Mở rộng quy mô", "desc": "Phục vụ hơn 100 khách hàng doanh nghiệp." },
+              { "year": "2021", "title": "Ra mắt sản phẩm mới", "desc": "Đầu tư nâng cấp trải nghiệm khách hàng." },
+              { "year": "2024", "title": "Vươn ra thị trường", "desc": "Mở rộng hợp tác, khẳng định vị thế." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "about-video",
+          "label": "Giới thiệu: kèm nút phát video",
+          "html": "<section class=\"blk blk-about blk-about--video\"><div class=\"blk-about__media\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"><span class=\"blk-about__playbtn\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg></span></div><div class=\"blk-about__body\"><span class=\"blk-badge\" data-field=\"badge\">{{badge}}</span><h2 class=\"blk-about__heading\" data-field=\"heading\">{{{heading}}}</h2><p class=\"blk-about__desc\" data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
+          "fields": [
+            { "key": "image", "type": "image", "default": "/images/hero-side-square-1-800x800.webp" },
+            { "key": "badge", "type": "text", "default": "Về chúng tôi" },
+            { "key": "heading", "type": "richtext", "default": "Xem video giới thiệu<br>về hành trình của chúng tôi" },
+            { "key": "desc", "type": "text", "default": "Vài phút ngắn ngủi để hiểu rõ hơn về con người, văn hoá và giá trị chúng tôi theo đuổi." },
+            { "key": "cta", "type": "text", "default": "Tìm hiểu thêm", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 22, "paddingY": 14, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "layout", "label": "Vị trí ảnh", "type": "select", "cssClassPrefix": "blk-about--pos-", "options": [ { "id": "left", "label": "Ảnh bên trái (đang chọn)" }, { "id": "right", "label": "Ảnh bên phải" } ], "default": "left" }
+          ]
         }
       ]
     },
@@ -367,6 +632,99 @@
               { "icon": "🔍", "title": "Chuẩn SEO", "desc": "Tối ưu toàn diện cho công cụ tìm kiếm" },
               { "icon": "📱", "title": "Responsive", "desc": "Hiển thị hoàn hảo mọi thiết bị" },
               { "icon": "🔒", "title": "Bảo mật cao", "desc": "An toàn dữ liệu, chống tấn công" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "features-bento",
+          "label": "Tính năng: lưới bất đối xứng (bento)",
+          "html": "<section class=\"blk blk-features blk-features--bento\"><h2 class=\"blk-features__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-features__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li class=\"blk-features__item\"><span class=\"blk-features__icon\" data-item-field=\"icon\">{{icon}}</span><h3 data-item-field=\"title\">{{title}}</h3><p data-item-field=\"desc\">{{desc}}</p></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Tất cả trong một nền tảng" },
+            { "key": "items", "type": "list", "itemFields": [
+              { "key": "icon", "type": "text", "default": "⚡" },
+              { "key": "title", "type": "text", "default": "Tốc độ vượt trội" },
+              { "key": "desc", "type": "text", "default": "Mô tả ngắn cho tính năng này." }
+            ], "default": [
+              { "icon": "⚡", "title": "Tốc độ vượt trội", "desc": "Tối ưu hiệu suất, tải trang cực nhanh, mượt trên mọi thiết bị." },
+              { "icon": "🎯", "title": "Chuẩn xác", "desc": "Đúng nhu cầu khách hàng." },
+              { "icon": "🔒", "title": "Bảo mật cao", "desc": "An toàn dữ liệu." },
+              { "icon": "🚀", "title": "Dễ mở rộng", "desc": "Sẵn sàng phát triển cùng doanh nghiệp trong dài hạn." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "features-imagerows",
+          "label": "Tính năng: ảnh minh hoạ xen kẽ",
+          "html": "<section class=\"blk blk-features blk-features--imagerows\"><h2 class=\"blk-features__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-features__imagerows\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><div class=\"blk-features__imgwrap\"><img data-item-image=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-features__rowbody\"><span class=\"blk-features__icon\" data-item-field=\"icon\">{{icon}}</span><h3 data-item-field=\"title\">{{title}}</h3><p data-item-field=\"desc\">{{desc}}</p></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Khám phá từng tính năng" },
+            { "key": "items", "type": "list", "sidebarAdd": true, "itemLabel": "tính năng", "itemFields": [
+              { "key": "image", "type": "image", "default": "/images/hero-side-square-1-800x800.webp" },
+              { "key": "icon", "type": "text", "default": "⚡" },
+              { "key": "title", "type": "text", "default": "Tốc độ vượt trội" },
+              { "key": "desc", "type": "text", "default": "Mô tả chi tiết hơn cho tính năng này, giúp khách hàng hiểu rõ lợi ích thực tế." }
+            ], "default": [
+              { "image": "/images/hero-side-square-1-800x800.webp", "icon": "⚡", "title": "Tốc độ vượt trội", "desc": "Tối ưu hiệu suất, tải trang cực nhanh trên mọi thiết bị." },
+              { "image": "/images/hero-side-square-2-800x800.webp", "icon": "🎯", "title": "Đúng nhu cầu", "desc": "Thiết kế bám sát mục tiêu và chân dung khách hàng của bạn." },
+              { "image": "/images/hero-side-square-1-800x800.webp", "icon": "🚀", "title": "Dễ mở rộng", "desc": "Sẵn sàng phát triển thêm tính năng khi doanh nghiệp lớn mạnh." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "features-numbered",
+          "label": "Tính năng: số thứ tự lớn (01 02 03)",
+          "html": "<section class=\"blk blk-features blk-features--numbered\"><h2 class=\"blk-features__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-features__numlist\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><span class=\"blk-features__num\"></span><div><h3 data-item-field=\"title\">{{title}}</h3><p data-item-field=\"desc\">{{desc}}</p></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Quy trình làm việc" },
+            { "key": "items", "type": "list", "sidebarAdd": true, "itemLabel": "bước", "itemFields": [
+              { "key": "title", "type": "text", "default": "Tư vấn nhu cầu" },
+              { "key": "desc", "type": "text", "default": "Mô tả ngắn cho bước này." }
+            ], "default": [
+              { "title": "Tư vấn nhu cầu", "desc": "Lắng nghe và phân tích đúng mục tiêu của bạn." },
+              { "title": "Thiết kế & phát triển", "desc": "Xây dựng sản phẩm theo đúng lộ trình đã thống nhất." },
+              { "title": "Bàn giao & vận hành", "desc": "Hỗ trợ triển khai, đào tạo và bảo trì lâu dài." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "features-outline",
+          "label": "Tính năng: thẻ viền nổi bật khi hover",
+          "html": "<section class=\"blk blk-features blk-features--outline\"><h2 class=\"blk-features__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-features__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li class=\"blk-features__item\"><span class=\"blk-features__icon\" data-item-field=\"icon\">{{icon}}</span><h3 data-item-field=\"title\">{{title}}</h3><p data-item-field=\"desc\">{{desc}}</p></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Những gì bạn nhận được" },
+            { "key": "items", "type": "list", "itemFields": [
+              { "key": "icon", "type": "text", "default": "⚡" },
+              { "key": "title", "type": "text", "default": "Tốc độ vượt trội" },
+              { "key": "desc", "type": "text", "default": "Mô tả ngắn cho tính năng này." }
+            ], "default": [
+              { "icon": "⚡", "title": "Tốc độ vượt trội", "desc": "Tối ưu hiệu suất, tải trang cực nhanh." },
+              { "icon": "🎯", "title": "Chuẩn xác", "desc": "Đúng nhu cầu, đúng mục tiêu khách hàng." },
+              { "icon": "🚀", "title": "Dễ mở rộng", "desc": "Sẵn sàng phát triển cùng doanh nghiệp." }
             ] }
           ],
           "style": [
@@ -422,6 +780,95 @@
           ],
           "style": [
             { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "stats-icon",
+          "label": "Số liệu kèm icon minh hoạ",
+          "html": "<section class=\"blk blk-stats blk-stats--icon\"><ul class=\"blk-stats__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><span class=\"blk-stats__icon\" data-item-field=\"icon\">{{icon}}</span><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"label\">{{label}}</span></li></template></section>",
+          "fields": [
+            { "key": "items", "type": "list", "itemLabel": "số liệu", "itemFields": [
+              { "key": "icon", "type": "text", "default": "👥" },
+              { "key": "number", "type": "text", "default": "100+" },
+              { "key": "label", "type": "text", "default": "Khách hàng hài lòng" }
+            ], "default": [
+              { "icon": "👥", "number": "250+", "label": "Dự án đã triển khai" },
+              { "icon": "😊", "number": "98%", "label": "Khách hàng hài lòng" },
+              { "icon": "🏆", "number": "10+", "label": "Năm kinh nghiệm" },
+              { "icon": "🛠️", "number": "24/7", "label": "Hỗ trợ kỹ thuật" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "stats-countup",
+          "label": "Số liệu tự đếm khi cuộn tới",
+          "html": "<section class=\"blk blk-stats blk-stats--countup\"><ul class=\"blk-stats__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"label\">{{label}}</span></li></template></section>",
+          "fields": [
+            { "key": "items", "type": "list", "itemLabel": "số liệu", "countup": true, "itemFields": [
+              { "key": "number", "type": "text", "default": "100+" },
+              { "key": "label", "type": "text", "default": "Khách hàng hài lòng" }
+            ], "default": [
+              { "number": "250+", "label": "Dự án đã triển khai" },
+              { "number": "98%", "label": "Khách hàng hài lòng" },
+              { "number": "10+", "label": "Năm kinh nghiệm" },
+              { "number": "24", "label": "Chuyên gia đồng hành" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "stats-progress",
+          "label": "Số liệu dạng thanh tiến trình",
+          "html": "<section class=\"blk blk-stats blk-stats--progress\"><ul class=\"blk-stats__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><div class=\"blk-stats__pctrow\"><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"label\">{{label}}</span></div><span class=\"blk-stats__bar\"><span class=\"blk-stats__bar-fill\"></span></span></li></template></section>",
+          "fields": [
+            { "key": "items", "type": "list", "itemLabel": "số liệu", "progress": true, "itemFields": [
+              { "key": "number", "type": "text", "default": "90%" },
+              { "key": "label", "type": "text", "default": "Mức độ hài lòng" }
+            ], "default": [
+              { "number": "98%", "label": "Khách hàng hài lòng" },
+              { "number": "92%", "label": "Đúng tiến độ cam kết" },
+              { "number": "87%", "label": "Khách hàng quay lại" },
+              { "number": "95%", "label": "Đánh giá 5 sao" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "stats-divided",
+          "label": "Số liệu ngăn cách bằng viền dọc",
+          "html": "<section class=\"blk blk-stats blk-stats--divided\"><ul class=\"blk-stats__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><strong data-item-field=\"number\">{{number}}</strong><span data-item-field=\"label\">{{label}}</span></li></template></section>",
+          "fields": [
+            { "key": "items", "type": "list", "itemLabel": "số liệu", "itemFields": [
+              { "key": "number", "type": "text", "default": "100+" },
+              { "key": "label", "type": "text", "default": "Khách hàng hài lòng" }
+            ], "default": [
+              { "number": "250+", "label": "Dự án đã triển khai" },
+              { "number": "98%", "label": "Khách hàng hài lòng" },
+              { "number": "10+", "label": "Năm kinh nghiệm" },
+              { "number": "24/7", "label": "Hỗ trợ kỹ thuật" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
             { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
@@ -487,6 +934,138 @@
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
           ]
+        },
+        {
+          "id": "pricing-toggle",
+          "label": "Bảng giá: công tắc Tháng/Năm",
+          "pricingToggle": true,
+          "html": "<section class=\"blk blk-pricing blk-pricing--toggle\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-pricing__toggle\"><span class=\"blk-pricing__toggle-label\">Theo tháng</span><button type=\"button\" class=\"blk-pricing__switch\" aria-pressed=\"false\"><span class=\"blk-pricing__switch-knob\"></span></button><span class=\"blk-pricing__toggle-label\">Theo năm <span class=\"blk-pricing__toggle-save\">Tiết kiệm 2 tháng</span></span></div><ul class=\"blk-pricing__grid\" data-list-container=\"plans\"></ul><template data-list-template=\"plans\"><li class=\"blk-pricing__plan\"><span class=\"blk-pricing__badge\" data-item-field=\"badge\">{{badge}}</span><h3 data-item-field=\"name\">{{name}}</h3><div class=\"blk-pricing__price blk-pricing__price-monthly\"><strong data-item-field=\"priceMonthly\">{{priceMonthly}}</strong><span data-item-field=\"periodMonthly\">{{periodMonthly}}</span></div><div class=\"blk-pricing__price blk-pricing__price-yearly\"><strong data-item-field=\"priceYearly\">{{priceYearly}}</strong><span data-item-field=\"periodYearly\">{{periodYearly}}</span></div><p class=\"blk-pricing__desc\" data-item-field=\"desc\">{{desc}}</p><ul class=\"blk-pricing__features\"><li data-item-field=\"feature1\">{{feature1}}</li><li data-item-field=\"feature2\">{{feature2}}</li><li data-item-field=\"feature3\">{{feature3}}</li><li data-item-field=\"feature4\">{{feature4}}</li></ul><a class=\"blk-btn blk-btn--outline blk-pricing__cta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Bảng giá linh hoạt theo nhu cầu" },
+            { "key": "plans", "type": "list", "itemLabel": "gói giá", "itemFields": [
+              { "key": "badge", "type": "text", "default": "" },
+              { "key": "name", "type": "text", "default": "Cơ bản" },
+              { "key": "priceMonthly", "type": "text", "default": "299.000đ" },
+              { "key": "periodMonthly", "type": "text", "default": "/tháng" },
+              { "key": "priceYearly", "type": "text", "default": "2.990.000đ" },
+              { "key": "periodYearly", "type": "text", "default": "/năm" },
+              { "key": "desc", "type": "text", "default": "Phù hợp cá nhân, khởi đầu nhanh." },
+              { "key": "feature1", "type": "text", "default": "✓ 1 website" },
+              { "key": "feature2", "type": "text", "default": "✓ Giao diện responsive" },
+              { "key": "feature3", "type": "text", "default": "✓ Chuẩn SEO cơ bản" },
+              { "key": "feature4", "type": "text", "default": "✓ Hỗ trợ qua email" },
+              { "key": "cta", "type": "text", "default": "Chọn gói này", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 1.5, "borderColor": "#e7e9ec", "hoverEffect": "lift" } }
+            ], "default": [
+              { "badge": "", "name": "Cơ bản", "priceMonthly": "299.000đ", "periodMonthly": "/tháng", "priceYearly": "2.990.000đ", "periodYearly": "/năm", "desc": "Phù hợp cá nhân, khởi đầu nhanh.", "feature1": "✓ 1 website", "feature2": "✓ Giao diện responsive", "feature3": "✓ Chuẩn SEO cơ bản", "feature4": "✓ Hỗ trợ qua email", "cta": "Chọn gói này" },
+              { "badge": "Phổ biến nhất", "name": "Chuyên nghiệp", "priceMonthly": "599.000đ", "periodMonthly": "/tháng", "priceYearly": "5.990.000đ", "periodYearly": "/năm", "desc": "Đầy đủ tính năng cho đội nhóm đang tăng trưởng.", "feature1": "✓ Không giới hạn website", "feature2": "✓ Tối ưu tốc độ & SEO nâng cao", "feature3": "✓ Tích hợp form thu thập khách hàng", "feature4": "✓ Hỗ trợ ưu tiên 24/7", "cta": "Chọn gói này" },
+              { "badge": "", "name": "Doanh nghiệp", "priceMonthly": "1.290.000đ", "periodMonthly": "/tháng", "priceYearly": "12.900.000đ", "periodYearly": "/năm", "desc": "Giải pháp riêng theo yêu cầu quy mô lớn.", "feature1": "✓ Nhiều trang, đa ngôn ngữ", "feature2": "✓ Tích hợp hệ thống riêng", "feature3": "✓ Quản lý theo nhóm & phân quyền", "feature4": "✓ Tư vấn chiến lược 1-1", "cta": "Liên hệ tư vấn" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "pricing-compare",
+          "label": "Bảng giá: so sánh tính năng theo cột",
+          "html": "<section class=\"blk blk-pricing blk-pricing--compare\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-pricing__tablewrap\"><table class=\"blk-pricing__table\"><thead><tr><th></th><th><div class=\"blk-pricing__colhead\"><strong data-field=\"plan1Name\">{{plan1Name}}</strong><span data-field=\"plan1Price\">{{plan1Price}}</span></div></th><th><div class=\"blk-pricing__colhead\"><strong data-field=\"plan2Name\">{{plan2Name}}</strong><span data-field=\"plan2Price\">{{plan2Price}}</span></div></th><th><div class=\"blk-pricing__colhead\"><strong data-field=\"plan3Name\">{{plan3Name}}</strong><span data-field=\"plan3Price\">{{plan3Price}}</span></div></th></tr></thead><tbody><tr><td data-field=\"row1Label\">{{row1Label}}</td><td data-field=\"row1V1\">{{row1V1}}</td><td data-field=\"row1V2\">{{row1V2}}</td><td data-field=\"row1V3\">{{row1V3}}</td></tr><tr><td data-field=\"row2Label\">{{row2Label}}</td><td data-field=\"row2V1\">{{row2V1}}</td><td data-field=\"row2V2\">{{row2V2}}</td><td data-field=\"row2V3\">{{row2V3}}</td></tr><tr><td data-field=\"row3Label\">{{row3Label}}</td><td data-field=\"row3V1\">{{row3V1}}</td><td data-field=\"row3V2\">{{row3V2}}</td><td data-field=\"row3V3\">{{row3V3}}</td></tr><tr><td data-field=\"row4Label\">{{row4Label}}</td><td data-field=\"row4V1\">{{row4V1}}</td><td data-field=\"row4V2\">{{row4V2}}</td><td data-field=\"row4V3\">{{row4V3}}</td></tr></tbody><tfoot><tr><td></td><td><a class=\"blk-btn blk-btn--outline blk-pricing__cta\" data-field=\"plan1Cta\" href=\"#\">{{plan1Cta}}</a></td><td><a class=\"blk-btn blk-btn--primary blk-pricing__cta\" data-field=\"plan2Cta\" href=\"#\">{{plan2Cta}}</a></td><td><a class=\"blk-btn blk-btn--outline blk-pricing__cta\" data-field=\"plan3Cta\" href=\"#\">{{plan3Cta}}</a></td></tr></tfoot></table></div></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "So sánh chi tiết các gói" },
+            { "key": "plan1Name", "type": "text", "default": "Cơ bản" },
+            { "key": "plan1Price", "type": "text", "default": "2.990.000đ" },
+            { "key": "plan2Name", "type": "text", "default": "Chuyên nghiệp" },
+            { "key": "plan2Price", "type": "text", "default": "5.990.000đ" },
+            { "key": "plan3Name", "type": "text", "default": "Doanh nghiệp" },
+            { "key": "plan3Price", "type": "text", "default": "Liên hệ" },
+            { "key": "row1Label", "type": "text", "default": "Số trang" },
+            { "key": "row1V1", "type": "text", "default": "1" },
+            { "key": "row1V2", "type": "text", "default": "Không giới hạn" },
+            { "key": "row1V3", "type": "text", "default": "Không giới hạn" },
+            { "key": "row2Label", "type": "text", "default": "Tối ưu SEO" },
+            { "key": "row2V1", "type": "text", "default": "Cơ bản" },
+            { "key": "row2V2", "type": "text", "default": "Nâng cao" },
+            { "key": "row2V3", "type": "text", "default": "Nâng cao" },
+            { "key": "row3Label", "type": "text", "default": "Tích hợp form thu thập" },
+            { "key": "row3V1", "type": "text", "default": "✕" },
+            { "key": "row3V2", "type": "text", "default": "✓" },
+            { "key": "row3V3", "type": "text", "default": "✓" },
+            { "key": "row4Label", "type": "text", "default": "Hỗ trợ kỹ thuật" },
+            { "key": "row4V1", "type": "text", "default": "Email" },
+            { "key": "row4V2", "type": "text", "default": "Ưu tiên 24/7" },
+            { "key": "row4V3", "type": "text", "default": "Riêng theo hợp đồng" },
+            { "key": "plan1Cta", "type": "text", "default": "Chọn gói này", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 13, "paddingX": 18, "paddingY": 11, "radius": 24, "borderWidth": 1.5, "borderColor": "#e7e9ec", "hoverEffect": "lift" } },
+            { "key": "plan2Cta", "type": "text", "default": "Chọn gói này", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 13, "paddingX": 18, "paddingY": 11, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
+            { "key": "plan3Cta", "type": "text", "default": "Liên hệ tư vấn", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 13, "paddingX": 18, "paddingY": 11, "radius": 24, "borderWidth": 1.5, "borderColor": "#e7e9ec", "hoverEffect": "lift" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "pricing-single",
+          "label": "Bảng giá: 1 gói nổi bật duy nhất",
+          "html": "<section class=\"blk blk-pricing blk-pricing--single\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-pricing__singlecard\"><span class=\"blk-pricing__badge\" data-field=\"badge\">{{badge}}</span><h3 data-field=\"name\">{{name}}</h3><div class=\"blk-pricing__price blk-pricing__price--big\"><strong data-field=\"price\">{{price}}</strong><span data-field=\"period\">{{period}}</span></div><p class=\"blk-pricing__desc\" data-field=\"desc\">{{desc}}</p><ul class=\"blk-pricing__features\" data-list-container=\"features\"></ul><a class=\"blk-btn blk-btn--primary blk-pricing__cta\" data-field=\"cta\" href=\"#\">{{cta}}</a></div><template data-list-template=\"features\"><li data-item-field=\"text\">{{text}}</li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Một gói duy nhất, đầy đủ mọi thứ bạn cần" },
+            { "key": "badge", "type": "text", "default": "Ưu đãi ra mắt" },
+            { "key": "name", "type": "text", "default": "Gói Trọn Gói" },
+            { "key": "price", "type": "text", "default": "5.990.000đ" },
+            { "key": "period", "type": "text", "default": "/dự án" },
+            { "key": "desc", "type": "text", "default": "Tất cả tính năng bạn cần để ra mắt website chuyên nghiệp, không phát sinh chi phí ẩn." },
+            { "key": "features", "type": "list", "sidebarAdd": true, "itemLabel": "quyền lợi", "itemFields": [
+              { "key": "text", "type": "text", "default": "✓ Thiết kế không giới hạn khối" }
+            ], "default": [
+              { "text": "✓ Thiết kế không giới hạn khối" },
+              { "text": "✓ Tối ưu tốc độ & chuẩn SEO" },
+              { "text": "✓ Tích hợp form thu thập khách hàng" },
+              { "text": "✓ Bàn giao trong 5 ngày làm việc" },
+              { "text": "✓ Hỗ trợ kỹ thuật 3 tháng miễn phí" },
+              { "text": "✓ Bảo hành trọn đời" }
+            ] },
+            { "key": "cta", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 15, "paddingX": 28, "paddingY": 15, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "pricing-popular-scale",
+          "label": "Bảng giá: gói khuyến nghị phóng to nổi bật",
+          "html": "<section class=\"blk blk-pricing blk-pricing--popular-scale\"><h2 class=\"blk-pricing__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-pricing__grid\" data-list-container=\"plans\"></ul><template data-list-template=\"plans\"><li class=\"blk-pricing__plan\"><span class=\"blk-pricing__badge\" data-item-field=\"badge\">{{badge}}</span><h3 data-item-field=\"name\">{{name}}</h3><div class=\"blk-pricing__price\"><strong data-item-field=\"price\">{{price}}</strong><span data-item-field=\"period\">{{period}}</span></div><p class=\"blk-pricing__desc\" data-item-field=\"desc\">{{desc}}</p><ul class=\"blk-pricing__features\"><li data-item-field=\"feature1\">{{feature1}}</li><li data-item-field=\"feature2\">{{feature2}}</li><li data-item-field=\"feature3\">{{feature3}}</li><li data-item-field=\"feature4\">{{feature4}}</li></ul><a class=\"blk-btn blk-btn--outline blk-pricing__cta\" data-item-field=\"cta\" href=\"#\">{{cta}}</a></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Bảng giá phù hợp mọi nhu cầu" },
+            { "key": "plans", "type": "list", "itemLabel": "gói giá", "itemFields": [
+              { "key": "badge", "type": "text", "default": "" },
+              { "key": "name", "type": "text", "default": "Cơ bản" },
+              { "key": "price", "type": "text", "default": "2.990.000đ" },
+              { "key": "period", "type": "text", "default": "/dự án" },
+              { "key": "desc", "type": "text", "default": "Phù hợp landing page đơn giản, ra mắt nhanh." },
+              { "key": "feature1", "type": "text", "default": "✓ 1 trang landing page" },
+              { "key": "feature2", "type": "text", "default": "✓ Giao diện responsive" },
+              { "key": "feature3", "type": "text", "default": "✓ Chuẩn SEO cơ bản" },
+              { "key": "feature4", "type": "text", "default": "✓ Bàn giao trong 3 ngày" },
+              { "key": "cta", "type": "text", "default": "Chọn gói này", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 14, "paddingX": 20, "paddingY": 13, "radius": 24, "borderWidth": 1.5, "borderColor": "#e7e9ec", "hoverEffect": "lift" } }
+            ], "default": [
+              { "badge": "", "name": "Cơ bản", "price": "2.990.000đ", "period": "/dự án", "desc": "Phù hợp landing page đơn giản, ra mắt nhanh.", "feature1": "✓ 1 trang landing page", "feature2": "✓ Giao diện responsive", "feature3": "✓ Chuẩn SEO cơ bản", "feature4": "✓ Bàn giao trong 3 ngày", "cta": "Chọn gói này" },
+              { "badge": "Phổ biến nhất", "name": "Chuyên nghiệp", "price": "5.990.000đ", "period": "/dự án", "desc": "Đầy đủ tính năng cho chiến dịch chuyển đổi cao.", "feature1": "✓ Landing page không giới hạn khối", "feature2": "✓ Tối ưu tốc độ & SEO nâng cao", "feature3": "✓ Tích hợp form thu thập khách hàng", "feature4": "✓ Bàn giao trong 5 ngày", "cta": "Chọn gói này" },
+              { "badge": "", "name": "Doanh nghiệp", "price": "Liên hệ", "period": "", "desc": "Giải pháp riêng theo yêu cầu quy mô doanh nghiệp.", "feature1": "✓ Nhiều trang, đa ngôn ngữ", "feature2": "✓ Tích hợp hệ thống riêng", "feature3": "✓ Hỗ trợ kỹ thuật ưu tiên", "feature4": "✓ Tư vấn chiến lược 1-1", "cta": "Liên hệ tư vấn" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#f7f9f8" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
         }
       ]
     },
@@ -535,6 +1114,100 @@
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
           ]
+        },
+        {
+          "id": "testimonials-carousel",
+          "label": "Đánh giá: carousel trượt qua từng đánh giá",
+          "html": "<section class=\"blk blk-testi blk-testi--carousel\"><h2 class=\"blk-testi__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-testi__carousel\"><ul class=\"blk-testi__slides\" data-list-container=\"items\"></ul></div><template data-list-template=\"items\"><li class=\"blk-testi__slide\"><p class=\"blk-testi__quote\" data-item-field=\"quote\">{{quote}}</p><div class=\"blk-testi__person\"><img data-item-image=\"avatar\" src=\"{{avatar}}\" alt=\"\"><div><strong data-item-field=\"name\">{{name}}</strong><span data-item-field=\"role\">{{role}}</span></div></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Khách hàng nói gì về chúng tôi" },
+            { "key": "items", "type": "list", "itemLabel": "đánh giá", "noReorder": true, "testiSlideshow": true, "itemFields": [
+              { "key": "quote", "type": "text", "default": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao." },
+              { "key": "avatar", "type": "image", "default": "/images/hero-side-square-2-800x800.webp" },
+              { "key": "name", "type": "text", "default": "Nguyễn Văn A" },
+              { "key": "role", "type": "text", "default": "Chủ doanh nghiệp" }
+            ], "default": [
+              { "quote": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Nguyễn Văn A", "role": "Chủ doanh nghiệp" },
+              { "quote": "Landing page mới giúp tỉ lệ chuyển đổi tăng rõ rệt chỉ sau vài tuần ra mắt.", "avatar": "/images/hero-side-square-1-800x800.webp", "name": "Trần Thị B", "role": "Trưởng phòng Marketing" },
+              { "quote": "Tốc độ tải trang rất nhanh, thao tác chỉnh sửa nội dung cũng cực kỳ dễ dùng.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Lê Văn C", "role": "Founder Startup" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "testimonials-rating",
+          "label": "Đánh giá kèm sao xếp hạng",
+          "html": "<section class=\"blk blk-testi\"><h2 class=\"blk-testi__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-testi__grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><div class=\"blk-testi__stars\" data-item-field=\"rating\">{{rating}}</div><p class=\"blk-testi__quote\" data-item-field=\"quote\">{{quote}}</p><div class=\"blk-testi__person\"><img data-item-image=\"avatar\" src=\"{{avatar}}\" alt=\"\"><div><strong data-item-field=\"name\">{{name}}</strong><span data-item-field=\"role\">{{role}}</span></div></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Khách hàng đánh giá 5 sao" },
+            { "key": "items", "type": "list", "itemLabel": "đánh giá", "itemFields": [
+              { "key": "rating", "type": "text", "default": "★★★★★" },
+              { "key": "quote", "type": "text", "default": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao." },
+              { "key": "avatar", "type": "image", "default": "/images/hero-side-square-2-800x800.webp" },
+              { "key": "name", "type": "text", "default": "Nguyễn Văn A" },
+              { "key": "role", "type": "text", "default": "Chủ doanh nghiệp" }
+            ], "default": [
+              { "rating": "★★★★★", "quote": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Nguyễn Văn A", "role": "Chủ doanh nghiệp" },
+              { "rating": "★★★★★", "quote": "Landing page mới giúp tỉ lệ chuyển đổi tăng rõ rệt chỉ sau vài tuần ra mắt.", "avatar": "/images/hero-side-square-1-800x800.webp", "name": "Trần Thị B", "role": "Trưởng phòng Marketing" },
+              { "rating": "★★★★☆", "quote": "Tốc độ tải trang rất nhanh, thao tác chỉnh sửa nội dung cũng cực kỳ dễ dùng.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Lê Văn C", "role": "Founder Startup" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "testimonials-marquee",
+          "label": "Đánh giá: chạy băng chuyền tự động",
+          "marqueeListKey": "items",
+          "html": "<section class=\"blk blk-testi blk-testi--marquee\"><h2 class=\"blk-testi__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-testi__marquee-viewport\"><div class=\"blk-testi__marquee-track\"><ul class=\"blk-testi__grid blk-testi__mgrid\" data-list-container=\"items\"></ul></div></div><template data-list-template=\"items\"><li><p class=\"blk-testi__quote\" data-item-field=\"quote\">{{quote}}</p><div class=\"blk-testi__person\"><img data-item-image=\"avatar\" src=\"{{avatar}}\" alt=\"\"><div><strong data-item-field=\"name\">{{name}}</strong><span data-item-field=\"role\">{{role}}</span></div></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Khách hàng nói gì về chúng tôi" },
+            { "key": "items", "type": "list", "itemLabel": "đánh giá", "noReorder": true, "itemFields": [
+              { "key": "quote", "type": "text", "default": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao." },
+              { "key": "avatar", "type": "image", "default": "/images/hero-side-square-2-800x800.webp" },
+              { "key": "name", "type": "text", "default": "Nguyễn Văn A" },
+              { "key": "role", "type": "text", "default": "Chủ doanh nghiệp" }
+            ], "default": [
+              { "quote": "Đội ngũ chuyên nghiệp, giao diện đúng như mong muốn và hỗ trợ nhiệt tình sau bàn giao.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Nguyễn Văn A", "role": "Chủ doanh nghiệp" },
+              { "quote": "Landing page mới giúp tỉ lệ chuyển đổi tăng rõ rệt chỉ sau vài tuần ra mắt.", "avatar": "/images/hero-side-square-1-800x800.webp", "name": "Trần Thị B", "role": "Trưởng phòng Marketing" },
+              { "quote": "Tốc độ tải trang rất nhanh, thao tác chỉnh sửa nội dung cũng cực kỳ dễ dùng.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Lê Văn C", "role": "Founder Startup" },
+              { "quote": "Hỗ trợ nhiệt tình, phản hồi nhanh trong suốt quá trình triển khai.", "avatar": "/images/hero-side-square-1-800x800.webp", "name": "Hoàng Thị E", "role": "Quản lý cửa hàng" },
+              { "quote": "Giao diện đẹp, chuẩn thương hiệu, đúng những gì chúng tôi hình dung.", "avatar": "/images/hero-side-square-2-800x800.webp", "name": "Đỗ Văn F", "role": "Giám đốc sáng tạo" }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "testimonials-portrait",
+          "label": "Đánh giá kèm ảnh lớn bên cạnh",
+          "html": "<section class=\"blk blk-testi blk-testi--portrait\"><div class=\"blk-testi__portraitmedia\"><img data-field=\"avatar\" src=\"{{avatar}}\" alt=\"\"></div><div class=\"blk-testi__portraitbody\"><p class=\"blk-testi__quote\" data-field=\"quote\">{{quote}}</p><strong data-field=\"name\">{{name}}</strong><span data-field=\"role\">{{role}}</span></div></section>",
+          "fields": [
+            { "key": "avatar", "type": "image", "default": "/images/hero-side-square-1-800x800.webp", "ratio": { "default": "4:5", "presets": [{ "id": "1:1", "label": "1:1" }, { "id": "4:5", "label": "4:5" }, { "id": "3:4", "label": "3:4" }] } },
+            { "key": "quote", "type": "text", "default": "Web100 đã giúp chúng tôi có một landing page chuyển đổi vượt mong đợi chỉ trong vài ngày. Đội ngũ hỗ trợ tận tâm từ đầu đến cuối." },
+            { "key": "name", "type": "text", "default": "Phạm Thị D" },
+            { "key": "role", "type": "text", "default": "Giám đốc Marketing" }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" },
+            { "key": "layout", "label": "Vị trí ảnh", "type": "select", "cssClassPrefix": "blk-testi--pos-", "options": [ { "id": "left", "label": "Ảnh bên trái (đang chọn)" }, { "id": "right", "label": "Ảnh bên phải" } ], "default": "left" }
+          ]
         }
       ]
     },
@@ -570,6 +1243,103 @@
           "id": "faq-2col",
           "label": "Câu hỏi thường gặp: lưới 2 cột",
           "html": "<section class=\"blk blk-faq\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-faq__list blk-faq__list--grid\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><h3 data-item-field=\"question\">{{question}}</h3><p data-item-field=\"answer\">{{answer}}</p></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
+            { "key": "items", "type": "list", "itemLabel": "câu hỏi", "itemFields": [
+              { "key": "question", "type": "text", "default": "Câu hỏi của bạn là gì?" },
+              { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
+            ], "default": [
+              { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." },
+              { "question": "Tôi có thể tự chỉnh sửa nội dung sau này không?", "answer": "Có. Trang được xuất ra ở dạng dễ chỉnh sửa, hoặc bạn có thể quay lại công cụ này để kéo thả chỉnh sửa bất cứ lúc nào." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "faq-accordion",
+          "label": "Câu hỏi thường gặp: accordion mở/đóng",
+          "faqAccordion": true,
+          "html": "<section class=\"blk blk-faq blk-faq--accordion\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-faq__list blk-faq__list--accordion\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li class=\"blk-faq__accitem is-open\"><div class=\"blk-faq__acchead\"><h3 data-item-field=\"question\">{{question}}</h3><button type=\"button\" class=\"blk-faq__accicon\" aria-label=\"Mở/đóng câu trả lời\"></button></div><div class=\"blk-faq__accbody\"><p data-item-field=\"answer\">{{answer}}</p></div></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
+            { "key": "items", "type": "list", "itemLabel": "câu hỏi", "itemFields": [
+              { "key": "question", "type": "text", "default": "Câu hỏi của bạn là gì?" },
+              { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
+            ], "default": [
+              { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." },
+              { "question": "Tôi có thể tự chỉnh sửa nội dung sau này không?", "answer": "Có. Trang được xuất ra ở dạng dễ chỉnh sửa, hoặc bạn có thể quay lại công cụ này để kéo thả chỉnh sửa bất cứ lúc nào." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "faq-search",
+          "label": "Câu hỏi thường gặp: có ô tìm kiếm",
+          "faqSearch": true,
+          "html": "<section class=\"blk blk-faq blk-faq--search\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><div class=\"blk-faq__searchwrap\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m21 21-4.3-4.3\"/></svg><input type=\"text\" class=\"blk-faq__searchinput\" placeholder=\"Tìm câu hỏi của bạn...\"></div><ul class=\"blk-faq__list\" data-list-container=\"items\"></ul><p class=\"blk-faq__searchempty\">Không tìm thấy câu hỏi phù hợp.</p><template data-list-template=\"items\"><li><h3 data-item-field=\"question\">{{question}}</h3><p data-item-field=\"answer\">{{answer}}</p></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
+            { "key": "items", "type": "list", "itemLabel": "câu hỏi", "itemFields": [
+              { "key": "question", "type": "text", "default": "Câu hỏi của bạn là gì?" },
+              { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
+            ], "default": [
+              { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." },
+              { "question": "Tôi có thể tự chỉnh sửa nội dung sau này không?", "answer": "Có. Trang được xuất ra ở dạng dễ chỉnh sửa, hoặc bạn có thể quay lại công cụ này để kéo thả chỉnh sửa bất cứ lúc nào." },
+              { "question": "Có hỗ trợ tên miền và hosting không?", "answer": "Có, chúng tôi hỗ trợ tư vấn và cấu hình tên miền/hosting theo yêu cầu của bạn." }
+            ] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "faq-contact",
+          "label": "Câu hỏi thường gặp: kèm khung liên hệ",
+          "html": "<section class=\"blk blk-faq blk-faq--contact\"><div class=\"blk-faq__main\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-faq__list\" data-list-container=\"items\"></ul></div><div class=\"blk-faq__contactbox\"><h3 data-field=\"contactTitle\">{{contactTitle}}</h3><p data-field=\"contactDesc\">{{contactDesc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"contactCta\" href=\"#\">{{contactCta}}</a></div><template data-list-template=\"items\"><li><h3 data-item-field=\"question\">{{question}}</h3><p data-item-field=\"answer\">{{answer}}</p></li></template></section>",
+          "fields": [
+            { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
+            { "key": "items", "type": "list", "itemLabel": "câu hỏi", "itemFields": [
+              { "key": "question", "type": "text", "default": "Câu hỏi của bạn là gì?" },
+              { "key": "answer", "type": "text", "default": "Câu trả lời chi tiết, rõ ràng giúp khách hàng yên tâm hơn trước khi quyết định." }
+            ], "default": [
+              { "question": "Thời gian hoàn thành một landing page mất bao lâu?", "answer": "Thông thường từ 3-5 ngày làm việc tuỳ độ phức tạp, sau khi thống nhất nội dung và thiết kế." },
+              { "question": "Chi phí thiết kế landing page là bao nhiêu?", "answer": "Chi phí tuỳ theo số lượng khối và tính năng cần thiết, tham khảo bảng giá phía trên hoặc liên hệ để được báo giá chi tiết." },
+              { "question": "Sau khi bàn giao có được hỗ trợ chỉnh sửa không?", "answer": "Có. Mọi gói đều đi kèm thời gian hỗ trợ chỉnh sửa miễn phí sau bàn giao." }
+            ] },
+            { "key": "contactTitle", "type": "text", "default": "Còn thắc mắc khác?" },
+            { "key": "contactDesc", "type": "text", "default": "Đội ngũ của chúng tôi luôn sẵn sàng giải đáp mọi câu hỏi của bạn." },
+            { "key": "contactCta", "type": "text", "default": "Liên hệ tư vấn", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 22, "paddingY": 13, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#ffffff" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#0b0f14" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "faq-numbered",
+          "label": "Câu hỏi thường gặp: dạng thẻ đánh số",
+          "html": "<section class=\"blk blk-faq blk-faq--numbered\"><h2 class=\"blk-faq__heading\" data-field=\"heading\">{{heading}}</h2><ul class=\"blk-faq__numlist\" data-list-container=\"items\"></ul><template data-list-template=\"items\"><li><span class=\"blk-faq__num\"></span><div><h3 data-item-field=\"question\">{{question}}</h3><p data-item-field=\"answer\">{{answer}}</p></div></li></template></section>",
           "fields": [
             { "key": "heading", "type": "text", "default": "Câu hỏi thường gặp" },
             { "key": "items", "type": "list", "itemLabel": "câu hỏi", "itemFields": [
@@ -627,6 +1397,72 @@
             { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
             { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
           ]
+        },
+        {
+          "id": "cta-fullbleed",
+          "label": "CTA: ảnh nền toàn khối",
+          "html": "<section class=\"blk blk-cta blk-cta--fullbleed\"><div class=\"blk-cta__bgwrap\"><img data-field=\"image\" src=\"{{image}}\" alt=\"\"></div><div class=\"blk-cta__overlaycontent\"><h2 data-field=\"heading\">{{{heading}}}</h2><p data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
+          "fields": [
+            { "key": "image", "type": "image", "default": "/images/hero-full-1600x900.webp" },
+            { "key": "heading", "type": "richtext", "default": "Sẵn sàng bắt đầu<br>dự án của bạn?" },
+            { "key": "desc", "type": "text", "default": "Chia sẻ ý tưởng của bạn, chúng tôi sẽ giúp bạn hiện thực hoá thành landing page chuyên nghiệp." },
+            { "key": "cta", "type": "text", "default": "Liên hệ ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 15, "paddingX": 26, "paddingY": 16, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu lớp phủ", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ đậm lớp phủ", "type": "range", "min": 0.15, "max": 0.85, "step": 0.05, "default": 0.55 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "cta-dual",
+          "label": "CTA: 2 nút (chính + phụ)",
+          "html": "<section class=\"blk blk-cta blk-cta--dual\"><h2 data-field=\"heading\">{{{heading}}}</h2><p data-field=\"desc\">{{desc}}</p><div class=\"blk-cta__actions\"><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a><a class=\"blk-btn blk-btn--outline\" data-field=\"ctaSecondary\" href=\"#\">{{ctaSecondary}}</a></div></section>",
+          "fields": [
+            { "key": "heading", "type": "richtext", "default": "Sẵn sàng bắt đầu<br>dự án của bạn?" },
+            { "key": "desc", "type": "text", "default": "Chia sẻ ý tưởng của bạn, chúng tôi sẽ giúp bạn hiện thực hoá thành landing page chuyên nghiệp." },
+            { "key": "cta", "type": "text", "default": "Bắt đầu ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 15, "paddingX": 26, "paddingY": 16, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } },
+            { "key": "ctaSecondary", "type": "text", "default": "Xem demo", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 0, "text": "#ffffff", "font": "", "fontSize": 15, "paddingX": 26, "paddingY": 16, "radius": 24, "borderWidth": 1.5, "borderColor": "#ffffff", "hoverEffect": "lighten" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "cta-email",
+          "label": "CTA: ô nhập email nhanh",
+          "html": "<section class=\"blk blk-cta blk-cta--email\"><h2 data-field=\"heading\">{{{heading}}}</h2><p data-field=\"desc\">{{desc}}</p><div class=\"blk-cta__form\"><input type=\"email\" class=\"blk-cta__emailinput\" placeholder=\"Nhập email của bạn...\"><a class=\"blk-btn blk-btn--primary blk-cta__emailbtn\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
+          "fields": [
+            { "key": "heading", "type": "richtext", "default": "Nhận ưu đãi mới nhất<br>qua email" },
+            { "key": "desc", "type": "text", "default": "Đăng ký để không bỏ lỡ ưu đãi và mẹo thiết kế landing page mới nhất." },
+            { "key": "cta", "type": "text", "default": "Đăng ký ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 14, "paddingX": 22, "paddingY": 14, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "cta-floating",
+          "label": "CTA: thẻ nổi, tách khỏi nền trang",
+          "html": "<section class=\"blk blk-cta blk-cta--floating\"><div class=\"blk-cta__floatcard\"><h2 data-field=\"heading\">{{{heading}}}</h2><p data-field=\"desc\">{{desc}}</p><a class=\"blk-btn blk-btn--primary\" data-field=\"cta\" href=\"#\">{{cta}}</a></div></section>",
+          "fields": [
+            { "key": "heading", "type": "richtext", "default": "Sẵn sàng bắt đầu<br>dự án của bạn?" },
+            { "key": "desc", "type": "text", "default": "Chia sẻ ý tưởng của bạn, chúng tôi sẽ giúp bạn hiện thực hoá thành landing page chuyên nghiệp." },
+            { "key": "cta", "type": "text", "default": "Liên hệ ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#ffffff", "bgOpacity": 1, "text": "#0b0f14", "font": "", "fontSize": 15, "paddingX": 26, "paddingY": 16, "radius": 24, "borderWidth": 0, "borderColor": "#ffffff", "hoverEffect": "lift" } }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền thẻ", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền thẻ", "type": "range", "min": 0.5, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
         }
       ]
     },
@@ -657,6 +1493,85 @@
           "label": "Footer: nhiều cột",
           "html": "<footer class=\"blk blk-footer blk-footer--columns\"><div class=\"blk-footer__col blk-footer__col--brand\"><span class=\"blk-footer__logo\" data-field=\"logoText\">{{logoText}}</span><p data-field=\"desc\">{{desc}}</p></div><div class=\"blk-footer__col\"><h4 data-field=\"linksHeading\">{{linksHeading}}</h4><ul class=\"blk-footer__linklist\" data-list-container=\"links\"></ul></div><div class=\"blk-footer__col\"><h4 data-field=\"contactHeading\">{{contactHeading}}</h4><p data-field=\"contactLine1\">{{contactLine1}}</p><p data-field=\"contactLine2\">{{contactLine2}}</p></div><p class=\"blk-footer__copy blk-footer__copy--columns\" data-field=\"copyright\">{{copyright}}</p><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
           "fields": [
+            { "key": "logoText", "type": "text", "default": "Thương hiệu" },
+            { "key": "desc", "type": "text", "default": "Mô tả ngắn về thương hiệu, sản phẩm hoặc dịch vụ của bạn." },
+            { "key": "linksHeading", "type": "text", "default": "Liên kết" },
+            { "key": "links", "type": "list", "itemFields": [{ "key": "label", "type": "text", "default": "Liên kết" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Bảng giá" }, { "label": "Liên hệ" }] },
+            { "key": "contactHeading", "type": "text", "default": "Liên hệ" },
+            { "key": "contactLine1", "type": "text", "default": "hello@thuonghieu.vn" },
+            { "key": "contactLine2", "type": "text", "default": "090 000 0000" },
+            { "key": "copyright", "type": "text", "default": "© 2026 Thương hiệu. All rights reserved." }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "footer-social",
+          "label": "Footer kèm icon mạng xã hội",
+          "html": "<footer class=\"blk blk-footer blk-footer--social\"><div class=\"blk-footer__top\"><span class=\"blk-footer__logo\" data-field=\"logoText\">{{logoText}}</span><p data-field=\"desc\">{{desc}}</p><div class=\"blk-footer__social\"><a href=\"#\" aria-label=\"Facebook\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M22 12a10 10 0 1 0-11.5 9.9v-7H7.9V12h2.6V9.8c0-2.6 1.5-4 3.9-4 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12Z\"/></svg></a><a href=\"#\" aria-label=\"Instagram\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"17.2\" cy=\"6.8\" r=\"0.6\" fill=\"currentColor\" stroke=\"none\"/></svg></a><a href=\"#\" aria-label=\"YouTube\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"4\"/><path d=\"M10 9.5v5l4.5-2.5Z\" fill=\"currentColor\" stroke=\"none\"/></svg></a><a href=\"#\" aria-label=\"TikTok\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M16.5 3c.4 2.2 1.9 3.7 4 4v3c-1.5 0-2.9-.4-4-1.2v6.7a5.5 5.5 0 1 1-5.5-5.5c.3 0 .5 0 .8.1v3.1a2.5 2.5 0 1 0 1.7 2.4V3h3Z\"/></svg></a></div></div><ul class=\"blk-footer__links\" data-list-container=\"links\"></ul><p class=\"blk-footer__copy\" data-field=\"copyright\">{{copyright}}</p><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
+          "fields": [
+            { "key": "logoText", "type": "text", "default": "Thương hiệu" },
+            { "key": "desc", "type": "text", "default": "Mô tả ngắn về thương hiệu của bạn." },
+            { "key": "copyright", "type": "text", "default": "© 2026 Thương hiệu. All rights reserved." },
+            { "key": "links", "type": "list", "itemFields": [{ "key": "label", "type": "text", "default": "Liên kết" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Liên hệ" }] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "footer-newsletter",
+          "label": "Footer: nhiều cột kèm đăng ký nhận tin",
+          "html": "<footer class=\"blk blk-footer blk-footer--columns blk-footer--newsletter\"><div class=\"blk-footer__col blk-footer__col--brand\"><span class=\"blk-footer__logo\" data-field=\"logoText\">{{logoText}}</span><p data-field=\"desc\">{{desc}}</p></div><div class=\"blk-footer__col\"><h4 data-field=\"linksHeading\">{{linksHeading}}</h4><ul class=\"blk-footer__linklist\" data-list-container=\"links\"></ul></div><div class=\"blk-footer__col\"><h4 data-field=\"contactHeading\">{{contactHeading}}</h4><p data-field=\"contactLine1\">{{contactLine1}}</p><p data-field=\"contactLine2\">{{contactLine2}}</p></div><div class=\"blk-footer__col\"><h4 data-field=\"newsletterHeading\">{{newsletterHeading}}</h4><p data-field=\"newsletterDesc\">{{newsletterDesc}}</p><div class=\"blk-footer__newsletter\"><input type=\"email\" class=\"blk-footer__newsletterinput\" placeholder=\"Email của bạn...\"><a class=\"blk-btn blk-btn--primary blk-footer__newsletterbtn\" data-field=\"newsletterCta\" href=\"#\">{{newsletterCta}}</a></div></div><p class=\"blk-footer__copy blk-footer__copy--columns\" data-field=\"copyright\">{{copyright}}</p><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
+          "fields": [
+            { "key": "logoText", "type": "text", "default": "Thương hiệu" },
+            { "key": "desc", "type": "text", "default": "Mô tả ngắn về thương hiệu, sản phẩm hoặc dịch vụ của bạn." },
+            { "key": "linksHeading", "type": "text", "default": "Liên kết" },
+            { "key": "links", "type": "list", "itemFields": [{ "key": "label", "type": "text", "default": "Liên kết" }], "default": [{ "label": "Trang chủ" }, { "label": "Dịch vụ" }, { "label": "Liên hệ" }] },
+            { "key": "contactHeading", "type": "text", "default": "Liên hệ" },
+            { "key": "contactLine1", "type": "text", "default": "hello@thuonghieu.vn" },
+            { "key": "contactLine2", "type": "text", "default": "090 000 0000" },
+            { "key": "newsletterHeading", "type": "text", "default": "Đăng ký nhận tin" },
+            { "key": "newsletterDesc", "type": "text", "default": "Nhận tin tức và ưu đãi mới nhất qua email." },
+            { "key": "newsletterCta", "type": "text", "default": "Gửi", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 13, "paddingX": 18, "paddingY": 11, "radius": 10, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
+            { "key": "copyright", "type": "text", "default": "© 2026 Thương hiệu. All rights reserved." }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "footer-minimal",
+          "label": "Footer tối giản 1 dòng",
+          "html": "<footer class=\"blk blk-footer blk-footer--minimal\"><p class=\"blk-footer__copy\" data-field=\"copyright\">{{copyright}}</p><ul class=\"blk-footer__links\" data-list-container=\"links\"></ul><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
+          "fields": [
+            { "key": "copyright", "type": "text", "default": "© 2026 Thương hiệu. All rights reserved." },
+            { "key": "links", "type": "list", "itemFields": [{ "key": "label", "type": "text", "default": "Liên kết" }], "default": [{ "label": "Chính sách bảo mật" }, { "label": "Điều khoản sử dụng" }] }
+          ],
+          "style": [
+            { "key": "bg", "label": "Màu nền", "type": "color", "default": "#0b0f14" },
+            { "key": "text", "label": "Màu chữ", "type": "color", "default": "#ffffff" },
+            { "key": "opacity", "label": "Độ trong suốt nền", "type": "range", "min": 0.3, "max": 1, "step": 0.05, "default": 1 },
+            { "key": "font", "label": "Font chữ", "type": "font", "default": "jakarta" }
+          ]
+        },
+        {
+          "id": "footer-cta",
+          "label": "Footer: kèm khối CTA lớn phía trên",
+          "html": "<footer class=\"blk blk-footer blk-footer--withcta\"><div class=\"blk-footer__ctaband\"><h2 data-field=\"ctaHeading\">{{{ctaHeading}}}</h2><a class=\"blk-btn blk-btn--primary\" data-field=\"ctaButton\" href=\"#\">{{ctaButton}}</a></div><div class=\"blk-footer--columns\"><div class=\"blk-footer__col blk-footer__col--brand\"><span class=\"blk-footer__logo\" data-field=\"logoText\">{{logoText}}</span><p data-field=\"desc\">{{desc}}</p></div><div class=\"blk-footer__col\"><h4 data-field=\"linksHeading\">{{linksHeading}}</h4><ul class=\"blk-footer__linklist\" data-list-container=\"links\"></ul></div><div class=\"blk-footer__col\"><h4 data-field=\"contactHeading\">{{contactHeading}}</h4><p data-field=\"contactLine1\">{{contactLine1}}</p><p data-field=\"contactLine2\">{{contactLine2}}</p></div></div><p class=\"blk-footer__copy blk-footer__copy--columns\" data-field=\"copyright\">{{copyright}}</p><template data-list-template=\"links\"><li><a data-item-field=\"label\">{{label}}</a></li></template></footer>",
+          "fields": [
+            { "key": "ctaHeading", "type": "richtext", "default": "Sẵn sàng bắt đầu<br>dự án của bạn?" },
+            { "key": "ctaButton", "type": "text", "default": "Liên hệ ngay", "customStyle": "button", "buttonStyleDefault": { "bg": "#0bcb68", "bgOpacity": 1, "text": "#ffffff", "font": "", "fontSize": 15, "paddingX": 26, "paddingY": 15, "radius": 24, "borderWidth": 0, "borderColor": "#0bcb68", "hoverEffect": "darken" } },
             { "key": "logoText", "type": "text", "default": "Thương hiệu" },
             { "key": "desc", "type": "text", "default": "Mô tả ngắn về thương hiệu, sản phẩm hoặc dịch vụ của bạn." },
             { "key": "linksHeading", "type": "text", "default": "Liên kết" },

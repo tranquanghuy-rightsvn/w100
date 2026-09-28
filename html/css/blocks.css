@@ -298,6 +298,67 @@ a { text-decoration: none; color: inherit; }
 .blk-menu--split-center { justify-content: center; }
 .blk-menu--split-center .img-style-wrap { margin-right: 0; }
 
+/* Menu 2 nút (Đăng nhập/Đăng ký) — bọc 2 field kiểu button trong 1 div để
+   làm điểm neo "justify-self:end" chung trên layout grid nav-center, vì mỗi
+   field button tự bọc riêng .btn-style-wrap (không còn là con trực tiếp của
+   grid), xem wireButtonCustomStyle trong builder.js. */
+.blk-menu__actions { display: flex; align-items: center; gap: 10px; }
+.blk-menu--nav-center .blk-menu__actions { justify-self: end; }
+
+/* Menu có ô tìm kiếm — ô hiển thị tĩnh (không phải input thật, vì trang xuất
+   ra là HTML tĩnh không có backend để xử lý tìm kiếm), chỉ để đúng cảm giác
+   thị giác của 1 thanh tìm kiếm trên nav. */
+.blk-menu__search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blk-text) 6%, transparent);
+  font-size: 13px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.blk-menu__search svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Menu 2 tầng: thanh trên (liên hệ) mảnh, nền hơi khác biệt nền chính (tính
+   qua color-mix nên tự đổi theo màu nền/chữ đang chọn, không cần thêm ô màu
+   riêng) + thanh nav chính bên dưới dùng lại layout flex gốc của .blk-menu. */
+.blk-menu--topbar { display: block; padding: 0; }
+.blk-menu--topbar .blk-menu__topbar {
+  padding: 8px 5%;
+  font-size: 12.5px;
+  background: color-mix(in srgb, var(--blk-text) 6%, var(--blk-bg));
+}
+.blk-menu--topbar .blk-menu__mainbar { display: flex; align-items: center; gap: 28px; padding: 14px 5%; }
+/* Bo góc "floating" phải cắt luôn phần thanh trên, nếu không góc vuông của
+   nó sẽ lộ ra ngoài phần bo tròn của cả khối. */
+.blk-menu--topbar.blk--floating { overflow: hidden; }
+
+/* Thanh nổi kiểu viên thuốc — tách khỏi mép trên/2 bên, bo tròn toàn thanh.
+   Dùng cùng lúc với "overlay" (đè lên banner) vẫn đúng vì margin vẫn áp
+   dụng bình thường trên khối position:absolute; inset:0 chỉ set base
+   offset, margin đẩy thêm vào trong từ đó. */
+.blk-menu.blk--floating {
+  margin: 16px 3% 0;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(11, 15, 20, 0.14);
+}
+.blk-menu.blk--floating.blk-menu--nav-center { grid-template-columns: 1fr auto 1fr; }
+
+/* Kính mờ (glassmorphism) — nền mờ trong suốt kiểu kính, rõ nhất khi kết
+   hợp giảm "Độ trong suốt nền" để lộ nội dung phía sau qua lớp blur. */
+.blk-menu.blk--glass {
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+}
+
+/* Viền dưới phân cách — dùng color-mix theo màu chữ đang chọn nên luôn đủ
+   tương phản với nền, không cần chọn màu viền riêng. */
+.blk-menu.blk--borderBottom {
+  border-bottom: 1px solid color-mix(in srgb, var(--blk-text) 14%, transparent);
+}
+
 /* ------------------------------ Hiệu ứng hover cho mục menu ------------------------------ */
 .blk-menu--hover-color .blk-menu__nav a { transition: color 0.2s ease; }
 .blk-menu--hover-color .blk-menu__nav a:hover { color: var(--blk-nav-hover-color, #0bcb68) !important; opacity: 1; }
@@ -325,6 +386,19 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 .blk-menu__nav-indicator.is-active { opacity: 1; }
+
+.blk-menu--hover-pill .blk-menu__nav a {
+  display: inline-block;
+  padding: 7px 16px;
+  margin: -7px -16px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.blk-menu--hover-pill .blk-menu__nav a:hover {
+  background: var(--blk-nav-hover-color, #0bcb68);
+  color: #fff !important;
+  opacity: 1;
+}
 
 /* Bọc field kiểu button (customStyle:"button", vd nút CTA của menu) — style
    nền/chữ/bo góc/hover riêng cho từng khối được set qua <style> chèn ngay
@@ -381,6 +455,85 @@ a { text-decoration: none; color: inherit; }
 .blk-features--row h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
 .blk-features--row p { font-size: 12.5px; opacity: 0.65; }
 
+/* -- features-bento: lưới bất đối xứng kiểu bento — mặc định đúng 4 mục để
+   khít vừa lưới 4 cột x 2 hàng không dư ô trống (1 ô lớn 2x2 + 2 ô nhỏ + 1
+   ô ngang 2x1); thêm/bớt mục vẫn hoạt động, chỉ mất sự khít tuyệt đối đó. -- */
+.blk-features--bento .blk-features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 160px;
+  gap: 20px;
+  max-width: 1100px;
+}
+.blk-features--bento .blk-features__item {
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  text-align: left; overflow: hidden;
+}
+.blk-features--bento .blk-features__item:nth-child(1) {
+  grid-column: span 2; grid-row: span 2;
+  background: linear-gradient(135deg, var(--blk-accent), var(--blk-accent-dark));
+  color: #fff;
+}
+.blk-features--bento .blk-features__item:nth-child(1) .blk-features__icon { font-size: 42px; }
+.blk-features--bento .blk-features__item:nth-child(1) h3 { font-size: 20px; }
+.blk-features--bento .blk-features__item:nth-child(4) { grid-column: span 2; }
+@media (max-width: 900px) {
+  .blk-features--bento .blk-features__grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
+  .blk-features--bento .blk-features__item:nth-child(1),
+  .blk-features--bento .blk-features__item:nth-child(4) { grid-column: span 2; grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .blk-features--bento .blk-features__grid { grid-template-columns: 1fr; }
+  .blk-features--bento .blk-features__item:nth-child(1),
+  .blk-features--bento .blk-features__item:nth-child(4) { grid-column: span 1; }
+}
+
+/* -- features-imagerows: mỗi tính năng kèm 1 ảnh riêng, xen kẽ trái/phải -- */
+.blk-features.blk-features--imagerows { text-align: left; }
+.blk-features--imagerows .blk-features__heading { text-align: center; }
+.blk-features__imagerows { display: flex; flex-direction: column; gap: 56px; max-width: 1000px; margin: 0 auto; }
+.blk-features__imagerows > li { display: flex; align-items: center; gap: 40px; }
+.blk-features__imagerows > li:nth-child(even) { flex-direction: row-reverse; }
+.blk-features__imgwrap { flex: 0 0 38%; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; }
+.blk-features__imgwrap img { width: 100%; height: 100%; object-fit: cover; }
+.blk-features__rowbody { flex: 1; }
+.blk-features__rowbody .blk-features__icon { font-size: 26px; margin-bottom: 10px; }
+.blk-features__rowbody h3 { font-size: 19px; font-weight: 800; margin-bottom: 8px; }
+.blk-features__rowbody p { font-size: 14px; opacity: 0.72; }
+@media (max-width: 700px) {
+  .blk-features__imagerows > li, .blk-features__imagerows > li:nth-child(even) { flex-direction: column; align-items: stretch; }
+  .blk-features__imgwrap { flex: none; width: 100%; }
+}
+
+/* -- features-numbered: số thứ tự lớn, tự đếm bằng CSS counter theo đúng thứ
+   tự DOM — luôn đúng dù thêm/xoá/kéo sắp xếp lại mục, không cần lưu số. -- */
+.blk-features.blk-features--numbered { text-align: left; }
+.blk-features--numbered .blk-features__heading { text-align: center; }
+.blk-features__numlist { display: flex; flex-direction: column; max-width: 800px; margin: 0 auto; counter-reset: blk-features-num; }
+.blk-features__numlist > li {
+  display: flex; align-items: flex-start; gap: 24px;
+  padding: 24px 0; border-bottom: 1px solid rgba(11, 15, 20, 0.08);
+  counter-increment: blk-features-num;
+}
+.blk-features__numlist > li:first-child { padding-top: 0; }
+.blk-features__numlist > li:last-child { border-bottom: none; }
+.blk-features__num { flex-shrink: 0; min-width: 56px; font-size: 34px; font-weight: 800; line-height: 1; color: var(--blk-accent); opacity: 0.5; }
+.blk-features__num::before { content: counter(blk-features-num, decimal-leading-zero); }
+.blk-features__numlist h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+.blk-features__numlist p { font-size: 14px; opacity: 0.7; }
+
+/* -- features-outline: viền mỏng thay nền xám, nổi bật + nâng nhẹ khi hover -- */
+.blk-features--outline .blk-features__item {
+  background: transparent;
+  border: 1px solid rgba(11, 15, 20, 0.1);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.blk-features--outline .blk-features__item:hover {
+  border-color: var(--blk-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(11, 15, 20, 0.08);
+}
+
 /* ------------------------------ Logos (đối tác/khách hàng) ------------------------------ */
 .blk-logos { padding: 48px 6%; text-align: center; }
 .blk-logos__label { font-size: 13px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; opacity: 0.55; margin-bottom: 28px; }
@@ -395,6 +548,76 @@ a { text-decoration: none; color: inherit; }
 .blk-logos--split .blk-logos__intro p { font-size: 13.5px; opacity: 0.65; }
 .blk-logos--split .blk-logos__grid { flex: 1; justify-content: flex-start; margin: 0; max-width: none; }
 
+/* -- logos-marquee: băng chuyền logo tự cuộn vô hạn -- */
+/* Mask 2 đầu để logo mờ dần ra thay vì cắt cụt — chỉ cần đặt trên viewport
+   (khung nhìn cố định, overflow:hidden), không đặt trên track đang chạy. */
+.blk-logos--marquee .blk-logos__marquee-viewport {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+/* Track chứa 2 bản list giống hệt nhau nối liền nhau (bản gốc + bản sao do
+   renderBlockInstance tự nhân đôi — xem variant.marqueeListKey trong
+   builder.js). Mỗi .blk-logos__grid có "padding-right" bù đúng bằng "gap"
+   nội bộ của nó nên 2 bản luôn bằng nhau tuyệt đối về bề rộng — nhờ vậy
+   translateX(-50%) luôn dịch đúng 1 bản, tạo vòng lặp liền mạch không giật. */
+.blk-logos--marquee .blk-logos__marquee-track {
+  display: flex;
+  width: max-content;
+  animation: blk-logos-marquee 28s linear infinite;
+}
+.blk-logos--marquee .blk-logos__marquee-track .blk-logos__grid {
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  max-width: none;
+  margin: 0;
+  padding-right: 40px;
+}
+.blk-logos--marquee:hover .blk-logos__marquee-track { animation-play-state: paused; }
+@keyframes blk-logos-marquee { to { transform: translateX(-50%); } }
+
+/* -- logos-cards: mỗi logo trong 1 thẻ khung viền, giữ màu gốc thay vì xám -- */
+.blk-logos--cards .blk-logos__grid { gap: 16px; }
+.blk-logos--cards .blk-logos__grid li {
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px 28px;
+  border: 1px solid rgba(11, 15, 20, 0.08);
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.blk-logos--cards .blk-logos__grid li:hover { border-color: rgba(11, 15, 20, 0.18); box-shadow: 0 8px 20px rgba(11, 15, 20, 0.06); }
+.blk-logos--cards .blk-logos__grid img { filter: none; opacity: 1; height: 28px; }
+
+/* -- logos-stats: dải logo kèm hàng số liệu ấn tượng bên dưới -- */
+.blk-logos--stats .blk-logos__stats {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 48px;
+  margin: 32px auto 0; padding-top: 28px; max-width: 1000px;
+  border-top: 1px solid rgba(11, 15, 20, 0.08);
+}
+.blk-logos--stats .blk-logos__stats li { text-align: center; }
+.blk-logos--stats .blk-logos__stats strong { display: block; font-size: 28px; font-weight: 800; color: var(--blk-accent-dark); }
+.blk-logos--stats .blk-logos__stats span { display: block; font-size: 12.5px; opacity: 0.65; margin-top: 4px; }
+
+/* -- logos-divided: lưới logo có đường kẻ phân cách kiểu bảng -- */
+/* Mỗi ô lùi -1px (trên/trái) để viền các ô liền kề chồng khít lên nhau,
+   tránh bị dày gấp đôi ở phần giáp ranh — viền ngoài cùng do chính
+   .blk-logos__grid đảm nhận. */
+.blk-logos--divided .blk-logos__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
+  max-width: 900px;
+  border: 1px solid rgba(11, 15, 20, 0.08);
+}
+.blk-logos--divided .blk-logos__grid li {
+  display: flex; align-items: center; justify-content: center;
+  padding: 26px 16px;
+  border: 1px solid rgba(11, 15, 20, 0.08);
+  margin: -1px 0 0 -1px;
+}
+
 /* ------------------------------ About (giới thiệu) ------------------------------ */
 .blk-about { display: flex; align-items: center; gap: 56px; padding: 72px 6%; }
 .blk-about--right { flex-direction: row-reverse; }
@@ -403,9 +626,16 @@ a { text-decoration: none; color: inherit; }
 .blk-about__body { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 .blk-about__heading { font-size: 32px; font-weight: 800; letter-spacing: -0.01em; }
 .blk-about__desc { font-size: 15px; opacity: 0.75; max-width: 480px; }
+/* Style "Vị trí ảnh" của about-checklist/about-video dùng prefix riêng
+   "blk-about--pos-" (khác "blk-about--" trơn của about-split) — 2 variant
+   này đã có sẵn 1 class định danh bố cục riêng (blk-about--checklist/
+   blk-about--video); nếu dùng chung prefix "blk-about--", cơ chế đổi class
+   của style "select" (xem applyInstanceStyle) sẽ regex-xoá nhầm luôn class
+   định danh đó mỗi lần áp style, vì nó cũng bắt đầu bằng "blk-about--". */
+.blk-about--pos-right { flex-direction: row-reverse; }
 @media (max-width: 780px) {
   .blk-about { flex-direction: column; }
-  .blk-about--right { flex-direction: column; }
+  .blk-about--right, .blk-about--pos-right { flex-direction: column; }
   .blk-about__media { width: 100%; flex: none; }
 }
 
@@ -416,6 +646,62 @@ a { text-decoration: none; color: inherit; }
 .blk-about__values li { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
 .blk-about__values span { font-size: 20px; }
 
+/* -- about-fullbleed: ảnh nền toàn khối, chữ nổi trên ảnh (cùng kỹ thuật với .blk-hero--full) -- */
+.blk-about--fullbleed { position: relative; display: block; padding: 0; min-height: 480px; overflow: hidden; }
+.blk-about--fullbleed .blk-about__bgwrap { position: absolute; inset: 0; z-index: 0; }
+.blk-about--fullbleed .blk-about__bgwrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blk-about--fullbleed::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--blk-bg) 0%, transparent 65%);
+}
+.blk-about--fullbleed .blk-about__overlaycontent {
+  position: relative; z-index: 2; min-height: 480px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
+  max-width: 520px; padding: 72px 6%; color: var(--blk-text);
+}
+@media (max-width: 780px) {
+  .blk-about--fullbleed { min-height: 420px; }
+  .blk-about--fullbleed .blk-about__overlaycontent { min-height: 420px; padding: 48px 6%; max-width: 100%; }
+}
+
+/* -- about-checklist: ảnh + danh sách ưu điểm có dấu tick -- */
+.blk-about__checklist { display: flex; flex-direction: column; gap: 10px; margin: 4px 0; }
+.blk-about__checklist li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 600; }
+.blk-about__checklist svg {
+  width: 20px; height: 20px; flex-shrink: 0; padding: 3px; box-sizing: border-box;
+  border-radius: 50%; background: rgba(11, 203, 104, 0.12); color: var(--blk-accent-dark);
+}
+
+/* -- about-timeline: mốc thời gian phát triển, cuộn ngang trên màn hẹp -- */
+.blk-about.blk-about--timeline { display: block; text-align: center; }
+.blk-about--timeline .blk-about__intro { max-width: 640px; margin: 0 auto 40px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.blk-about__timeline { display: flex; gap: 0; overflow-x: auto; max-width: 1100px; margin: 0 auto; padding-top: 20px; }
+.blk-about__timeline li {
+  flex: 1 0 220px; position: relative; text-align: left;
+  padding: 24px 20px 0; border-top: 3px solid rgba(11, 15, 20, 0.1);
+}
+.blk-about__timeline li::before {
+  content: ""; position: absolute; top: -7px; left: 20px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--blk-accent); box-shadow: 0 0 0 4px var(--blk-bg);
+}
+.blk-about__tlyear { display: block; font-size: 13px; font-weight: 800; color: var(--blk-accent-dark); margin-bottom: 6px; }
+.blk-about__tltitle { display: block; font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+.blk-about__tldesc { font-size: 13.5px; opacity: 0.7; line-height: 1.55; }
+
+/* -- about-video: ảnh + nút phát video nổi giữa (chỉ trang trí, không phát thật) -- */
+.blk-about--video .blk-about__media { position: relative; }
+.blk-about__playbtn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 68px; height: 68px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.92); color: var(--blk-accent-dark);
+  box-shadow: 0 10px 30px rgba(11, 15, 20, 0.25);
+  transition: transform 0.2s ease;
+}
+.blk-about__playbtn svg { width: 26px; height: 26px; margin-left: 3px; }
+.blk-about--video .blk-about__media:hover .blk-about__playbtn { transform: translate(-50%, -50%) scale(1.08); }
+
 /* ------------------------------ Stats (thống kê) ------------------------------ */
 .blk-stats { padding: 56px 6%; }
 .blk-stats__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; text-align: center; }
@@ -425,6 +711,34 @@ a { text-decoration: none; color: inherit; }
 
 /* -- stats-cards: mỗi số liệu trong 1 thẻ nền sáng có viền -- */
 .blk-stats--cards .blk-stats__grid li { background: #fff; border: 1px solid rgba(127, 127, 127, 0.18); border-radius: 16px; padding: 24px 16px; }
+
+/* -- stats-icon: kèm icon minh hoạ phía trên con số -- */
+.blk-stats__icon { display: block; font-size: 28px; margin-bottom: 4px; }
+
+/* -- stats-countup: tự đếm số khi cuộn tới — chỉ cần đặt số đích trong field
+   "number" như bình thường, script (statsCountupScript) tự động chạy. -- */
+
+/* -- stats-progress: thanh tiến trình lấp đầy theo % lấy từ field "number" -- */
+.blk-stats--progress .blk-stats__grid { text-align: left; }
+.blk-stats--progress .blk-stats__grid li { gap: 10px; }
+.blk-stats__pctrow { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.blk-stats--progress .blk-stats__grid strong { font-size: 22px; }
+.blk-stats--progress .blk-stats__grid span { font-size: 12.5px; }
+.blk-stats__bar { display: block; height: 8px; border-radius: 999px; background: rgba(127, 127, 127, 0.18); overflow: hidden; }
+.blk-stats__bar-fill {
+  display: block; height: 100%; width: 0%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--blk-accent), var(--blk-accent-dark));
+  transition: width 1.1s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* -- stats-divided: ngăn cách bằng viền dọc thay vì thẻ/nền riêng -- */
+.blk-stats--divided .blk-stats__grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+.blk-stats--divided .blk-stats__grid li { padding: 0 40px; border-left: 1px solid rgba(127, 127, 127, 0.25); }
+.blk-stats--divided .blk-stats__grid li:first-child { border-left: none; padding-left: 0; }
+.blk-stats--divided .blk-stats__grid li:last-child { padding-right: 0; }
+@media (max-width: 640px) {
+  .blk-stats--divided .blk-stats__grid li { border-left: none; padding: 12px 24px; }
+}
 
 /* ------------------------------ Pricing (bảng giá) ------------------------------ */
 .blk-pricing { padding: 72px 6%; text-align: center; }
@@ -447,6 +761,66 @@ a { text-decoration: none; color: inherit; }
 .blk-pricing__plan--simple { text-align: center; align-items: center; }
 .blk-pricing__plan--simple .blk-pricing__price { justify-content: center; }
 
+/* -- pricing-toggle: công tắc chuyển Tháng/Năm — bật class ở root, CSS tự
+   ẩn/hiện đúng cặp giá tương ứng (xem pricingToggleScript trong builder.js) -- */
+.blk-pricing__toggle { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 32px; font-size: 13.5px; font-weight: 600; }
+.blk-pricing__toggle-save { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; background: rgba(11, 203, 104, 0.14); color: var(--blk-accent-dark); }
+.blk-pricing__switch {
+  position: relative; width: 46px; height: 26px; border-radius: 999px; border: none; cursor: pointer;
+  background: rgba(127, 127, 127, 0.35); padding: 0; flex-shrink: 0; transition: background 0.2s ease;
+}
+.blk-pricing__switch-knob {
+  position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; transition: transform 0.2s ease; box-shadow: 0 1px 3px rgba(11, 15, 20, 0.25);
+}
+.blk-pricing--yearly .blk-pricing__switch { background: var(--blk-accent); }
+.blk-pricing--yearly .blk-pricing__switch-knob { transform: translateX(20px); }
+.blk-pricing__price-yearly { display: none; }
+.blk-pricing--yearly .blk-pricing__price-monthly { display: none; }
+.blk-pricing--yearly .blk-pricing__price-yearly { display: flex; }
+
+/* -- pricing-compare: bảng so sánh tính năng theo cột, cột giữa (gói 2)
+   luôn được tô nổi bật bằng :nth-child, không cần đánh dấu riêng trong HTML -- */
+.blk-pricing--compare { text-align: left; }
+.blk-pricing--compare .blk-pricing__heading { text-align: center; }
+.blk-pricing__tablewrap { max-width: 900px; margin: 0 auto; overflow-x: auto; }
+.blk-pricing__table { width: 100%; border-collapse: collapse; }
+.blk-pricing__table th, .blk-pricing__table td { padding: 16px 18px; border-bottom: 1px solid rgba(127, 127, 127, 0.15); text-align: center; }
+.blk-pricing__table thead th:first-child, .blk-pricing__table tbody td:first-child { text-align: left; font-weight: 600; }
+.blk-pricing__colhead { display: flex; flex-direction: column; gap: 4px; }
+.blk-pricing__colhead strong { font-size: 16px; font-weight: 800; }
+.blk-pricing__colhead span { font-size: 13px; font-weight: 400; opacity: 0.7; }
+.blk-pricing__table th:nth-child(3), .blk-pricing__table td:nth-child(3) { background: rgba(11, 203, 104, 0.06); }
+.blk-pricing__table thead th:nth-child(3) { border-radius: 12px 12px 0 0; }
+.blk-pricing__table tfoot td:nth-child(3) { border-radius: 0 0 12px 12px; }
+.blk-pricing__table tfoot td { border-bottom: none; padding-top: 20px; }
+
+/* -- pricing-single: 1 gói duy nhất, trình bày như 1 thẻ lớn ở giữa -- */
+.blk-pricing--single .blk-pricing__singlecard {
+  position: relative; max-width: 460px; margin: 0 auto; text-align: center;
+  background: #fff; border: 1px solid rgba(127, 127, 127, 0.18); border-radius: 24px; padding: 40px 36px;
+}
+.blk-pricing--single h3 { font-size: 22px; font-weight: 800; margin: 10px 0 4px; }
+.blk-pricing--single .blk-pricing__price { justify-content: center; margin: 10px 0; }
+.blk-pricing--single .blk-pricing__price strong { font-size: 44px; }
+.blk-pricing--single .blk-pricing__desc { margin-bottom: 8px; }
+.blk-pricing--single .blk-pricing__features { text-align: left; max-width: 320px; margin: 16px auto; }
+
+/* -- pricing-popular-scale: gói có badge (đang khuyến nghị) được phóng to,
+   nâng lên rõ rệt so với 2 gói còn lại, dùng :has() để tự nhận diện, không
+   cần thêm class/style riêng theo vị trí cột. -- */
+.blk-pricing--popular-scale .blk-pricing__grid { align-items: center; }
+.blk-pricing--popular-scale .blk-pricing__plan:has(.blk-pricing__badge:not(:empty)) {
+  transform: scale(1.06);
+  box-shadow: 0 20px 45px rgba(11, 15, 20, 0.14);
+  border-color: var(--blk-accent);
+  background: #fff;
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .blk-pricing--popular-scale .blk-pricing__plan:has(.blk-pricing__badge:not(:empty)) { transform: none; }
+}
+
 /* ------------------------------ Testimonials (đánh giá khách hàng) ------------------------------ */
 .blk-testi { padding: 72px 6%; text-align: center; }
 .blk-testi__heading { font-size: 30px; font-weight: 800; margin-bottom: 40px; }
@@ -465,6 +839,66 @@ a { text-decoration: none; color: inherit; }
 .blk-testi__spotlight { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .blk-testi--spotlight .blk-testi__quote { font-size: 22px; font-weight: 700; line-height: 1.5; opacity: 1; }
 
+/* -- testimonials-carousel: trượt qua từng đánh giá, tự chạy (xem
+   buildTestiDots/testiSlideScript trong builder.js) -- */
+.blk-testi__carousel { position: relative; max-width: 680px; margin: 0 auto; }
+.blk-testi__slides { list-style: none; margin: 0; padding: 0; }
+.blk-testi__slide { display: none; text-align: center; }
+.blk-testi__slide.is-active { display: block; animation: blk-testi-fade 0.4s ease; }
+.blk-testi__slide .blk-testi__quote { font-size: 19px; font-weight: 600; line-height: 1.55; opacity: 1; margin-bottom: 18px; }
+.blk-testi__slide .blk-testi__person { justify-content: center; }
+@keyframes blk-testi-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.blk-testi__dots { display: flex; justify-content: center; gap: 8px; margin-top: 28px; }
+.blk-testi__dot { width: 8px; height: 8px; padding: 0; border: none; border-radius: 999px; background: rgba(127, 127, 127, 0.35); cursor: pointer; transition: all 0.2s ease; }
+.blk-testi__dot.is-active { background: var(--blk-accent); width: 22px; }
+.blk-testi__arrow {
+  position: absolute; top: 36%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%; border: none; padding: 0;
+  background: rgba(127, 127, 127, 0.1); color: inherit; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: background 0.2s ease;
+}
+.blk-testi__arrow svg { width: 16px; height: 16px; }
+.blk-testi__arrow:hover { background: rgba(127, 127, 127, 0.2); }
+.blk-testi__arrow--prev { left: -54px; }
+.blk-testi__arrow--next { right: -54px; }
+@media (max-width: 780px) {
+  .blk-testi__arrow--prev { left: 0; }
+  .blk-testi__arrow--next { right: 0; }
+}
+
+/* -- testimonials-rating: kèm sao xếp hạng phía trên trích dẫn -- */
+.blk-testi__stars { color: #f5b301; font-size: 15px; letter-spacing: 2px; }
+
+/* -- testimonials-marquee: băng chuyền đánh giá tự cuộn vô hạn, cùng kỹ
+   thuật với logos-marquee (xem variant.marqueeListKey trong builder.js) -- */
+.blk-testi--marquee .blk-testi__marquee-viewport {
+  overflow: hidden; width: 100%;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.blk-testi--marquee .blk-testi__marquee-track { display: flex; width: max-content; animation: blk-testi-marquee 34s linear infinite; }
+.blk-testi--marquee:hover .blk-testi__marquee-track { animation-play-state: paused; }
+.blk-testi--marquee .blk-testi__mgrid {
+  display: flex; flex-wrap: nowrap; flex-shrink: 0;
+  gap: 24px; padding-right: 24px; max-width: none; margin: 0;
+}
+.blk-testi--marquee .blk-testi__mgrid li { flex: 0 0 320px; }
+@keyframes blk-testi-marquee { to { transform: translateX(-50%); } }
+
+/* -- testimonials-portrait: ảnh lớn 1 bên, trích dẫn + tên bên còn lại -- */
+.blk-testi--portrait { display: flex; align-items: center; gap: 48px; text-align: left; }
+.blk-testi--portrait .blk-testi__portraitmedia { flex: 0 0 38%; border-radius: 20px; overflow: hidden; }
+.blk-testi--portrait .blk-testi__portraitmedia img { width: 100%; height: 100%; object-fit: cover; }
+.blk-testi--portrait .blk-testi__portraitbody { flex: 1; }
+.blk-testi--portrait .blk-testi__quote { font-size: 21px; font-weight: 600; line-height: 1.55; opacity: 1; margin-bottom: 18px; }
+.blk-testi--portrait .blk-testi__portraitbody strong { display: block; font-size: 15px; font-weight: 800; }
+.blk-testi--portrait .blk-testi__portraitbody span { display: block; font-size: 13px; opacity: 0.6; margin-top: 2px; }
+.blk-testi--pos-right { flex-direction: row-reverse; }
+@media (max-width: 780px) {
+  .blk-testi--portrait { flex-direction: column; }
+  .blk-testi--portrait .blk-testi__portraitmedia { width: 100%; flex: none; }
+}
+
 /* ------------------------------ FAQ (câu hỏi thường gặp) ------------------------------ */
 .blk-faq { padding: 72px 6%; text-align: center; }
 .blk-faq__heading { font-size: 30px; font-weight: 800; margin-bottom: 32px; }
@@ -478,6 +912,73 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 700px) {
   .blk-faq__list.blk-faq__list--grid { grid-template-columns: 1fr; }
 }
+
+/* -- faq-accordion: bấm mở/đóng từng câu trả lời (xem faqAccordionScript
+   trong builder.js) — dùng grid-template-rows 0fr↔1fr để chuyển chiều cao
+   mượt mà không cần JS đo chiều cao thật. Mặc định mọi mục đều mở (class
+   "is-open" có sẵn trong template) để câu trả lời luôn thấy được và sửa
+   được ngay trong editor — bấm để đóng lại vẫn hoạt động bình thường. */
+.blk-faq__list--accordion { gap: 0; }
+.blk-faq__accitem { border-bottom: 1px solid rgba(127, 127, 127, 0.18); }
+.blk-faq__acchead { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 4px; cursor: pointer; }
+.blk-faq__acchead h3 { font-size: 15.5px; font-weight: 700; margin: 0; }
+.blk-faq__accicon {
+  position: relative; flex-shrink: 0; width: 26px; height: 26px; padding: 0;
+  border: none; border-radius: 50%; background: rgba(127, 127, 127, 0.12);
+  color: inherit; cursor: pointer;
+}
+.blk-faq__accicon::before, .blk-faq__accicon::after {
+  content: ""; position: absolute; top: 50%; left: 50%; background: currentColor;
+  transform: translate(-50%, -50%); transition: transform 0.2s ease;
+}
+.blk-faq__accicon::before { width: 10px; height: 2px; }
+.blk-faq__accicon::after { width: 2px; height: 10px; }
+.blk-faq__accitem.is-open .blk-faq__accicon::after { transform: translate(-50%, -50%) scaleY(0); }
+.blk-faq__accbody { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.25s ease; }
+.blk-faq__accbody > p { overflow: hidden; margin: 0; padding: 0 4px; opacity: 0; transition: opacity 0.2s ease; font-size: 14px; line-height: 1.6; }
+.blk-faq__accitem.is-open .blk-faq__accbody { grid-template-rows: 1fr; }
+.blk-faq__accitem.is-open .blk-faq__accbody > p { padding-bottom: 20px; opacity: 0.72; }
+
+/* -- faq-search: ô tìm kiếm lọc câu hỏi (xem faqSearchScript trong
+   builder.js) — lọc bằng cách ẩn/hiện <li>, không cần backend. -- */
+.blk-faq__searchwrap { position: relative; max-width: 480px; margin: 0 auto 32px; }
+.blk-faq__searchwrap svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; opacity: 0.5; pointer-events: none; }
+.blk-faq__searchinput {
+  width: 100%; height: 46px; border-radius: 999px; border: 1px solid rgba(127, 127, 127, 0.25);
+  padding: 0 18px 0 44px; font-family: inherit; font-size: 14px; background: #fff; color: inherit;
+}
+.blk-faq__searchinput:focus { outline: none; border-color: var(--blk-accent); }
+.blk-faq__searchempty { display: none; text-align: center; opacity: 0.6; font-size: 14px; padding: 20px 0; }
+
+/* -- faq-contact: danh sách FAQ + khung liên hệ bên cạnh -- */
+.blk-faq.blk-faq--contact { display: flex; align-items: flex-start; gap: 48px; text-align: left; }
+.blk-faq--contact .blk-faq__main { flex: 1; min-width: 0; }
+.blk-faq--contact .blk-faq__heading { text-align: left; margin-bottom: 24px; }
+.blk-faq--contact .blk-faq__list { margin: 0; max-width: none; }
+.blk-faq__contactbox { flex: 0 0 300px; background: rgba(11, 203, 104, 0.06); border-radius: 20px; padding: 32px 28px; }
+.blk-faq__contactbox h3 { font-size: 19px; font-weight: 800; margin-bottom: 10px; }
+.blk-faq__contactbox p { font-size: 13.5px; opacity: 0.75; margin-bottom: 18px; line-height: 1.6; }
+@media (max-width: 780px) {
+  .blk-faq.blk-faq--contact { flex-direction: column; }
+  .blk-faq__contactbox { flex: none; width: 100%; }
+}
+
+/* -- faq-numbered: đánh số tự động bằng CSS counter, cùng kỹ thuật với
+   features-numbered -- */
+.blk-faq.blk-faq--numbered { text-align: left; }
+.blk-faq--numbered .blk-faq__heading { text-align: center; }
+.blk-faq__numlist { display: flex; flex-direction: column; max-width: 760px; margin: 0 auto; counter-reset: blk-faq-num; }
+.blk-faq__numlist > li {
+  display: flex; align-items: flex-start; gap: 22px;
+  padding: 22px 0; border-bottom: 1px solid rgba(127, 127, 127, 0.15);
+  counter-increment: blk-faq-num;
+}
+.blk-faq__numlist > li:first-child { padding-top: 0; }
+.blk-faq__numlist > li:last-child { border-bottom: none; }
+.blk-faq__num { flex-shrink: 0; min-width: 48px; font-size: 30px; font-weight: 800; line-height: 1; color: var(--blk-accent); opacity: 0.5; }
+.blk-faq__num::before { content: counter(blk-faq-num, decimal-leading-zero); }
+.blk-faq__numlist h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+.blk-faq__numlist p { font-size: 14px; opacity: 0.7; line-height: 1.55; }
 
 /* ------------------------------ CTA band (kêu gọi hành động) ------------------------------ */
 .blk-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 56px 6%; }
@@ -493,6 +994,57 @@ a { text-decoration: none; color: inherit; }
 .blk-cta.blk-cta--centered { flex-direction: column; text-align: center; gap: 16px; }
 .blk-cta--centered h2 { font-size: 32px; }
 .blk-cta--centered p { max-width: 520px; margin: 0 auto; }
+
+/* -- cta-fullbleed: ảnh nền toàn khối, lớp phủ đều (không gradient lệch
+   như hero/about vì CTA cần chữ canh giữa, đọc rõ trên toàn bộ chiều rộng) -- */
+.blk-cta--fullbleed { position: relative; display: block; padding: 0; min-height: 380px; overflow: hidden; }
+.blk-cta--fullbleed .blk-cta__bgwrap { position: absolute; inset: 0; z-index: 0; }
+.blk-cta--fullbleed .blk-cta__bgwrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blk-cta--fullbleed::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--blk-bg); }
+.blk-cta--fullbleed .blk-cta__overlaycontent {
+  position: relative; z-index: 2; min-height: 380px; max-width: 720px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  text-align: center; padding: 64px 6%; color: var(--blk-text);
+}
+.blk-cta--fullbleed .blk-cta__overlaycontent h2 { font-size: 32px; font-weight: 800; }
+.blk-cta--fullbleed .blk-cta__overlaycontent p { font-size: 14.5px; opacity: 0.85; }
+
+/* -- cta-dual: 2 nút chính + phụ cạnh nhau -- */
+.blk-cta.blk-cta--dual { flex-direction: column; text-align: center; gap: 16px; }
+.blk-cta--dual h2 { font-size: 32px; }
+.blk-cta--dual p { max-width: 520px; margin: 0 auto; }
+.blk-cta__actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* -- cta-email: ô nhập email + nút gửi cạnh nhau (chỉ giao diện, trang tĩnh
+   không có backend xử lý thật — giống ô tìm kiếm của Menu) -- */
+.blk-cta.blk-cta--email { flex-direction: column; text-align: center; gap: 16px; }
+.blk-cta--email h2 { font-size: 30px; }
+.blk-cta--email p { max-width: 480px; margin: 0 auto; }
+.blk-cta__form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.blk-cta__emailinput {
+  flex: 1; min-width: 220px; height: 48px; border-radius: 999px;
+  border: 1px solid rgba(127, 127, 127, 0.3); padding: 0 20px;
+  font-family: inherit; font-size: 14px; background: #fff; color: #0b0f14;
+}
+.blk-cta__emailinput:focus { outline: none; border-color: var(--blk-accent); }
+.blk-cta__emailbtn { flex-shrink: 0; }
+
+/* -- cta-floating: khối CTA thu nhỏ lại thành 1 thẻ nổi, tách khỏi nền
+   trang — nền/màu chữ do người dùng chọn áp cho CHÍNH THẺ (kế thừa biến
+   --blk-bg/--blk-text từ root xuống) thay vì cho cả section, section chỉ
+   còn đóng vai trò khoảng đệm trong suốt xung quanh thẻ. */
+.blk-cta--floating { background: transparent; padding: 56px 6%; }
+.blk-cta__floatcard {
+  max-width: 900px; margin: 0 auto; background: var(--blk-bg); color: var(--blk-text);
+  border-radius: 28px; padding: 56px 48px; text-align: center;
+  box-shadow: 0 24px 60px rgba(11, 15, 20, 0.14);
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.blk-cta__floatcard h2 { font-size: 30px; font-weight: 800; }
+.blk-cta__floatcard p { font-size: 14.5px; opacity: 0.8; max-width: 480px; }
+@media (max-width: 640px) {
+  .blk-cta__floatcard { padding: 40px 28px; border-radius: 22px; }
+}
 
 /* ------------------------------ Footer ------------------------------ */
 .blk-footer { padding: 48px 6% 28px; }
@@ -525,7 +1077,62 @@ a { text-decoration: none; color: inherit; }
   .blk-footer--columns { grid-template-columns: 1fr; }
 }
 
+/* -- footer-social: dải icon mạng xã hội cạnh mô tả thương hiệu (chỉ trang
+   trí, href="#" tĩnh — giống mọi CTA khác trong công cụ, không có URL riêng
+   để chỉnh trực tiếp). Nền vòng tròn tự tính theo màu chữ đang chọn nên luôn
+   đủ tương phản dù đổi màu nền/chữ thế nào. -- */
+.blk-footer__social { display: flex; gap: 10px; margin-top: 16px; }
+.blk-footer__social a {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: color-mix(in srgb, var(--blk-text) 10%, transparent);
+  color: inherit; transition: background 0.2s ease;
+}
+.blk-footer__social a:hover { background: color-mix(in srgb, var(--blk-text) 20%, transparent); }
+.blk-footer__social svg { width: 17px; height: 17px; }
+
+/* -- footer-newsletter: thêm 1 cột đăng ký nhận tin vào footer nhiều cột -- */
+.blk-footer--newsletter.blk-footer--columns { grid-template-columns: 1.2fr 0.8fr 1fr 1.1fr; }
+.blk-footer__newsletter { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.blk-footer__newsletterinput {
+  height: 42px; border-radius: 10px; background: transparent; color: inherit;
+  border: 1px solid color-mix(in srgb, var(--blk-text) 25%, transparent);
+  padding: 0 14px; font-family: inherit; font-size: 13.5px;
+}
+.blk-footer__newsletterinput::placeholder { color: color-mix(in srgb, var(--blk-text) 55%, transparent); }
+.blk-footer__newsletterbtn { width: 100%; justify-content: center; }
+@media (max-width: 900px) {
+  .blk-footer--newsletter.blk-footer--columns { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .blk-footer--newsletter.blk-footer--columns { grid-template-columns: 1fr; }
+}
+
+/* -- footer-minimal: 1 dòng gọn, chỉ bản quyền + vài liên kết nhỏ -- */
+.blk-footer.blk-footer--minimal {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; padding: 24px 6%;
+}
+.blk-footer--minimal .blk-footer__copy { margin: 0; }
+.blk-footer--minimal .blk-footer__links { gap: 20px; padding: 0; margin: 0; border: none; }
+@media (max-width: 600px) {
+  .blk-footer.blk-footer--minimal { flex-direction: column; text-align: center; }
+}
+
+/* -- footer-cta: 1 băng CTA lớn phía trên, bên dưới là footer nhiều cột như
+   thường — tái dùng nguyên class ".blk-footer--columns" cho phần lưới cột
+   thay vì viết lại CSS, chỉ khác nó nằm trong 1 div con thay vì chính root. -- */
+.blk-footer--withcta { padding: 0; }
+.blk-footer__ctaband {
+  text-align: center; padding: 56px 6%;
+  border-bottom: 1px solid color-mix(in srgb, var(--blk-text) 14%, transparent);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.blk-footer__ctaband h2 { font-size: 30px; font-weight: 800; max-width: 600px; }
+
 /* ------------------------------ List item — chỗ trống cho tay nắm/nút xoá của editor ------------------------------ */
 .blk-menu__nav li, .blk-footer__links li, .blk-features__item,
 .blk-logos__grid li, .blk-stats__grid li, .blk-testi__grid li, .blk-faq__list li,
-.blk-footer__linklist li, .blk-about__values li, .blk-features__rowlist li { position: relative; }
+.blk-footer__linklist li, .blk-about__values li, .blk-features__rowlist li,
+.blk-about__checklist li, .blk-features__imagerows li, .blk-features__numlist li,
+.blk-testi__slide, .blk-faq__accitem, .blk-faq__numlist li { position: relative; }

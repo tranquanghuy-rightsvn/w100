@@ -517,13 +517,21 @@ body.is-dragging-something * {
   align-content: start;
 }
 .variant-card {
-  border: 1px solid var(--ui-line); border-radius: 14px; overflow: hidden;
-  /* Thẻ tự có transform khi hover (translateY bên dưới) — thêm clip-path
-     làm cơ chế cắt chính vì Safari cắt sai góc bo tròn khi chính phần tử
-     overflow:hidden lại có transform trên bản thân nó. */
+  border: 1px solid var(--ui-line); border-radius: 14px;
+  /* Thẻ tự có transform khi hover (translateY bên dưới) — dùng clip-path làm
+     cơ chế cắt chính vì Safari cắt sai góc bo tròn khi chính phần tử
+     overflow:hidden lại có transform trên bản thân nó. KHÔNG được thêm lại
+     "overflow: hidden" ở đây (kể cả làm dự phòng): phần tử này là 1 grid
+     item trong lưới auto-rows (.add-variants) — CSS Grid ép "automatic
+     minimum size" của item về 0 khi overflow khác "visible", khiến hàng
+     grid bị tính chiều cao hụt hơn cả nội dung thật (từng làm variant-label
+     bị cắt mất/đè lên nhau, xem lịch sử fix). clip-path không có tác dụng
+     phụ này nên vẫn cắt góc bo tròn đúng mà không đụng tới grid sizing. */
   clip-path: inset(0 round 14px);
   cursor: pointer; background: #fff; text-align: left;
   transition: border-color 0.2s ease, transform 0.15s ease;
+  height: max-content;
+  padding-top: 6px;
 }
 .variant-card:hover { border-color: var(--ui-green); transform: translateY(-2px); }
 .variant-card.is-current { border-color: var(--ui-green); box-shadow: 0 0 0 2px rgba(11,203,104,0.25); }

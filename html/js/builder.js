@@ -229,6 +229,92 @@ function heroSlideScript(boxId) {
     'if(nextBtn)nextBtn.addEventListener("click",function(){show(idx+1);restart();});' +
     'restart();})();';
 }
+/* Script cho carousel đánh giá (fieldDef.testiSlideshow — xem buildTestiDots)
+   — cùng cơ chế autoplay/bấm nốt/mũi tên với heroSlideScript, tách riêng
+   class để styling phù hợp nền sáng của khối đánh giá (xem buildTestiDots). */
+function testiSlideScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-testi-slide-id="' + boxId + '"]\');if(!box||box.__testiSlideWired)return;box.__testiSlideWired=true;' +
+    'var slidesEl=box.querySelector("[data-list-container]");if(!slidesEl)return;' +
+    'var slides=Array.prototype.slice.call(slidesEl.children);' +
+    'var dotsWrap=box.querySelector(":scope > .blk-testi__dots");' +
+    'var dots=dotsWrap?Array.prototype.slice.call(dotsWrap.querySelectorAll(".blk-testi__dot")):[];' +
+    'var prevBtn=box.querySelector(":scope > .blk-testi__arrow--prev");' +
+    'var nextBtn=box.querySelector(":scope > .blk-testi__arrow--next");' +
+    'if(slides.length<2)return;' +
+    'var idx=0,timer;' +
+    'function show(i){slides[idx].classList.remove("is-active");if(dots[idx])dots[idx].classList.remove("is-active");idx=(i+slides.length)%slides.length;slides[idx].classList.add("is-active");if(dots[idx])dots[idx].classList.add("is-active");}' +
+    'function restart(){clearInterval(timer);timer=setInterval(function(){show(idx+1);},6000);}' +
+    'dots.forEach(function(d,i){d.addEventListener("click",function(){show(i);restart();});});' +
+    'if(prevBtn)prevBtn.addEventListener("click",function(){show(idx-1);restart();});' +
+    'if(nextBtn)nextBtn.addEventListener("click",function(){show(idx+1);restart();});' +
+    'restart();})();';
+}
+/* Script cho stats-countup (fieldDef.countup): đợi khối cuộn vào khung nhìn
+   rồi chạy số từ 0 lên đúng giá trị đang hiển thị — tự tách phần số đứng
+   đầu (vd "250" trong "250+", "98" trong "98%") bằng regex, phần còn lại
+   giữ nguyên làm hậu tố, tự chứa để còn chạy đúng trên bản xuất tĩnh. */
+function statsCountupScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-countup-id="' + boxId + '"]\');if(!box||box.__countupWired)return;box.__countupWired=true;' +
+    'var items=Array.prototype.slice.call(box.querySelectorAll("strong[data-item-field=number]"));' +
+    'var parsed=items.map(function(el){var m=/^([0-9][0-9.,]*)/.exec(el.textContent);if(!m)return null;var raw=m[0];var suffix=el.textContent.slice(raw.length);var clean=raw.replace(/,/g,"");var dot=clean.indexOf(".");var decimals=dot===-1?0:clean.length-dot-1;var num=parseFloat(clean);return {el:el,num:num,decimals:decimals,suffix:suffix,raw:raw};}).filter(Boolean);' +
+    'if(!parsed.length)return;' +
+    'var done=false;' +
+    'function run(){if(done)return;done=true;parsed.forEach(function(p){var start=null,dur=1400;function step(ts){if(start===null)start=ts;var t=Math.min((ts-start)/dur,1);var eased=1-Math.pow(1-t,3);var val=p.num*eased;p.el.textContent=(p.decimals?val.toFixed(p.decimals):Math.round(val).toString())+p.suffix;if(t<1)requestAnimationFrame(step);else p.el.textContent=p.raw+p.suffix;}requestAnimationFrame(step);});}' +
+    'if("IntersectionObserver" in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){run();io.disconnect();}});},{threshold:0.4});io.observe(box);}else{run();}' +
+    '})();';
+}
+/* Script cho stats-progress (fieldDef.progress): đọc số % từ chính field
+   "number" đang hiển thị (vd "98%" → 98) để set độ dài thanh tiến trình,
+   không cần thêm field số riêng — chạy 1 lần khi khối cuộn vào khung nhìn. */
+function statsProgressScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-progress-id="' + boxId + '"]\');if(!box||box.__progressWired)return;box.__progressWired=true;' +
+    'var items=Array.prototype.slice.call(box.querySelectorAll(".blk-stats__grid > li"));' +
+    'var parsed=items.map(function(li){var num=li.querySelector("strong[data-item-field=number]");var fill=li.querySelector(".blk-stats__bar-fill");if(!num||!fill)return null;var m=/^([0-9]+(\\.[0-9]+)?)/.exec(num.textContent);if(!m)return null;var val=Math.min(100,Math.max(0,parseFloat(m[0])));return {fill:fill,val:val};}).filter(Boolean);' +
+    'if(!parsed.length)return;' +
+    'var done=false;' +
+    'function run(){if(done)return;done=true;requestAnimationFrame(function(){parsed.forEach(function(p){p.fill.style.width=p.val+"%";});});}' +
+    'if("IntersectionObserver" in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){run();io.disconnect();}});},{threshold:0.4});io.observe(box);}else{run();}' +
+    '})();';
+}
+/* Script cho pricing-toggle (variant.pricingToggle): bấm công tắc chỉ đổi 1
+   class trên root ("blk-pricing--yearly"), toàn bộ việc ẩn/hiện giá
+   tháng/năm tương ứng do CSS đảm nhận (xem blocks.css) — tự chứa nên vẫn
+   hoạt động đúng trên trang xuất tĩnh. */
+function pricingToggleScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-pricing-toggle-id="' + boxId + '"]\');if(!box||box.__pricingToggleWired)return;box.__pricingToggleWired=true;' +
+    'var btn=box.querySelector(":scope > .blk-pricing__toggle > .blk-pricing__switch");if(!btn)return;' +
+    'btn.addEventListener("click",function(){var on=box.classList.toggle("blk-pricing--yearly");btn.setAttribute("aria-pressed",on?"true":"false");});' +
+    '})();';
+}
+/* Script cho faq-accordion (variant.faqAccordion): bấm vào phần đầu câu hỏi
+   (".blk-faq__acchead") để bật/tắt "is-open" trên chính mục đó — click trực
+   tiếp lên phần chữ câu hỏi (field text đang bật contenteditable) vẫn không
+   bị ảnh hưởng vì wireEditableText đã tự stopPropagation() trên click của
+   chính nó, không để lọt lên tới listener delegate ở đây. Toàn bộ hiệu ứng
+   mở/đóng mượt do CSS đảm nhận (grid-template-rows), script chỉ đổi 1 class. */
+function faqAccordionScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-faq-accordion-id="' + boxId + '"]\');if(!box||box.__faqAccordionWired)return;box.__faqAccordionWired=true;' +
+    'box.addEventListener("click",function(e){' +
+    'var head=e.target.closest(".blk-faq__acchead");if(!head||!box.contains(head))return;' +
+    'var item=head.closest(".blk-faq__accitem");if(item)item.classList.toggle("is-open");' +
+    '});' +
+    '})();';
+}
+/* Script cho faq-search (variant.faqSearch): gõ vào ô tìm kiếm sẽ ẩn/hiện
+   từng câu hỏi theo khớp chuỗi con (không phân biệt hoa/thường) trên toàn bộ
+   nội dung mục đó (cả câu hỏi lẫn câu trả lời), hiện thông báo rỗng nếu
+   không còn mục nào khớp. */
+function faqSearchScript(boxId) {
+  return '(function(){var box=document.querySelector(\'[data-faq-search-id="' + boxId + '"]\');if(!box||box.__faqSearchWired)return;box.__faqSearchWired=true;' +
+    'var input=box.querySelector(".blk-faq__searchinput");var list=box.querySelector("[data-list-container]");if(!input||!list)return;' +
+    'var empty=box.querySelector(".blk-faq__searchempty");' +
+    'input.addEventListener("input",function(){' +
+    'var q=input.value.trim().toLowerCase();var count=0;' +
+    'Array.prototype.forEach.call(list.children,function(li){var match=!q||li.textContent.toLowerCase().indexOf(q)!==-1;li.style.display=match?"":"none";if(match)count++;});' +
+    'if(empty)empty.style.display=count?"none":"block";' +
+    '});' +
+    '})();';
+}
 /* Chèn/gỡ icon svg (từ ICONS_CATALOG, quản lý ở data/icons-catalog.json)
    ngay trước phần chữ của 1 nút — icon là span con riêng (không phải text
    node) nên el.textContent vẫn đúng, không lẫn nội dung svg khi lưu field.
@@ -729,6 +815,107 @@ function buildHeroDots(instance, key, container) {
   script.textContent = heroSlideScript(heroId);
 }
 
+/* Carousel đánh giá khách hàng (fieldDef.testiSlideshow, vd testimonials-
+   carousel) — CÙNG Ý TƯỞNG với buildHeroDots/heroSlideScript nhưng tách
+   riêng thành class/script của chính nó (blk-testi__*) thay vì dùng chung
+   class "blk-hero__*": nốt/mũi tên của hero được thiết kế màu trắng bán
+   trong suốt để nổi trên ảnh nền tối, không hợp với nền sáng thường gặp của
+   khối đánh giá — tách riêng để styling đúng ngữ cảnh mà không đụng tới
+   Hero đang hoạt động ổn định. */
+function buildTestiDots(instance, key, container) {
+  const box = container.parentElement;
+  const slides = instance.fields[key] || [];
+  let dotsWrap = box.querySelector(':scope > .blk-testi__dots');
+  let prevBtn = box.querySelector(':scope > .blk-testi__arrow--prev');
+  let nextBtn = box.querySelector(':scope > .blk-testi__arrow--next');
+  if (slides.length < 2) {
+    if (dotsWrap) dotsWrap.remove();
+    if (prevBtn) prevBtn.remove();
+    if (nextBtn) nextBtn.remove();
+    const oldScript = box.querySelector(':scope > script[data-testi-slide-script]');
+    if (oldScript) oldScript.remove();
+    box.removeAttribute('data-testi-slide-id');
+    return;
+  }
+  if (!prevBtn) {
+    prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'blk-testi__arrow blk-testi__arrow--prev';
+    prevBtn.setAttribute('aria-label', 'Đánh giá trước');
+    prevBtn.innerHTML = ICON_ARROW_LEFT;
+    box.appendChild(prevBtn);
+  }
+  if (!nextBtn) {
+    nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'blk-testi__arrow blk-testi__arrow--next';
+    nextBtn.setAttribute('aria-label', 'Đánh giá tiếp theo');
+    nextBtn.innerHTML = ICON_ARROW_RIGHT;
+    box.appendChild(nextBtn);
+  }
+  if (!dotsWrap) {
+    dotsWrap = document.createElement('div');
+    dotsWrap.className = 'blk-testi__dots';
+    box.appendChild(dotsWrap);
+  }
+  dotsWrap.innerHTML = '';
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'blk-testi__dot' + (i === 0 ? ' is-active' : '');
+    dot.setAttribute('aria-label', 'Đánh giá ' + (i + 1));
+    dotsWrap.appendChild(dot);
+  });
+  const testiId = instance.id + '__testi';
+  box.dataset.testiSlideId = testiId;
+  let script = box.querySelector(':scope > script[data-testi-slide-script]');
+  if (!script) {
+    script = document.createElement('script');
+    script.setAttribute('data-testi-slide-script', '');
+    box.appendChild(script);
+  }
+  script.textContent = testiSlideScript(testiId);
+}
+
+/* Gắn 1 script tự chạy (countup/progress — xem statsCountupScript/
+   statsProgressScript) vào khối cha của list (thường là .blk root), dùng
+   chung 1 cơ chế đặt id + tạo/ghi lại <script> giống buildHeroDots. "kind"
+   quyết định tên data-attribute (data-<kind>-id) để mỗi loại script tự tìm
+   đúng khối của mình, nhiều loại có thể cùng tồn tại trên 1 khối nếu cần. */
+function wireStatsScript(instance, container, kind, scriptFn) {
+  const box = container.parentElement;
+  const id = instance.id + '__' + kind;
+  box.dataset[kind + 'Id'] = id;
+  const attr = 'data-' + kind + '-script';
+  let script = box.querySelector(':scope > script[' + attr + ']');
+  if (!script) {
+    script = document.createElement('script');
+    script.setAttribute(attr, '');
+    box.appendChild(script);
+  }
+  script.textContent = scriptFn(id);
+}
+
+/* Biến thể của wireStatsScript, gắn thẳng vào root của khối thay vì cha của
+   1 field list cụ thể — dùng cho các hành vi ở cấp cả khối, không gắn với
+   riêng field nào (vd công tắc Tháng/Năm, accordion, ô tìm kiếm FAQ). "kind"
+   đặt theo camelCase (vd "pricingToggle") — tự chuyển kebab-case cho tên
+   attribute vì setAttribute/querySelector không tự làm điều đó như
+   "el.dataset" vẫn làm khi gán bằng property. */
+function wireBlockScript(root, kind, scriptFn) {
+  const kebab = kind.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+  const id = root.dataset.instanceId + '__' + kind;
+  root.dataset[kind + 'Id'] = id;
+  const attr = 'data-' + kebab + '-script';
+  let script = root.querySelector(':scope > script[' + attr + ']');
+  if (!script) {
+    script = document.createElement('script');
+    script.setAttribute(attr, '');
+    root.appendChild(script);
+  }
+  script.textContent = scriptFn(id);
+}
+
 function commitEdit(el) {
   const bind = el.dataset.bind;
   if (!bind) return;
@@ -958,7 +1145,7 @@ function renderBlockInstance(instance) {
       // fieldDef.slideshow: khối đầu tiên hiện sẵn — script tự chạy (xem
       // buildHeroDots/heroSlideScript) chỉ đổi class "is-active" qua lại
       // giữa các mục, không tự render lại DOM.
-      if (fieldDef && fieldDef.slideshow && idx === 0) itemEl.classList.add('is-active');
+      if (fieldDef && (fieldDef.slideshow || fieldDef.testiSlideshow) && idx === 0) itemEl.classList.add('is-active');
       itemEl.querySelectorAll('[data-item-field]').forEach((f2) => {
         f2.setAttribute('data-editable-text', '');
         f2.dataset.bind = 'list:' + instance.id + ':' + key + ':' + idx + ':' + f2.dataset.itemField;
@@ -1013,7 +1200,49 @@ function renderBlockInstance(instance) {
     // fieldDef.slideshow: dựng nốt chỉ mục + script tự chạy (dots+autoplay),
     // sống sót qua bản xuất tĩnh — xem buildHeroDots.
     if (fieldDef && fieldDef.slideshow) buildHeroDots(instance, key, container);
+    // fieldDef.testiSlideshow (testimonials-carousel): dựng nốt chỉ mục +
+    // script tự chạy riêng cho khối đánh giá — xem buildTestiDots.
+    if (fieldDef && fieldDef.testiSlideshow) buildTestiDots(instance, key, container);
+    // fieldDef.countup/progress (khối Thống kê): gắn script tự chạy khi cuộn
+    // tới — xem statsCountupScript/statsProgressScript.
+    if (fieldDef && fieldDef.countup) wireStatsScript(instance, container, 'countup', statsCountupScript);
+    if (fieldDef && fieldDef.progress) wireStatsScript(instance, container, 'progress', statsProgressScript);
   });
+
+  // variant.marqueeListKey (vd logos-marquee): nhân đôi list đã dựng xong
+  // ngay bên cạnh bản gốc để tạo hiệu ứng băng chuyền cuộn vô hạn mượt bằng
+  // CSS thuần (transform: translateX(-50%) trên .blk-logos__marquee-track —
+  // xem blocks.css). Bản sao chỉ để hiển thị (aria-hidden, gỡ hết icon/nút
+  // sửa của editor và mọi attribute list-item) — sửa/thêm/xoá/kéo sắp xếp
+  // vẫn thao tác trên bản gốc duy nhất, bản sao tự cập nhật theo vì cả khối
+  // được render lại từ đầu mỗi lần state đổi.
+  if (variant.marqueeListKey) {
+    const sourceList = root.querySelector('[data-list-container="' + variant.marqueeListKey + '"]');
+    if (sourceList) {
+      const clone = sourceList.cloneNode(true);
+      clone.removeAttribute('data-list-container');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('[data-editor-only]').forEach((el) => el.remove());
+      clone.querySelectorAll('[data-list-item]').forEach((el) => {
+        el.removeAttribute('data-list-item');
+        el.removeAttribute('data-list-key');
+        el.removeAttribute('data-list-index');
+      });
+      clone.querySelectorAll('[data-img-style-id]').forEach((el) => el.removeAttribute('data-img-style-id'));
+      sourceList.after(clone);
+    }
+  }
+
+  // variant.pricingToggle (pricing-toggle): gắn script cho công tắc chuyển
+  // Tháng/Năm — chỉ bật/tắt class trên root, CSS (.blk-pricing--yearly) tự lo
+  // phần ẩn/hiện giá tương ứng, xem pricingToggleScript.
+  if (variant.pricingToggle) wireBlockScript(root, 'pricingToggle', pricingToggleScript);
+  // variant.faqAccordion (faq-accordion): gắn script bấm mở/đóng từng câu
+  // trả lời — xem faqAccordionScript.
+  if (variant.faqAccordion) wireBlockScript(root, 'faqAccordion', faqAccordionScript);
+  // variant.faqSearch (faq-search): gắn script lọc câu hỏi theo từ khoá gõ
+  // vào ô tìm kiếm — xem faqSearchScript.
+  if (variant.faqSearch) wireBlockScript(root, 'faqSearch', faqSearchScript);
 
   // Field text/richtext tĩnh (không phải list, không phải ảnh)
   variant.fields.filter((f) => f.type !== 'list' && f.type !== 'image').forEach((f) => {
@@ -1198,7 +1427,8 @@ function renderPropsPanel(panel, inst, variant) {
         { id: 'underline-slide', label: 'Thanh trượt' },
         { id: 'zoom', label: 'Phóng to nhẹ' },
         { id: 'bold', label: 'Đậm chữ hơn' },
-        { id: 'underline-grow', label: 'Gạch chân mở rộng' }
+        { id: 'underline-grow', label: 'Gạch chân mở rộng' },
+        { id: 'pill', label: 'Nền pill sau chữ' }
       ];
       const current = inst.style[s.key] || s.default;
       const select = document.createElement('select');
@@ -1212,7 +1442,7 @@ function renderPropsPanel(panel, inst, variant) {
       row.appendChild(select);
       panel.appendChild(row);
 
-      const needsColor = current === 'color' || current === 'underline-slide' || current === 'underline-grow';
+      const needsColor = current === 'color' || current === 'underline-slide' || current === 'underline-grow' || current === 'pill';
       if (needsColor) {
         const colorRow = document.createElement('div');
         colorRow.className = 'prop-row';
