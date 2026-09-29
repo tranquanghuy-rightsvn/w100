@@ -53,6 +53,31 @@ function reorderArray(arr, from, to) {
   copy.splice(to, 0, moved);
   return copy;
 }
+/* Đường dẫn tới 1 mảng/mục nằm lồng bên trong field list (vd mục con của
+   nav menu phân cấp) — dùng chung bởi list lồng nhau ở mọi độ sâu, ghi dưới
+   dạng chuỗi "navItems.1.children.0" (key/idx xen kẽ, nối bằng dấu chấm) để
+   lưu được vào dataset/attribute (vốn chỉ nhận string). */
+function walkPath(base, segs) {
+  let cur = base;
+  segs.forEach((s) => { cur = cur[/^\d+$/.test(s) ? +s : s]; });
+  return cur;
+}
+function getAtPath(instance, pathStr) {
+  return pathStr ? walkPath(instance.fields, pathStr.split('.')) : instance.fields;
+}
+function setAtPath(instance, pathStr, value) {
+  const segs = pathStr.split('.');
+  const lastSeg = segs.pop();
+  const parent = segs.length ? walkPath(instance.fields, segs) : instance.fields;
+  parent[/^\d+$/.test(lastSeg) ? +lastSeg : lastSeg] = value;
+}
+function buildDefaultItem(itemFields) {
+  const obj = {};
+  (itemFields || []).forEach((itf) => {
+    obj[itf.key] = itf.type === 'list' ? JSON.parse(JSON.stringify(itf.default || [])) : itf.default;
+  });
+  return obj;
+}
 function placeCaretAtEnd(el) {
   const range = document.createRange();
   range.selectNodeContents(el);
@@ -354,13 +379,13 @@ function getButtonStyleRef(instance, f, itemCtx) {
     if (!instance.buttonStyles[f.key]) instance.buttonStyles[f.key] = Object.assign({}, f.buttonStyleDefault);
     return instance.buttonStyles[f.key];
   }
-  const item = instance.fields[itemCtx.listKey][itemCtx.idx];
+  const item = itemCtx.path ? getAtPath(instance, itemCtx.path) : instance.fields[itemCtx.listKey][itemCtx.idx];
   const bsKey = f.key + '__btnStyle';
   if (!item[bsKey]) item[bsKey] = Object.assign({}, f.buttonStyleDefault);
   return item[bsKey];
 }
 function buttonStyleIdOf(instanceId, f, itemCtx) {
-  return instanceId + '__' + f.key + (itemCtx ? ':' + itemCtx.listKey + ':' + itemCtx.idx : '');
+  return instanceId + '__' + f.key + (itemCtx ? ':' + (itemCtx.path || (itemCtx.listKey + ':' + itemCtx.idx)) : '');
 }
 function wireButtonCustomStyle(instance, f, el, itemCtx) {
   if (f.customStyle !== 'button') return el;
@@ -415,13 +440,13 @@ function getTextStyleRef(instance, f, itemCtx) {
     if (!instance.textStyles[f.key]) instance.textStyles[f.key] = {};
     return instance.textStyles[f.key];
   }
-  const item = instance.fields[itemCtx.listKey][itemCtx.idx];
+  const item = itemCtx.path ? getAtPath(instance, itemCtx.path) : instance.fields[itemCtx.listKey][itemCtx.idx];
   const tsKey = f.key + '__textStyle';
   if (!item[tsKey]) item[tsKey] = {};
   return item[tsKey];
 }
 function textStyleIdOf(instanceId, f, itemCtx) {
-  return instanceId + '__txt__' + f.key + (itemCtx ? ':' + itemCtx.listKey + ':' + itemCtx.idx : '');
+  return instanceId + '__txt__' + f.key + (itemCtx ? ':' + (itemCtx.path || (itemCtx.listKey + ':' + itemCtx.idx)) : '');
 }
 /* Chỉ sinh khai báo cho property NGƯỜI DÙNG ĐÃ ĐỔI (ts.<key> khác null) —
    field chưa đụng tới thì không xuất CSS gì, giữ đúng giao diện gốc. */
@@ -934,6 +959,11 @@ function commitEdit(el) {
     const idx = +parts[3];
     const itemKey = parts[4];
     if (inst.fields[listKey] && inst.fields[listKey][idx]) inst.fields[listKey][idx][itemKey] = el.textContent.trim();
+  } else if (parts[0] === 'listnested') {
+    const inst = findInstance(parts[1]);
+    if (!inst) return;
+    const item = getAtPath(inst, parts[2]);
+    if (item) item[parts[3]] = el.textContent.trim();
   }
   pushUndo();
   scheduleSave();
@@ -1090,9 +1120,7 @@ function addListItem(instanceId, listKey) {
   const inst = findInstance(instanceId);
   const variant = findVariant(inst.typeId, inst.variantId);
   const fieldDef = variant.fields.find((f) => f.key === listKey);
-  const newItem = {};
-  (fieldDef.itemFields || []).forEach((itf) => { newItem[itf.key] = itf.default; });
-  inst.fields[listKey].push(newItem);
+  inst.fields[listKey].push(buildDefaultItem(fieldDef.itemFields));
   renderCanvas();
   pushUndo();
   scheduleSave();
@@ -1100,6 +1128,28 @@ function addListItem(instanceId, listKey) {
 function removeListItem(instanceId, listKey, idx) {
   const inst = findInstance(instanceId);
   inst.fields[listKey].splice(idx, 1);
+  renderCanvas();
+  pushUndo();
+  scheduleSave();
+}
+/* Thêm/xoá mục cho field list LỒNG BÊN TRONG 1 mục của list cha (vd mục con
+   của nav menu phân cấp) — không dùng chung addListItem/removeListItem ở
+   trên vì list cấp 1 chỉ cần 1 cặp key/idx phẳng, còn list lồng cần cả
+   "đường dẫn" (path) tới đúng mảng nằm sâu bao nhiêu tầng cũng được (xem
+   walkPath/getAtPath). itemFieldDefs được truyền thẳng từ nơi gọi (đã biết
+   sẵn lúc render) để không phải tự dò lại theo path. */
+function addNestedListItem(instanceId, arrayPath, itemFieldDefs) {
+  const inst = findInstance(instanceId);
+  getAtPath(inst, arrayPath).push(buildDefaultItem(itemFieldDefs));
+  renderCanvas();
+  pushUndo();
+  scheduleSave();
+}
+function removeNestedListItem(instanceId, itemPath) {
+  const inst = findInstance(instanceId);
+  const segs = itemPath.split('.');
+  const idx = +segs.pop();
+  getAtPath(inst, segs.join('.')).splice(idx, 1);
   renderCanvas();
   pushUndo();
   scheduleSave();
@@ -1135,7 +1185,14 @@ function renderBlockInstance(instance) {
     const container = root.querySelector('[data-list-container="' + key + '"]');
     const items = instance.fields[key] || [];
     items.forEach((itemData, idx) => {
-      const itemHtml = substituteTemplate(tpl.innerHTML, itemData);
+      // dùng substituteOutsideTemplates (không phải substituteTemplate suông)
+      // vì itemFields kiểu list lồng nhau (vd mục con của nav menu phân cấp)
+      // khiến tpl.innerHTML chứa thêm <template> con bên trong — nếu thay
+      // {{label}} kiểu suông sẽ đè nhầm luôn placeholder của tầng con, khiến
+      // MỌI mục con hiện ra trùng đúng 1 chữ của mục cha (đã xảy ra thật, xem
+      // wireNestedListsForItem). Với list không lồng gì thì 2 hàm cho kết
+      // quả giống hệt nhau (không có <template> nào để bảo vệ).
+      const itemHtml = substituteOutsideTemplates(tpl.innerHTML, itemData);
       const itemWrap = document.createElement('div');
       itemWrap.innerHTML = itemHtml;
       const itemEl = itemWrap.firstElementChild;
@@ -1172,6 +1229,11 @@ function renderBlockInstance(instance) {
         removeListItem(instance.id, key, idx);
       });
       container.appendChild(itemEl);
+      // itemFields chứa field kiểu "list" (vd mục con của nav menu phân cấp)
+      // — mục vừa chèn có thể lại chứa list lồng bên trong, đệ quy xử lý
+      // riêng ở wireNestedListsForItem (không đụng gì tới list cấp 1 này
+      // với các khối hiện có, vì chỉ tìm/patch nếu thực sự có template lồng).
+      wireNestedListsForItem(itemEl, itemData, fieldDef, instance, key + '.' + idx);
     });
     // fieldDef.sidebarAdd: nút "Thêm mục" nằm ở sidebar (panel Tuỳ chỉnh khối)
     // thay vì chèn ngay trong canvas — dùng cho list nằm trong thanh mỏng như
@@ -1263,6 +1325,108 @@ function renderBlockInstance(instance) {
   });
 
   return root;
+}
+
+/* Đệ quy dựng field kiểu "list" lồng bên trong 1 mục của list cha (vd mục
+   con/mục cháu của nav menu phân cấp 2-3 tầng) — tách riêng khỏi vòng lặp
+   list cấp 1 ở renderBlockInstance() vì phải bám theo "đường dẫn" (path) tới
+   đúng mảng lồng nhau (walkPath/getAtPath) thay vì chỉ 1 cặp key/idx phẳng.
+   Dùng tiền tố bind "listnested:" (khác "list:" ở list cấp 1) để
+   commitEdit/style ref phân biệt được — không đụng gì tới list cấp 1 đang
+   hoạt động ổn định. Với khối KHÔNG có itemFields kiểu list (mọi khối hiện
+   có: footer, pricing, testimonials, hero...) hàm này không tìm thấy gì và
+   không làm gì cả, an toàn tuyệt đối. */
+function wireNestedListsForItem(itemEl, itemData, parentFieldDef, instance, itemPath) {
+  const itemFieldDefs = (parentFieldDef && parentFieldDef.itemFields) || [];
+  Array.from(itemEl.querySelectorAll('[data-list-template]')).forEach((tpl) => {
+    const key = tpl.dataset.listTemplate;
+    const fieldDef = itemFieldDefs.find((f) => f.key === key);
+    const container = itemEl.querySelector('[data-list-container="' + key + '"]');
+    const items = itemData[key] || [];
+    const arrayPath = itemPath + '.' + key;
+
+    // Icon mũi tên + hành vi hover chỉ bật khi mục THỰC SỰ có mục con — ẩn
+    // bằng style inline (sống sót qua bản xuất tĩnh, không phụ thuộc CSS
+    // ngoài) thay vì dựa vào class cha, vì caret của mục cháu nằm sâu hơn
+    // (xử lý ở lượt đệ quy sau) cũng khớp mọi selector CSS chỉ dựa trên
+    // class cha. Lúc này itemEl CHƯA có mục con nào được chèn nên
+    // querySelector dưới đây chỉ có thể trúng đúng caret của chính itemEl.
+    const caretEl = itemEl.querySelector(':scope > a .blk-menu__caret, :scope > .text-style-wrap > a .blk-menu__caret');
+    if (caretEl) caretEl.style.display = items.length ? '' : 'none';
+    itemEl.classList.toggle('blk-menu__has-submenu', items.length > 0);
+    // Mục đang rỗng thì submenu ẩn hẳn (không caret/hover) nên nút "+ Thêm
+    // mục" nằm BÊN TRONG submenu (thêm ở dưới) không có cách nào hover ra để
+    // bấm — chèn thêm 1 nút "+" nhỏ, LUÔN HIỆN ngay cạnh nhãn (chỉ khi đang
+    // rỗng) làm lối vào đầu tiên. Có mục con rồi thì caret/hover đã hoạt
+    // động, nút nhỏ này không cần nữa (items.length > 0 sẽ không vào đây ở
+    // lượt render tiếp theo).
+    if (!items.length) {
+      const quickAddBtn = document.createElement('button');
+      quickAddBtn.type = 'button';
+      quickAddBtn.className = 'list-quickadd-btn';
+      quickAddBtn.setAttribute('data-editor-only', '');
+      quickAddBtn.title = 'Thêm ' + (fieldDef && fieldDef.itemLabel || 'mục con');
+      quickAddBtn.innerHTML = ICON_PLUS;
+      quickAddBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addNestedListItem(instance.id, arrayPath, fieldDef && fieldDef.itemFields);
+      });
+      itemEl.appendChild(quickAddBtn);
+    }
+
+    items.forEach((childData, idx) => {
+      // substituteOutsideTemplates: xem chú thích lý do ở vòng lặp list cấp 1
+      // trong renderBlockInstance() — tpl.innerHTML ở đây cũng có thể chứa
+      // thêm 1 tầng <template> con nữa (vd tầng 3 trong menu).
+      const childHtml = substituteOutsideTemplates(tpl.innerHTML, childData);
+      const wrap = document.createElement('div');
+      wrap.innerHTML = childHtml;
+      const childEl = wrap.firstElementChild;
+      childEl.setAttribute('data-list-item', '');
+      const childPath = arrayPath + '.' + idx;
+
+      childEl.querySelectorAll('[data-item-field]').forEach((f2) => {
+        f2.setAttribute('data-editable-text', '');
+        f2.dataset.bind = 'listnested:' + instance.id + ':' + childPath + ':' + f2.dataset.itemField;
+        const itemFieldDef = fieldDef && (fieldDef.itemFields || []).find((itf) => itf.key === f2.dataset.itemField);
+        if (itemFieldDef && itemFieldDef.customStyle === 'button') {
+          wireButtonCustomStyle(instance, itemFieldDef, f2, { path: childPath });
+        } else if (itemFieldDef) {
+          wireTextCustomStyle(instance, itemFieldDef, f2, { path: childPath });
+        }
+      });
+
+      childEl.insertAdjacentHTML('afterbegin', toolsHtml('Xoá mục', { withHandle: false }));
+      childEl.querySelector('.tool-delete').addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        removeNestedListItem(instance.id, childPath);
+      });
+
+      container.appendChild(childEl);
+      // Mục con vừa chèn có thể lại chứa list lồng sâu hơn nữa (vd tầng 3
+      // trong menu) — xử lý tiếp bằng chính hàm này.
+      wireNestedListsForItem(childEl, childData, fieldDef, instance, childPath);
+    });
+
+    // Nút "+ Thêm mục" luôn chèn NGAY TRONG container (khác list cấp 1 chèn
+    // sau container) — vì container ở đây thường là submenu ẩn theo hover
+    // (position:absolute, opacity:0 khi không hover), chèn nút vào trong để
+    // nó chỉ hiện khi mở submenu ra xem, không lộ ra ngoài thanh nav chính.
+    const addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'list-add-btn';
+    addBtn.setAttribute('data-editor-only', '');
+    addBtn.innerHTML = ICON_PLUS + ' Thêm ' + (fieldDef && fieldDef.itemLabel || 'mục');
+    addBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addNestedListItem(instance.id, arrayPath, fieldDef && fieldDef.itemFields);
+    });
+    container.appendChild(addBtn);
+    tpl.remove();
+  });
 }
 
 /* ------------------------------ Xuất bản: gỡ mọi thứ chỉ dành cho editor ------------------------------ */

@@ -238,6 +238,18 @@ body {
 }
 .list-add-btn svg { width: 12px; height: 12px; }
 
+/* Nút "+" nhỏ luôn hiện cạnh 1 mục nav đang chưa có mục con (xem
+   wireNestedListsForItem) — lối vào để thêm mục con/cháu ĐẦU TIÊN cho mục
+   vừa tạo, vì nút "+ Thêm mục" thường (list-add-btn) nằm trong submenu chỉ
+   hover ra được khi đã có ít nhất 1 mục con. */
+.list-quickadd-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; margin-left: 6px; vertical-align: middle;
+  border: none; border-radius: 999px; cursor: pointer;
+  background: var(--ui-green-tint); color: var(--ui-green-dark);
+}
+.list-quickadd-btn svg { width: 11px; height: 11px; }
+
 .is-drag-ghost { opacity: 0; }
 .is-drop-target { position: relative; }
 .is-drop-target::before {

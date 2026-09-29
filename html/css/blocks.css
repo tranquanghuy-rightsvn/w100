@@ -400,6 +400,89 @@ a { text-decoration: none; color: inherit; }
   opacity: 1;
 }
 
+/* Menu phân cấp 2-3 tầng — submenu hiện khi hover vào mục cha (desktop);
+   tầng 3 bung sang cạnh phải tầng 2 thay vì lồng xuống dưới, giữ đúng cảm
+   giác menu multi-level, không tràn ra ngoài khối menu. */
+.blk-menu__has-submenu { position: relative; }
+/* Field chữ nào cũng bị engine bọc thêm 1 lớp <span class="text-style-wrap">
+   (xem wireTextCustomStyle trong builder.js, áp dụng cả ở canvas lẫn bản
+   xuất tĩnh) nên <a> không còn là con trực tiếp của <li> — thêm nhánh
+   :has() để vẫn bắt đúng link chứa icon mũi tên dù qua lớp bọc nào. */
+.blk-menu__has-submenu > a,
+.blk-menu__has-submenu a:has(> .blk-menu__caret) { display: inline-flex; align-items: center; gap: 4px; }
+.blk-menu__caret { width: 12px; height: 12px; flex-shrink: 0; transition: transform 0.2s ease; }
+.blk-menu__has-submenu:hover .blk-menu__caret:not(.blk-menu__caret--right) { transform: rotate(180deg); }
+
+.blk-menu__submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  margin-top: 14px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--blk-bg, #fff);
+  box-shadow: 0 16px 40px rgba(11, 15, 20, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 40;
+}
+.blk-menu__has-submenu:hover > .blk-menu__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.blk-menu__submenu li { display: block; }
+.blk-menu__submenu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  opacity: 0.85;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+.blk-menu__submenu a:hover { background: color-mix(in srgb, var(--blk-text) 6%, transparent); opacity: 1; }
+
+/* Tầng 3 — bung sang cạnh phải của mục cấp 2 đang hover thay vì lồng xuống
+   dưới (nếu không sẽ tràn ra ngoài khối menu, khó bấm). */
+.blk-menu__submenu--level3 {
+  top: -8px;
+  left: 100%;
+  margin-top: 0;
+  margin-left: 8px;
+}
+
+/* Menu có giỏ hàng (trang bán hàng) — icon giỏ + số lượng nổi ở góc trên
+   phải. Số lượng (cartCount) là field chữ nên bị engine tự bọc thêm
+   <span class="text-style-wrap"> (xem wireTextCustomStyle) — đẩy badge đè
+   lên góc icon bằng margin âm trên chính lớp bọc đó thay vì position:
+   absolute, để không phụ thuộc "position:relative" mà lớp bọc tự thêm sẵn
+   (dùng absolute ở đây sẽ định vị lệch theo lớp bọc chứ không theo icon). */
+.blk-menu__cart { position: relative; display: inline-flex; align-items: flex-start; color: inherit; }
+.blk-menu__cart svg { width: 22px; height: 22px; flex-shrink: 0; }
+.blk-menu__cart .text-style-wrap { margin-left: -10px; margin-top: -5px; line-height: 0; }
+.blk-menu__cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #0bcb68;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 /* Bọc field kiểu button (customStyle:"button", vd nút CTA của menu) — style
    nền/chữ/bo góc/hover riêng cho từng khối được set qua <style> chèn ngay
    bên trong, không đụng blocks.css chung nên export tĩnh vẫn tự chứa đủ. */
@@ -1129,6 +1212,48 @@ a { text-decoration: none; color: inherit; }
   display: flex; flex-direction: column; align-items: center; gap: 18px;
 }
 .blk-footer__ctaband h2 { font-size: 30px; font-weight: 800; max-width: 600px; }
+
+/* -- footer-wordmark: lưới liên kết + social phía trên (tái dùng nguyên
+   ".blk-footer--columns" như "footer-cta"), tên thương hiệu khổng lồ phía
+   dưới làm điểm nhấn thị giác — xu hướng footer hiện đại kiểu SaaS. -- */
+.blk-footer--wordmark { padding: 0; }
+.blk-footer--wordmark > .blk-footer--columns { padding-bottom: 8px; }
+.blk-footer__wordmark {
+  padding: 8px 6% 4px; margin-top: 8px;
+  font-size: clamp(46px, 11vw, 140px); font-weight: 800; line-height: 0.85;
+  letter-spacing: -0.02em; white-space: nowrap; overflow: hidden;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--blk-text) 55%, transparent), color-mix(in srgb, var(--blk-text) 4%, transparent));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.blk-footer--wordmark > .blk-footer__copy--columns { padding-left: 6%; padding-right: 6%; }
+@media (max-width: 700px) {
+  .blk-footer__wordmark { font-size: clamp(34px, 16vw, 80px); }
+}
+
+/* -- footer-gradientcard: thẻ bo góc nổi trên khoảng đệm trong suốt xung
+   quanh (cùng ý tưởng ".blk-cta__floatcard"), dải gradient accent phía trên
+   thẻ + cột đăng ký nhận tin để làm điểm nhấn hiện đại. -- */
+.blk-footer--card { background: transparent; padding: 48px 6%; }
+.blk-footer__cardinner {
+  max-width: 1180px; margin: 0 auto; background: var(--blk-bg); color: var(--blk-text);
+  border-radius: 32px; padding: 52px 48px 28px; position: relative; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(11, 15, 20, 0.14);
+}
+.blk-footer__cardinner::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+  background: linear-gradient(90deg, var(--blk-accent), var(--blk-accent-dark));
+}
+.blk-footer__cardgrid { display: grid; grid-template-columns: 1.3fr 1fr 1.1fr; gap: 32px; }
+.blk-footer__cardgrid .blk-footer__col--brand p { font-size: 13.5px; opacity: 0.7; max-width: 280px; margin-top: 8px; }
+.blk-footer__cardgrid h4 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 14px; opacity: 0.85; }
+.blk-footer__copy--card { margin-top: 32px; padding-top: 20px; border-top: 1px solid color-mix(in srgb, var(--blk-text) 14%, transparent); }
+@media (max-width: 900px) {
+  .blk-footer__cardgrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .blk-footer__cardinner { padding: 40px 28px 24px; border-radius: 22px; }
+  .blk-footer__cardgrid { grid-template-columns: 1fr; }
+}
 
 /* ------------------------------ List item — chỗ trống cho tay nắm/nút xoá của editor ------------------------------ */
 .blk-menu__nav li, .blk-footer__links li, .blk-features__item,
