@@ -3,9 +3,11 @@
 
 - /lp/thiet-ke-website-da-nang/     — nhom tu khoa gia re ("thiet ke web da nang gia re"...)
 - /lp/website-doanh-nghiep-da-nang/ — nhom tu khoa doanh nghiep
+- /lp/dich-vu-website-gia-re/       — toan quoc, nhom tu khoa gia re (KHONG nhac dia phuong nao)
+- /lp/thiet-ke-website-chuyen-nghiep/ — toan quoc, nhom tu khoa chuyen nghiep (KHONG nhac dia phuong)
 - /lp/cam-on/                       — trang cam on sau khi gui form
 
-Hai landing chi khac nhau o hero (headline, mo ta, 4 diem noi bat) va goi
+Cac landing chi khac nhau o hero (headline, mo ta, 4 diem noi bat) va goi
 duoc lam noi bat trong bang gia; moi section ben duoi dung chung. Muon sua
 noi dung chung -> sua template o day roi chay lai:
 
@@ -162,6 +164,43 @@ VARIANTS = [
         "featured": "pro",
         "badge": "Được chọn nhiều",
     },
+    # --- toan quoc: local=False -> khong nhac dia phuong (hero, anh, FAQ, footer, og:image) ---
+    {
+        "slug": "dich-vu-website-gia-re",
+        "local": False,
+        "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
+        "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
+        "h1": "Dịch vụ website giá rẻ <span>từ 1,5 triệu</span>",
+        "sub": "Giá rẻ nhưng không làm ẩu: giao diện đẹp, chuẩn điện thoại, chuẩn SEO, báo giá rõ ràng trước khi làm, không phát sinh.",
+        "points": [
+            "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
+            "<b>Giao diện bắt mắt</b> trên cả mobile và máy tính",
+            "Hiển thị <b>dưới 0.5 giây</b> - mắt thường không cảm nhận được",
+            "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
+            "Hỗ trợ <b>trọn đời MIỄN PHÍ</b>",
+            "<b>Xem demo trước</b>, ưng ý mới làm tiếp",
+        ],
+        "featured": "normal",
+        "badge": "Tiết kiệm nhất",
+    },
+    {
+        "slug": "thiet-ke-website-chuyen-nghiep",
+        "local": False,
+        "title": "Thiết kế website chuyên nghiệp, chuẩn SEO | Web100",
+        "description": "Thiết kế website chuyên nghiệp theo bộ nhận diện thương hiệu, chuẩn SEO theo tiêu chuẩn Google, tốc độ Lighthouse 90+. Gói 3.500.000đ tặng tên miền + hosting năm đầu.",
+        "h1": "Thiết kế website <span>chuyên nghiệp</span>",
+        "sub": "Thiết kế theo bộ nhận diện thương hiệu, chuẩn SEO, tải nhanh, giúp doanh nghiệp tạo niềm tin và có thêm khách hàng từ Google.",
+        "points": [
+            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói 3,5 triệu)",
+            "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
+            "Tốc độ <b>Lighthouse 90+</b>, hiển thị dưới 0.5 giây",
+            "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
+            "Hỗ trợ <b>trọn đời MIỄN PHÍ</b>",
+            "Website Web100 làm đang <b>đứng top Google</b>",
+        ],
+        "featured": "pro",
+        "badge": "Được chọn nhiều",
+    },
 ]
 
 # ------------------------------------------------------------------ du an that (lay tu /khach-hang/<slug>/)
@@ -227,13 +266,17 @@ FAQS = [
      "Có, website quản trị được thiết kế đơn giản nhưng đầy đủ để bạn thay đổi nội dung website không cần hỗ trợ của lập trình viên."),
     ("Tôi ở Đà Nẵng, gặp trực tiếp được không?",
      f"Được. Web100 ở số 85 Hói Kiểng 22, Ngũ Hành Sơn. Gọi {PHONE_TXT} hoặc nhắn Zalo để hẹn gặp trực tiếp hoặc họp online."),
+    # ^ chi trang local; trang toan quoc thay bang FAQ_REMOTE (xem faq_section)
     ("Có cần cọc trước không?",
      "Chỉ khi hoàn thành demo và bạn ưng ý mới cần cọc. Cọc trước 10%, một số tiền nhỏ để cả 2 bên cùng có trách nhiệm với sản phẩm."),
 ]
 
+FAQ_LOCAL_Q = "Tôi ở Đà Nẵng, gặp trực tiếp được không?"
+FAQ_REMOTE = ("Không gặp trực tiếp thì làm việc thế nào?",
+              f"Web100 làm việc online qua điện thoại, Zalo, Messenger hoặc họp online. Bạn xem demo ngay trên điện thoại hay máy tính, góp ý trực tiếp, không cần gặp mặt. Gọi {PHONE_TXT} để được tư vấn.")
 
 # ------------------------------------------------------------------ khoi dung chung
-def head(title: str, description: str, extra_css: str = "") -> str:
+def head(title: str, description: str, extra_css: str = "", og_image: str = "thiet-ke-website-da-nang.jpg") -> str:
     return f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -253,7 +296,7 @@ def head(title: str, description: str, extra_css: str = "") -> str:
 <meta name="robots" content="noindex, follow">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
-<meta property="og:image" content="https://web100.vn/images/og/thiet-ke-website-da-nang.jpg">
+<meta property="og:image" content="https://web100.vn/images/og/{og_image}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="vi_VN">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -278,11 +321,13 @@ HEADER = f"""<header class="lp-header">
   </div>
 </header>"""
 
+FOOTER_ADDR = "Số nhà 85, đường Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng"
+FOOTER_TAGLINE = "Thiết kế website chuẩn SEO, bàn giao nhanh, hỗ trợ trọn đời."
 FOOTER = f"""<footer class="lp-footer">
   <div class="container lp-footer__inner" data-track-area="footer">
     <div>
       <img src="/images/logo.webp" alt="Web100" width="200" height="58" loading="lazy">
-      <p>Số nhà 85, đường Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng</p>
+      <p>{FOOTER_ADDR}</p>
     </div>
     <div class="lp-footer__links">
       <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a>
@@ -437,7 +482,8 @@ def process_section() -> str:
 </section>"""
 
 
-def faq_section() -> str:
+def faq_section(local: bool = True) -> str:
+    items = FAQS if local else [FAQ_REMOTE if q == FAQ_LOCAL_Q else (q, a) for q, a in FAQS]
     faqs = "".join(f"""
       <div class="faq-item">
         <button class="faq-trigger" type="button" aria-expanded="false">
@@ -445,7 +491,7 @@ def faq_section() -> str:
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-panel"><p>{a}</p></div>
-      </div>""" for q, a in FAQS)
+      </div>""" for q, a in items)
     return f"""<!-- ============================ FAQ ============================ -->
 <section class="faq lp-faq">
   <div class="container lp-faq__inner">
@@ -466,8 +512,19 @@ def landing(v: dict) -> str:
         for s, n, w, h in LOGOS
     )
     cards = "\n".join(price_card(p, v["featured"], v["badge"]) for p in PACKAGES)
+    local = v.get("local", True)
+    if local:
+        loc_badge = f"{I_PIN} Web100 · Ngũ Hành Sơn, Đà Nẵng"
+        proof_alt = "CEO Quang Huy của Web100 ký hợp đồng với Honda Hiếu Nga Đà Nẵng"
+        proof_cap = "<strong>Honda Hiếu Nga Đà Nẵng</strong> ký hợp đồng cùng CEO Quang Huy của Web100."
+        footer, og = FOOTER, "thiet-ke-website-da-nang.jpg"
+    else:
+        loc_badge = f"{I_CHECK} Web100 · Hơn 500 doanh nghiệp đã tin chọn"
+        proof_alt = "CEO Quang Huy của Web100 ký hợp đồng với Honda Hiếu Nga"
+        proof_cap = "<strong>Honda Hiếu Nga</strong> ký hợp đồng cùng CEO Quang Huy của Web100."
+        footer, og = FOOTER.replace(FOOTER_ADDR, FOOTER_TAGLINE), "home.jpg"
 
-    return f"""{head(v["title"], v["description"], f'<link rel="stylesheet" href="/css/pricing.css?v={ASSET_V}">' + chr(10))}
+    return f"""{head(v["title"], v["description"], f'<link rel="stylesheet" href="/css/pricing.css?v={ASSET_V}">' + chr(10), og)}
 <body class="lp">
 
 {HEADER}
@@ -478,7 +535,7 @@ def landing(v: dict) -> str:
 <section class="lp-hero">
   <div class="container lp-hero__grid">
     <div class="lp-hero__copy">
-      <span class="lp-hero__loc">{I_PIN} Web100 · Ngũ Hành Sơn, Đà Nẵng</span>
+      <span class="lp-hero__loc">{loc_badge}</span>
       <h1>{v["h1"]}</h1>
       <p class="lp-hero__sub">{v["sub"]}</p>
       <ul class="lp-hero__points">{points}
@@ -497,8 +554,8 @@ def landing(v: dict) -> str:
     </div>
 
     <figure class="lp-hero__proof">
-      <img src="/images/ve-chung-toi-banner.webp" alt="CEO Quang Huy của Web100 ký hợp đồng với Honda Hiếu Nga Đà Nẵng" width="1300" height="868">
-      <figcaption><strong>Honda Hiếu Nga Đà Nẵng</strong> ký hợp đồng cùng CEO Quang Huy của Web100.</figcaption>
+      <img src="/images/ve-chung-toi-banner.webp" alt="{proof_alt}" width="1300" height="868">
+      <figcaption>{proof_cap}</figcaption>
     </figure>
   </div>
 </section>
@@ -535,7 +592,7 @@ def landing(v: dict) -> str:
 
 {process_section()}
 
-{faq_section()}
+{faq_section(local)}
 
 <!-- ============================ CTA + FORM CUỐI ============================ -->
 <section class="lp-final">
@@ -557,7 +614,7 @@ def landing(v: dict) -> str:
 
 </main>
 
-{FOOTER}
+{footer}
 
 {CONTACT}
 
