@@ -124,17 +124,17 @@ PRICING_COMMON = [
 ]
 
 # ------------------------------------------------------------------ uu dai (chi tren /lp/*)
-# Gia goc (PACKAGES["price"]) bi gach, hien gia uu dai. CHI landing quang cao dung PROMO; trang SEO va
-# sync_shared_sections.py van giu gia goc. Het han (sau PROMO["end"]) -> JS tren trang tu an moi
-# thu .promo-on va hien lai .promo-off (gia goc), khong can build lai. Bo uu dai: PROMO = None.
+# Gia thuc te GIU NGUYEN (PACKAGES["price"]); PROMO["was"] = gia niem yet cu, hien gach ngang phia
+# truoc gia thuc te. CHI landing quang cao dung PROMO; trang SEO va sync_shared_sections.py khong doi.
+# Het han (sau PROMO["end"]) -> JS tu an moi thu .promo-on (khong can build lai). Bo: PROMO = None.
 PROMO = {
     "start": "2026-09-28T00:00:00+07:00",
     "end": "2026-10-05T23:59:59+07:00",
     "label": "28/09 - 05/10",
-    "prices": {  # key goi -> (gia uu dai, chuoi ngan)
-        "normal": ("1.000.000", "1 triệu"),
-        "pro": ("1.500.000", "1,5 triệu"),
-        "premium": ("2.000.000", "2 triệu"),
+    "was": {  # key goi -> (gia cu bi gach, chuoi ngan)
+        "normal": ("2.500.000", "2,5 triệu"),
+        "pro": ("5.000.000", "5 triệu"),
+        "premium": ("9.500.000", "9,5 triệu"),
     },
 }
 
@@ -144,7 +144,7 @@ def vnd(s: str) -> int:
 
 
 def promo_off_pct(p: dict) -> int:
-    return round((1 - vnd(PROMO["prices"][p["key"]][0]) / vnd(p["price"])) * 100)
+    return round((1 - vnd(p["price"]) / vnd(PROMO["was"][p["key"]][0])) * 100)
 
 
 def promo(on: str, off: str) -> str:
@@ -165,7 +165,7 @@ VARIANTS = [
         "slug": "thiet-ke-website-da-nang",
         "title": "Thiết kế website Đà Nẵng từ 1,5 triệu | Web100",
         "description": "Thiết kế website tại Đà Nẵng từ 1.500.000đ: giao diện đẹp, chuẩn mobile, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng.",
-        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("<del>1,5</del> 1 triệu", "1,5 triệu") + "</span>",
+        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("<del>2,5</del> 1,5 triệu", "1,5 triệu") + "</span>",
         "sub": "Giao diện đẹp, chuẩn điện thoại, bàn giao nhanh, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -201,7 +201,7 @@ VARIANTS = [
         "local": False,
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
-        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("<del>1,5</del> 1 triệu", "1,5 triệu") + "</span>",
+        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("<del>2,5</del> 1,5 triệu", "1,5 triệu") + "</span>",
         "sub": "Giá rẻ nhưng không làm ẩu: giao diện đẹp, chuẩn điện thoại, chuẩn SEO, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -437,16 +437,16 @@ def price_card(p: dict, featured: str, badge: str) -> str:
     price = f'<div class="price-card__price"><span>{p["price"]}</span> đ</div>'
     pick = f'data-pick-package="{p["value"]}"'
     if PROMO:
-        sale = PROMO["prices"][p["key"]][0]
-        save = f'{vnd(p["price"]) - vnd(sale):,}'.replace(",", ".")
+        was = PROMO["was"][p["key"]][0]
+        save = f'{vnd(was) - vnd(p["price"]):,}'.replace(",", ".")
         price = f"""<div class="price-card__promo promo-on">
           <span class="price-card__sale-tag">{I_FIRE} Ưu đãi {PROMO["label"]}</span>
-          <div class="price-card__was"><del>{p["price"]}đ</del><em>-{promo_off_pct(p)}%</em></div>
-          <div class="price-card__price"><span>{sale}</span> đ</div>
+          <div class="price-card__was"><del>{was}đ</del><em>-{promo_off_pct(p)}%</em></div>
+          <div class="price-card__price"><span>{p["price"]}</span> đ</div>
           <p class="price-card__save">Tiết kiệm {save}đ</p>
         </div>
         <div class="price-card__price promo-off"><span>{p["price"]}</span> đ</div>"""
-        pick = (f'data-pick-package="{p["name"]} {sale}đ (ưu đãi {PROMO["label"]})" '
+        pick = (f'data-pick-package="{p["value"]} (ưu đãi {PROMO["label"]})" '
                 f'data-package-full="{p["value"]}"')
     return f"""      <div class="{cls}">{badge_html}
         <h3>{p["name"]}</h3>
@@ -555,10 +555,10 @@ def promo_box(featured: str) -> str:
         return ""
     rows = ""
     for p in PACKAGES:
-        sale_short = PROMO["prices"][p["key"]][1]
+        was_short = PROMO["was"][p["key"]][1]
         cls = ' class="is-hot"' if p["key"] == featured else ""
         rows += (f'\n          <li{cls}><span class="lp-promo__name">{p["name"]}</span>'
-                 f'<del>{p["short"]}</del><b>{sale_short}</b><em>-{promo_off_pct(p)}%</em></li>')
+                 f'<del>{was_short}</del><b>{p["short"]}</b><em>-{promo_off_pct(p)}%</em></li>')
     return f"""
       <div class="lp-promo promo-on" data-promo-end="{PROMO["end"]}">
         <div class="lp-promo__head">
