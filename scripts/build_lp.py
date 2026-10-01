@@ -440,7 +440,7 @@ def price_card(p: dict, featured: str, badge: str) -> str:
         save = f'{vnd(p["price"]) - vnd(sale):,}'.replace(",", ".")
         price = f"""<div class="price-card__promo promo-on">
           <span class="price-card__sale-tag">{I_FIRE} Ưu đãi lớn</span>
-          <div class="price-card__was"><del>{p["price"]}đ</del><em>-{promo_off_pct(p)}%</em></div>
+          <div class="price-card__was"><del>{p["price"]}đ</del></div>
           <div class="price-card__price"><span>{sale}</span> đ</div>
           <p class="price-card__save">Tiết kiệm {save}đ</p>
         </div>
@@ -557,7 +557,7 @@ def promo_box(featured: str) -> str:
     return f"""
       <a class="lp-promo promo-on" href="#bang-gia">
         <span class="lp-promo__title">{I_FIRE} Ưu đãi lớn khi đăng ký thiết kế website từ ngày {PROMO["label"]}</span>
-        <span class="lp-promo__body">Gói {p["name"]} <del>{p["price"]}đ</del> <b>{PROMO["sale"][featured][0]}đ</b> <em class="lp-promo__off">-{promo_off_pct(p)}%</em></span>
+        <span class="lp-promo__body">Gói {p["name"]} <del>{p["price"]}đ</del> <b>{PROMO["sale"][featured][0]}đ</b></span>
       </a>"""
 
 
