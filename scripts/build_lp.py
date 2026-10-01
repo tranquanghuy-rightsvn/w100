@@ -202,7 +202,6 @@ VARIANTS = [
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
         "h1": "Dịch vụ website giá rẻ <span>từ " + promo("1,5 triệu", "2,5 triệu") + "</span>",
-        "sub": "Giá rẻ nhưng không làm ẩu: giao diện đẹp, chuẩn điện thoại, chuẩn SEO, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
             "<b>Giao diện bắt mắt</b> trên cả mobile và máy tính",
@@ -610,7 +609,7 @@ def landing(v: dict) -> str:
     <div class="lp-hero__copy">
       <span class="lp-hero__loc">{loc_badge}</span>
       <h1>{v["h1"]}</h1>
-      <p class="lp-hero__sub">{v["sub"]}</p>{promo_box(v["featured"])}
+{f'{chr(10)}      <p class="lp-hero__sub">{v["sub"]}</p>' if v.get("sub") else ""}{promo_box(v["featured"])}
       <ul class="lp-hero__points">{points}
       </ul>
       <div class="lp-hero__actions" data-track-area="hero">
