@@ -54,8 +54,8 @@ PACKAGES = [
     # /website-doanh-nghiep/ va bang so sanh trong blog chi-phi-thiet-ke-website dung chung noi dung nay
     # (scripts/sync_shared_sections.py) — sua o day roi chay lai ca 2 script.
     {
-        "key": "normal", "name": "Normal", "value": "Normal 1.500.000đ", "short": "1,5 triệu",
-        "price": "1.500.000",
+        "key": "normal", "name": "Normal", "value": "Normal 2.500.000đ", "short": "2,5 triệu",
+        "price": "2.500.000",
         "desc": "Khởi đầu tinh gọn cho hộ kinh doanh, cửa hàng và doanh nghiệp mới.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -73,8 +73,8 @@ PACKAGES = [
         ],
     },
     {
-        "key": "pro", "name": "Chuyên nghiệp", "value": "Chuyên nghiệp 3.500.000đ", "short": "3,5 triệu",
-        "price": "3.500.000",
+        "key": "pro", "name": "Chuyên nghiệp", "value": "Chuyên nghiệp 5.000.000đ", "short": "5 triệu",
+        "price": "5.000.000",
         "desc": "Cân bằng nhất giữa chi phí và tính năng cho doanh nghiệp đang tăng trưởng.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -94,8 +94,8 @@ PACKAGES = [
         ],
     },
     {
-        "key": "premium", "name": "Cao cấp", "value": "Cao cấp 7.500.000đ", "short": "7,5 triệu",
-        "price": "7.500.000",
+        "key": "premium", "name": "Cao cấp", "value": "Cao cấp 9.500.000đ", "short": "9,5 triệu",
+        "price": "9.500.000",
         "desc": "Giải pháp toàn diện cho doanh nghiệp lớn, chuỗi khách sạn và yêu cầu tuỳ biến sâu.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -124,17 +124,17 @@ PRICING_COMMON = [
 ]
 
 # ------------------------------------------------------------------ uu dai (chi tren /lp/*)
-# Gia thuc te GIU NGUYEN (PACKAGES["price"]); PROMO["was"] = gia niem yet cu, hien gach ngang phia
-# truoc gia thuc te. CHI landing quang cao dung PROMO; trang SEO va sync_shared_sections.py khong doi.
+# PACKAGES["price"] = gia niem yet (trang chu, trang SEO, blog). Landing quang cao: goi featured hien
+# gia niem yet gach ngang + PROMO["sale"] (gia uu dai). Cac goi khac tren landing van gia niem yet.
 # Het han (sau PROMO["end"]) -> JS tu an moi thu .promo-on (khong can build lai). Bo: PROMO = None.
 PROMO = {
     "start": "2026-09-05T00:00:00+07:00",
     "end": "2026-10-05T23:59:59+07:00",
     "label": "05/09/2026 - 05/10/2026",
-    "was": {  # key goi -> (gia cu bi gach, chuoi ngan)
-        "normal": ("2.500.000", "2,5 triệu"),
-        "pro": ("5.000.000", "5 triệu"),
-        "premium": ("9.500.000", "9,5 triệu"),
+    "sale": {  # key goi -> (gia uu dai, chuoi ngan)
+        "normal": ("1.500.000", "1,5 triệu"),
+        "pro": ("3.500.000", "3,5 triệu"),
+        "premium": ("7.500.000", "7,5 triệu"),
     },
 }
 
@@ -144,7 +144,7 @@ def vnd(s: str) -> int:
 
 
 def promo_off_pct(p: dict) -> int:
-    return round((1 - vnd(p["price"]) / vnd(PROMO["was"][p["key"]][0])) * 100)
+    return round((1 - vnd(PROMO["sale"][p["key"]][0]) / vnd(p["price"])) * 100)
 
 
 def promo(on: str, off: str) -> str:
@@ -165,7 +165,7 @@ VARIANTS = [
         "slug": "thiet-ke-website-da-nang",
         "title": "Thiết kế website Đà Nẵng từ 1,5 triệu | Web100",
         "description": "Thiết kế website tại Đà Nẵng từ 1.500.000đ: giao diện đẹp, chuẩn mobile, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng.",
-        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("<del>2,5</del> 1,5 triệu", "1,5 triệu") + "</span>",
+        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("1,5 triệu", "2,5 triệu") + "</span>",
         "sub": "Giao diện đẹp, chuẩn điện thoại, bàn giao nhanh, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -201,7 +201,7 @@ VARIANTS = [
         "local": False,
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
-        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("<del>2,5</del> 1,5 triệu", "1,5 triệu") + "</span>",
+        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("1,5 triệu", "2,5 triệu") + "</span>",
         "sub": "Giá rẻ nhưng không làm ẩu: giao diện đẹp, chuẩn điện thoại, chuẩn SEO, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -437,16 +437,16 @@ def price_card(p: dict, featured: str, badge: str) -> str:
     price = f'<div class="price-card__price"><span>{p["price"]}</span> đ</div>'
     pick = f'data-pick-package="{p["value"]}"'
     if PROMO and is_feat:
-        was = PROMO["was"][p["key"]][0]
-        save = f'{vnd(was) - vnd(p["price"]):,}'.replace(",", ".")
+        sale = PROMO["sale"][p["key"]][0]
+        save = f'{vnd(p["price"]) - vnd(sale):,}'.replace(",", ".")
         price = f"""<div class="price-card__promo promo-on">
           <span class="price-card__sale-tag">{I_FIRE} Ưu đãi lớn</span>
-          <div class="price-card__was"><del>{was}đ</del><em>-{promo_off_pct(p)}%</em></div>
-          <div class="price-card__price"><span>{p["price"]}</span> đ</div>
+          <div class="price-card__was"><del>{p["price"]}đ</del><em>-{promo_off_pct(p)}%</em></div>
+          <div class="price-card__price"><span>{sale}</span> đ</div>
           <p class="price-card__save">Tiết kiệm {save}đ</p>
         </div>
         <div class="price-card__price promo-off"><span>{p["price"]}</span> đ</div>"""
-        pick = (f'data-pick-package="{p["value"]} (ưu đãi {PROMO["label"]})" '
+        pick = (f'data-pick-package="{p["name"]} {sale}đ (ưu đãi {PROMO["label"]})" '
                 f'data-package-full="{p["value"]}"')
     return f"""      <div class="{cls}">{badge_html}
         <h3>{p["name"]}</h3>
@@ -558,7 +558,7 @@ def promo_box(featured: str) -> str:
     return f"""
       <a class="lp-promo promo-on" href="#bang-gia">
         <span class="lp-promo__title">{I_FIRE} Ưu đãi lớn khi đăng ký thiết kế website từ ngày {PROMO["label"]}</span>
-        <span class="lp-promo__body">Gói {p["name"]} <del>{PROMO["was"][featured][0]}đ</del> <b>{p["price"]}đ</b> <em class="lp-promo__off">-{promo_off_pct(p)}%</em></span>
+        <span class="lp-promo__body">Gói {p["name"]} <del>{p["price"]}đ</del> <b>{PROMO["sale"][featured][0]}đ</b> <em class="lp-promo__off">-{promo_off_pct(p)}%</em></span>
       </a>"""
 
 
