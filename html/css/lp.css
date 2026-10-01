@@ -114,78 +114,28 @@
 html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !important; }
 
 .lp-promo {
-  --promo-a: #ff3d2e;
-  --promo-b: #ff8a00;
-  position: relative;
-  overflow: hidden;
-  margin-top: 22px;
-  padding: 18px 20px 16px;
-  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 14px;
+  background: linear-gradient(125deg, #ff3d2e 0%, #ff8a00 100%);
   color: #fff;
-  background:
-    radial-gradient(260px 140px at 100% 0%, rgba(255, 220, 90, 0.55) 0%, rgba(255, 220, 90, 0) 70%),
-    linear-gradient(125deg, var(--promo-a) 0%, #ff5a1f 45%, var(--promo-b) 100%);
-  box-shadow: 0 18px 40px -16px rgba(255, 61, 46, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-  max-width: 560px;
-}
-/* Vệt sáng lướt qua định kỳ. */
-.lp-promo::after {
-  content: "";
-  position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
-  transform: translateX(-180%) skewX(-20deg);
-  animation: lp-promo-shine 4.5s ease-in-out 1s infinite;
-  pointer-events: none;
-}
-@keyframes lp-promo-shine { 0%, 70% { transform: translateX(-180%) skewX(-20deg); } 100% { transform: translateX(380%) skewX(-20deg); } }
-.lp-promo__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.lp-promo__tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px 5px 9px; border-radius: 999px;
-  background: #fff; color: var(--promo-a);
-  font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;
-}
-.lp-promo__tag svg { width: 15px; height: 15px; animation: lp-promo-fire 1.2s ease-in-out infinite alternate; transform-origin: 50% 90%; }
-@keyframes lp-promo-fire { from { transform: scale(1) rotate(-4deg); } to { transform: scale(1.18) rotate(4deg); } }
-.lp-promo__date { font-size: 13.5px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: rgba(0, 0, 0, 0.18); }
-.lp-promo__title { margin: 12px 0 10px; color: #fff; font-size: 18px; font-weight: 700; line-height: 1.3; }
-.lp-promo__title b { font-size: 1.35em; font-weight: 900; color: #fff6c2; }
-.lp-promo__list { display: grid; gap: 6px; }
-.lp-promo__list li {
-  display: grid; grid-template-columns: 1fr auto auto 52px; align-items: baseline; gap: 12px;
-  padding: 8px 12px; border-radius: 12px;
-  background: rgba(255, 255, 255, 0.14);
-}
-.lp-promo__list li.is-hot { background: #fff; color: var(--ink); box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.35); }
-.lp-promo__name { font-weight: 700; font-size: 15px; }
-.lp-promo__list del { font-size: 14px; font-weight: 600; opacity: 0.8; text-decoration-thickness: 2px; }
-.lp-promo__list b { font-size: 19px; font-weight: 900; color: #fff6c2; }
-.lp-promo__list li.is-hot b { color: var(--promo-a); }
-.lp-promo__list li.is-hot del { color: var(--muted); }
-.lp-promo__list em {
-  justify-self: end; font-style: normal; font-size: 12px; font-weight: 900;
-  padding: 3px 7px; border-radius: 8px; background: #1a1a1a; color: #ffd84d;
-}
-.lp-promo__foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; font-weight: 700; }
-.lp-promo__cd { display: flex; gap: 6px; }
-.lp-promo__cd span {
-  display: flex; flex-direction: column; align-items: center; min-width: 44px;
-  padding: 4px 4px 3px; border-radius: 10px; background: rgba(0, 0, 0, 0.28);
-  font-size: 10.5px; font-weight: 600; line-height: 1.1; text-transform: lowercase;
-}
-.lp-promo__cd b { font-size: 19px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1.15; }
-.lp-promo__cta {
-  margin-left: auto; position: relative; z-index: 1;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 10px 16px; border-radius: 999px;
-  background: #fff; color: var(--promo-a); font-size: 14px; font-weight: 800;
+  box-shadow: 0 12px 28px -14px rgba(255, 61, 46, 0.7);
   transition: transform 0.2s ease;
 }
-.lp-promo__cta svg { width: 16px; height: 16px; }
-.lp-promo__cta:hover { transform: translateY(-2px); }
-@media (prefers-reduced-motion: reduce) {
-  .lp-promo::after, .lp-promo__tag svg { animation: none; }
-}
+.lp-promo:hover { transform: translateY(-2px); }
+.lp-promo { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 16px; }
+.lp-promo__title { display: flex; align-items: flex-start; gap: 6px; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.lp-promo__title svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: #fff6c2; }
+.lp-promo__body { font-size: 15px; font-weight: 700; line-height: 1.5; }
+.lp-promo__body del { margin: 0 4px; font-weight: 600; opacity: 0.8; text-decoration-thickness: 2px; }
+.lp-promo__body b { font-size: 18px; font-weight: 900; color: #fff6c2; }
+.lp-promo__off { display: inline-block; margin-left: 4px; vertical-align: 2px; font-style: normal; font-size: 12.5px; font-weight: 900; padding: 3px 8px; border-radius: 8px; background: #1a1a1a; color: #ffd84d; }
 
 /* Thẻ giá: giá gốc gạch ngang + giá ưu đãi. */
 .lp-pricing .price-card__promo { margin: 18px 0 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
@@ -398,13 +348,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-form.modal { padding: 22px 18px; }
   .lp-hero__proof img { width: 96px; height: 72px; }
   .lp-hero__proof figcaption { font-size: 13px; }
-  .lp-promo { padding: 16px 14px 14px; border-radius: 18px; }
-  .lp-promo__title { font-size: 16px; }
-  .lp-promo__list li { grid-template-columns: 1fr auto auto 46px; gap: 8px; padding: 8px 10px; }
-  .lp-promo__name { font-size: 14px; }
-  .lp-promo__list del { font-size: 12.5px; }
-  .lp-promo__list b { font-size: 17px; }
-  .lp-promo__cta { margin-left: 0; width: 100%; justify-content: center; }
+  .lp-promo__body { font-size: 14px; }
 
   .lp-logos { padding: 28px 0 56px; }
   .lp-pricing, .lp-final { padding: 56px 0; }

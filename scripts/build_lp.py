@@ -128,9 +128,9 @@ PRICING_COMMON = [
 # truoc gia thuc te. CHI landing quang cao dung PROMO; trang SEO va sync_shared_sections.py khong doi.
 # Het han (sau PROMO["end"]) -> JS tu an moi thu .promo-on (khong can build lai). Bo: PROMO = None.
 PROMO = {
-    "start": "2026-09-28T00:00:00+07:00",
+    "start": "2026-09-05T00:00:00+07:00",
     "end": "2026-10-05T23:59:59+07:00",
-    "label": "28/09 - 05/10",
+    "label": "05/09/2026 - 05/10/2026",
     "was": {  # key goi -> (gia cu bi gach, chuoi ngan)
         "normal": ("2.500.000", "2,5 triệu"),
         "pro": ("5.000.000", "5 triệu"),
@@ -436,11 +436,11 @@ def price_card(p: dict, featured: str, badge: str) -> str:
     items = "".join(f'\n          <li>{I_CHECK_PRICE} {i}</li>' for i in p["items"])
     price = f'<div class="price-card__price"><span>{p["price"]}</span> đ</div>'
     pick = f'data-pick-package="{p["value"]}"'
-    if PROMO:
+    if PROMO and is_feat:
         was = PROMO["was"][p["key"]][0]
         save = f'{vnd(was) - vnd(p["price"]):,}'.replace(",", ".")
         price = f"""<div class="price-card__promo promo-on">
-          <span class="price-card__sale-tag">{I_FIRE} Ưu đãi {PROMO["label"]}</span>
+          <span class="price-card__sale-tag">{I_FIRE} Ưu đãi lớn</span>
           <div class="price-card__was"><del>{was}đ</del><em>-{promo_off_pct(p)}%</em></div>
           <div class="price-card__price"><span>{p["price"]}</span> đ</div>
           <p class="price-card__save">Tiết kiệm {save}đ</p>
@@ -551,61 +551,26 @@ def faq_section(local: bool = True) -> str:
 
 
 def promo_box(featured: str) -> str:
+    """Banner uu dai o hero: chi giam goi ma landing nham toi (featured)."""
     if not PROMO:
         return ""
-    rows = ""
-    for p in PACKAGES:
-        was_short = PROMO["was"][p["key"]][1]
-        cls = ' class="is-hot"' if p["key"] == featured else ""
-        rows += (f'\n          <li{cls}><span class="lp-promo__name">{p["name"]}</span>'
-                 f'<del>{was_short}</del><b>{p["short"]}</b><em>-{promo_off_pct(p)}%</em></li>')
+    p = next(x for x in PACKAGES if x["key"] == featured)
     return f"""
-      <div class="lp-promo promo-on" data-promo-end="{PROMO["end"]}">
-        <div class="lp-promo__head">
-          <span class="lp-promo__tag">{I_FIRE} Ưu đãi giới hạn</span>
-          <span class="lp-promo__date">Chỉ từ {PROMO["label"]}</span>
-        </div>
-        <p class="lp-promo__title">Giảm đến <b>-{max(promo_off_pct(p) for p in PACKAGES)}%</b> cả 3 gói thiết kế website</p>
-        <ul class="lp-promo__list">{rows}
-        </ul>
-        <div class="lp-promo__foot">
-          <span>Kết thúc sau</span>
-          <div class="lp-promo__cd" aria-label="Thời gian còn lại của ưu đãi">
-            <span><b data-cd="d">--</b>ngày</span><span><b data-cd="h">--</b>giờ</span><span><b data-cd="m">--</b>phút</span><span><b data-cd="s">--</b>giây</span>
-          </div>
-          <a class="lp-promo__cta" href="#bang-gia">Giữ giá ưu đãi {I_ARROW}</a>
-        </div>
-      </div>"""
+      <a class="lp-promo promo-on" href="#bang-gia">
+        <span class="lp-promo__title">{I_FIRE} Ưu đãi lớn khi đăng ký thiết kế website từ ngày {PROMO["label"]}</span>
+        <span class="lp-promo__body">Gói {p["name"]} <del>{PROMO["was"][featured][0]}đ</del> <b>{p["price"]}đ</b> <em class="lp-promo__off">-{promo_off_pct(p)}%</em></span>
+      </a>"""
 
 
 # Chay som trong <head>: het han uu dai -> gan .promo-ended truoc khi ve trang (khong nhay giao dien).
 PROMO_HEAD = ("<script>(function(){{try{{if(Date.now()>Date.parse('{end}'))"
               "document.documentElement.classList.add('promo-ended')}}catch(e){{}}}})();</script>\n")
 
-# Dem nguoc + het han thi doi gia tri goi trong nut "Chon goi" ve gia goc.
+# Het han uu dai -> nut "Chon goi" ghi lai gia tri goi khong kem chu "uu dai".
 PROMO_JS = """<script>
-  (function () {
-    var box = document.querySelector('[data-promo-end]');
-    if (!box) return;
-    var end = Date.parse(box.getAttribute('data-promo-end'));
-    var els = {};
-    ['d', 'h', 'm', 's'].forEach(function (k) { els[k] = box.querySelector('[data-cd="' + k + '"]'); });
-    function pad(n) { return (n < 10 ? '0' : '') + n; }
-    function finish() {
-      document.documentElement.classList.add('promo-ended');
-      document.querySelectorAll('[data-package-full]').forEach(function (b) { b.dataset.pickPackage = b.dataset.packageFull; });
-    }
-    function tick() {
-      var t = Math.floor((end - Date.now()) / 1000);
-      if (t <= 0) { finish(); return false; }
-      els.d.textContent = pad(Math.floor(t / 86400));
-      els.h.textContent = pad(Math.floor(t % 86400 / 3600));
-      els.m.textContent = pad(Math.floor(t % 3600 / 60));
-      els.s.textContent = pad(t % 60);
-      return true;
-    }
-    if (tick()) { var id = setInterval(function () { if (!tick()) clearInterval(id); }, 1000); }
-  })();
+  if (document.documentElement.classList.contains('promo-ended')) {
+    document.querySelectorAll('[data-package-full]').forEach(function (b) { b.dataset.pickPackage = b.dataset.packageFull; });
+  }
 </script>
 """
 
@@ -686,7 +651,7 @@ def landing(v: dict) -> str:
     <div class="lp-head">
       <span class="eyebrow">Bảng giá</span>
       <h2>3 gói thiết kế website, giá công khai</h2>
-      <p>{promo(f"Giá ưu đãi áp dụng từ {PROMO['label']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
+      <p>{promo(f"Ưu đãi lớn khi đăng ký từ ngày {PROMO['label']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
     </div>
     <div class="pricing-grid reveal">
 {cards}
