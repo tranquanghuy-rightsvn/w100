@@ -41,6 +41,7 @@ I_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 I_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
 I_MSG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.35.27.57l.05 1.78a.8.8 0 0 0 1.12.71l1.98-.87a.8.8 0 0 1 .53-.04c.91.25 1.87.38 2.91.38 5.64 0 10-4.13 10-9.7S17.64 2 12 2Zm6 7.46-2.94 4.66a1.5 1.5 0 0 1-2.17.4l-2.34-1.75a.6.6 0 0 0-.72 0l-3.16 2.4c-.42.32-.97-.18-.69-.63l2.94-4.66a1.5 1.5 0 0 1 2.17-.4l2.34 1.75a.6.6 0 0 0 .72 0l3.16-2.4c.42-.32.97.18.69.63Z"/></svg>'
 I_DONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>'
+I_FIRE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 1.5s.9 3.1-1.3 6c-1.3 1.8-3.4 3-3.4 6a3.2 3.2 0 0 0 6.4.3c.2 1.4-.3 2.8-1.3 3.7 2.9-.6 5-3.2 5-6.4 0-5-5.4-6.4-5.4-9.6ZM8 9.6C6.2 11.2 5 13.4 5 16a7 7 0 0 0 5.2 6.8A4.8 4.8 0 0 1 7.3 18c0-2.6 1.6-3.9 1.6-6.4 0-.8-.3-1.5-.9-2Z"/></svg>'
 I_CHECK_PRICE = I_CHECK.replace("<svg ", '<svg class="price-card__check" ', 1)
 I_MSG_BRAND = I_MSG.replace("<svg ", '<svg class="lp-msg-icon" ', 1)
 ZALO_IMG = '<img class="lp-zalo-icon" src="/images/zalo.webp" alt="" width="22" height="22">'
@@ -122,6 +123,36 @@ PRICING_COMMON = [
     "Tool kiểm tra chất lượng SEO của bài viết",
 ]
 
+# ------------------------------------------------------------------ uu dai (chi tren /lp/*)
+# Gia goc (PACKAGES["price"]) bi gach, hien gia uu dai. CHI landing quang cao dung PROMO; trang SEO va
+# sync_shared_sections.py van giu gia goc. Het han (sau PROMO["end"]) -> JS tren trang tu an moi
+# thu .promo-on va hien lai .promo-off (gia goc), khong can build lai. Bo uu dai: PROMO = None.
+PROMO = {
+    "start": "2026-09-28T00:00:00+07:00",
+    "end": "2026-10-05T23:59:59+07:00",
+    "label": "28/09 - 05/10",
+    "prices": {  # key goi -> (gia uu dai, chuoi ngan)
+        "normal": ("1.000.000", "1 triệu"),
+        "pro": ("1.500.000", "1,5 triệu"),
+        "premium": ("2.000.000", "2 triệu"),
+    },
+}
+
+
+def vnd(s: str) -> int:
+    return int(s.replace(".", ""))
+
+
+def promo_off_pct(p: dict) -> int:
+    return round((1 - vnd(PROMO["prices"][p["key"]][0]) / vnd(p["price"])) * 100)
+
+
+def promo(on: str, off: str) -> str:
+    """Noi dung doi theo uu dai: `on` khi dang uu dai, `off` sau khi het han."""
+    if not PROMO:
+        return off
+    return f'<span class="promo-on">{on}</span><span class="promo-off">{off}</span>'
+
 
 def pricing_common_html(indent: str = "    ") -> str:
     items = "".join(f"\n{indent}    <li>{I_CHECK_PRICE} {c}</li>" for c in PRICING_COMMON)
@@ -134,7 +165,7 @@ VARIANTS = [
         "slug": "thiet-ke-website-da-nang",
         "title": "Thiết kế website Đà Nẵng từ 1,5 triệu | Web100",
         "description": "Thiết kế website tại Đà Nẵng từ 1.500.000đ: giao diện đẹp, chuẩn mobile, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng.",
-        "h1": "Thiết kế website Đà Nẵng <span>từ 1,5 triệu</span>",
+        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("<del>1,5</del> 1 triệu", "1,5 triệu") + "</span>",
         "sub": "Giao diện đẹp, chuẩn điện thoại, bàn giao nhanh, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -154,7 +185,7 @@ VARIANTS = [
         "h1": "Website doanh nghiệp Đà Nẵng",
         "sub": "Thiết kế theo bộ nhận diện, trình bày năng lực và dự án để tạo niềm tin với khách hàng, đối tác, đã làm cho doanh nghiệp thật tại Đà Nẵng.",
         "points": [
-            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói 3,5 triệu)",
+            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói Chuyên nghiệp)",
             "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
             "Hiển thị <b>dưới 0.5 giây</b> - mắt thường không cảm nhận được",
             "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
@@ -170,7 +201,7 @@ VARIANTS = [
         "local": False,
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
-        "h1": "Dịch vụ website giá rẻ <span>từ 1,5 triệu</span>",
+        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("<del>1,5</del> 1 triệu", "1,5 triệu") + "</span>",
         "sub": "Giá rẻ nhưng không làm ẩu: giao diện đẹp, chuẩn điện thoại, chuẩn SEO, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -191,7 +222,7 @@ VARIANTS = [
         "h1": "Thiết kế website <span>chuyên nghiệp</span>",
         "sub": "Thiết kế theo bộ nhận diện thương hiệu, chuẩn SEO, tải nhanh, giúp doanh nghiệp tạo niềm tin và có thêm khách hàng từ Google.",
         "points": [
-            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói 3,5 triệu)",
+            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói Chuyên nghiệp)",
             "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
             "Tốc độ <b>Lighthouse 90+</b>, hiển thị dưới 0.5 giây",
             "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
@@ -403,13 +434,27 @@ def price_card(p: dict, featured: str, badge: str) -> str:
     badge_html = f'\n        <span class="price-card__badge">{badge}</span>' if is_feat else ""
     gifts = "".join(f'\n          <li class="price-card__gift">{I_CHECK_PRICE} {g}</li>' for g in p["gifts"])
     items = "".join(f'\n          <li>{I_CHECK_PRICE} {i}</li>' for i in p["items"])
+    price = f'<div class="price-card__price"><span>{p["price"]}</span> đ</div>'
+    pick = f'data-pick-package="{p["value"]}"'
+    if PROMO:
+        sale = PROMO["prices"][p["key"]][0]
+        save = f'{vnd(p["price"]) - vnd(sale):,}'.replace(",", ".")
+        price = f"""<div class="price-card__promo promo-on">
+          <span class="price-card__sale-tag">{I_FIRE} Ưu đãi {PROMO["label"]}</span>
+          <div class="price-card__was"><del>{p["price"]}đ</del><em>-{promo_off_pct(p)}%</em></div>
+          <div class="price-card__price"><span>{sale}</span> đ</div>
+          <p class="price-card__save">Tiết kiệm {save}đ</p>
+        </div>
+        <div class="price-card__price promo-off"><span>{p["price"]}</span> đ</div>"""
+        pick = (f'data-pick-package="{p["name"]} {sale}đ (ưu đãi {PROMO["label"]})" '
+                f'data-package-full="{p["value"]}"')
     return f"""      <div class="{cls}">{badge_html}
         <h3>{p["name"]}</h3>
         <p class="price-card__desc">{p["desc"]}</p>
-        <div class="price-card__price"><span>{p["price"]}</span> đ</div>
+        {price}
         <ul class="price-card__list">{gifts}{items}
         </ul>
-        <a class="{btn}" href="#dang-ky" data-pick-package="{p["value"]}">Chọn gói {p["name"]}</a>
+        <a class="{btn}" href="#dang-ky" {pick}>Chọn gói {p["name"]}</a>
       </div>"""
 
 
@@ -505,6 +550,66 @@ def faq_section(local: bool = True) -> str:
 </section>"""
 
 
+def promo_box(featured: str) -> str:
+    if not PROMO:
+        return ""
+    rows = ""
+    for p in PACKAGES:
+        sale_short = PROMO["prices"][p["key"]][1]
+        cls = ' class="is-hot"' if p["key"] == featured else ""
+        rows += (f'\n          <li{cls}><span class="lp-promo__name">{p["name"]}</span>'
+                 f'<del>{p["short"]}</del><b>{sale_short}</b><em>-{promo_off_pct(p)}%</em></li>')
+    return f"""
+      <div class="lp-promo promo-on" data-promo-end="{PROMO["end"]}">
+        <div class="lp-promo__head">
+          <span class="lp-promo__tag">{I_FIRE} Ưu đãi giới hạn</span>
+          <span class="lp-promo__date">Chỉ từ {PROMO["label"]}</span>
+        </div>
+        <p class="lp-promo__title">Giảm đến <b>-{max(promo_off_pct(p) for p in PACKAGES)}%</b> cả 3 gói thiết kế website</p>
+        <ul class="lp-promo__list">{rows}
+        </ul>
+        <div class="lp-promo__foot">
+          <span>Kết thúc sau</span>
+          <div class="lp-promo__cd" aria-label="Thời gian còn lại của ưu đãi">
+            <span><b data-cd="d">--</b>ngày</span><span><b data-cd="h">--</b>giờ</span><span><b data-cd="m">--</b>phút</span><span><b data-cd="s">--</b>giây</span>
+          </div>
+          <a class="lp-promo__cta" href="#bang-gia">Giữ giá ưu đãi {I_ARROW}</a>
+        </div>
+      </div>"""
+
+
+# Chay som trong <head>: het han uu dai -> gan .promo-ended truoc khi ve trang (khong nhay giao dien).
+PROMO_HEAD = ("<script>(function(){{try{{if(Date.now()>Date.parse('{end}'))"
+              "document.documentElement.classList.add('promo-ended')}}catch(e){{}}}})();</script>\n")
+
+# Dem nguoc + het han thi doi gia tri goi trong nut "Chon goi" ve gia goc.
+PROMO_JS = """<script>
+  (function () {
+    var box = document.querySelector('[data-promo-end]');
+    if (!box) return;
+    var end = Date.parse(box.getAttribute('data-promo-end'));
+    var els = {};
+    ['d', 'h', 'm', 's'].forEach(function (k) { els[k] = box.querySelector('[data-cd="' + k + '"]'); });
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function finish() {
+      document.documentElement.classList.add('promo-ended');
+      document.querySelectorAll('[data-package-full]').forEach(function (b) { b.dataset.pickPackage = b.dataset.packageFull; });
+    }
+    function tick() {
+      var t = Math.floor((end - Date.now()) / 1000);
+      if (t <= 0) { finish(); return false; }
+      els.d.textContent = pad(Math.floor(t / 86400));
+      els.h.textContent = pad(Math.floor(t % 86400 / 3600));
+      els.m.textContent = pad(Math.floor(t % 3600 / 60));
+      els.s.textContent = pad(t % 60);
+      return true;
+    }
+    if (tick()) { var id = setInterval(function () { if (!tick()) clearInterval(id); }, 1000); }
+  })();
+</script>
+"""
+
+
 def landing(v: dict) -> str:
     points = "".join(f"\n          <li>{I_CHECK}<span>{pt}</span></li>" for pt in v["points"])
     logos = "".join(
@@ -524,7 +629,10 @@ def landing(v: dict) -> str:
         proof_cap = "<strong>Honda Hiếu Nga</strong> ký hợp đồng cùng CEO Quang Huy của Web100."
         footer, og = FOOTER.replace(FOOTER_ADDR, FOOTER_TAGLINE), "home.jpg"
 
-    return f"""{head(v["title"], v["description"], f'<link rel="stylesheet" href="/css/pricing.css?v={ASSET_V}">' + chr(10), og)}
+    extra = f'<link rel="stylesheet" href="/css/pricing.css?v={ASSET_V}">' + chr(10)
+    if PROMO:
+        extra = PROMO_HEAD.format(end=PROMO["end"]) + extra
+    return f"""{head(v["title"], v["description"], extra, og)}
 <body class="lp">
 
 {HEADER}
@@ -537,7 +645,7 @@ def landing(v: dict) -> str:
     <div class="lp-hero__copy">
       <span class="lp-hero__loc">{loc_badge}</span>
       <h1>{v["h1"]}</h1>
-      <p class="lp-hero__sub">{v["sub"]}</p>
+      <p class="lp-hero__sub">{v["sub"]}</p>{promo_box(v["featured"])}
       <ul class="lp-hero__points">{points}
       </ul>
       <div class="lp-hero__actions" data-track-area="hero">
@@ -578,7 +686,7 @@ def landing(v: dict) -> str:
     <div class="lp-head">
       <span class="eyebrow">Bảng giá</span>
       <h2>3 gói thiết kế website, giá công khai</h2>
-      <p>Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
+      <p>{promo(f"Giá ưu đãi áp dụng từ {PROMO['label']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
     </div>
     <div class="pricing-grid reveal">
 {cards}
@@ -618,7 +726,7 @@ def landing(v: dict) -> str:
 
 {CONTACT}
 
-<script src="/js/main.js?v={ASSET_V}"></script>
+{PROMO_JS if PROMO else ""}<script src="/js/main.js?v={ASSET_V}"></script>
 </body>
 </html>
 """
