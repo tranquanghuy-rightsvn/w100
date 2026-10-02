@@ -33,7 +33,9 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .blog-featured__card:hover { transform: translateY(-4px); }
-.blog-featured__cover {
+/* Ảnh bìa thường đặt chữ ở bên trái: khi khung cắt bớt thì giữ mép trái. */
+.blog-featured__cover img { object-position: 0 50%; }
+.blog-cover.blog-featured__cover {
   min-height: 280px;
   aspect-ratio: auto;
   border-radius: var(--radius) 0 0 var(--radius);
