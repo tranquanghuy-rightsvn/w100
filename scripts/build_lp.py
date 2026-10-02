@@ -54,8 +54,8 @@ PACKAGES = [
     # /website-doanh-nghiep/ va bang so sanh trong blog chi-phi-thiet-ke-website dung chung noi dung nay
     # (scripts/sync_shared_sections.py) — sua o day roi chay lai ca 2 script.
     {
-        "key": "normal", "name": "Normal", "value": "Normal 2.500.000đ", "short": "2,5 triệu",
-        "price": "2.500.000",
+        "key": "normal", "name": "Cơ bản", "value": "Cơ bản 1.500.000đ", "short": "1,5 triệu",
+        "price": "1.500.000",
         "desc": "Khởi đầu tinh gọn cho hộ kinh doanh, cửa hàng và doanh nghiệp mới.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -73,8 +73,8 @@ PACKAGES = [
         ],
     },
     {
-        "key": "pro", "name": "Chuyên nghiệp", "value": "Chuyên nghiệp 5.000.000đ", "short": "5 triệu",
-        "price": "5.000.000",
+        "key": "pro", "name": "Chuyên nghiệp", "value": "Chuyên nghiệp 3.500.000đ", "short": "3,5 triệu",
+        "price": "3.500.000",
         "desc": "Cân bằng nhất giữa chi phí và tính năng cho doanh nghiệp đang tăng trưởng.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -94,8 +94,8 @@ PACKAGES = [
         ],
     },
     {
-        "key": "premium", "name": "Cao cấp", "value": "Cao cấp 9.500.000đ", "short": "9,5 triệu",
-        "price": "9.500.000",
+        "key": "premium", "name": "Cao cấp", "value": "Cao cấp 7.000.000đ", "short": "7 triệu",
+        "price": "7.000.000",
         "desc": "Giải pháp toàn diện cho doanh nghiệp lớn, chuỗi khách sạn và yêu cầu tuỳ biến sâu.",
         "gifts": [
             "Hỗ trợ trọn đời MIỄN PHÍ",
@@ -127,17 +127,7 @@ PRICING_COMMON = [
 # PACKAGES["price"] = gia niem yet (trang chu, trang SEO, blog). Landing quang cao: goi featured hien
 # gia niem yet gach ngang + PROMO["sale"] (gia uu dai). Cac goi khac tren landing van gia niem yet.
 # Het han (sau PROMO["end"]) -> JS tu an moi thu .promo-on (khong can build lai). Bo: PROMO = None.
-PROMO = {
-    "start": "2026-09-05T00:00:00+07:00",
-    "end": "2026-10-05T23:59:59+07:00",
-    "label": "05/09/2026 - 05/10/2026",
-    "short": "Ưu đãi đến 05/10",  # chữ ngắn trên banner hero và bảng giá
-    "sale": {  # key goi -> (gia uu dai, chuoi ngan)
-        "normal": ("1.500.000", "1,5 triệu"),
-        "pro": ("3.500.000", "3,5 triệu"),
-        "premium": ("7.500.000", "7,5 triệu"),
-    },
-}
+PROMO = None  # 2026-10-02: chủ web bỏ flash sale. Muốn bật lại: xem git log (PROMO có start/end/label/short/sale).
 
 
 def vnd(s: str) -> int:
@@ -166,7 +156,7 @@ VARIANTS = [
         "slug": "thiet-ke-website-da-nang",
         "title": "Thiết kế website Đà Nẵng từ 1,5 triệu | Web100",
         "description": "Thiết kế website tại Đà Nẵng từ 1.500.000đ: giao diện đẹp, chuẩn mobile, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng.",
-        "h1": "Thiết kế website Đà Nẵng <span>từ " + promo("1,5 triệu", "2,5 triệu") + "</span>",
+        "h1": "Thiết kế website Đà Nẵng <span>từ 1,5 triệu</span>",
         "sub": "Giao diện đẹp, chuẩn điện thoại, bàn giao nhanh, báo giá rõ ràng trước khi làm, không phát sinh.",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
@@ -202,7 +192,7 @@ VARIANTS = [
         "local": False,
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
-        "h1": "Dịch vụ website giá rẻ <span>từ " + promo("1,5 triệu", "2,5 triệu") + "</span>",
+        "h1": "Dịch vụ website giá rẻ <span>từ 1,5 triệu</span>",
         "points": [
             "<b>Tặng hosting</b> năm đầu (trị giá 450.000đ)",
             "<b>Giao diện bắt mắt</b> trên cả mobile và máy tính",
