@@ -560,7 +560,7 @@ def promo_box(featured: str) -> str:
         return ""
     p = next(x for x in PACKAGES if x["key"] == featured)
     return f"""
-      <a class="lp-promo promo-on" href="#bang-gia">
+      <a class="lp-promo promo-on" href="#dang-ky" data-pick-package="{p["name"]} {PROMO["sale"][featured][0]}đ (ưu đãi {PROMO["label"]})" data-package-full="{p["value"]}">
         <span class="lp-promo__title">{I_FIRE} {PROMO["short"]}: Gói {p["name"]} <b>{PROMO["sale"][featured][0]}đ</b></span>
         <span class="lp-promo__body">Giá gốc <del>{p["price"]}đ</del></span>
       </a>"""
@@ -614,7 +614,7 @@ def landing(v: dict) -> str:
     <div class="lp-hero__copy">
       <span class="lp-hero__loc">{loc_badge}</span>
       <h1>{v["h1"]}</h1>
-{f'{chr(10)}      <p class="lp-hero__sub">{v["sub"]}</p>' if v.get("sub") else ""}{promo_box(v["featured"])}
+{f'{chr(10)}      <p class="lp-hero__sub">{v["sub"]}</p>' if v.get("sub") else ""}
       <ul class="lp-hero__points">{points}
       </ul>
       <div class="lp-hero__actions" data-track-area="hero">
@@ -655,8 +655,8 @@ def landing(v: dict) -> str:
     <div class="lp-head">
       <span class="eyebrow">Bảng giá</span>
       <h2>3 gói thiết kế website, giá công khai</h2>
-      <p>{promo(f"{PROMO['short']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
-    </div>
+      <p>Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
+    </div>{promo_box(v["featured"])}
     <div class="pricing-grid reveal">
 {cards}
     </div>

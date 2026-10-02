@@ -129,6 +129,9 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 }
 .lp-promo:hover { transform: translateY(-2px); }
 .lp-promo { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 16px; }
+/* Banner ưu đãi nằm giữa phần bảng giá, trên 3 thẻ giá. */
+.lp-pricing .lp-promo { margin: -8px auto 36px; align-items: center; text-align: center; }
+.lp-pricing .lp-promo__title { justify-content: center; }
 .lp-promo__title { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 16px; font-weight: 800; line-height: 1.4; }
 .lp-promo__title b { font-size: 19px; font-weight: 900; color: #fff6c2; }
 .lp-promo__title svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: #fff6c2; }
