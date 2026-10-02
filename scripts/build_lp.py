@@ -408,6 +408,10 @@ def lead_form(form_id: str, area: str, title: str) -> str:
                 <option>Khác</option>
               </select>
             </label>
+            <label>
+              <span>Ngành của website <em>(không bắt buộc)</em></span>
+              <input type="text" name="nganh" autocomplete="off" placeholder="VD: y tế, đồ gia dụng, thời trang...">
+            </label>
             <!-- Gói khách bấm ở bảng giá (nút data-pick-package) được main.js ghi vào đây. -->
             <input type="hidden" name="goi_dich_vu" value="">
             <label>

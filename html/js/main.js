@@ -889,6 +889,7 @@ function initTemplateActions() {
       const mota = (data.get('mota') || '').toString().trim();
       const goi = (data.get('goi_dich_vu') || '').toString().trim();
       const loaiWebsite = (data.get('loai_website') || '').toString().trim();
+      const nganh = (data.get('nganh') || '').toString().trim();
 
       const phone = normalizeVnPhone(dienthoai);
       if (dienthoai && !phone) {
@@ -913,7 +914,7 @@ function initTemplateActions() {
           email: email || 'web100.vn@gmail.com',
           dienthoai: phone,
           goi_dich_vu: goi || 'Chưa chọn',
-          ghi_chu: withSource([loaiWebsite && `Website cần thiết kế: ${loaiWebsite}`, mota].filter(Boolean).join('\n')),
+          ghi_chu: withSource([loaiWebsite && `Website cần thiết kế: ${loaiWebsite}`, nganh && `Ngành: ${nganh}`, mota].filter(Boolean).join('\n')),
           trang: location.pathname,
         };
       } else if (formAction === 'quote') {
