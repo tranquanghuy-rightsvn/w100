@@ -1465,7 +1465,7 @@ body.no-scroll { overflow: hidden; }
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.footer-brand img { height: 26px; margin-bottom: 16px; }
+.footer-brand img { height: 26px; width: auto; margin-bottom: 16px; }
 .footer-brand p { font-size: 14px; max-width: 280px; }
 .footer-col h4,
 /* Tiêu đề cột footer dùng <p> thay vì <h4>: footer không phải một phần của
