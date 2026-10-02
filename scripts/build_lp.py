@@ -131,6 +131,7 @@ PROMO = {
     "start": "2026-09-05T00:00:00+07:00",
     "end": "2026-10-05T23:59:59+07:00",
     "label": "05/09/2026 - 05/10/2026",
+    "short": "Ưu đãi đến 05/10",  # chữ ngắn trên banner hero và bảng giá
     "sale": {  # key goi -> (gia uu dai, chuoi ngan)
         "normal": ("1.500.000", "1,5 triệu"),
         "pro": ("3.500.000", "3,5 triệu"),
@@ -560,8 +561,8 @@ def promo_box(featured: str) -> str:
     p = next(x for x in PACKAGES if x["key"] == featured)
     return f"""
       <a class="lp-promo promo-on" href="#bang-gia">
-        <span class="lp-promo__title">{I_FIRE} Ưu đãi lớn khi đăng ký thiết kế website từ ngày {PROMO["label"]}</span>
-        <span class="lp-promo__body">Gói {p["name"]} <del>{p["price"]}đ</del> <b>{PROMO["sale"][featured][0]}đ</b></span>
+        <span class="lp-promo__title">{I_FIRE} {PROMO["short"]}: Gói {p["name"]} <b>{PROMO["sale"][featured][0]}đ</b></span>
+        <span class="lp-promo__body">Giá gốc <del>{p["price"]}đ</del></span>
       </a>"""
 
 
@@ -654,7 +655,7 @@ def landing(v: dict) -> str:
     <div class="lp-head">
       <span class="eyebrow">Bảng giá</span>
       <h2>3 gói thiết kế website, giá công khai</h2>
-      <p>{promo(f"Ưu đãi lớn khi đăng ký từ ngày {PROMO['label']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
+      <p>{promo(f"{PROMO['short']}. " if PROMO else "", "")}Chọn gói, để lại số điện thoại, Web100 gọi lại tư vấn chi tiết.</p>
     </div>
     <div class="pricing-grid reveal">
 {cards}

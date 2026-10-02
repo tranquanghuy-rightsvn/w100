@@ -129,10 +129,11 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 }
 .lp-promo:hover { transform: translateY(-2px); }
 .lp-promo { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 16px; }
-.lp-promo__title { display: flex; align-items: flex-start; gap: 6px; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.lp-promo__title { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 16px; font-weight: 800; line-height: 1.4; }
+.lp-promo__title b { font-size: 19px; font-weight: 900; color: #fff6c2; }
 .lp-promo__title svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: #fff6c2; }
-.lp-promo__body { font-size: 15px; font-weight: 700; line-height: 1.5; }
-.lp-promo__body del { margin: 0 4px; font-weight: 600; opacity: 0.8; text-decoration-thickness: 2px; }
+.lp-promo__body { font-size: 13.5px; font-weight: 600; line-height: 1.4; opacity: 0.92; }
+.lp-promo__body del { margin-left: 2px; text-decoration-thickness: 2px; }
 .lp-promo__body b { font-size: 18px; font-weight: 900; color: #fff6c2; }
 .lp-promo__off { display: inline-block; margin-left: 4px; vertical-align: 2px; font-style: normal; font-size: 12.5px; font-weight: 900; padding: 3px 8px; border-radius: 8px; background: #1a1a1a; color: #ffd84d; }
 
