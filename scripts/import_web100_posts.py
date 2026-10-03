@@ -365,8 +365,8 @@ def write_posts(arts, header, tail):
                 {"@type": "BlogPosting", "headline": a['title'], "description": excerpt(a),
                  "image": f"{ORIGIN}/images/blog/{a['cover']}",
                  "datePublished": a['iso'], "dateModified": a['iso'],
-                 "author": {"@type": "Organization", "name": "Web100"},
-                 "publisher": {"@type": "Organization", "name": "Web100",
+                 "author": {"@id": f"{ORIGIN}/#organization", "@type": "Organization", "name": "Web100"},
+                 "publisher": {"@id": f"{ORIGIN}/#organization", "@type": "Organization", "name": "Web100",
                                "logo": {"@type": "ImageObject", "url": f"{ORIGIN}/images/logo.png"}},
                  "articleSection": CAT_NAME, "inLanguage": "vi-VN"},
                 {"@type": "BreadcrumbList", "itemListElement": [
