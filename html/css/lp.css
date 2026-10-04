@@ -367,12 +367,13 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .lp-trust { padding: 56px 0 80px; overflow: hidden; }
 .lp-trust .lp-head { margin-bottom: 32px; }
 .lp-head .lp-trust__count {
-  display: inline-flex; align-items: center; gap: 10px;
-  margin-top: 16px; padding: 8px 22px 8px 18px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 14px; padding: 9px 22px; border-radius: 999px;
   background: var(--green-tint); border: 1px solid rgba(11, 203, 104, 0.3);
+  font-size: 18px; line-height: 1.3; font-weight: 800; color: var(--green-deep);
 }
-.lp-trust__count strong { font-size: 28px; line-height: 1; font-weight: 900; letter-spacing: -0.02em; color: var(--green-dark); }
-.lp-trust__count span { font-size: 14px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--green-deep); }
+.lp-trust__count strong, .lp-trust__count span { font-size: inherit; font-weight: inherit; }
+.lp-trust__count strong { color: var(--green-dark); }
 .lp-marquee {
   display: grid; gap: 16px;
   /* Mờ dần ở 2 mép trái, phải. */
