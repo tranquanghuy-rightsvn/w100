@@ -251,9 +251,9 @@ SHOWCASE_ROWS = [
     ["coolmate", "tailormadevietnam", "khangdien", "venusvietnamtravel", "cocoonvietnam", "fvhospital", "ngheanpaper", "kangnam",
      "tatiland", "herbalspa", "f8", "dngvn", "nhakhoakim", "madamelan", "qpholdings", "senspa", "visitdanang",
      "kyanon", "sixdo", "weland"],
-    ["fulbright", "anland", "medpro", "namlongvn", "rohto", "thedecksaigon", "bimland", "nhakhoaparkway",
-     "hoalonginvest", "localvietnam", "giahanoi", "keppelland", "shynhpremium", "tamvi", "soliagroup", "3fstore",
-     "danangfantasticity", "nhakhoaident", "omegatours", "lavender"],
+    ["fulbright", "anland", "medpro", "namlongvn", "rohto", "yourvietnamtravel", "bimland", "nhakhoaparkway",
+     "hoalonginvest", "localvietnam", "planvietnamtour", "keppelland", "shynhpremium", "tamvi", "soliagroup", "3fstore",
+     "danangfantasticity", "nhakhoaident", "vietnambynomadays", "lavender"],
 ]
 
 

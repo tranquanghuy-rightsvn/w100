@@ -375,7 +375,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
           mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
 .lp-marquee__row { overflow: hidden; }
-.lp-marquee__track { display: flex; gap: 16px; width: max-content; animation: lp-marquee 70s linear infinite; }
+.lp-marquee__track { display: flex; gap: 16px; width: max-content; animation: lp-marquee 70s linear infinite; will-change: transform; backface-visibility: hidden; }
 .lp-marquee__row--rev .lp-marquee__track { animation-direction: reverse; }
 .lp-marquee:hover .lp-marquee__track { animation-play-state: paused; }
 @keyframes lp-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 8px)); } }
