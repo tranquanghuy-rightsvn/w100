@@ -267,7 +267,14 @@ def showcase_marquee() -> str:
                              f'alt="Website doanh nghiệp" width="280" height="210" loading="lazy" decoding="async"></div>')
         rev = " lp-marquee__row--rev" if r % 2 else ""
         rows += f'\n    <div class="lp-marquee__row{rev}"><div class="lp-marquee__track">' + "".join(cards) + "</div></div>"
-    return f'<div class="lp-marquee">{rows}\n  </div>'
+    # Anh lazy chi tai khi toi gan theo ca chieu ngang -> o trong khi chay vao. Khi khoi sap cuon toi thi
+    # chuyen tat ca sang eager de tai 1 luot (40 anh ~540KB), dau trang van nhe.
+    js = ("<script>(function(){var m=document.currentScript.previousElementSibling;"
+          "function go(){m.querySelectorAll('img[loading=lazy]').forEach(function(i){i.loading='eager';});}"
+          "if(!('IntersectionObserver' in window)){go();return;}"
+          "var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.disconnect();}},{rootMargin:'800px 0px'});"
+          "o.observe(m);})();</script>")
+    return f'<div class="lp-marquee">{rows}\n  </div>' + js
 
 
 LOGOS = [
