@@ -603,7 +603,7 @@ def trust_section(v: dict, logos: str) -> str:
   <div class="container">
     <div class="lp-head">
       <h2>Doanh nghiệp đã tin chọn Web100</h2>
-      <p class="lp-trust__count"><strong>500+</strong> doanh nghiệp</p>
+      <p class="lp-trust__count"><strong>500+</strong><span>doanh nghiệp</span></p>
     </div>
   </div>
   {showcase_marquee()}

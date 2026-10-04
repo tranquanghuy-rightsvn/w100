@@ -366,8 +366,13 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 /* ------------------------------ Doanh nghiệp đã tin chọn: 2 hàng ảnh website chạy ngược chiều ------------------------------ */
 .lp-trust { padding: 56px 0 80px; overflow: hidden; }
 .lp-trust .lp-head { margin-bottom: 32px; }
-.lp-trust__count { font-size: 18px !important; color: var(--muted); }
-.lp-trust__count strong { font-size: 30px; font-weight: 900; color: var(--green-dark); margin-right: 4px; }
+.lp-head .lp-trust__count {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 16px; padding: 8px 22px 8px 18px; border-radius: 999px;
+  background: var(--green-tint); border: 1px solid rgba(11, 203, 104, 0.3);
+}
+.lp-trust__count strong { font-size: 28px; line-height: 1; font-weight: 900; letter-spacing: -0.02em; color: var(--green-dark); }
+.lp-trust__count span { font-size: 14px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--green-deep); }
 .lp-marquee {
   display: grid; gap: 16px;
   /* Mờ dần ở 2 mép trái, phải. */
