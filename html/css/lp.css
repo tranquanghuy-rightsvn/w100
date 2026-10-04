@@ -362,3 +362,37 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-thanks__card { padding: 36px 20px; }
   .lp-thanks__actions .btn { flex: 1 1 100%; }
 }
+
+/* ------------------------------ Kho mẫu giao diện: 2 hàng chạy ngược chiều ------------------------------ */
+.lp-showcase { padding: 72px 0 80px; background: var(--bg-alt); overflow: hidden; }
+.lp-marquee {
+  display: grid; gap: 16px;
+  /* Mờ dần ở 2 mép trái, phải. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.lp-marquee__row { overflow: hidden; }
+.lp-marquee__track { display: flex; gap: 16px; width: max-content; animation: lp-marquee 70s linear infinite; }
+.lp-marquee__row--rev .lp-marquee__track { animation-direction: reverse; }
+.lp-marquee:hover .lp-marquee__track { animation-play-state: paused; }
+@keyframes lp-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 8px)); } }
+.lp-marquee__card {
+  position: relative; display: block; flex-shrink: 0;
+  width: 280px; aspect-ratio: 4 / 3; overflow: hidden;
+  border-radius: 10px; border: 1px solid var(--line); background: #fff;
+  box-shadow: 0 1px 3px rgba(11, 15, 20, 0.06);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.lp-marquee__card img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.5s ease; }
+.lp-marquee__card:hover { border-color: rgba(11, 203, 104, 0.55); box-shadow: 0 12px 28px -14px rgba(7, 140, 70, 0.45); }
+.lp-marquee__card:hover img { transform: scale(1.04); }
+@media (prefers-reduced-motion: reduce) {
+  .lp-marquee__track { animation: none; }
+  .lp-marquee__row { overflow-x: auto; }
+}
+@media (max-width: 700px) {
+  .lp-showcase { padding: 56px 0; }
+  .lp-marquee, .lp-marquee__track { gap: 12px; }
+  .lp-marquee__card { width: 210px; }
+  @keyframes lp-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
+}
