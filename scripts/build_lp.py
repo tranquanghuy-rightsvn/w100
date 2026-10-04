@@ -244,11 +244,11 @@ CASES = [
      "desc": "Website được làm mới từ năm 2024, đến nay đã hơn 2 năm tuổi. Không backlink, không chi phí SEO, chỉ thuần nội dung và chất lượng website chuẩn SEO. Website đã âm thầm leo lên top đầu với từ khoá uy tín địa phương, chỉ đứng sau fanpage của chính công ty."},
 ]
 
-# Kho mau giao dien (dai chay ngang): anh cat 4:3 tu dau trang cac mau o /mau-website-dep/
-# (html/images/lp/showcase/<slug>.webp, 560x420). Day la MAU giao dien tham khao, KHONG phai khach
-# hang Web100 -> tieu de ghi ro "Kho mau giao dien", khong dat duoi "Doanh nghiep da tin chon".
+# Dai "Doanh nghiep da tin chon Web100" (chi trang co "showcase": True): 2 hang x 20 o chay nguoc chieu.
+# Anh 560x420 (4:3, cat tu dau trang anh desktop o /mau-website-dep/) trong html/images/lp/showcase/.
+# Cac website o /mau-website-dep/ la khach hang that cua Web100 (chu web xac nhan 2026-10-04).
 SHOWCASE_ROWS = [
-    ["coolmate", "futaland", "khangdien", "vinuni", "cocoonvietnam", "fvhospital", "sonkimland", "kangnam",
+    ["coolmate", "tailormadevietnam", "khangdien", "venusvietnamtravel", "cocoonvietnam", "fvhospital", "ngheanpaper", "kangnam",
      "tatiland", "herbalspa", "f8", "dngvn", "nhakhoakim", "madamelan", "qpholdings", "senspa", "visitdanang",
      "kyanon", "sixdo", "weland"],
     ["fulbright", "anland", "medpro", "namlongvn", "rohto", "thedecksaigon", "bimland", "nhakhoaparkway",
@@ -257,35 +257,18 @@ SHOWCASE_ROWS = [
 ]
 
 
-def showcase_section() -> str:
+def showcase_marquee() -> str:
     rows = ""
-    n = 0
     for r, slugs in enumerate(SHOWCASE_ROWS):
         cards = []
         for copy in (0, 1):  # 2 ban giong nhau -> chay vong lien mach (translateX -50%)
+            hide = ' aria-hidden="true"' if copy else ""
             for s_ in slugs:
-                if copy == 0:
-                    n += 1
-                hide = ' tabindex="-1" aria-hidden="true"' if copy else ""
-                cards.append(
-                    f'<a class="lp-marquee__card" href="{ZALO}" target="_blank" rel="noopener"{hide} '
-                    f'aria-label="Xem mẫu giao diện, nhắn Zalo tư vấn"><img src="/images/lp/showcase/{s_}.webp" '
-                    f'alt="Mẫu giao diện website" width="280" height="210" loading="lazy" decoding="async"></a>')
+                cards.append(f'<div class="lp-marquee__card"{hide}><img src="/images/lp/showcase/{s_}.webp" '
+                             f'alt="Website doanh nghiệp" width="280" height="210" loading="lazy" decoding="async"></div>')
         rev = " lp-marquee__row--rev" if r % 2 else ""
         rows += f'\n    <div class="lp-marquee__row{rev}"><div class="lp-marquee__track">' + "".join(cards) + "</div></div>"
-    return f"""<!-- ============================ KHO MẪU GIAO DIỆN ============================ -->
-<section class="lp-showcase">
-  <div class="container">
-    <div class="lp-head">
-      <span class="eyebrow">Kho giao diện</span>
-      <h2>Kho mẫu giao diện website</h2>
-      <p>Chọn phong cách bạn thích, Web100 thiết kế lại theo đúng ngành và thương hiệu của bạn.</p>
-    </div>
-  </div>
-  <div class="lp-marquee" data-track-area="showcase">{rows}
-  </div>
-</section>
-"""
+    return f'<div class="lp-marquee">{rows}\n  </div>'
 
 
 LOGOS = [
@@ -614,6 +597,27 @@ PROMO_JS = """<script>
 """
 
 
+def trust_section(v: dict, logos: str) -> str:
+    if v.get("showcase"):
+        return f"""<section class="lp-logos lp-trust">
+  <div class="container">
+    <div class="lp-head">
+      <h2>Doanh nghiệp đã tin chọn Web100</h2>
+      <p class="lp-trust__count"><strong>500+</strong> doanh nghiệp</p>
+    </div>
+  </div>
+  {showcase_marquee()}
+</section>"""
+    return f"""<section class="lp-logos">
+  <div class="container">
+    <p class="lp-logos__title">Doanh nghiệp đã tin chọn Web100</p>
+    <ul class="lp-logos__grid reveal">{logos}
+    </ul>
+    <p class="lp-logos__more">và hơn <strong>500</strong> doanh nghiệp khác</p>
+  </div>
+</section>"""
+
+
 def landing(v: dict) -> str:
     points = "".join(f"\n          <li>{I_CHECK}<span>{pt}</span></li>" for pt in v["points"])
     logos = "".join(
@@ -675,16 +679,7 @@ def landing(v: dict) -> str:
 {top_cases_section()}
 
 <!-- ============================ LOGO KHÁCH HÀNG ============================ -->
-<section class="lp-logos">
-  <div class="container">
-    <p class="lp-logos__title">Doanh nghiệp đã tin chọn Web100</p>
-    <ul class="lp-logos__grid reveal">{logos}
-    </ul>
-    <p class="lp-logos__more">và hơn <strong>500</strong> doanh nghiệp khác</p>
-  </div>
-</section>
-
-{showcase_section() if v.get("showcase") else ""}
+{trust_section(v, logos)}
 <!-- ============================ BẢNG GIÁ ============================ -->
 <section class="pricing lp-pricing" id="bang-gia">
   <div class="container">

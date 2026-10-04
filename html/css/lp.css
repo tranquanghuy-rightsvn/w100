@@ -363,8 +363,11 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-thanks__actions .btn { flex: 1 1 100%; }
 }
 
-/* ------------------------------ Kho mẫu giao diện: 2 hàng chạy ngược chiều ------------------------------ */
-.lp-showcase { padding: 72px 0 80px; background: var(--bg-alt); overflow: hidden; }
+/* ------------------------------ Doanh nghiệp đã tin chọn: 2 hàng ảnh website chạy ngược chiều ------------------------------ */
+.lp-trust { padding: 56px 0 80px; overflow: hidden; }
+.lp-trust .lp-head { margin-bottom: 32px; }
+.lp-trust__count { font-size: 18px !important; color: var(--muted); }
+.lp-trust__count strong { font-size: 30px; font-weight: 900; color: var(--green-dark); margin-right: 4px; }
 .lp-marquee {
   display: grid; gap: 16px;
   /* Mờ dần ở 2 mép trái, phải. */
@@ -391,7 +394,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-marquee__row { overflow-x: auto; }
 }
 @media (max-width: 700px) {
-  .lp-showcase { padding: 56px 0; }
+  .lp-trust { padding: 40px 0 56px; }
   .lp-marquee, .lp-marquee__track { gap: 12px; }
   .lp-marquee__card { width: 210px; }
   @keyframes lp-marquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
