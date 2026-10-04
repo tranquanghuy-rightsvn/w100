@@ -161,6 +161,17 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .price-card--featured .price-card__was em { background: #ff3d2e; color: #fff; }
 .price-card--featured .price-card__save { color: var(--green); }
 
+/* Hero 2 landing Đà Nẵng: ảnh Cầu Rồng làm nền mờ (opacity 0.15) phía sau, chữ giữ màu tối. */
+.lp-hero--danang { position: relative; isolation: isolate; }
+.lp-hero--danang::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: url("/images/lp/cau-rong-1600.webp") center 60% / cover no-repeat;
+  opacity: 0.15;
+}
+@media (max-width: 700px) {
+  .lp-hero--danang::before { background-image: url("/images/lp/cau-rong-800.webp"); background-position: center 40%; }
+}
+
 /* ------------------------------ Form lead ------------------------------ */
 /* .modal cho main.js tìm .modal__done; bỏ các thuộc tính popup của .modal. */
 .lp-form.modal {

@@ -174,7 +174,7 @@ VARIANTS = [
         "title": "Thiết kế website doanh nghiệp Đà Nẵng | Web100",
         "description": "Website doanh nghiệp tại Đà Nẵng thiết kế theo thương hiệu, có dự án thực tế. Từ gói 3.500.000đ tặng tên miền + hosting năm đầu.",
         "h1": "Website doanh nghiệp Đà Nẵng",
-        "sub": "Thiết kế theo bộ nhận diện, trình bày năng lực và dự án để tạo niềm tin với khách hàng, đối tác, đã làm cho doanh nghiệp thật tại Đà Nẵng.",
+        "sub": "Thiết kế theo bộ nhận diện, trình bày năng lực và dự án để tạo niềm tin với khách hàng, đối tác.",
         "points": [
             "<b>Tặng tên miền + hosting</b> năm đầu (từ gói Chuyên nghiệp)",
             "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
@@ -654,7 +654,7 @@ def landing(v: dict) -> str:
 <main>
 
 <!-- ============================ HERO + FORM ============================ -->
-<section class="lp-hero">
+<section class="lp-hero{' lp-hero--danang' if local else ''}">
   <div class="container lp-hero__grid">
     <div class="lp-hero__copy">
       <span class="lp-hero__loc">{loc_badge}</span>
