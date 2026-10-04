@@ -190,7 +190,6 @@ VARIANTS = [
     {
         "slug": "dich-vu-website-gia-re",
         "local": False,
-        "showcase": True,  # dai "Kho mau giao dien" 2 hang chay nguoc chieu, sau khoi logo
         "title": "Dịch vụ thiết kế website giá rẻ từ 1,5 triệu | Web100",
         "description": "Dịch vụ thiết kế website giá rẻ từ 1.500.000đ: giao diện đẹp, chuẩn mobile, chuẩn SEO, bàn giao 5–7 ngày, tặng hosting năm đầu, báo giá rõ ràng, không phát sinh.",
         "h1": "Dịch vụ website giá rẻ <span>từ 1,5 triệu</span>",
@@ -598,7 +597,7 @@ PROMO_JS = """<script>
 
 
 def trust_section(v: dict, logos: str) -> str:
-    if v.get("showcase"):
+    if v.get("showcase", True):  # 2026-10-04: ca 4 landing dung dai anh website khach thay luoi logo
         return f"""<section class="lp-logos lp-trust">
   <div class="container">
     <div class="lp-head">
