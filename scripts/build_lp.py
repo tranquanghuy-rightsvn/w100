@@ -252,7 +252,7 @@ SHOWCASE_ROWS = [
      "tatiland", "herbalspa", "f8", "dngvn", "nhakhoakim", "madamelan", "qpholdings", "senspa", "visitdanang",
      "kyanon", "sixdo", "weland"],
     ["fulbright", "anland", "medpro", "namlongvn", "rohto", "yourvietnamtravel", "bimland", "nhakhoaparkway",
-     "hoalonginvest", "localvietnam", "planvietnamtour", "keppelland", "shynhpremium", "tamvi", "soliagroup", "3fstore",
+     "hoalonginvest", "localvietnam", "planvietnamtour", "keppelland", "shynhpremium", "dearjose", "soliagroup", "3fstore",
      "danangfantasticity", "nhakhoaident", "vietnambynomadays", "lavender"],
 ]
 
