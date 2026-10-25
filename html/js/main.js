@@ -40,9 +40,12 @@ function initMessengerLinks() {
    mọi trang) — trong GA4 đánh dấu generate_lead / click_call / click_zalo là
    key event rồi import sang Google Ads. Có Facebook Pixel (fbq) thì bắn luôn.
      click_call · click_zalo · click_messenger — bấm nút liên hệ
+     click_cta       — bấm nút khác (Chọn gói, Nhận báo giá, ô loại website…), không phải chuyển đổi
+     Mọi lượt bấm kèm link_location (khu vực data-track-area), cta_id (id nút, hoặc
+     "<khu vực>-<loại>" khi nút không có id) và cta_text (chữ trên nút) để so hiệu quả từng nút.
      form_start      — khách bắt đầu điền một form
      package_selected — chọn gói (nút "Chọn gói" hoặc ô chọn trong form)
-     generate_lead   — form gửi THÀNH CÔNG (GAS trả ok)
+     generate_lead   — form gửi THÀNH CÔNG (GAS trả ok), kèm form_location = khu vực của form
      form_error      — gửi thất bại (để phát hiện sớm khi GAS lỗi)
    -------------------------------------------------------------------------- */
 function track(event, params = {}) {
@@ -60,7 +63,7 @@ function trackFb(event, params) {
 
 // Bắn generate_lead rồi mới gọi done() — chờ gtag gửi xong (tối đa 1,2s) vì
 // done() có thể chuyển sang trang cảm ơn, rời trang sớm quá là mất sự kiện.
-function trackLead({ form, package: pkg, phone }, done) {
+function trackLead({ form, package: pkg, phone, location: formLocation }, done) {
   let called = false;
   const once = () => { if (!called) { called = true; done(); } };
   try {
@@ -68,7 +71,7 @@ function trackLead({ form, package: pkg, phone }, done) {
       // Enhanced conversions: gtag tự chuẩn hoá + băm SHA-256 trước khi gửi.
       if (phone) window.gtag('set', 'user_data', { phone_number: '+84' + phone.slice(1) });
       window.gtag('event', 'generate_lead', {
-        form, package: pkg, currency: 'VND', value: 1,
+        form, package: pkg, form_location: formLocation || 'other', currency: 'VND', value: 1,
         event_callback: once, event_timeout: 1200,
       });
     }
@@ -117,20 +120,41 @@ function attributionNote() {
   return `[Nguồn] ${parts.join(' | ')}`;
 }
 
+// Thông tin chung của 1 nút cho báo cáo: khu vực, id (tự đặt theo khu vực nếu nút không có id), chữ trên nút.
+function ctaParams(el, kind) {
+  const area = el.closest('[data-track-area]');
+  const loc = area ? area.dataset.trackArea : 'other';
+  return {
+    link_location: loc,
+    cta_id: el.id || `${loc}-${kind}`,
+    cta_text: (el.innerText || el.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 60),
+    page: location.pathname,
+  };
+}
+
 function initClickTracking() {
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a) return;
     const href = a.getAttribute('href');
-    const area = a.closest('[data-track-area]');
-    const params = { link_location: area ? area.dataset.trackArea : 'other', page: location.pathname };
     let event = '';
     if (href.startsWith('tel:')) event = 'click_call';
     else if (/zalo\.me\//.test(href)) event = 'click_zalo';
     else if (a.hasAttribute('data-messenger') || /(^|\/\/)(m\.me|www\.messenger\.com)\//.test(href)) event = 'click_messenger';
     if (!event) return;
+    const params = ctaParams(a, event.replace('click_', ''));
     track(event, params);
     trackFb(event, params);
+  });
+
+  // Nút hành động không phải gọi/Zalo: Chọn gói (mở popup hoặc cuộn tới form), Nhận báo giá,
+  // ô loại website. Chỉ để so hiệu quả từng nút - chuyển đổi thật là generate_lead khi gửi form.
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-open-modal], [data-pick-package], [data-goto-form], [data-pick-website-type]');
+    if (!btn) return;
+    const kind = btn.dataset.pickWebsiteType ? 'website-type'
+      : (btn.dataset.package || btn.dataset.pickPackage) ? 'package' : 'form';
+    track('click_cta', ctaParams(btn, kind));
   });
 
   document.querySelectorAll('.modal__form').forEach((form) => {
@@ -1004,7 +1028,11 @@ function initTemplateActions() {
             if (done) done.hidden = false;
           };
           if (duplicate) { finish(); return; }
-          trackLead({ form: formAction, package: payload.goi_dich_vu || '', phone }, finish);
+          const formArea = form.closest('[data-track-area]');
+          trackLead({
+            form: formAction, package: payload.goi_dich_vu || '', phone,
+            location: formArea ? formArea.dataset.trackArea : 'other',
+          }, finish);
         })
         .catch((err) => {
           console.error('Gửi form thất bại:', err);

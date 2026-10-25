@@ -14,6 +14,11 @@ noi dung chung -> sua template o day roi chay lai:
     python3 scripts/build_lp.py
     python3 scripts/bump_asset_version.py
 
+Trang co "hand_edited": True (hien la /lp/website-doanh-nghiep-da-nang/) da duoc
+sua tay nhieu (banner 3 o gia + o loai website, popup chon goi, nhan xet khach hang,
+Zalo truoc nut Goi, khong Messenger...) nen script BO QUA, khong ghi de. Sua phan dung
+chung (du an top Google, FAQ, quy trinh...) thi phai sua tay them o trang do.
+
 Tat ca trang deu noindex (khong vao sitemap, khong canh tranh voi trang SEO
 /thiet-ke-website-da-nang/). KHONG chan /lp/ trong robots.txt — AdsBot can
 crawl duoc trang dich, va Google phai doc duoc the noindex.
@@ -170,7 +175,10 @@ VARIANTS = [
         "badge": "Tiết kiệm nhất",
     },
     {
+        # Trang nay da sua tay truc tiep html/lp/website-doanh-nghiep-da-nang/index.html
+        # (10/2026) -> main() bo qua. Cau hinh duoi day chi con de tham khao, khong con dung.
         "slug": "website-doanh-nghiep-da-nang",
+        "hand_edited": True,
         "title": "Thiết kế website doanh nghiệp Đà Nẵng | Web100",
         "description": "Website doanh nghiệp tại Đà Nẵng thiết kế theo thương hiệu, có dự án thực tế. Từ gói 3.500.000đ tặng tên miền + hosting năm đầu.",
         "h1": "Website doanh nghiệp Đà Nẵng",
@@ -687,7 +695,7 @@ def landing(v: dict) -> str:
 <!-- ============================ LOGO KHÁCH HÀNG ============================ -->
 {trust_section(v, logos)}
 <!-- ============================ BẢNG GIÁ ============================ -->
-<section class="pricing lp-pricing" id="bang-gia">
+<section class="pricing lp-pricing" id="bang-gia" data-track-area="pricing">
   <div class="container">
     <div class="lp-head">
       <span class="eyebrow">Bảng giá</span>
@@ -782,6 +790,9 @@ def thank_you() -> str:
 
 def main() -> None:
     for v in VARIANTS:
+        if v.get("hand_edited"):
+            print("skip (sua tay)", f'html/lp/{v["slug"]}/index.html')
+            continue
         out = LP_DIR / v["slug"] / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(landing(v), encoding="utf-8")
