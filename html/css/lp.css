@@ -171,29 +171,27 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 @media (max-width: 700px) {
   .lp-hero--danang::before { background-image: url("/images/lp/cau-rong-800.webp"); background-position: center 40%; }
 }
-/* LP Hà Nội (Tháp Rùa - Hồ Gươm) và TP.HCM (bờ sông Sài Gòn, Bitexco): cùng kiểu nền mờ như Đà Nẵng */
+/* LP TP.HCM (bờ sông Sài Gòn, Bitexco): cùng kiểu nền mờ như Đà Nẵng. LP Hà Nội không dùng ảnh nền. */
 /* /images/* cache 30 ngày: thay ảnh thì ĐỔI TÊN FILE (vd -v2, -v3), không ghi đè file cũ cùng tên. */
-.lp-hero--hanoi, .lp-hero--hcm { position: relative; isolation: isolate; }
-.lp-hero--hanoi::before, .lp-hero--hcm::before {
+.lp-hero--hcm { position: relative; isolation: isolate; }
+.lp-hero--hcm::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   /* Ảnh nguyên khung, rộng 100% - cao tự động (không cắt, không phóng thêm để phủ kín chiều cao);
      phần banner thấp hơn ảnh thì ảnh mờ dần xuống nền. */
-  background: url("/images/lp/ha-noi-v4-1600.webp") center top / 100% auto no-repeat;
+  background: url("/images/lp/sai-gon-v3-1600.webp") center top / 100% auto no-repeat;
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
   opacity: 0.18;
 }
-.lp-hero--hcm::before { background-image: url("/images/lp/sai-gon-v3-1600.webp"); }
 @media (max-width: 700px) {
   /* Banner mobile rất cao: phủ kín (cover) sẽ phóng ảnh to tới mức không nhận ra công trình
      -> hiện trọn ảnh vuông ở đầu banner, phía dưới để nền trắng. */
-  .lp-hero--hanoi::before, .lp-hero--hcm::before {
+  .lp-hero--hcm::before {
     background-size: 100% auto; background-position: center top;
     /* ảnh vuông cao đúng 100vw: mờ dần ở 40% dưới cho khỏi lộ mép cắt */
     -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
     mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
   }
-  .lp-hero--hanoi::before { background-image: url("/images/lp/ha-noi-v4-800.webp"); }
   .lp-hero--hcm::before { background-image: url("/images/lp/sai-gon-v2-800.webp"); }
 }
 
