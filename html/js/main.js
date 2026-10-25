@@ -169,6 +169,38 @@ function initPackagePicker() {
     select.addEventListener('change', () => track('website_type_selected', { website_type: select.value }));
   });
 
+  /* Ô "Bạn cần website gì?" trên banner ([data-pick-website-type], data-target = id khối form):
+     bấm là chọn sẵn đúng loại đó ở ô "Website cần thiết kế" của form. Form đang khuất (mobile:
+     form nằm dưới banner) thì cuộn tới; còn lại chỉ đặt con trỏ vào ô SĐT. Đổi tay ở select
+     thì ô tương ứng trên banner cũng sáng theo. */
+  const typeChips = [...document.querySelectorAll('[data-pick-website-type]')];
+  const syncTypeChips = (value) => {
+    typeChips.forEach((c) => {
+      const on = c.dataset.pickWebsiteType === value;
+      c.classList.toggle('is-active', on);
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  };
+  typeChips.forEach((chip) => {
+    chip.setAttribute('aria-pressed', 'false');
+    chip.addEventListener('click', () => {
+      const target = document.querySelector(chip.dataset.target);
+      const select = target && target.querySelector('select[name="loai_website"]');
+      if (!select) return;
+      select.value = chip.dataset.pickWebsiteType;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      const r = target.getBoundingClientRect();
+      const inView = r.top >= 0 && r.bottom <= window.innerHeight;
+      if (!inView) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const phone = target.querySelector('[name="dienthoai"]');
+      if (phone && !phone.value) setTimeout(() => phone.focus({ preventScroll: true }), inView ? 0 : 450);
+    });
+  });
+  new Set(typeChips.map((c) => c.dataset.target)).forEach((sel) => {
+    const select = document.querySelector(`${sel} select[name="loai_website"]`);
+    if (select) select.addEventListener('change', () => syncTypeChips(select.value));
+  });
+
   document.querySelectorAll('.modal__form input[name="goi_dich_vu"][type="radio"]').forEach((radio) => {
     radio.addEventListener('change', () => {
       if (radio.checked) track('package_selected', { package: radio.value, source: 'form' });
@@ -816,8 +848,13 @@ function initTemplateActions() {
       if (btn.dataset.package) {
         const pkgInput = modal.querySelector('[name="goi_dich_vu"]');
         if (pkgInput) pkgInput.value = btn.dataset.package;
+        // Popup có dòng "Gói đã chọn: ..." ([data-package-label]) thì hiện tên gói cho khách thấy.
+        modal.querySelectorAll('[data-package-label]').forEach((el) => { el.textContent = btn.dataset.package; });
+        track('package_selected', { package: btn.dataset.package, source: 'pricing' });
       }
       openModal(modal);
+      const phone = modal.querySelector('[name="dienthoai"]');
+      if (phone) setTimeout(() => phone.focus({ preventScroll: true }), 300);
     });
   });
 

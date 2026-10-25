@@ -428,6 +428,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 }
 .lp-hero__price:hover { border-color: var(--green); transform: translateY(-2px); }
 .lp-hero__price span { font-size: 13px; font-weight: 600; color: var(--muted); }
+.lp-hero__price i { font-style: normal; }
 .lp-hero__price b { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
 .lp-hero__price--featured { border-color: var(--green); background: var(--green-tint); }
 .lp-hero__price--featured b { color: var(--green-deep); }
@@ -437,6 +438,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 
 /* ---------- Nhận xét khách hàng ---------- */
 .lp-reviews { padding: 88px 0; }
+.lp-reviews .lp-head { max-width: 1000px; }
 .lp-reviews__list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
 .lp-review {
   grid-column: span 2;
@@ -466,7 +468,51 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-review, .lp-review:nth-child(4) { flex: 0 0 82%; scroll-snap-align: start; }
 }
 @media (max-width: 700px) {
-  .lp-hero__price { flex: 1 1 0; padding: 10px 14px; }
-  .lp-hero__price b { font-size: 19px; }
+  .lp-hero__prices { gap: 8px; }
+  .lp-hero__price { flex: 1 1 0; min-width: 0; padding: 9px 10px; }
+  .lp-hero__price span { font-size: 12px; white-space: nowrap; }
+  .lp-hero__price i { display: none; } /* mobile: "Chuyên nghiệp" thay vì "Gói Chuyên nghiệp" cho vừa 3 ô */
+  .lp-hero__price b { font-size: clamp(13px, 3.9vw, 19px); white-space: nowrap; }
   .lp-reviews__list { margin: 0 -18px; padding: 0 18px 8px; scroll-padding: 0 18px; }
 }
+
+/* Thanh liên hệ dưới mobile chỉ 3 mục (trang không dùng Messenger) */
+@media (max-width: 900px) {
+  .lp-bar--3 { grid-template-columns: 1fr 1fr 1.6fr; }
+}
+
+/* Popup đăng ký gói (nút "Chọn gói" ở bảng giá): dùng lại style form lead .lp-form nhưng giữ
+   hành vi popup của .modal (giới hạn rộng/cao, trượt lên khi mở) mà .lp-form.modal đã tắt. */
+.lp-form--popup.modal {
+  max-width: 440px; max-height: 90vh; overflow-y: auto;
+  transform: translateY(16px); border: 0;
+}
+.modal-overlay.is-open .lp-form--popup.modal { transform: translateY(0); }
+.lp-form--popup .lp-form__title { padding-right: 40px; }
+.lp-form .lp-form__picked {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 4px 0 12px; padding: 6px 14px; border-radius: 999px;
+  background: var(--green-tint); color: var(--green-deep);
+  font-size: 13.5px; font-weight: 600;
+}
+.lp-form__picked b { font-weight: 800; }
+
+/* Ô "Bạn cần website gì?" cuối cột trái banner - bấm là chọn sẵn loại website ở form */
+.lp-hero__types { margin-top: 26px; }
+.lp-hero__types-title { margin: 0 0 10px; font-size: 14px; font-weight: 700; color: var(--ink); }
+.lp-hero__types-list { display: flex; flex-wrap: wrap; gap: 8px; max-width: 560px; }
+.lp-hero__type {
+  padding: 8px 14px; border-radius: 999px;
+  background: #fff; border: 1px solid var(--line);
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
+  cursor: pointer; transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.lp-hero__type:hover { border-color: var(--green); color: var(--green-deep); }
+.lp-hero__type.is-active { background: var(--green-tint); border-color: var(--green); color: var(--green-deep); }
+@media (max-width: 700px) {
+  .lp-hero__types { margin-top: 22px; }
+  .lp-hero__type { padding: 8px 12px; font-size: 13.5px; }
+}
+/* Khối liên hệ cuối trang: nút Gọi giờ nằm cuối (Zalo lên trước) - giữ icon màu xanh lá,
+   không ăn màu xanh dương của rule a:last-child (vốn dành cho Messenger) */
+.lp-final__contacts a[href^="tel:"] svg { color: var(--green); }
