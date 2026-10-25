@@ -171,6 +171,19 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 @media (max-width: 700px) {
   .lp-hero--danang::before { background-image: url("/images/lp/cau-rong-800.webp"); background-position: center 40%; }
 }
+/* LP Hà Nội (cầu Thê Húc + đền Ngọc Sơn) và TP.HCM (Landmark 81): cùng kiểu nền mờ như Đà Nẵng */
+.lp-hero--hanoi, .lp-hero--hcm { position: relative; isolation: isolate; }
+.lp-hero--hanoi::before, .lp-hero--hcm::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: url("/images/lp/ho-guom-1600.webp") center 50% / cover no-repeat;
+  opacity: 0.15;
+}
+/* ảnh đêm (nền tối) -> mờ hơn để banner không bị xám */
+.lp-hero--hcm::before { background-image: url("/images/lp/landmark-81-1600.webp"); opacity: 0.09; }
+@media (max-width: 700px) {
+  .lp-hero--hanoi::before { background-image: url("/images/lp/ho-guom-800.webp"); }
+  .lp-hero--hcm::before { background-image: url("/images/lp/landmark-81-800.webp"); }
+}
 
 /* ------------------------------ Form lead ------------------------------ */
 /* .modal cho main.js tìm .modal__done; bỏ các thuộc tính popup của .modal. */
