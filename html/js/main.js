@@ -132,6 +132,65 @@ function ctaParams(el, kind) {
   };
 }
 
+/* Báo ngầm về GAS (action "click" -> email NOTIFY_EMAIL + sheet ClickLienHe) mỗi lượt bấm
+   Gọi / Zalo trên landing quảng cáo (/lp/), để đối chiếu CPA và biết nút nào hiệu quả.
+   Mã nút cố định theo khu vực (data-track-area) - đổi mã là báo cáo cũ không so được nữa. */
+const CONTACT_BUTTONS = {
+  'call:header': ['phone-1', 'SĐT trên header (đầu trang)'],
+  'call:hero': ['phone-2', 'SĐT trên banner'],
+  'call:float': ['phone-3', 'SĐT nút tròn góc phải (máy tính)'],
+  'call:sticky-bar': ['phone-4', 'SĐT thanh liên hệ dưới cùng (điện thoại)'],
+  'call:final': ['phone-5', 'SĐT khối liên hệ cuối trang'],
+  'call:footer': ['phone-6', 'SĐT ở chân trang'],
+  'call:thanks': ['phone-7', 'SĐT trang cảm ơn'],
+  'zalo:hero': ['zalo-1', 'Zalo trên banner'],
+  'zalo:float': ['zalo-2', 'Zalo nút tròn góc phải (máy tính)'],
+  'zalo:sticky-bar': ['zalo-3', 'Zalo thanh liên hệ dưới cùng (điện thoại)'],
+  'zalo:final': ['zalo-4', 'Zalo khối liên hệ cuối trang'],
+  'zalo:thanks': ['zalo-5', 'Zalo trang cảm ơn'],
+};
+
+function contactButton(kind, loc) {
+  const b = CONTACT_BUTTONS[`${kind}:${loc}`];
+  return b ? { code: b[0], label: b[1] } : { code: `${kind === 'call' ? 'phone' : 'zalo'}-${loc}`, label: `${kind === 'call' ? 'SĐT' : 'Zalo'} (${loc})` };
+}
+
+function reportContactClick(kind, params) {
+  if (!location.pathname.startsWith('/lp/') || !window.WEB100_FORM_URL) return;
+  const btn = contactButton(kind, params.link_location);
+  // Bấm đúp / bấm lại cùng 1 nút trong 60 giây chỉ báo 1 lần.
+  const dedupeKey = `web100_click_${btn.code}`;
+  try {
+    const last = Number(sessionStorage.getItem(dedupeKey) || 0);
+    if (Date.now() - last < 60000) return;
+    sessionStorage.setItem(dedupeKey, String(Date.now()));
+  } catch (e) { /* private mode: vẫn gửi */ }
+  let attr = {};
+  try { attr = JSON.parse(localStorage.getItem(ATTR_KEY) || 'null') || {}; } catch (e) { /* bỏ qua */ }
+  if (attr.ts && Date.now() - attr.ts > ATTR_TTL) attr = {};
+  const payload = {
+    action: 'click',
+    loai: kind === 'call' ? 'Gọi điện' : 'Zalo',
+    ma_nut: btn.code,
+    vi_tri: btn.label,
+    chu_tren_nut: params.cta_text,
+    trang: location.pathname,
+    thiet_bi: window.matchMedia('(max-width: 900px)').matches ? 'Điện thoại' : 'Máy tính',
+    referrer: document.referrer.slice(0, 200),
+  };
+  ATTR_PARAMS.forEach((k) => { if (attr[k]) payload[k] = attr[k]; });
+  if (attr.landing) payload.landing_quang_cao = attr.landing;
+  if (attr.ts) payload.click_quang_cao_luc = new Date(attr.ts).toISOString();
+  // sendBeacon: gửi ngầm, không chặn việc mở app gọi điện / Zalo, vẫn đi được khi trang bị rời đi.
+  const body = JSON.stringify(payload);
+  try {
+    if (navigator.sendBeacon && navigator.sendBeacon(window.WEB100_FORM_URL, new Blob([body], { type: 'text/plain;charset=utf-8' }))) return;
+  } catch (e) { /* rơi xuống fetch */ }
+  try {
+    fetch(window.WEB100_FORM_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body });
+  } catch (e) { /* đo lường không được làm hỏng trang */ }
+}
+
 function initClickTracking() {
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
@@ -143,6 +202,11 @@ function initClickTracking() {
     else if (a.hasAttribute('data-messenger') || /(^|\/\/)(m\.me|www\.messenger\.com)\//.test(href)) event = 'click_messenger';
     if (!event) return;
     const params = ctaParams(a, event.replace('click_', ''));
+    if (event === 'click_call' || event === 'click_zalo') {
+      const kind = event === 'click_call' ? 'call' : 'zalo';
+      params.cta_code = contactButton(kind, params.link_location).code;
+      reportContactClick(kind, params);
+    }
     track(event, params);
     trackFb(event, params);
   });
