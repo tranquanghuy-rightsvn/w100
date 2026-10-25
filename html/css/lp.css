@@ -176,10 +176,14 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .lp-hero--hanoi, .lp-hero--hcm { position: relative; isolation: isolate; }
 .lp-hero--hanoi::before, .lp-hero--hcm::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: url("/images/lp/ho-guom-v2-1600.webp") center 50% / cover no-repeat;
+  /* Ảnh nguyên khung, rộng 100% - cao tự động (không cắt, không phóng thêm để phủ kín chiều cao);
+     phần banner thấp hơn ảnh thì ảnh mờ dần xuống nền. */
+  background: url("/images/lp/ho-guom-v3-1600.webp") center top / 100% auto no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
   opacity: 0.18;
 }
-.lp-hero--hcm::before { background-image: url("/images/lp/sai-gon-v2-1600.webp"); }
+.lp-hero--hcm::before { background-image: url("/images/lp/sai-gon-v3-1600.webp"); }
 @media (max-width: 700px) {
   /* Banner mobile rất cao: phủ kín (cover) sẽ phóng ảnh to tới mức không nhận ra công trình
      -> hiện trọn ảnh vuông ở đầu banner, phía dưới để nền trắng. */
