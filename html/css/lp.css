@@ -440,6 +440,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .lp-reviews__list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
 .lp-review {
   grid-column: span 2;
+  margin: 0;
   display: flex; flex-direction: column; gap: 14px;
   padding: 26px 24px; background: #fff;
   border: 1px solid var(--line); border-radius: var(--radius);
