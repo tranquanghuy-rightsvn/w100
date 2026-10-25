@@ -517,9 +517,8 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
    không ăn màu xanh dương của rule a:last-child (vốn dành cho Messenger) */
 .lp-final__contacts a[href^="tel:"] svg { color: var(--green); }
 
-/* ---------- Vệt sáng lướt qua các nút / ô quan trọng (.lp-shine) ----------
-   Tự chạy định kỳ (mobile không có hover), 3 nhịp lệch nhau (--late, --later) để các nút không
-   loé cùng lúc. Dùng ::before - ::after của .btn đã dành cho vòng xoay "đang gửi". */
+/* ---------- Vệt sáng lướt qua khi rê chuột (.lp-shine) ----------
+   Giống nút SĐT ở header. Dùng ::before - ::after của .btn đã dành cho vòng xoay "đang gửi". */
 .lp-shine { position: relative; overflow: hidden; isolation: isolate; }
 .lp-shine::before {
   content: "";
@@ -529,18 +528,12 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
-  animation: lp-shine 4.2s ease-in-out 1.2s infinite;
 }
-.lp-shine--late::before { animation-delay: 2.6s; }
-.lp-shine--later::before { animation-delay: 3.6s; }
+.lp-shine:hover::before { transform: translateX(330%) skewX(-20deg); transition: transform 0.75s ease; }
 /* Ô giá nền nhạt: vệt sáng phải đậm hơn mới thấy */
 .lp-hero__price.lp-shine::before {
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0) 100%);
 }
-@keyframes lp-shine {
-  0% { transform: translateX(-160%) skewX(-20deg); }
-  28%, 100% { transform: translateX(330%) skewX(-20deg); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .lp-shine::before { animation: none; display: none; }
+  .lp-shine:hover::before { transition: none; transform: translateX(-160%) skewX(-20deg); }
 }
