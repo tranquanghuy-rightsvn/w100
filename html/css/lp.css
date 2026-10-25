@@ -178,7 +178,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   content: ""; position: absolute; inset: 0; z-index: -1;
   /* Ảnh nguyên khung, rộng 100% - cao tự động (không cắt, không phóng thêm để phủ kín chiều cao);
      phần banner thấp hơn ảnh thì ảnh mờ dần xuống nền. */
-  background: url("/images/lp/ho-guom-v3-1600.webp") center top / 100% auto no-repeat;
+  background: url("/images/lp/ha-noi-v4-1600.webp") center top / 100% auto no-repeat;
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0, #000 65%, transparent 100%);
   opacity: 0.18;
@@ -193,7 +193,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
     -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
     mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
   }
-  .lp-hero--hanoi::before { background-image: url("/images/lp/ho-guom-v2-800.webp"); }
+  .lp-hero--hanoi::before { background-image: url("/images/lp/ha-noi-v4-800.webp"); }
   .lp-hero--hcm::before { background-image: url("/images/lp/sai-gon-v2-800.webp"); }
 }
 
