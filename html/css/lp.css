@@ -171,18 +171,25 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 @media (max-width: 700px) {
   .lp-hero--danang::before { background-image: url("/images/lp/cau-rong-800.webp"); background-position: center 40%; }
 }
-/* LP Hà Nội (cầu Thê Húc + đền Ngọc Sơn) và TP.HCM (Landmark 81): cùng kiểu nền mờ như Đà Nẵng */
+/* LP Hà Nội (Tháp Rùa - Hồ Gươm) và TP.HCM (Bưu điện Thành phố): cùng kiểu nền mờ như Đà Nẵng */
 .lp-hero--hanoi, .lp-hero--hcm { position: relative; isolation: isolate; }
 .lp-hero--hanoi::before, .lp-hero--hcm::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: url("/images/lp/ho-guom-1600.webp") center 50% / cover no-repeat;
-  opacity: 0.15;
+  background: url("/images/lp/thap-rua-1600.webp") center 50% / cover no-repeat;
+  opacity: 0.18;
 }
-/* ảnh đêm (nền tối) -> mờ hơn để banner không bị xám */
-.lp-hero--hcm::before { background-image: url("/images/lp/landmark-81-1600.webp"); opacity: 0.09; }
+.lp-hero--hcm::before { background-image: url("/images/lp/buu-dien-sai-gon-1600.webp"); }
 @media (max-width: 700px) {
-  .lp-hero--hanoi::before { background-image: url("/images/lp/ho-guom-800.webp"); }
-  .lp-hero--hcm::before { background-image: url("/images/lp/landmark-81-800.webp"); }
+  /* Banner mobile rất cao: phủ kín (cover) sẽ phóng ảnh to tới mức không nhận ra công trình
+     -> hiện trọn ảnh vuông ở đầu banner, phía dưới để nền trắng. */
+  .lp-hero--hanoi::before, .lp-hero--hcm::before {
+    background-size: 100% auto; background-position: center top;
+    /* ảnh vuông cao đúng 100vw: mờ dần ở 40% dưới cho khỏi lộ mép cắt */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
+    mask-image: linear-gradient(to bottom, #000 0, #000 60vw, transparent 100vw);
+  }
+  .lp-hero--hanoi::before { background-image: url("/images/lp/thap-rua-800.webp"); }
+  .lp-hero--hcm::before { background-image: url("/images/lp/buu-dien-sai-gon-800.webp"); }
 }
 
 /* ------------------------------ Form lead ------------------------------ */
