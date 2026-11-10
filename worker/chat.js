@@ -19,6 +19,16 @@ const MAX_TOOL_ROUNDS = 2;
 const MAX_TOKENS = 600;
 
 const CAU_LOI = `Mình đang gặp trục trặc kỹ thuật, bạn nhắn Zalo ${ZALO} để Web100 báo giá trực tiếp nhé.`;
+// Quy tắc 4 (quy-tac-ai.md): ngành không có thì câu trả lời phải mở đầu bằng câu này. Model được nhắc
+// qua tool_result nhưng không phải lúc nào cũng tuân, nên server tự ghép vào nếu thiếu.
+const CAU_GAN_NHAT = 'Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp.';
+
+/** Đảm bảo câu dẫn cho trường hợp ngành gần nhất luôn mở đầu bằng CAU_GAN_NHAT. */
+export function epCauGanNhat(text, baoGia) {
+  if (!baoGia || baoGia.ly_do !== 'gan_nhat') return text;
+  if (/chưa có trong dữ liệu/i.test(text)) return text;
+  return `${CAU_GAN_NHAT} ${text}`.trim();
+}
 
 const QUY_TAC = `Bạn là trợ lý báo giá của Web100 (web100.vn), công ty thiết kế website tại Đà Nẵng, làm cho khách toàn quốc.
 Xưng "mình", gọi khách là "bạn". Trả lời tiếng Việt, ngắn gọn, 1 đến 3 câu, văn nói tự nhiên.
@@ -183,12 +193,12 @@ export async function handleChat(request, env, deps = {}) {
       if (res.stop_reason === 'refusal') {
         return reply({ ok: true, reply: `Câu này mình không hỗ trợ được, bạn nhắn Zalo ${ZALO} nhé.`, bao_gia: null });
       }
-      return reply({ ok: true, reply: text || lastText || CAU_LOI, bao_gia: baoGia });
+      return reply({ ok: true, reply: epCauGanNhat(text || lastText || CAU_LOI, baoGia), bao_gia: baoGia });
     }
     // Quá số vòng tool: vẫn trả bảng giá (nếu có) kèm câu dẫn chung.
     return reply({
       ok: true,
-      reply: lastText || (baoGia ? `Đây là bảng giá ngành ${baoGia.nganh.ten}, bạn xem mẫu nào ưng thì nói mình nhé.` : CAU_LOI),
+      reply: epCauGanNhat(lastText || (baoGia ? `Đây là bảng giá ngành ${baoGia.nganh.ten}, bạn xem mẫu nào ưng thì nói mình nhé.` : CAU_LOI), baoGia),
       bao_gia: baoGia,
     });
   } catch (err) {

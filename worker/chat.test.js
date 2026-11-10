@@ -1,7 +1,7 @@
 // node --test worker/   (không gọi API thật: client giả trả về kịch bản định sẵn)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { handleChat, cleanMessages, runTool, TOOL, buildSystem } from './chat.js';
+import { handleChat, cleanMessages, runTool, TOOL, buildSystem, epCauGanNhat } from './chat.js';
 
 const post = (body, ip = '1.2.3.4') => new Request('https://web100.vn/api/chat', {
   method: 'POST',
@@ -113,4 +113,23 @@ test('chat: quá 30 request / IP -> 429', async () => {
     last = await handleChat(post({ messages: [{ role: 'user', content: 'hi' }] }, '9.9.9.9'), {}, { client, training: '' });
   }
   assert.equal(last.status, 429);
+});
+
+test('ngành gần nhất: câu trả lời luôn mở đầu bằng câu "chưa có trong dữ liệu"', async () => {
+  const gan = { ly_do: 'gan_nhat' };
+  assert.match(epCauGanNhat('Có 18 mẫu.', gan), /^Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp\. Có 18 mẫu\.$/);
+  assert.equal(epCauGanNhat('Ngành của bạn chưa có trong dữ liệu, mình gợi ý thú cưng.', gan), 'Ngành của bạn chưa có trong dữ liệu, mình gợi ý thú cưng.');
+  assert.equal(epCauGanNhat('Có 18 mẫu.', { ly_do: 'exact' }), 'Có 18 mẫu.');
+  assert.equal(epCauGanNhat('Chào bạn.', null), 'Chào bạn.');
+
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_2', name: 'tra_bao_gia', input: { slug: 'ban-thu-cung-thuc-an-va-phu-kien-thu-cung', ly_do: 'gan_nhat' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Bên mình có 18 mẫu thú cưng, giá 3 đến 5 triệu.' }] },
+  ]);
+  const res = await handleChat(post({ messages: [{ role: 'user', content: 'mình bán cá cảnh' }] }), {}, { client, training: '' });
+  const body = await res.json();
+  assert.match(body.reply, /^Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết/);
+  assert.match(body.reply, /18 mẫu thú cưng/);
+  assert.equal(body.bao_gia.ly_do, 'gan_nhat');
+  assert.match(JSON.parse(client.calls[1].messages[2].content[0].content).ghi_chu, /KHÔNG có trong dữ liệu/);
 });
