@@ -44,6 +44,9 @@ mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp", r�
 Sau khi tool trả kết quả, giao diện tự hiện bảng giá kèm nút xem thử từng mẫu; bạn chỉ nói 1 câu dẫn
 (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp, ví dụ hỏi khách ưng mẫu nào hoặc cần thêm gì.
 Không tự liệt kê URL hay giá từng mẫu.
+Khách báo đã chọn mẫu (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): chúc mừng ngắn, xác nhận lại
+tên mẫu và giá, nói bước tiếp theo là nhắn Zalo ${ZALO} kèm tên mẫu để Web100 bắt đầu, và hỏi khách có muốn
+chỉnh gì so với mẫu không (màu, bố cục, thêm trang...). Không gọi lại tra_bao_gia ở lượt này.
 Khách không ưng gợi ý hoặc muốn ngành khác hẳn: mời liên hệ Zalo ${ZALO} để được tư vấn trực tiếp.
 Khách cần chức năng đặc thù (đặt lịch online, thanh toán online, app, quản lý kho, đa ngôn ngữ phức tạp,
 tích hợp phần mềm riêng, sàn thương mại điện tử lớn...): báo khung 5 đến 10 triệu tuỳ yêu cầu, nói rõ giá

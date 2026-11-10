@@ -217,6 +217,43 @@
 }
 .bg-popup__xem:hover { background: var(--green); color: #fff; }
 .bg-popup__xem svg { width: 14px; height: 14px; }
+/* Ô chứa 2 nút Xem thử + Chọn mẫu này (nút chọn chỉ hiện sau khi đã xem) */
+.bg-popup__acts { white-space: nowrap; }
+.bg-popup__acts > * { vertical-align: middle; }
+.bg-popup__acts .bg-popup__xem { margin-right: 8px; }
+.bg-popup__chon {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--green-dark);
+  background: var(--green-dark);
+  color: #fff;
+  font: inherit; font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.bg-popup__chon:hover { background: var(--green-deep); transform: translateY(-1px); }
+.bg-popup__chon[hidden] { display: none; }
+.bg-popup__chon:disabled { background: var(--green-tint); color: var(--green-dark); cursor: default; transform: none; }
+.bg-popup__chon svg { width: 14px; height: 14px; }
+/* Dòng đã xem: nền vàng nhạt + nhãn; dòng đã chọn: nền xanh nhạt + nhãn có dấu tick */
+.bg-popup tr.is-viewed td { background: #fff8e1; }
+.bg-popup tr.is-chosen td { background: var(--green-tint); }
+.bg-popup__badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+.bg-popup__badge[hidden] { display: none; }
+.bg-popup__badge--viewed { background: #ffe08a; color: #7a4d00; }
+.bg-popup__badge--chosen { background: var(--green-dark); color: #fff; }
+.bg-popup__badge svg { width: 11px; height: 11px; }
+.lh-chat__table-btn--zalo { background: var(--green-dark); color: #fff; border-color: var(--green-dark); text-decoration: none; }
+.lh-chat__table-btn--zalo:hover { background: var(--green-deep); }
 .bg-popup__foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 16px; }
 .bg-popup__foot small { color: var(--muted); font-size: 12.5px; }
 
@@ -245,6 +282,11 @@
   .bg-popup table { font-size: 13px; }
   .bg-popup__gia { font-size: 13px; }
   .bg-popup__xem { padding: 6px 10px; font-size: 12px; }
+  .bg-popup__acts { white-space: normal; }
+  .bg-popup__acts .bg-popup__xem { margin: 0 0 6px; }
+  .bg-popup__chon { padding: 6px 10px; font-size: 12px; }
+  .bg-popup__badge { display: inline-flex; margin: 4px 0 0; }
+  .bg-popup__badge[hidden] { display: none; }
   .lh-hero h1 { font-size: 28px; }
   .lh-grid { grid-template-columns: 1fr; }
 }
