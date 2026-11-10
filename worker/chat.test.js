@@ -225,3 +225,10 @@ test('system: mỗi lượt hỏi 1 điều, nâng cấp website xin link trư�
   assert.match(sys, /MỖI LƯỢT CHỈ HỎI 1 ĐIỀU/);
   assert.match(sys, /lượt đầu chỉ xin link website hiện tại/);
 });
+
+test('system: chat AI trên website có giá cố định 1tr, không xếp vào khung 5 đến 10 triệu', async () => {
+  const { readFileSync } = await import('node:fs');
+  const sys = buildSystem(readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8'), 'lp');
+  assert.match(sys, /Chat AI tự tư vấn \/ tự báo giá.*1\.000\.000đ.*chưa bao gồm chi phí token/s);
+  assert.match(sys, /NGOẠI LỆ: tính năng nào có giá riêng/);
+});

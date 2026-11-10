@@ -64,6 +64,9 @@ Xếp hạng tại thời điểm 11/2026
 3. https://xevipnoibai.com từ khoá: Taxi nội bài (top 6)
 ...
 
+TÍNH NĂNG THÊM CÓ GIÁ CỐ ĐỊNH (không thuộc nhóm chức năng đặc thù 5 đến 10 triệu):
+- Chat AI tự tư vấn / tự báo giá cho khách trên website (giống AI đang nói chuyện với bạn): cộng thêm 1.000.000đ vào giá website. Giá này chưa bao gồm chi phí token AI (phí dùng AI tính theo lượng tin nhắn thực tế, khách tự chi trả).
+
 KHÁC:
 - Địa chỉ văn phòng: 85 Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng. Nhận khách toàn quốc, làm việc online.
 - Làm việc trực tiếp được ở cả Đà Nẵng và Hà Nội, ở Hà Nội có nhân viên.
