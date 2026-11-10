@@ -1,13 +1,20 @@
-// Cloudflare Worker (Static Assets) phục vụ web100.vn — thư mục html/ là toàn bộ site,
-// không có code Worker riêng. Mỗi lần push lên master, Cloudflare Workers Builds tự deploy.
+// Cloudflare Worker (Static Assets) phục vụ web100.vn — thư mục html/ là toàn bộ site.
+// Code Worker (worker/index.js) CHỈ chạy cho các URL trong "run_worker_first" (API báo giá);
+// mọi URL khác Cloudflare trả thẳng file tĩnh. Mỗi lần push lên master, Workers Builds tự deploy.
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   // Tên Worker THẬT trên Cloudflare (domain web100.vn gắn vào Worker này). Sai tên = wrangler
   // tạo một Worker mới thay vì cập nhật production.
   "name": "w100",
   "compatibility_date": "2026-09-01",
+  // API JSON /bao-gia/<nganh> (dữ liệu worker/bao-gia.json, sinh bởi scripts/build_bao_gia.py).
+  "main": "./worker/index.js",
   "assets": {
     "directory": "./html",
+    // Tên binding để Worker chuyển tiếp mọi request không phải API về file tĩnh.
+    "binding": "ASSETS",
+    // Chỉ các URL này mới đi qua Worker; còn lại phục vụ tĩnh trực tiếp (không tốn request Worker).
+    "run_worker_first": ["/bao-gia", "/bao-gia/*"],
     // Mọi URL của site kết thúc bằng "/" và nội dung nằm ở <thư-mục>/index.html. Giữ đúng
     // hành vi mặc định trước đây: "/website-ban-hang" tự chuyển về "/website-ban-hang/".
     "html_handling": "auto-trailing-slash",
