@@ -87,20 +87,139 @@
 .lh-hours strong { font-size: 14px; color: var(--ink); }
 .lh-hours span { font-size: 13.5px; color: var(--muted); }
 
-/* ------------------------------ Form liên hệ & bản đồ ------------------------------ */
-/* Tái sử dụng đúng khối .modal/.modal__form/.modal__done (vốn dùng cho popup
-   "Yêu cầu tư vấn") nhưng đặt tĩnh ngay trên trang thay vì trong overlay —
-   main.js đã tự nhận .modal__form và xử lý submit (chặn thật, hiện .modal__done). */
+/* ------------------------------ Chat AI báo giá & bản đồ ------------------------------ */
+/* Thay cho form "Gửi yêu cầu tư vấn" cũ: khung chat gọi POST /api/chat (html/js/chat-bao-gia.js),
+   khi AI tra được ngành thì mở popup bảng giá (.bg-popup) dùng lại .modal-overlay/.modal của style.css. */
 .lh-form { padding: 24px 0 72px; }
 .lh-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
-.lh-form-card {
-  position: static;
-  width: 100%;
-  max-width: none;
-  max-height: none;
-  box-shadow: none;
+.lh-chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  background: #fff;
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
+.lh-chat__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-alt);
+}
+.lh-chat__head .modal__title { font-size: 19px; margin-bottom: 4px; padding-right: 0; }
+.lh-chat__head p { font-size: 13.5px; color: var(--muted); margin: 0; }
+.lh-chat__avatar {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 14px;
+  background: var(--green-tint); color: var(--green-dark);
+}
+.lh-chat__avatar svg { width: 24px; height: 24px; }
+.lh-chat__log {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 20px 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.lh-chat__msg {
+  max-width: 85%;
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.lh-chat__msg--ai { align-self: flex-start; background: var(--bg-alt); color: var(--ink); border-bottom-left-radius: 4px; }
+.lh-chat__msg--user { align-self: flex-end; background: var(--green-dark); color: #fff; border-bottom-right-radius: 4px; }
+.lh-chat__msg--error { align-self: flex-start; background: #fff3f0; color: #a3321b; border-bottom-left-radius: 4px; }
+.lh-chat__msg--typing { align-self: flex-start; background: var(--bg-alt); color: var(--muted); letter-spacing: 3px; }
+.lh-chat__msg--typing::after { content: "..."; animation: lh-dots 1.2s steps(4, end) infinite; }
+@keyframes lh-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+/* Nút mở lại bảng giá, đính ngay dưới câu dẫn của AI */
+.lh-chat__table-btn {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--green);
+  background: #fff;
+  color: var(--green-dark);
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.lh-chat__table-btn:hover { background: var(--green-tint); }
+.lh-chat__table-btn svg { width: 16px; height: 16px; }
+.lh-chat__chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 20px 0; }
+.lh-chat__chips button {
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.lh-chat__chips button:hover { border-color: var(--green); color: var(--green-dark); }
+.lh-chat__chips[hidden] { display: none; }
+.lh-chat__form { display: flex; gap: 10px; padding: 14px 20px 20px; }
+.lh-chat__form input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  font: inherit; font-size: 14.5px;
+  color: var(--ink);
+}
+.lh-chat__form input:focus { outline: none; border-color: var(--green); background: #fff; }
+.lh-chat__form .btn { width: 46px; padding: 0; flex-shrink: 0; }
+.lh-chat__form .btn svg { width: 18px; height: 18px; }
+
+/* Popup bảng giá */
+.bg-popup .modal { max-width: 760px; padding: 32px 28px 24px; }
+.bg-popup .modal__title { font-size: 20px; }
+.bg-popup .modal p { margin-bottom: 16px; }
+.bg-popup__note {
+  margin-bottom: 14px !important;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--green-tint);
+  color: var(--green-dark) !important;
+  font-weight: 600;
+}
+.bg-popup__wrap { max-height: 52vh; overflow: auto; border: 1px solid var(--line); border-radius: 14px; }
+.bg-popup table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.bg-popup th, .bg-popup td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.bg-popup th { position: sticky; top: 0; background: var(--bg-alt); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.bg-popup tr:last-child td { border-bottom: 0; }
+.bg-popup td:first-child { color: var(--muted); width: 40px; }
+.bg-popup__url { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+.bg-popup__gia { color: var(--green-dark); font-weight: 800; white-space: nowrap; }
+.bg-popup__xem {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--green-tint);
+  color: var(--green-dark);
+  font-size: 13px; font-weight: 700;
+  white-space: nowrap;
+}
+.bg-popup__xem:hover { background: var(--green); color: #fff; }
+.bg-popup__xem svg { width: 14px; height: 14px; }
+.bg-popup__foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 16px; }
+.bg-popup__foot small { color: var(--muted); font-size: 12.5px; }
+
 .lh-map {
   border-radius: var(--radius);
   overflow: hidden;
@@ -117,6 +236,15 @@
 }
 @media (max-width: 700px) {
   .lh-hero { padding: 56px 0 40px; }
+  .lh-chat { min-height: 460px; }
+  .lh-chat__log { max-height: 340px; }
+  .lh-chat__msg { max-width: 92%; }
+  .bg-popup .modal { padding: 28px 16px 18px; }
+  .bg-popup th:first-child, .bg-popup td:first-child { display: none; }
+  .bg-popup th, .bg-popup td { padding: 10px 6px; }
+  .bg-popup table { font-size: 13px; }
+  .bg-popup__gia { font-size: 13px; }
+  .bg-popup__xem { padding: 6px 10px; font-size: 12px; }
   .lh-hero h1 { font-size: 28px; }
   .lh-grid { grid-template-columns: 1fr; }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "w100",
+  "private": true,
+  "type": "module",
+  "description": "web100.vn: site tĩnh trong html/ + Worker (worker/) cho API báo giá và chat AI",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build:bao-gia": "python3 scripts/build_bao_gia.py",
+    "test": "node --test worker/*.test.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.142.0"
+  },
+  "allowScripts": {
+    "workerd@1.20260926.1": true
+  }
+}

@@ -1,5 +1,7 @@
 // Worker của web100.vn. Chỉ nhận các URL khai trong "run_worker_first" ở wrangler.jsonc
-// (hiện là /bao-gia và /bao-gia/*); mọi URL khác Cloudflare phục vụ thẳng từ html/ như trước.
+// (/bao-gia/* và /api/*); mọi URL khác Cloudflare phục vụ thẳng từ html/ như trước.
+//
+// POST /api/chat -> worker/chat.js (AI chat báo giá, Claude Haiku, cần secret ANTHROPIC_API_KEY).
 //
 // API báo giá:
 //   GET /bao-gia/                 -> danh sách ngành (stt, ten, slug, giá thấp/cao nhất, số mẫu)
@@ -9,8 +11,10 @@
 //                                    hay cụm mô tả (xe máy điện) cũng được, nhưng chỉ là tìm gần đúng.
 //        200 + match: "exact"|"fuzzy"  -> có ngành, kèm bang_gia [{gia, gia_vnd, url}]
 //        404 + match: "none"           -> không có, kèm goi_y [ngành gần nhất] để AI chọn thay thế
-import data from './bao-gia.json';
+import data from './bao-gia.json' with { type: 'json' };
+import training from './training-dich-vu.md'; // Text module (wrangler.jsonc "rules")
 import { timNganh, tomTat } from './bao-gia.js';
+import { handleChat } from './chat.js';
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
@@ -53,6 +57,8 @@ function handleBaoGia(url) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === '/api/chat') return handleChat(request, env, { training });
+    if (url.pathname.startsWith('/api/')) return json({ ok: false, loi: 'Không có API này' }, 404);
     if (url.pathname === '/bao-gia' || url.pathname.startsWith('/bao-gia/')) {
       if (request.method === 'OPTIONS') return new Response(null, { headers: JSON_HEADERS });
       if (request.method !== 'GET') return json({ ok: false, loi: 'Chỉ hỗ trợ GET' }, 405);

@@ -21,9 +21,10 @@ bằng "Nói chuyện với AI". Mọi thay đổi kịch bản sửa ở đây 
 | Dữ liệu báo giá | `baogiatonghop.csv` (232 ngành, 3.822 URL mẫu) | nguồn gốc, do chủ web100 sửa |
 | Build dữ liệu | `python3 scripts/build_bao_gia.py` | CSV -> `worker/bao-gia.json`. Sửa CSV xong chạy lại rồi push |
 | API báo giá | `worker/index.js` + `worker/bao-gia.js`, route `/bao-gia/*` (wrangler.jsonc `run_worker_first`) | JSON, có CORS, cache 1 giờ |
-| AI | Claude **Haiku**, model id `claude-haiku-5-5` | gọi qua Anthropic SDK từ Worker (không gọi từ trình duyệt, lộ key) |
-| Endpoint chat | `/api/chat` trên cùng Worker (chưa làm) | key để ở secret `ANTHROPIC_API_KEY` của Worker w100 |
-| Giao diện | `html/lien-he/index.html`, khung chat thay form "Gửi yêu cầu tư vấn" (chưa làm) | bảng giá hiện dạng popup |
+| AI | Claude **Haiku**, model id `claude-haiku-5-5`, `effort: low`, `max_tokens: 600` | gọi qua `@anthropic-ai/sdk` từ Worker (không gọi từ trình duyệt, lộ key) |
+| Endpoint chat | `POST /api/chat`, code `worker/chat.js`, test `npm test` | key để ở Secret `ANTHROPIC_API_KEY` của Worker w100 (Dashboard hoặc `npx wrangler secret put`) |
+| File training | `worker/training-dich-vu.md` | nhúng nguyên văn vào system prompt, sửa xong push là có hiệu lực |
+| Giao diện | `html/lien-he/index.html` + `html/js/chat-bao-gia.js` + CSS trong `html/css/lien-he.css` | khung chat thay form cũ, bảng giá hiện popup (URL mẫu, Giá, nút Xem thử) |
 
 ### 2.1 API `/bao-gia`
 
@@ -68,7 +69,7 @@ Web100 làm website tương đương.
 
 ### 3.2 Biết: file training về dịch vụ (chủ web100 sẽ cung cấp)
 
-File `training-dich-vu.md` (chưa có). Dự kiến gồm: giá trên bao gồm gì; phí hằng năm (domain, hosting, bảo trì);
+File `worker/training-dich-vu.md` (đã tạo khung, chủ web100 điền). Gồm: giá trên bao gồm gì; phí hằng năm (domain, hosting, bảo trì);
 thời gian hoàn thành; số lần chỉnh sửa; bàn giao gì; có SEO/quảng cáo không; thanh toán mấy đợt; bảo hành.
 Toàn bộ file này được nhúng vào system prompt, đặt sau danh sách ngành, và bật prompt caching.
 
@@ -159,12 +160,13 @@ THÔNG TIN DỊCH VỤ:
 
 ## 7. Việc còn lại
 
-- [ ] Chủ web100 viết `training-dich-vu.md` (mục 3.2).
-- [ ] Worker: thêm `/api/chat` (POST messages -> Haiku -> trả text + dữ liệu bảng khi có tool call), secret
-      `ANTHROPIC_API_KEY`, chặn spam (giới hạn số lượt/IP, độ dài tin nhắn).
-- [ ] `html/lien-he/index.html`: thay form "Gửi yêu cầu tư vấn" bằng khung chat + popup bảng giá
-      (cột URL, Giá, nút Xem thử), nút "Nhắn Zalo 0964074043" cố định dưới khung chat.
-- [ ] Ghi log hội thoại về Google Sheet qua GAS (giống form hiện tại) để chủ web100 theo dõi lead.
+- [ ] Chủ web100 đặt Secret `ANTHROPIC_API_KEY` cho Worker w100 (chưa có thì chat trả 503 kèm câu mời Zalo).
+- [ ] Chủ web100 điền `worker/training-dich-vu.md` (mục 3.2).
+- [x] Worker `/api/chat`: Haiku + tool `tra_bao_gia` (enum 232 slug, strict), tool_result gọn cho model,
+      `bao_gia` đầy đủ cho trình duyệt; chặn spam 30 request / IP / 10 phút, tối đa 24 tin, 1000 ký tự mỗi tin.
+- [x] `/lien-he/`: khung chat + chip gợi ý + popup bảng giá; hội thoại lưu sessionStorage.
+- [ ] Ghi log hội thoại về Google Sheet qua GAS (giống form cũ) để chủ web100 theo dõi lead.
+- [ ] Sau 1 đến 2 tuần chạy thật: đọc log, chỉnh QUY_TAC trong `worker/chat.js` nếu AI trả lời lệch.
 - [ ] Khi sửa `baogiatonghop.csv`: chạy `python3 scripts/build_bao_gia.py` (tự cập nhật `worker/bao-gia.json`
       và phụ lục bên dưới), kiểm tra enum của tool `tra_bao_gia` lấy từ cùng danh sách này, rồi push.
 
