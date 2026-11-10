@@ -2,6 +2,7 @@
 // (/bao-gia/* và /api/*); mọi URL khác Cloudflare phục vụ thẳng từ html/ như trước.
 //
 // POST /api/chat -> worker/chat.js (AI chat báo giá, Claude Haiku, cần secret ANTHROPIC_API_KEY).
+// GET  /api/ping -> { co_key, do_dai_key } để kiểm tra secret đã gắn vào Worker đang phục vụ web100.vn chưa.
 //
 // API báo giá:
 //   GET /bao-gia/                 -> danh sách ngành (stt, ten, slug, giá thấp/cao nhất, số mẫu)
@@ -57,6 +58,13 @@ function handleBaoGia(url) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    // Kiểm tra nhanh Worker đã có secret ANTHROPIC_API_KEY chưa (không lộ giá trị key).
+    if (url.pathname === '/api/ping') {
+      const k = env.ANTHROPIC_API_KEY;
+      return new Response(JSON.stringify({ ok: true, co_key: !!k, do_dai_key: k ? String(k).length : 0 }), {
+        headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+      });
+    }
     if (url.pathname === '/api/chat') return handleChat(request, env, { training });
     if (url.pathname.startsWith('/api/')) return json({ ok: false, loi: 'Không có API này' }, 404);
     if (url.pathname === '/bao-gia' || url.pathname.startsWith('/bao-gia/')) {
