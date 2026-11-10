@@ -232,3 +232,19 @@ test('system: chat AI trên website có giá cố định 1tr, không xếp vào
   assert.match(sys, /Chat AI tự tư vấn \/ tự báo giá.*1\.000\.000đ.*chưa bao gồm chi phí token/s);
   assert.match(sys, /NGOẠI LỆ: tính năng nào có giá riêng/);
 });
+
+test('chat: phiên đã gửi số (da_gui) -> AI gọi lại gui_lien_he cùng số thì KHÔNG gửi GAS, không trả lien_he', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_d', name: 'gui_lien_he', input: { hoten: 'Huy', dienthoai: '0905 123 456', nhu_cau: 'hỏi thêm' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Hosting năm sau 450k bạn nhé.' }] },
+  ]);
+  const leads = [];
+  const res = await handleChat(post({
+    messages: [{ role: 'user', content: 'Huy 0905123456' }, { role: 'assistant', content: 'Cảm ơn Huy' }, { role: 'user', content: 'hosting năm sau bao nhiêu?' }],
+    sid: 'sid-dup-00001', kenh: 'lp', da_gui: '0905123456',
+  }, '9.9.9.6'), {}, { client, training: '', sendLog: async () => {}, sendLead: async (p) => { leads.push(p); return true; } });
+  const body = await res.json();
+  assert.equal(leads.length, 0);
+  assert.equal(body.lien_he, null);
+  assert.match(JSON.parse(client.calls[1].messages.at(-1).content[0].content).ghi_chu, /KHÔNG cần gửi lại/);
+});

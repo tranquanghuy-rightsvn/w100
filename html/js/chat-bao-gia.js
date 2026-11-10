@@ -35,6 +35,7 @@
   var busy = false;
   var sid = newSid();
   var leadTracked = false; // đã bắn generate_lead cho phiên này chưa
+  var leadPhone = '';      // số khách đã để lại trong phiên này (Worker dùng để không gửi lại / không email lại)
   var popup = null;
   var viewed = loadJson(VIEWED_KEY, {});   // { url: thời điểm xem }
   var chosen = loadJson(CHOSEN_KEY, null); // { url, gia_vnd, nganh }
@@ -104,7 +105,7 @@
   }
 
   function save() {
-    try { sessionStorage.setItem(STORE_KEY, JSON.stringify({ sid: sid, kenh: KENH, lead: leadTracked, messages: messages, entries: entries.slice(-60) })); } catch (e) { /* bỏ qua */ }
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify({ sid: sid, kenh: KENH, lead: leadTracked, leadPhone: leadPhone, messages: messages, entries: entries.slice(-60) })); } catch (e) { /* bỏ qua */ }
   }
   function restore() {
     try {
@@ -114,6 +115,7 @@
       messages = d.messages;
       if (d.sid) sid = d.sid;
       leadTracked = !!d.lead;
+      leadPhone = d.leadPhone || '';
       entries = Array.isArray(d.entries) ? d.entries : [];
       log.innerHTML = greeting;
       entries.forEach(renderEntry);
@@ -232,6 +234,8 @@
   // /lien-he/), package = mẫu đã chọn hoặc "Chưa chọn" như form cũ. Chỉ form_location khác ("chat-hero" /
   // "chat") để tách được lead từ chat trong báo cáo, không cần tạo conversion mới.
   function fireLead(phone, pkg) {
+    leadPhone = phone || leadPhone;
+    save();
     if (leadTracked) return;
     leadTracked = true;
     save();
@@ -284,6 +288,7 @@
           messages.push({ role: 'assistant', content: thanks });
         }
         addEntry({ kind: 'ai', text: thanks });
+        leadPhone = phone;
         if (!duplicate) fireLead(phone, e.mau_chon ? 'Mẫu ' + host(e.mau_chon) + ' ' + e.gia : '');
       })
       .catch(function () {
@@ -316,7 +321,7 @@
     fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: messages, sid: sid, trang: location.pathname, kenh: KENH, nguon: nguonQuangCao() }),
+      body: JSON.stringify({ messages: messages, sid: sid, trang: location.pathname, kenh: KENH, nguon: nguonQuangCao(), da_gui: leadPhone }),
     })
       .then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); })
       .then(function (res) {

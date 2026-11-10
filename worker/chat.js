@@ -83,7 +83,8 @@ ngắn khách cần gì: ngành, mẫu đã chọn và giá nếu có, chức n�
 1 câu; khách không muốn nói tên thì dùng hoten = "Khách". Không xin email, địa chỉ hay thông tin khác.
 gui_lien_he trả ok: cảm ơn khách bằng tên, nói Web100 sẽ gọi lại số đó trong vòng vài giờ, hỏi khách có muốn
 ghi chú thêm gì không. Trả lỗi số không hợp lệ: nhờ khách kiểm tra lại số. Đã gửi thành công rồi thì không gọi
-lại gui_lien_he, trừ khi khách đưa số khác.
+lại gui_lien_he nữa (kể cả khi khách hỏi tiếp, cảm ơn, hay nhắc lại số), trừ khi khách nói rõ muốn đổi sang số khác.
+Sau khi đã có số, các lượt sau chỉ trả lời câu khách hỏi, không xin lại Zalo.
 Không nhắc tới tool, không nói "hệ thống", chỉ nói tự nhiên như người tư vấn.
 
 Câu hỏi về dịch vụ (giá gồm gì, phí hằng năm, thời gian làm, bảo hành, thanh toán...): chỉ trả lời theo mục
@@ -253,7 +254,10 @@ export async function runLienHe(input, ctx) {
   }
   const hoten = String((input && input.hoten) || '').trim().slice(0, 80) || 'Khách';
   const nhuCau = String((input && input.nhu_cau) || '').trim().slice(0, 500);
-  if (ctx.daGui === dienthoai) return { forModel: { ok: true, ghi_chu: 'Số này đã gửi rồi.' }, lienHe: null };
+  // Phiên này đã gửi đúng số này cho Web100 rồi (trình duyệt báo qua body.da_gui): không gửi lại, không email.
+  if (ctx.daGui === dienthoai) {
+    return { forModel: { ok: true, ghi_chu: 'Số này đã gửi cho Web100 từ trước, KHÔNG cần gửi lại và đừng gọi gui_lien_he nữa. Chỉ tiếp tục tư vấn câu khách đang hỏi.' }, lienHe: null };
+  }
   const ok = await ctx.sendLead({
     action: 'chat',
     hoten,
@@ -326,6 +330,7 @@ export async function handleChat(request, env, deps = {}) {
     messages: original,
     sendLead: deps.sendLead || sendLead,
     nganh: '',
+    daGui: chuanSdt(body.da_gui), // số khách đã để lại trong phiên (trình duyệt nhớ)
   };
 
   // Trả lời khách + ghi lịch sử chat ngầm (chỉ khi AI trả lời được, lỗi kỹ thuật không ghi).
