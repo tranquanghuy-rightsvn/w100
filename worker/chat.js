@@ -88,7 +88,9 @@ export function runTool(input) {
       gia_thap_nhat: nhan(Math.min(...gias)),
       gia_cao_nhat: nhan(Math.max(...gias)),
       ly_do: lyDo,
-      ghi_chu: 'Bảng giá đầy đủ đã hiện cho khách, bạn chỉ nói 1 câu dẫn.',
+      ghi_chu: lyDo === 'gan_nhat'
+        ? 'Ngành khách nói KHÔNG có trong dữ liệu, đây là ngành gần nhất. Câu trả lời PHẢI mở đầu đúng bằng: "Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp", rồi nêu tên ngành thay thế, số mẫu, khoảng giá. Bảng giá đã hiện cho khách.'
+        : 'Bảng giá đầy đủ đã hiện cho khách, bạn chỉ nói 1 câu dẫn (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp.',
     },
     baoGia: { nganh: tomTat(nganh), bang_gia: nganh.bang_gia, ly_do: lyDo },
   };
