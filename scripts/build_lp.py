@@ -190,7 +190,7 @@ VARIANTS = [
         "h1": "Website doanh nghiệp Đà Nẵng",
         "sub": "Thiết kế theo bộ nhận diện, trình bày năng lực và dự án để tạo niềm tin với khách hàng, đối tác.",
         "points": [
-            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói Chuyên nghiệp)",
+            "<b>Tặng hosting</b> năm đầu",
             "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
             "Hiển thị <b>dưới 0.5 giây</b> - mắt thường không cảm nhận được",
             "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
@@ -226,7 +226,7 @@ VARIANTS = [
         "h1": "Thiết kế website <span>chuyên nghiệp</span>",
         "sub": "Thiết kế theo bộ nhận diện thương hiệu, chuẩn SEO, tải nhanh, giúp doanh nghiệp tạo niềm tin và có thêm khách hàng từ Google.",
         "points": [
-            "<b>Tặng tên miền + hosting</b> năm đầu (từ gói Chuyên nghiệp)",
+            "<b>Tặng hosting</b> năm đầu",
             "<b>Giao diện theo bộ nhận diện</b> thương hiệu, trên cả mobile và máy tính",
             "Tốc độ <b>Lighthouse 90+</b>, hiển thị dưới 0.5 giây",
             "Thiết kế <b>chuẩn SEO</b> theo tiêu chuẩn Google",
@@ -423,7 +423,8 @@ CONTACT = f"""<div class="contact-float lp-float" data-track-area="float">
 </nav>"""
 
 
-# Khung chat AI bao gia (2026-11): thay form o hero. Dung chung html/js/chat-bao-gia.js + /css/chat-ai.css voi
+# Khung chat AI bao gia (2026-11): thay form o hero. Icon robot: Microsoft Fluent Emoji "Robot" 3D (giay phep
+# MIT, github.com/microsoft/fluentui-emoji), luu html/images/ai-robot.webp 112x112. Dung chung html/js/chat-bao-gia.js + /css/chat-ai.css voi
 # /lien-he/, data-kenh="lp" -> AI tu xin so Zalo + ten trong chat roi goi tool gui_lien_he (worker/chat.js),
 # gui thanh cong thi chat-bao-gia.js ban generate_lead (1 lan / phien chat). id="dang-ky" giu nguyen de
 # cac nut href="#dang-ky" data-goto-form (thanh lien he mobile, khoi cuoi trang) cuon toi day.
@@ -440,13 +441,8 @@ def chat_widget() -> str:
     chips = "".join(f'\n          <button type="button" data-q="{q}">{t}</button>' for t, q in CHAT_CHIPS)
     return f"""<div class="lh-chat lp-chat" id="lh-chat" data-kenh="lp" data-track-area="chat-hero">
         <div class="lh-chat__head">
-          <span class="lh-chat__avatar" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M8 7h8a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3Z"/><path d="M9 13h.01M15 13h.01M3 12H2M22 12h-1"/></svg>
-          </span>
-          <div>
-            <p class="modal__title">Hỏi giá website với AI</p>
-            <p>Nói ngành của bạn, AI báo giá kèm mẫu website ngay. Cần tư vấn kỹ, để lại số Zalo, Web100 gọi lại trong vài giờ.</p>
-          </div>
+          <img class="lp-chat__robot" src="/images/ai-robot.webp" alt="" width="56" height="56">
+          <p class="modal__title">Tư vấn báo giá với AI thông minh</p>
         </div>
         <div class="lh-chat__log" id="lh-chat-log" aria-live="polite">
           <div class="lh-chat__msg lh-chat__msg--ai">Chào bạn, mình là AI báo giá của Web100. Bạn định làm website cho ngành gì? Ví dụ: spa, nhà hàng, bán hàng online, công ty xây dựng...</div>
@@ -454,7 +450,7 @@ def chat_widget() -> str:
         <div class="lh-chat__chips" id="lh-chat-chips">{chips}
         </div>
         <form class="lh-chat__form" id="lh-chat-form" autocomplete="off">
-          <input type="text" name="q" maxlength="1000" placeholder="VD: Mình mở spa, làm web hết bao nhiêu?" aria-label="Nhập câu hỏi cho AI" required>
+          <input type="text" name="q" maxlength="1000" placeholder="Ví dụ: Tôi cần làm website bán hàng quần áo" aria-label="Nhập câu hỏi cho AI" required>
           <button class="btn btn-primary btn-sm" type="submit" aria-label="Gửi">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
           </button>

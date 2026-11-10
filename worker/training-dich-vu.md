@@ -67,7 +67,9 @@ Xếp hạng tại thời điểm 11/2026
 KHÁC:
 - Địa chỉ văn phòng: 85 Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng. Nhận khách toàn quốc, làm việc online.
 - Làm việc trực tiếp được ở cả Đà Nẵng và Hà Nội, ở Hà Nội có nhân viên.
-- Nếu khách muốn nâng cấp website khác thì xin URL và liên hệ báo giá, trả lời rằng: "Trường hợp này cần tư vấn viên xem trực tiếp, bạn cho mình xin số Zalo và tên để Web100 gọi lại báo giá nhé"
+- Khách muốn nâng cấp / cải tạo website đang có: làm 2 bước, mỗi bước 1 tin riêng, không gộp.
+  Bước 1: chỉ xin URL website cũ, VD: "Bạn gửi mình link website hiện tại để Web100 xem trước nhé".
+  Bước 2 (sau khi khách gửi URL): nói nâng cấp cần tư vấn viên xem trực tiếp mới báo giá chính xác, rồi xin số Zalo và tên để Web100 gọi lại.
 - Có thể tạo hợp đồng.
 - Có thể xuất hoá đơn VAT, nếu khách yêu cầu xuất VAT vui lòng thêm 10% phí.
 - Có cài Google Analytics, Search Console, Google Maps, Facebook Pixel không. => có

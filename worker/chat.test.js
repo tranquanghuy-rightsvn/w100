@@ -219,3 +219,9 @@ test('chat: gui_lien_he với số sai -> không gửi GAS, báo AI hỏi lại,
   assert.equal(leads.length, 0);
   assert.equal(JSON.parse(client.calls[1].messages.at(-1).content[0].content).ok, false);
 });
+
+test('system: mỗi lượt hỏi 1 điều, nâng cấp website xin link trước rồi mới xin Zalo', () => {
+  const sys = buildSystem('', 'lp');
+  assert.match(sys, /MỖI LƯỢT CHỈ HỎI 1 ĐIỀU/);
+  assert.match(sys, /lượt đầu chỉ xin link website hiện tại/);
+});

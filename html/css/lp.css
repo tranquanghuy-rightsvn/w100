@@ -581,3 +581,16 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
   .lp-chat .lh-chat__log { max-height: 320px; }
   .lp-final-ai { padding: 22px 18px; }
 }
+
+/* Khung chat AI nổi bật hơn (viền xanh đậm + bóng xanh), icon robot 3D */
+.lp-chat.lh-chat {
+  border: 2px solid var(--green);
+  box-shadow: 0 0 0 6px rgba(11, 203, 104, 0.12), 0 28px 64px -18px rgba(7, 140, 70, 0.45);
+}
+.lp-chat .lh-chat__head { align-items: center; background: linear-gradient(135deg, var(--green-tint) 0%, #fff 70%); border-bottom-color: rgba(11, 203, 104, 0.25); }
+.lp-chat .lh-chat__head .modal__title { margin: 0; }
+.lp-chat__robot { width: 56px; height: 56px; flex-shrink: 0; filter: drop-shadow(0 6px 10px rgba(7, 140, 70, 0.25)); }
+@media (max-width: 700px) {
+  .lp-chat__robot { width: 48px; height: 48px; }
+  .lp-chat .lh-chat__head .modal__title { font-size: 18px; }
+}

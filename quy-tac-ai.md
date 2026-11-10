@@ -110,6 +110,8 @@ bạn xem bảng bên dưới nhé".
 
 - AI **không bao giờ** bảo khách tự nhắn / gọi Zalo của Web100. Thay vào đó xin **số Zalo (hoặc SĐT) + tên** của
   khách, hẹn Web100 gọi lại trong vòng vài giờ. Xin tối đa 1 lần mỗi 2 lượt, khách chưa muốn cho thì thôi.
+- **Mỗi lượt chỉ hỏi 1 điều**, không gộp. Ví dụ khách muốn nâng cấp website cũ: lượt 1 chỉ xin link website
+  hiện tại; khách gửi link rồi lượt 2 mới nói cần tư vấn viên xem trực tiếp và xin số Zalo + tên.
 - Có đủ số + tên trong hội thoại -> AI gọi tool `gui_lien_he {hoten, dienthoai, nhu_cau}` (có ở cả 2 trang).
   Có số mà chưa có tên thì hỏi tên 1 câu; khách không nói thì `hoten = "Khách"`.
 - Worker chuẩn hoá SĐT (sai -> báo AI nhờ khách kiểm tra lại), gửi GAS action `chat` (kèm `nhu_cau`, `nguon` =
