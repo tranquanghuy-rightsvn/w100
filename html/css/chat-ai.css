@@ -1,0 +1,230 @@
+/* ==========================================================================
+   Khung chat AI báo giá: dùng chung cho /lien-he/ và các landing /lp/* (html/js/chat-bao-gia.js).
+   Khi AI tra được ngành thì mở popup bảng giá (.bg-popup) dùng lại .modal-overlay/.modal của style.css.
+   ========================================================================== */
+.lh-chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.lh-chat__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-alt);
+}
+.lh-chat__head .modal__title { font-size: 19px; margin-bottom: 4px; padding-right: 0; }
+.lh-chat__head p { font-size: 13.5px; color: var(--muted); margin: 0; }
+.lh-chat__avatar {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 14px;
+  background: var(--green-tint); color: var(--green-dark);
+}
+.lh-chat__avatar svg { width: 24px; height: 24px; }
+.lh-chat__log {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 20px 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.lh-chat__msg {
+  max-width: 85%;
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.lh-chat__msg--ai { align-self: flex-start; background: var(--bg-alt); color: var(--ink); border-bottom-left-radius: 4px; }
+.lh-chat__msg--user { align-self: flex-end; background: var(--green-dark); color: #fff; border-bottom-right-radius: 4px; }
+.lh-chat__msg--error { align-self: flex-start; background: #fff3f0; color: #a3321b; border-bottom-left-radius: 4px; }
+.lh-chat__msg--typing { align-self: flex-start; background: var(--bg-alt); color: var(--muted); letter-spacing: 3px; }
+.lh-chat__msg--typing::after { content: "..."; animation: lh-dots 1.2s steps(4, end) infinite; }
+@keyframes lh-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+/* Nút mở lại bảng giá, đính ngay dưới câu dẫn của AI */
+.lh-chat__table-btn {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--green);
+  background: #fff;
+  color: var(--green-dark);
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.lh-chat__table-btn:hover { background: var(--green-tint); }
+.lh-chat__table-btn svg { width: 16px; height: 16px; }
+.lh-chat__chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 20px 0; }
+.lh-chat__chips button {
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.lh-chat__chips button:hover { border-color: var(--green); color: var(--green-dark); }
+.lh-chat__chips[hidden] { display: none; }
+.lh-chat__form { display: flex; gap: 10px; padding: 14px 20px 20px; }
+.lh-chat__form input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  font: inherit; font-size: 14.5px;
+  color: var(--ink);
+}
+.lh-chat__form input:focus { outline: none; border-color: var(--green); background: #fff; }
+.lh-chat__form .btn { width: 46px; padding: 0; flex-shrink: 0; }
+.lh-chat__form .btn svg { width: 18px; height: 18px; }
+
+/* Popup bảng giá */
+.bg-popup .modal { max-width: 760px; padding: 32px 28px 24px; }
+.bg-popup .modal__title { font-size: 20px; }
+.bg-popup .modal p { margin-bottom: 16px; }
+.bg-popup__note {
+  margin-bottom: 14px !important;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--green-tint);
+  color: var(--green-dark) !important;
+  font-weight: 600;
+}
+.bg-popup__wrap { max-height: 52vh; overflow: auto; border: 1px solid var(--line); border-radius: 14px; }
+.bg-popup table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.bg-popup th, .bg-popup td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.bg-popup th { position: sticky; top: 0; background: var(--bg-alt); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.bg-popup tr:last-child td { border-bottom: 0; }
+.bg-popup td:first-child { color: var(--muted); width: 40px; }
+.bg-popup__url { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+.bg-popup__gia { color: var(--green-dark); font-weight: 800; white-space: nowrap; }
+.bg-popup__xem {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--green-tint);
+  color: var(--green-dark);
+  font-size: 13px; font-weight: 700;
+  white-space: nowrap;
+}
+.bg-popup__xem:hover { background: var(--green); color: #fff; }
+.bg-popup__xem svg { width: 14px; height: 14px; }
+/* Ô chứa 2 nút Xem thử + Chọn mẫu này (nút chọn chỉ hiện sau khi đã xem) */
+.bg-popup__acts { white-space: nowrap; }
+.bg-popup__acts > * { vertical-align: middle; }
+.bg-popup__acts .bg-popup__xem { margin-right: 8px; }
+.bg-popup__chon {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--green-dark);
+  background: var(--green-dark);
+  color: #fff;
+  font: inherit; font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.bg-popup__chon:hover { background: var(--green-deep); transform: translateY(-1px); }
+.bg-popup__chon[hidden] { display: none; }
+.bg-popup__chon:disabled { background: var(--green-tint); color: var(--green-dark); cursor: default; transform: none; }
+.bg-popup__chon svg { width: 14px; height: 14px; }
+/* Dòng đã xem: nền vàng nhạt + nhãn; dòng đã chọn: nền xanh nhạt + nhãn có dấu tick */
+.bg-popup tr.is-viewed td { background: #fff8e1; }
+.bg-popup tr.is-chosen td { background: var(--green-tint); }
+.bg-popup__badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+.bg-popup__badge[hidden] { display: none; }
+.bg-popup__badge--viewed { background: #ffe08a; color: #7a4d00; }
+.bg-popup__badge--chosen { background: var(--green-dark); color: #fff; }
+.bg-popup__badge svg { width: 11px; height: 11px; }
+.lh-chat__table-btn--zalo { background: var(--green-dark); color: #fff; border-color: var(--green-dark); text-decoration: none; }
+.lh-chat__table-btn--zalo:hover { background: var(--green-deep); }
+.bg-popup__foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 16px; }
+.bg-popup__foot small { color: var(--muted); font-size: 12.5px; }
+
+/* Khung xin tên + số điện thoại ngay trong chat, hiện sau khi khách chọn mẫu (chat-bao-gia.js) */
+.lh-lead {
+  align-self: stretch;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--green);
+  border-radius: 14px;
+  background: var(--green-tint);
+}
+.lh-lead__title { margin: 0; font-size: 14px; font-weight: 700; color: var(--green-dark); line-height: 1.45; }
+.lh-lead__row { display: flex; flex-wrap: wrap; gap: 8px; }
+.lh-lead__row input {
+  flex: 1 1 160px; min-width: 0;
+  height: 42px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: #fff; color: var(--ink);
+  font: inherit; font-size: 14.5px;
+}
+.lh-lead__row input:focus { outline: none; border-color: var(--green); }
+.lh-lead__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lh-lead__err { margin: 0; font-size: 13px; color: #a3321b; }
+.lh-lead__err[hidden] { display: none; }
+.lh-lead__btn {
+  position: relative;
+  height: 42px; padding: 0 18px;
+  border: none; border-radius: 999px;
+  background: var(--green-dark); color: #fff;
+  font: inherit; font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.lh-lead__btn:hover { background: var(--green-deep); }
+.lh-lead__btn:disabled { opacity: 0.8; cursor: wait; }
+.lh-lead__btn.is-loading { color: transparent; }
+.lh-lead__btn.is-loading::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.45); border-top-color: #fff; border-radius: 50%;
+  animation: lh-lead-spin 0.6s linear infinite;
+}
+@keyframes lh-lead-spin { to { transform: rotate(360deg); } }
+.lh-lead.is-sent { padding: 10px 14px; }
+.lh-lead__done { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--green-dark); }
+.lh-lead__done svg { width: 16px; height: 16px; flex: none; }
+
+@media (max-width: 700px) {
+  .lh-chat { min-height: 460px; }
+  .lh-chat__log { max-height: 340px; }
+  .lh-chat__msg { max-width: 92%; }
+  .bg-popup .modal { padding: 28px 16px 18px; }
+  .bg-popup th:first-child, .bg-popup td:first-child { display: none; }
+  .bg-popup th, .bg-popup td { padding: 10px 6px; }
+  .bg-popup table { font-size: 13px; }
+  .bg-popup__gia { font-size: 13px; }
+  .bg-popup__xem { padding: 6px 10px; font-size: 12px; }
+  .bg-popup__acts { white-space: normal; }
+  .bg-popup__acts .bg-popup__xem { margin: 0 0 6px; }
+  .bg-popup__chon { padding: 6px 10px; font-size: 12px; }
+  .bg-popup__badge { display: inline-flex; margin: 4px 0 0; }
+  .bg-popup__badge[hidden] { display: none; }
+}

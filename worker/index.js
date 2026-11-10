@@ -56,7 +56,7 @@ function handleBaoGia(url) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     // Kiểm tra nhanh Worker đã có secret ANTHROPIC_API_KEY chưa (không lộ giá trị key).
     if (url.pathname === '/api/ping') {
@@ -65,7 +65,7 @@ export default {
         headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
       });
     }
-    if (url.pathname === '/api/chat') return handleChat(request, env, { training });
+    if (url.pathname === '/api/chat') return handleChat(request, env, { training, ctx });
     if (url.pathname.startsWith('/api/')) return json({ ok: false, loi: 'Không có API này' }, 404);
     if (url.pathname === '/bao-gia' || url.pathname.startsWith('/bao-gia/')) {
       if (request.method === 'OPTIONS') return new Response(null, { headers: JSON_HEADERS });

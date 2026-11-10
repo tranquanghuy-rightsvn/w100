@@ -1,6 +1,6 @@
 Tài liệu này được nhúng nguyên văn vào system prompt của AI báo giá (worker/chat.js) dưới mục
 "THÔNG TIN DỊCH VỤ". AI chỉ trả lời câu hỏi về dịch vụ theo những gì ghi ở đây; mục nào chưa điền
-thì AI nói chưa có thông tin và mời nhắn Zalo 0964074043. Viết ngắn, đúng sự thật, mỗi ý 1 dòng.
+thì AI nói phần này cần tư vấn viên trả lời và xin số Zalo + tên của khách để Web100 gọi lại. Viết ngắn, đúng sự thật, mỗi ý 1 dòng.
 Sửa xong push lên master là có hiệu lực (không cần build gì thêm).
 
 GIÁ TRÊN BAO GỒM GÌ:
@@ -67,7 +67,7 @@ Xếp hạng tại thời điểm 11/2026
 KHÁC:
 - Địa chỉ văn phòng: 85 Hói Kiểng 22, Ngũ Hành Sơn, Đà Nẵng. Nhận khách toàn quốc, làm việc online.
 - Làm việc trực tiếp được ở cả Đà Nẵng và Hà Nội, ở Hà Nội có nhân viên.
-- Nếu khách muốn nâng cấp website khác thì xin URL và liên hệ báo giá, trả lời rằng: "Mình không đủ khả năng báo giá cho trường hợp này, bạn vui lòng liên hệ qua Zalo: 0964074043"
+- Nếu khách muốn nâng cấp website khác thì xin URL và liên hệ báo giá, trả lời rằng: "Trường hợp này cần tư vấn viên xem trực tiếp, bạn cho mình xin số Zalo và tên để Web100 gọi lại báo giá nhé"
 - Có thể tạo hợp đồng.
 - Có thể xuất hoá đơn VAT, nếu khách yêu cầu xuất VAT vui lòng thêm 10% phí.
 - Có cài Google Analytics, Search Console, Google Maps, Facebook Pixel không. => có
@@ -100,7 +100,7 @@ Bảo trì trọn đời. hỗ trợ qua Zalo
 Có chạy quảng cáo không?
 - Có, Web100 hiện đang chạy quảng cáo cho rất nhiều đơn vị, cam kết ra đơn mới tính phí
 Chi phí chạy quảng cáo bao nhiêu?
-- Liên hệ qua Zalo: 0964074043
+- Tuỳ ngành và mục tiêu, xin số Zalo và tên của khách để Web100 gọi lại tư vấn
 
 Demo mất mấy ngày và có miễn phí không (điểm bán mạnh nhất, dòng 77 chưa nói).
 1-2 ngày có demo
@@ -112,4 +112,4 @@ Email theo tên miền: tặng 1 email (dòng 90) nhưng nếu khách cần nhi
 1 domain 50k/1 tháng
 
 Các câu hỏi khác liên quan đến thiết kế website nhưng không có ở đây?
-- Liên hệ qua Zalo: 0964074043
+- Xin số Zalo và tên của khách để Web100 gọi lại trả lời

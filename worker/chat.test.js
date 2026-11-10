@@ -133,3 +133,89 @@ test('ngành gần nhất: câu trả lời luôn mở đầu bằng câu "chưa
   assert.equal(body.bao_gia.ly_do, 'gan_nhat');
   assert.match(JSON.parse(client.calls[1].messages[2].content[0].content).ghi_chu, /KHÔNG có trong dữ liệu/);
 });
+
+test('chat: có sid -> gửi log hội thoại (tin cũ + câu trả lời) qua ctx.waitUntil', async () => {
+  const client = fakeClient([
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Bạn làm ngành gì?' }] },
+  ]);
+  const logs = [];
+  const waits = [];
+  const res = await handleChat(
+    post({ messages: [{ role: 'user', content: 'chào' }], sid: 'abc12345-xyz', trang: '/lien-he/' }, '9.9.9.1'),
+    { CHAT_LOG_KEY: 'k1' },
+    { client, training: '', sendLog: async (p) => { logs.push(p); }, ctx: { waitUntil: (p) => waits.push(p) } },
+  );
+  assert.equal((await res.json()).ok, true);
+  assert.equal(waits.length, 1);
+  assert.equal(logs[0].action, 'chat_log');
+  assert.equal(logs[0].key, 'k1');
+  assert.equal(logs[0].sid, 'abc12345-xyz');
+  assert.deepEqual(logs[0].messages, [{ role: 'user', content: 'chào' }, { role: 'assistant', content: 'Bạn làm ngành gì?' }]);
+});
+
+test('chat: không có sid hợp lệ -> không ghi log', async () => {
+  const client = fakeClient([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'Chào' }] }]);
+  const logs = [];
+  await handleChat(post({ messages: [{ role: 'user', content: 'hi' }], sid: '<x>' }, '9.9.9.2'), {},
+    { client, training: '', sendLog: async (p) => { logs.push(p); } });
+  assert.equal(logs.length, 0);
+});
+
+test('chat: log sau tool_use chỉ chứa văn bản, có tên ngành', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_9', name: 'tra_bao_gia', input: { slug: 'cua-hang-xe-may-dien', ly_do: 'exact' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Có 18 mẫu.' }] },
+  ]);
+  const logs = [];
+  await handleChat(post({ messages: [{ role: 'user', content: 'xe điện' }], sid: 'sid-000000001' }, '9.9.9.3'), {},
+    { client, training: '', sendLog: async (p) => { logs.push(p); } });
+  assert.equal(logs[0].nganh, 'Cửa hàng xe máy điện');
+  assert.equal(logs[0].messages.length, 2);
+  assert.ok(logs[0].messages.every((m) => typeof m.content === 'string'));
+});
+
+test('system: kênh lp tự xin Zalo khi chọn mẫu, không còn câu mời nhắn Zalo của Web100', () => {
+  const lp = buildSystem('', 'lp');
+  const lh = buildSystem('', 'lien_he');
+  assert.match(lp, /xin khách số Zalo và tên/);
+  assert.match(lh, /khung ngay bên dưới/);
+  assert.doesNotMatch(lp, /0964074043/);
+  assert.doesNotMatch(lh, /0964074043/);
+});
+
+test('chat: AI gọi gui_lien_he -> gửi GAS action chat (chuẩn hoá SĐT, kèm nguồn + hội thoại) -> trả lien_he', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_l', name: 'gui_lien_he', input: { hoten: 'Anh Huy', dienthoai: '+84 905.123.456', nhu_cau: 'Mẫu pega.com.vn 3tr' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Cảm ơn anh Huy, Web100 sẽ gọi lại trong vài giờ.' }] },
+  ]);
+  const leads = [];
+  const res = await handleChat(post({
+    messages: [{ role: 'user', content: 'Huy 0905123456' }], sid: 'sid-lead-0001', kenh: 'lp', nguon: 'gclid=abc', trang: '/lp/x/',
+  }, '9.9.9.4'), {}, { client, training: '', sendLog: async () => {}, sendLead: async (p) => { leads.push(p); return true; } });
+  const body = await res.json();
+  assert.deepEqual(body.lien_he, { hoten: 'Anh Huy', dienthoai: '0905123456' });
+  assert.equal(leads.length, 1);
+  assert.equal(leads[0].action, 'chat');
+  assert.equal(leads[0].dienthoai, '0905123456');
+  assert.equal(leads[0].nguon, 'gclid=abc');
+  assert.equal(leads[0].kenh, 'lp');
+  assert.equal(leads[0].messages[0].content, 'Huy 0905123456');
+  assert.deepEqual(client.calls[0].tools.map((t) => t.name), ['tra_bao_gia', 'gui_lien_he']);
+  assert.match(client.calls[0].system[0].text, /xin khách số Zalo và tên/);
+  const toolResult = JSON.parse(client.calls[1].messages.at(-1).content[0].content);
+  assert.equal(toolResult.ok, true);
+});
+
+test('chat: gui_lien_he với số sai -> không gửi GAS, báo AI hỏi lại, không có lien_he', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_x', name: 'gui_lien_he', input: { hoten: 'A', dienthoai: '12345', nhu_cau: '' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Số chưa đúng, bạn kiểm tra lại nhé.' }] },
+  ]);
+  const leads = [];
+  const res = await handleChat(post({ messages: [{ role: 'user', content: 'A 12345' }], sid: 'sid-lead-0002' }, '9.9.9.5'), {},
+    { client, training: '', sendLog: async () => {}, sendLead: async (p) => { leads.push(p); return true; } });
+  const body = await res.json();
+  assert.equal(body.lien_he, null);
+  assert.equal(leads.length, 0);
+  assert.equal(JSON.parse(client.calls[1].messages.at(-1).content[0].content).ok, false);
+});

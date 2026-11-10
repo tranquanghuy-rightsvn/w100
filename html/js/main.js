@@ -248,7 +248,8 @@ function initPackagePicker() {
         track('package_selected', { package: pkg, source: 'pricing' });
       }
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      const phone = target.querySelector('[name="dienthoai"]');
+      // Form lead: con trỏ vào ô SĐT. Khung chat AI (landing /lp/ từ 11/2026): vào ô nhập câu hỏi.
+      const phone = target.querySelector('[name="dienthoai"]') || target.querySelector('#lh-chat-form [name="q"]');
       if (phone) setTimeout(() => phone.focus({ preventScroll: true }), 450);
     });
   });

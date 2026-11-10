@@ -560,3 +560,24 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 @media (prefers-reduced-motion: reduce) {
   .lp-shine:hover::before { transition: none; transform: translateX(-160%) skewX(-20deg); }
 }
+
+/* ------------------------------ Khung chat AI thay form (11/2026) ------------------------------ */
+/* Khung chat dùng chung /css/chat-ai.css; ở landing thêm bóng giống thẻ form cũ. */
+.lp-chat.lh-chat { min-height: 540px; box-shadow: 0 24px 60px -20px rgba(11, 15, 20, 0.22); }
+.lp-chat .lh-chat__head .modal__title { font-size: 20px; font-weight: 800; color: var(--ink); }
+.lp-chat .lh-chat__log { max-height: 380px; }
+/* Khối cuối trang: thẻ dẫn lên khung chat ở hero (thay form cuối). */
+.lp-final-ai {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.45);
+}
+.lp-final-ai__title { font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.25; margin: 0 0 8px; }
+.lp-final-ai__desc { color: var(--muted); margin: 0 0 20px; font-size: 15px; line-height: 1.6; }
+.lp-final-ai .btn { width: 100%; justify-content: center; }
+@media (max-width: 700px) {
+  .lp-chat.lh-chat { min-height: 480px; }
+  .lp-chat .lh-chat__log { max-height: 320px; }
+  .lp-final-ai { padding: 22px 18px; }
+}

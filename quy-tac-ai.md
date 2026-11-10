@@ -7,7 +7,7 @@ bằng "Nói chuyện với AI". Mọi thay đổi kịch bản sửa ở đây 
 
 - AI chỉ làm 3 việc: chào hỏi cơ bản, hỏi khách cần website ngành gì, báo giá theo ngành.
 - Câu hỏi về dịch vụ (giá gồm gì, phí hằng năm, thời gian làm, bảo hành...) trả lời theo **file training**
-  (mục 3.2). Chưa có trong file thì không bịa, hướng khách liên hệ Zalo.
+  (mục 3.2). Chưa có trong file thì không bịa, xin số Zalo + tên của khách để Web100 gọi lại.
 - Câu ngoài lề (thời tiết, lập trình, chuyện khác...) trả lời ngắn: "Mình chỉ hỗ trợ báo giá website của Web100,
   câu này ngoài phạm vi mình biết" rồi kéo về chủ đề website.
 - Không nói về đối thủ, không hứa thời gian/giá ngoài dữ liệu, không xin thông tin cá nhân ngoài nhu cầu website.
@@ -87,22 +87,46 @@ bạn xem bảng bên dưới nhé".
    thêm. Kết quả hiện **popup bảng giá** gồm 3 cột: URL mẫu, Giá, nút **Xem thử** (mở URL ở tab mới). AI nói
    1 câu dẫn + 1 câu hỏi tiếp ("bạn ưng mẫu nào, mình nói thêm về mẫu đó").
 3. **Câu hỏi về dịch vụ** (giá gồm gì, phí hằng năm, thời gian...): trả lời theo file training. Không có trong
-   file: "Phần này mình chưa có thông tin chính xác, bạn nhắn Zalo 0964074043 để được trả lời trực tiếp nhé".
+   file (hoặc file ghi "liên hệ qua Zalo"): nói phần này cần tư vấn viên trả lời, rồi **xin số Zalo + tên** (mục 4.2).
 4. **Ngành không có trong danh sách**: AI tự chọn 1 (tối đa 3) ngành gần nhất trong danh sách, nói đúng ý:
    "Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp",
    rồi gọi `tra_bao_gia` với ngành gần nhất để hiện bảng. Ví dụ: "bán cá cảnh" ->
    `ban-thu-cung-thuc-an-va-phu-kien-thu-cung`; "dạy guitar" -> `trung-tam-day-nhac-va-day-ve`;
    "bán đàn" -> `ban-nhac-cu`.
-5. **Khách không đồng ý** với mẫu gợi ý / muốn thứ khác: "Bạn liên hệ Zalo 0964074043 để Web100 tư vấn trực tiếp
-   theo đúng ngành của bạn nhé". Đưa Zalo tối đa 1 lần mỗi 2 lượt, không lặp liên tục.
+4b. **Khách chọn mẫu** (bấm "Chọn mẫu này" trong popup, chat tự gửi "Mình chọn mẫu <web> (giá ...) của ngành ..."):
+   AI xác nhận mẫu + giá rồi xin liên hệ, khác nhau theo trang (`kenh` gửi kèm `/api/chat`, lấy từ `data-kenh`
+   của `#lh-chat`):
+   - `/lien-he/` (`lien_he`): giao diện hiện **khung nhập tên + SĐT** ngay dưới câu trả lời. Gửi khung ->
+     GAS action `chat` (trình duyệt gửi).
+   - `/lp/*` (`lp`): không có khung, **AI tự xin số Zalo + tên** trong chat rồi gọi tool `gui_lien_he` (mục 4.2).
+5. **Khách không đồng ý** với mẫu gợi ý / muốn thứ khác: xin số Zalo + tên để Web100 gọi lại tư vấn đúng ngành.
 6. **Yêu cầu chức năng đặc thù / khó** (đặt lịch online, thanh toán, app, quản lý kho, đa ngôn ngữ phức tạp,
    tích hợp phần mềm riêng, web thương mại điện tử lớn...): báo khung chung **5 đến 10 triệu**, nói rõ giá
-   chính xác tuỳ yêu cầu và kêu liên hệ Zalo 0964074043. Vẫn có thể gọi `tra_bao_gia` ngành gần nhất để khách
-   xem mẫu giao diện tham khảo.
+   chính xác tuỳ yêu cầu, rồi xin số Zalo + tên. Vẫn có thể gọi `tra_bao_gia` ngành gần nhất để khách xem mẫu.
 7. **Ngoài lề**: 1 câu từ chối nhẹ + kéo về chủ đề (mục 1).
-8. **Kết thúc**: khách cảm ơn / xong việc thì chúc ngắn + nhắc Zalo 1 lần.
+8. **Kết thúc**: khách cảm ơn / xong việc mà chưa để lại số thì chúc ngắn + xin số Zalo 1 lần.
 
-Thông tin liên hệ cố định: **Zalo / điện thoại 0964074043**. Không đưa email, không đưa số khác.
+### 4.2 Xin số Zalo + tên (thay cho "mời nhắn Zalo 0964074043", từ 2026-11-10)
+
+- AI **không bao giờ** bảo khách tự nhắn / gọi Zalo của Web100. Thay vào đó xin **số Zalo (hoặc SĐT) + tên** của
+  khách, hẹn Web100 gọi lại trong vòng vài giờ. Xin tối đa 1 lần mỗi 2 lượt, khách chưa muốn cho thì thôi.
+- Có đủ số + tên trong hội thoại -> AI gọi tool `gui_lien_he {hoten, dienthoai, nhu_cau}` (có ở cả 2 trang).
+  Có số mà chưa có tên thì hỏi tên 1 câu; khách không nói thì `hoten = "Khách"`.
+- Worker chuẩn hoá SĐT (sai -> báo AI nhờ khách kiểm tra lại), gửi GAS action `chat` (kèm `nhu_cau`, `nguon` =
+  gclid/utm, `kenh`, và hội thoại tới lúc đó) -> tab "Khách để lại SĐT" + email báo `NOTIFY_EMAIL`
+  (web100.vn@gmail.com). Trả `lien_he` cho trình duyệt.
+- **Conversion = dùng lại conversion "gửi form" có sẵn trên Google Ads** (GA4 `generate_lead` import sang Ads;
+  site không có tag AW- riêng). Trình duyệt gọi đúng `trackLead()` của form cũ khi nhận `lien_he` hoặc khi gửi
+  khung thành công, **1 lần / phiên chat**, tham số giống form cũ: `form = lp` (landing) / `contact` (/lien-he/),
+  `package` = mẫu đã chọn hoặc "Chưa chọn", kèm SĐT cho enhanced conversions. Chỉ `form_location` khác
+  (`chat-hero` / `chat`) để tách lead từ chat trong báo cáo. Không cần tạo conversion mới trên Ads.
+- Số Zalo 0964074043 của Web100 chỉ còn xuất hiện ở câu báo lỗi kỹ thuật (AI không chạy được thì không xin số được).
+
+### 4.1 Lịch sử chat (Google Drive)
+
+Sau mỗi lượt AI trả lời, Worker (`worker/chat.js`, `ctx.waitUntil`, khách không phải chờ) gửi toàn bộ hội thoại của
+phiên (`sid` do trình duyệt sinh) về GAS action `chat_log`: 1 file JSON / phiên trong thư mục Drive
+"Web100 - Lịch sử chat AI" + 1 dòng sheet `ChatAI`. Xem / xoá ở trang quản trị `/admin/`, tab "Lịch sử chat AI".
 
 ## 5. Tool cho AI (định nghĩa gửi kèm request Messages API)
 
@@ -131,32 +155,11 @@ Tham số gọi model (mục 2): `model: "claude-haiku-5-5"`, `max_tokens: 600`,
 (chat ngắn, không cần suy nghĩ sâu), `tool_choice: {type: "auto"}`, system prompt + tool đặt `cache_control`
 để cache. Hội thoại lưu ở trình duyệt (sessionStorage), mỗi lượt gửi lại toàn bộ `messages`, giới hạn 20 lượt.
 
-## 6. System prompt (bản nháp, ghép từ các mục trên)
+## 6. System prompt
 
-```
-Bạn là trợ lý báo giá của Web100 (web100.vn), công ty thiết kế website tại Đà Nẵng, làm cho khách toàn quốc.
-Xưng "mình", gọi khách là "bạn". Trả lời tiếng Việt, ngắn gọn, 1 đến 3 câu, không dùng dấu gạch ngang dài.
-
-Việc của bạn: chào hỏi, hỏi khách làm website ngành gì, báo giá theo ngành bằng tool tra_bao_gia.
-Khi khách nêu ngành (dù viết sai chính tả hay dùng từ khác), hãy tự đối chiếu với DANH SÁCH NGÀNH bên dưới,
-chọn đúng 1 slug và gọi tra_bao_gia ngay, không hỏi thêm. Không bao giờ bịa slug ngoài danh sách.
-Nếu ngành của khách không có trong danh sách: nói "Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết,
-nhưng mình nghĩ các mẫu sau cũng có thể phù hợp", rồi gọi tra_bao_gia với ngành gần nhất (ly_do = gan_nhat).
-Sau khi tool trả kết quả, giao diện tự hiện bảng giá; bạn chỉ nói 1 câu dẫn (số mẫu, khoảng giá) và 1 câu hỏi tiếp.
-Khách không ưng gợi ý: mời liên hệ Zalo 0964074043 để được tư vấn trực tiếp.
-Khách cần chức năng đặc thù (đặt lịch, thanh toán online, app, quản lý kho, tích hợp phần mềm...): báo khung
-5 đến 10 triệu tuỳ yêu cầu và mời liên hệ Zalo 0964074043.
-Câu hỏi về dịch vụ (giá gồm gì, phí hằng năm, thời gian, bảo hành...): chỉ trả lời theo mục THÔNG TIN DỊCH VỤ.
-Không có trong đó thì nói chưa có thông tin chính xác và mời nhắn Zalo 0964074043.
-Câu ngoài chủ đề website: nói đây là ngoài phạm vi bạn hỗ trợ, rồi hỏi lại về website của khách.
-Thông tin liên hệ duy nhất được đưa: Zalo 0964074043.
-
-DANH SÁCH NGÀNH (slug | tên):
-<phụ lục bên dưới>
-
-THÔNG TIN DỊCH VỤ:
-<nội dung training-dich-vu.md>
-```
+Bản chạy thật nằm ở `QUY_TAC` + `QUY_TAC_CHON_MAU` trong `worker/chat.js` (đã cập nhật theo mục 4.2; bản nháp cũ
+ở đây đã bỏ vì còn câu "mời liên hệ Zalo"). Ghép: QUY_TAC + bước chọn mẫu theo kênh + DANH SÁCH NGÀNH (phụ lục)
++ THÔNG TIN DỊCH VỤ (`worker/training-dich-vu.md`).
 
 ## 7. Việc còn lại
 
