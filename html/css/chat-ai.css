@@ -51,6 +51,11 @@
 .lh-chat__msg--error { align-self: flex-start; background: #fff3f0; color: #a3321b; border-bottom-left-radius: 4px; }
 .lh-chat__msg--typing { align-self: flex-start; background: var(--bg-alt); color: var(--muted); letter-spacing: 3px; }
 .lh-chat__msg--typing::after { content: "..."; animation: lh-dots 1.2s steps(4, end) infinite; }
+.lh-chat__msg[hidden] { display: none; }
+/* Câu chào đầu: hiện sau "..." đang gõ khi khung chat lần đầu vào màn hình (chat-bao-gia.js) */
+.lh-chat__msg.is-intro { animation: lh-msg-in .3s ease-out; }
+@keyframes lh-msg-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .lh-chat__msg.is-intro { animation: none; } }
 @keyframes lh-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
 /* Nút mở lại bảng giá, đính ngay dưới câu dẫn của AI */
 .lh-chat__table-btn {

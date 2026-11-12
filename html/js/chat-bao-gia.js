@@ -378,4 +378,39 @@
     send(b.getAttribute('data-chat-q'));
   });
   restore();
+
+  /* ---------- Câu chào đầu như AI đang gõ ----------
+     Câu chào vẫn nằm sẵn trong HTML (SEO, không JS vẫn thấy). Phiên mới: ẩn đi, khi khung chat lần đầu
+     vào màn hình thì hiện "..." đang gõ ~1,2s rồi mới hiện câu chào + các nút gợi ý. */
+  var introEl = log.querySelector('.lh-chat__msg--ai');
+  if (!messages.length && introEl && 'IntersectionObserver' in window) {
+    var introTyping = null;
+    var introTimer = 0;
+    var introDone = false;
+    var showIntro = function () {
+      if (introDone) return;
+      introDone = true;
+      clearTimeout(introTimer);
+      if (introTyping) introTyping.remove();
+      introEl.hidden = false;
+      introEl.classList.add('is-intro');
+      if (chips && !entries.length) chips.hidden = false;
+      scrollLog();
+    };
+    introEl.hidden = true;
+    if (chips) chips.hidden = true;
+    var io = new IntersectionObserver(function (list) {
+      if (!list.some(function (x) { return x.isIntersecting; })) return;
+      io.disconnect();
+      introTimer = setTimeout(function () {
+        if (introDone) return;
+        introTyping = addTyping();
+        introTimer = setTimeout(showIntro, 1200);
+      }, 300);
+    }, { threshold: 0.4 });
+    io.observe(chatBox || log);
+    // Khách gửi tin trước khi câu chào kịp hiện (ô nhập / nút trên banner): hiện ngay, đúng thứ tự.
+    form.addEventListener('submit', showIntro, true);
+    document.addEventListener('click', function (e) { if (e.target.closest('[data-chat-q]')) showIntro(); }, true);
+  }
 })();

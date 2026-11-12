@@ -33,7 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LP_DIR = ROOT / "html" / "lp"
-ASSET_V = "20260927a"
+ASSET_V = "20261112a"
 
 PHONE_TEL = "+84964074043"
 PHONE_TXT = "096.407.4043"
@@ -429,11 +429,12 @@ CONTACT = f"""<div class="contact-float lp-float" data-track-area="float">
 # gui thanh cong thi chat-bao-gia.js ban generate_lead (1 lan / phien chat). id="dang-ky" giu nguyen de
 # cac nut href="#dang-ky" data-goto-form (thanh lien he mobile, khoi cuoi trang) cuon toi day.
 CHAT_CHIPS = [
-    ("Spa", "Mình muốn làm website cho spa"),
-    ("Nhà hàng", "Mình muốn làm website nhà hàng"),
-    ("Bán hàng online", "Mình cần website bán hàng online"),
-    ("Công ty", "Mình cần website giới thiệu công ty"),
-    ("Giá gồm gì?", "Giá trên bao gồm những gì?"),
+    ("Tôi cần làm website doanh nghiệp", "Tôi cần làm website doanh nghiệp"),
+    ("Tôi cần làm website bán hàng", "Tôi cần làm website bán hàng"),
+    ("Tôi cần cải tiến website cũ", "Tôi cần cải tiến website cũ"),
+    ("Tôi quan tâm dịch vụ SEO", "Tôi quan tâm dịch vụ SEO"),
+    ("Tôi quan tâm dịch vụ chạy quảng cáo", "Tôi quan tâm dịch vụ chạy quảng cáo"),
+    ("Tôi cần báo giá", "Tôi cần báo giá"),
 ]
 
 
@@ -445,7 +446,7 @@ def chat_widget() -> str:
           <p class="modal__title">Tư vấn báo giá với AI thông minh</p>
         </div>
         <div class="lh-chat__log" id="lh-chat-log" aria-live="polite">
-          <div class="lh-chat__msg lh-chat__msg--ai">Chào bạn, mình là AI báo giá của Web100. Bạn định làm website cho ngành gì? Ví dụ: spa, nhà hàng, bán hàng online, công ty xây dựng...</div>
+          <div class="lh-chat__msg lh-chat__msg--ai">Chào bạn, mình là AI tư vấn của Web100, nói chuyện với mình chút được không?</div>
         </div>
         <div class="lh-chat__chips" id="lh-chat-chips">{chips}
         </div>
