@@ -242,3 +242,26 @@
   .bg-popup__badge { display: inline-flex; margin: 4px 0 0; }
   .bg-popup__badge[hidden] { display: none; }
 }
+
+/* ==========================================================================
+   Khung chat nổi bật (.lp-chat): hero các landing /lp/* và section báo giá ở trang chủ.
+   ========================================================================== */
+.lp-chat.lh-chat { min-height: 540px; box-shadow: 0 24px 60px -20px rgba(11, 15, 20, 0.22); }
+.lp-chat .lh-chat__head .modal__title { font-size: 20px; font-weight: 800; color: var(--ink); }
+.lp-chat .lh-chat__log { max-height: 380px; }
+@media (max-width: 700px) {
+  .lp-chat.lh-chat { min-height: 480px; }
+  .lp-chat .lh-chat__log { max-height: 320px; }
+}
+/* Khung chat AI nổi bật hơn (viền xanh đậm + bóng xanh), icon robot 3D */
+.lp-chat.lh-chat {
+  border: 2px solid var(--green);
+  box-shadow: 0 0 0 6px rgba(11, 203, 104, 0.12), 0 28px 64px -18px rgba(7, 140, 70, 0.45);
+}
+.lp-chat .lh-chat__head { align-items: center; background: linear-gradient(135deg, var(--green-tint) 0%, #fff 70%); border-bottom-color: rgba(11, 203, 104, 0.25); }
+.lp-chat .lh-chat__head .modal__title { margin: 0; }
+.lp-chat__robot { width: 56px; height: 56px; flex-shrink: 0; filter: drop-shadow(0 6px 10px rgba(7, 140, 70, 0.25)); }
+@media (max-width: 700px) {
+  .lp-chat__robot { width: 48px; height: 48px; }
+  .lp-chat .lh-chat__head .modal__title { font-size: 18px; }
+}

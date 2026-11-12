@@ -230,15 +230,6 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .lp-form .lp-form__privacy { margin: 2px 0 0; font-size: 12.5px; text-align: center; }
 .lp-form__privacy a { text-decoration: underline; }
 
-/* Form trượt từ phải sang + rõ dần lần đầu xuất hiện (main.js initReveal gắn .in). Form hero
-   đã nằm trong màn hình nên chạy ngay khi mở trang. */
-.reveal.lp-from-right { transform: translateX(56px); transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.reveal.lp-from-right.in { transform: none; }
-.lp-hero__form.reveal.lp-from-right { transition-delay: 0.15s; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal.lp-from-right { opacity: 1; transform: none; transition: none; }
-}
-
 /* ------------------------------ Logo khách hàng ------------------------------ */
 .lp-logos { padding: 40px 0 80px; }
 .lp-logos__title { text-align: center; font-size: 14px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
@@ -562,10 +553,7 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 }
 
 /* ------------------------------ Khung chat AI thay form (11/2026) ------------------------------ */
-/* Khung chat dùng chung /css/chat-ai.css; ở landing thêm bóng giống thẻ form cũ. */
-.lp-chat.lh-chat { min-height: 540px; box-shadow: 0 24px 60px -20px rgba(11, 15, 20, 0.22); }
-.lp-chat .lh-chat__head .modal__title { font-size: 20px; font-weight: 800; color: var(--ink); }
-.lp-chat .lh-chat__log { max-height: 380px; }
+/* Khung chat nổi bật (.lp-chat) nằm ở /css/chat-ai.css, dùng chung với trang chủ. */
 /* Khối cuối trang: thẻ dẫn lên khung chat ở hero (thay form cuối). */
 .lp-final-ai {
   background: #fff;
@@ -577,20 +565,6 @@ html:not(.promo-ended) .promo-off, html.promo-ended .promo-on { display: none !i
 .lp-final-ai__desc { color: var(--muted); margin: 0 0 20px; font-size: 15px; line-height: 1.6; }
 .lp-final-ai .btn { width: 100%; justify-content: center; }
 @media (max-width: 700px) {
-  .lp-chat.lh-chat { min-height: 480px; }
-  .lp-chat .lh-chat__log { max-height: 320px; }
   .lp-final-ai { padding: 22px 18px; }
 }
 
-/* Khung chat AI nổi bật hơn (viền xanh đậm + bóng xanh), icon robot 3D */
-.lp-chat.lh-chat {
-  border: 2px solid var(--green);
-  box-shadow: 0 0 0 6px rgba(11, 203, 104, 0.12), 0 28px 64px -18px rgba(7, 140, 70, 0.45);
-}
-.lp-chat .lh-chat__head { align-items: center; background: linear-gradient(135deg, var(--green-tint) 0%, #fff 70%); border-bottom-color: rgba(11, 203, 104, 0.25); }
-.lp-chat .lh-chat__head .modal__title { margin: 0; }
-.lp-chat__robot { width: 56px; height: 56px; flex-shrink: 0; filter: drop-shadow(0 6px 10px rgba(7, 140, 70, 0.25)); }
-@media (max-width: 700px) {
-  .lp-chat__robot { width: 48px; height: 48px; }
-  .lp-chat .lh-chat__head .modal__title { font-size: 18px; }
-}

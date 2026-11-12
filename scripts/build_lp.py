@@ -33,7 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LP_DIR = ROOT / "html" / "lp"
-ASSET_V = "20261112c"
+ASSET_V = "20261112d"
 
 PHONE_TEL = "+84964074043"
 PHONE_TXT = "096.407.4043"
@@ -727,7 +727,7 @@ def landing(v: dict) -> str:
       </div>
     </div>
 
-    <div class="lp-hero__form reveal lp-from-right" id="dang-ky">
+    <div class="lp-hero__form" id="dang-ky">
       {chat_widget()}
     </div>
 
@@ -760,7 +760,7 @@ def landing(v: dict) -> str:
         <a href="{MESSENGER}" data-messenger="{MESSENGER_DESKTOP}" target="_blank" rel="noopener">{I_MSG}<span>Nhắn Messenger</span></a>
       </div>
     </div>
-    <div class="lp-final__form reveal lp-from-right">
+    <div class="lp-final__form">
       {FINAL_AI}
     </div>
   </div>
