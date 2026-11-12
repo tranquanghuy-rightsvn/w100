@@ -158,11 +158,11 @@
     popup.className = 'modal-overlay bg-popup';
     popup.innerHTML = '<div class="modal" role="dialog" aria-modal="true" aria-label="Bảng giá website">'
       + '<button class="modal__close" type="button" aria-label="Đóng">&times;</button>'
-      + '<h3 class="modal__title">Bảng giá website: ' + esc(bg.nganh.ten) + '</h3>'
-      + '<p>' + bg.bang_gia.length + ' mẫu tham khảo' + (gia ? ', giá từ ' + esc(gia) : '') + '. Bấm Xem thử để mở website mẫu, dòng đã xem sẽ được đánh dấu và hiện nút Chọn mẫu này.</p>'
+      + '<h3 class="modal__title">Bảng giá website: ' + esc(bg.nganh.ten) + ' <span class="bg-popup__tron-goi">' + ICON_CHECK + 'Giá trọn gói</span></h3>'
+      + '<p>' + bg.bang_gia.length + ' mẫu tham khảo' + (gia ? ', giá trọn gói từ ' + esc(gia) : '') + '. Bấm Xem thử để mở website mẫu, dòng đã xem sẽ được đánh dấu và hiện nút Chọn mẫu này.</p>'
       + note
-      + '<div class="bg-popup__wrap"><table><thead><tr><th>#</th><th>Website mẫu</th><th>Giá</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>'
-      + '<div class="bg-popup__foot"><small>Giá là chi phí làm website tương đương mẫu, chưa gồm tên miền và hosting.</small>'
+      + '<div class="bg-popup__wrap"><table><thead><tr><th>#</th><th>Website mẫu</th><th>Giá trọn gói</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+      + '<div class="bg-popup__foot">'
       + '<a class="btn btn-primary btn-sm" href="' + ZALO_URL + '" target="_blank" rel="noopener">Nhắn Zalo ' + ZALO + '</a></div>'
       + '</div>';
     document.body.appendChild(popup);
@@ -343,7 +343,9 @@
         }
         if (d.bao_gia && d.bao_gia.bang_gia && d.bao_gia.bang_gia.length) {
           addEntry({ kind: 'table', bao_gia: d.bao_gia });
-          openPopup(d.bao_gia);
+          // Để khách đọc câu dẫn của AI trước, ~1s sau mới bật popup bảng giá.
+          var bg = d.bao_gia;
+          setTimeout(function () { if (!popup) openPopup(bg); }, 1000);
         }
         addLead(opts);
       })

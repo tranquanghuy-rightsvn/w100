@@ -1,7 +1,7 @@
 // node --test worker/   (không gọi API thật: client giả trả về kịch bản định sẵn)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { handleChat, cleanMessages, runTool, TOOL, buildSystem, epCauGanNhat } from './chat.js';
+import { handleChat, cleanMessages, runTool, TOOL, buildSystem, epCauGanNhat, boChaoLai } from './chat.js';
 
 const post = (body, ip = '1.2.3.4') => new Request('https://web100.vn/api/chat', {
   method: 'POST',
@@ -55,7 +55,7 @@ test('chat: trả lời thường, không tool', async () => {
   const res = await handleChat(post({ messages: [{ role: 'user', content: 'chào' }] }), {}, { client, training: '' });
   assert.equal(res.status, 200);
   const body = await res.json();
-  assert.equal(body.reply, 'Chào bạn, bạn làm website ngành gì?');
+  assert.equal(body.reply, 'Bạn làm website ngành gì?'); // câu chào lặp bị cắt (boChaoLai)
   assert.equal(body.bao_gia, null);
   const req = client.calls[0];
   assert.equal(req.model, 'claude-haiku-5-5');
@@ -247,4 +247,12 @@ test('chat: phiên đã gửi số (da_gui) -> AI gọi lại gui_lien_he cùng 
   assert.equal(leads.length, 0);
   assert.equal(body.lien_he, null);
   assert.match(JSON.parse(client.calls[1].messages.at(-1).content[0].content).ghi_chu, /KHÔNG cần gửi lại/);
+});
+
+test('boChaoLai: cắt câu chào lặp ở đầu, giữ nguyên câu khác', () => {
+  assert.equal(boChaoLai('Chào bạn! Bạn định làm website ngành gì?'), 'Bạn định làm website ngành gì?');
+  assert.equal(boChaoLai('Xin chào, mình hỏi chút nhé.'), 'Mình hỏi chút nhé.');
+  assert.equal(boChaoLai('Chào bạn.'), 'Chào bạn.');
+  assert.equal(boChaoLai('Chào mừng bạn, ngành gì?'), 'Chào mừng bạn, ngành gì?');
+  assert.equal(boChaoLai('Bạn làm ngành gì?'), 'Bạn làm ngành gì?');
 });

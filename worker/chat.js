@@ -40,6 +40,18 @@ export function epCauGanNhat(text, baoGia) {
   return `${CAU_GAN_NHAT} ${text}`.trim();
 }
 
+// Câu chào đã hiện sẵn trên giao diện, model vẫn hay mở đầu bằng "Chào bạn!..." nên server cắt câu chào ở đầu.
+const RE_CHAO = /^\s*(?:xin\s+)?chào(?:\s+(?:bạn|anh|chị|anh\/chị|anh chị))?(?:\s+\p{L}+)?\s*[!,.]\s*/iu;
+
+/** Bỏ câu chào lặp ở đầu câu trả lời ("Chào bạn! ...", "Xin chào, ..."), viết hoa chữ đầu phần còn lại. */
+export function boChaoLai(text) {
+  const m = String(text || '').match(RE_CHAO);
+  if (!m) return text;
+  const rest = text.slice(m[0].length).trim();
+  if (!rest) return text;
+  return rest.charAt(0).toUpperCase() + rest.slice(1);
+}
+
 // Kịch bản (quy-tac-ai.md mục 4): AI KHÔNG bảo khách tự nhắn Zalo cho Web100 nữa, mà xin số Zalo + tên của
 // khách rồi gọi tool gui_lien_he để Web100 chủ động gọi lại. Chỗ duy nhất còn đưa Zalo/điện thoại Web100 là câu
 // báo lỗi kỹ thuật (lúc AI không chạy được thì không xin số được).
@@ -48,10 +60,11 @@ Xưng "mình", gọi khách là "bạn". Trả lời tiếng Việt, ngắn gọ
 Không dùng markdown (không in đậm, không gạch đầu dòng, không bảng), không dùng dấu gạch ngang dài.
 
 Giao diện đã hiện sẵn câu chào của bạn: "Chào bạn, mình là AI tư vấn của Web100, nói chuyện với mình chút được không?".
-Nếu tin đầu của khách chỉ là đồng ý hoặc chào lại (được, ok, ừ, chào...) thì đừng chào lại dài, hỏi luôn khách
+Vì vậy KHÔNG BAO GIỜ chào lại hay giới thiệu lại bản thân: không mở đầu bằng "Chào bạn", "Xin chào", "Mình là AI...",
+vào thẳng nội dung. Nếu tin đầu của khách chỉ là đồng ý hoặc chào lại (được, ok, ừ, chào...) thì hỏi luôn khách
 định làm website cho ngành gì.
 
-Việc của bạn: chào hỏi, hỏi khách làm website ngành gì, báo giá theo ngành bằng tool tra_bao_gia, và xin số Zalo
+Việc của bạn: hỏi khách làm website ngành gì, báo giá theo ngành bằng tool tra_bao_gia, và xin số Zalo
 cùng tên của khách để Web100 gọi lại tư vấn.
 Khi khách nêu ngành (dù viết sai chính tả, viết tắt hay dùng từ khác), hãy tự đối chiếu với DANH SÁCH NGÀNH
 bên dưới, chọn đúng 1 slug và gọi tra_bao_gia ngay trong lượt đó, không hỏi thêm. Không bao giờ bịa slug
@@ -100,13 +113,16 @@ hỗ trợ, rồi hỏi lại về website của khách. Không nói về đối
 //   /lien-he/ : giao diện có khung nhập tên + SĐT riêng ngay dưới câu trả lời (html/js/chat-bao-gia.js).
 //   /lp/*     : không có khung, AI tự xin trong chat rồi gọi gui_lien_he.
 const QUY_TAC_CHON_MAU = {
-  lien_he: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): chúc mừng ngắn, xác nhận lại
-tên mẫu và giá, rồi mời khách để lại tên và số Zalo ở khung ngay bên dưới để Web100 gọi lại trong vòng vài giờ.
+  lien_he: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): KHÔNG chúc mừng, không khen lựa chọn.
+Nói đúng ý "Mình đã nhận thông tin bạn chọn mẫu <tên website>, giá <giá>", rồi mời khách để lại tên và số Zalo ở
+khung ngay bên dưới để Web100 gọi lại trong vòng vài giờ.
 Lượt này không hỏi số trong tin nhắn, không gọi lại tra_bao_gia.
 Khách đã gửi khung (tin dạng "(Mình đã gửi tên ... và số điện thoại ...)"): thông tin đã tới Web100, không gọi
 gui_lien_he, không xin lại; có thể hỏi khách muốn chỉnh gì so với mẫu (màu, bố cục, thêm trang...).`,
-  lp: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): chúc mừng ngắn, xác nhận lại
-tên mẫu và giá, rồi xin khách số Zalo và tên để Web100 gọi lại tư vấn trong vòng vài giờ. Không gọi lại
+  lp: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): KHÔNG chúc mừng, không khen lựa chọn.
+Nói đúng ý "Mình đã nhận thông tin bạn chọn mẫu <tên website>, giá <giá>", rồi xin khách số Zalo và tên (số điện thoại
+cũng được) để Web100 gọi lại tư vấn trong vòng vài giờ. VD: "Mình đã nhận thông tin bạn chọn mẫu abc.vn, giá
+3.000.000đ. Bạn cho mình xin số Zalo và tên để Web100 gọi lại tư vấn trong vòng vài giờ nhé." Không gọi lại
 tra_bao_gia ở lượt này. Khi khách đưa đủ số và tên thì gọi gui_lien_he với nhu_cau có tên mẫu và giá.`,
 };
 
@@ -339,6 +355,7 @@ export async function handleChat(request, env, deps = {}) {
 
   // Trả lời khách + ghi lịch sử chat ngầm (chỉ khi AI trả lời được, lỗi kỹ thuật không ghi).
   const done = (text, bg) => {
+    text = boChaoLai(text);
     const payload = buildChatLog(body, original, text, bg, request, env, lienHe);
     if (payload) {
       const p = (deps.sendLog || sendChatLog)(payload);
