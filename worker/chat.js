@@ -29,17 +29,6 @@ export const GAS_URL = 'https://script.google.com/macros/s/AKfycbwgxqNs8MfhlObqx
 const SID_RE = /^[a-z0-9-]{8,40}$/i;
 
 const CAU_LOI = `Mình đang gặp trục trặc kỹ thuật, bạn nhắn Zalo ${ZALO} để Web100 báo giá trực tiếp nhé.`;
-// Quy tắc 4 (quy-tac-ai.md): ngành không có thì câu trả lời phải mở đầu bằng câu này. Model được nhắc
-// qua tool_result nhưng không phải lúc nào cũng tuân, nên server tự ghép vào nếu thiếu.
-const CAU_GAN_NHAT = 'Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp.';
-
-/** Đảm bảo câu dẫn cho trường hợp ngành gần nhất luôn mở đầu bằng CAU_GAN_NHAT. */
-export function epCauGanNhat(text, baoGia) {
-  if (!baoGia || baoGia.ly_do !== 'gan_nhat') return text;
-  if (/chưa có trong dữ liệu/i.test(text)) return text;
-  return `${CAU_GAN_NHAT} ${text}`.trim();
-}
-
 // Câu chào đã hiện sẵn trên giao diện, model vẫn hay mở đầu bằng "Chào bạn!..." nên server cắt câu chào ở đầu.
 const RE_CHAO = /^\s*(?:xin\s+)?chào(?:\s+(?:bạn|anh|chị|anh\/chị|anh chị))?(?:\s+\p{L}+)?\s*[!,.]\s*/iu;
 
@@ -69,9 +58,22 @@ cùng tên của khách để Web100 gọi lại tư vấn.
 Khi khách nêu ngành (dù viết sai chính tả, viết tắt hay dùng từ khác), hãy tự đối chiếu với DANH SÁCH NGÀNH
 bên dưới, chọn đúng 1 slug và gọi tra_bao_gia ngay trong lượt đó, không hỏi thêm. Không bao giờ bịa slug
 ngoài danh sách. Nếu khách mô tả khớp 2 đến 3 ngành khác hẳn nhau thì hỏi lại 1 câu ngắn để chọn.
-Nếu ngành của khách không có trong danh sách: nói đúng ý "Ngành của bạn hiện chưa có trong dữ liệu báo giá
-mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp", rồi gọi tra_bao_gia với ngành gần nhất
-(ly_do = gan_nhat).
+
+HỎI KỸ NHU CẦU RỒI CHỐT, áp dụng cho 2 trường hợp:
+  (a) ngành của khách không có trong danh sách (không có ngành nào cùng nghĩa, chỉ na ná thì cũng tính là không
+  có): KHÔNG gọi tra_bao_gia, không gợi ý mẫu của ngành khác;
+  (b) khách đã xem bảng giá nhưng không tìm thấy mẫu ưng ý (chê mẫu, không thích, muốn kiểu khác...): không gọi
+  lại tra_bao_gia, không đẩy thêm mẫu khác, hỏi khách chưa ưng điểm nào hoặc muốn website trông thế nào.
+Cách làm: hỏi kỹ hơn nhu cầu của khách, mỗi lượt
+1 câu, 2 đến 3 lượt, chọn những điều chưa biết, ví dụ: khách kinh doanh / làm cụ thể gì, website dùng để làm gì
+(giới thiệu, bán hàng, nhận đặt lịch...), cần những trang hay chức năng gì, phong cách / màu sắc mong muốn,
+có website tham khảo không.
+Khách trả lời chung chung hoặc không muốn kể thêm thì chốt luôn, không hỏi dồn.
+Khi đã đủ hiểu thì chốt đúng ý: "Mình hiểu rồi, mình sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn
+chi tiết cho bạn. Bạn cho mình xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé." Đây là trường hợp
+DUY NHẤT được xin 3 thứ trong cùng 1 tin. Ngân sách không bắt buộc: khách đưa số và tên mà không nói ngân sách
+thì gọi gui_lien_he luôn, không hỏi lại ngân sách. nhu_cau ghi rõ ngành, các nhu cầu khách đã kể và ngân sách
+(nếu có).
 Sau khi tool trả kết quả, giao diện tự hiện bảng giá kèm nút xem thử từng mẫu; bạn chỉ nói 1 câu dẫn
 (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp, ví dụ hỏi khách ưng mẫu nào hoặc cần thêm gì.
 Không tự liệt kê URL hay giá từng mẫu.
@@ -80,7 +82,6 @@ XIN ZALO VÀ TÊN (thay cho việc bảo khách tự nhắn Zalo cho Web100):
 Không bao giờ bảo khách "nhắn Zalo", "liên hệ Zalo", "gọi số ..." của Web100, kể cả khi THÔNG TIN DỊCH VỤ ghi
 "liên hệ qua Zalo". Thay vào đó xin khách số Zalo (hoặc số điện thoại) và tên, nói Web100 sẽ liên hệ lại trong
 vòng vài giờ. Xin trong các trường hợp:
-  khách không ưng mẫu gợi ý hoặc muốn ngành khác hẳn;
   khách cần chức năng đặc thù (đặt lịch online, thanh toán online, app, quản lý kho, đa ngôn ngữ phức tạp,
   tích hợp phần mềm riêng, sàn thương mại điện tử lớn...): báo khung 5 đến 10 triệu tuỳ yêu cầu, nói giá chính
   xác cần trao đổi, rồi xin Zalo và tên (vẫn có thể gọi tra_bao_gia ngành gần nhất để khách xem mẫu tham khảo).
@@ -152,7 +153,7 @@ export const TOOL_LIEN_HE = {
     properties: {
       hoten: { type: 'string', description: 'Tên khách tự xưng, hoặc "Khách" nếu khách không muốn nói tên' },
       dienthoai: { type: 'string', description: 'Số Zalo / số điện thoại đúng như khách gõ' },
-      nhu_cau: { type: 'string', description: 'Tóm tắt ngắn khách cần gì: ngành, mẫu đã chọn và giá nếu có, chức năng đặc biệt...' },
+      nhu_cau: { type: 'string', description: 'Tóm tắt ngắn khách cần gì: ngành, mẫu đã chọn và giá nếu có, chức năng đặc biệt, ngân sách dự kiến nếu khách nói...' },
     },
     required: ['hoten', 'dienthoai', 'nhu_cau'],
     additionalProperties: false,
@@ -167,13 +168,8 @@ export const TOOL = {
     type: 'object',
     properties: {
       slug: { type: 'string', enum: data.map((n) => n.slug) },
-      ly_do: {
-        type: 'string',
-        enum: ['exact', 'gan_nhat'],
-        description: 'exact nếu khách nói đúng ngành này; gan_nhat nếu ngành khách không có trong danh sách và đây là ngành gần nhất bạn chọn thay',
-      },
     },
-    required: ['slug', 'ly_do'],
+    required: ['slug'],
     additionalProperties: false,
   },
 };
@@ -181,7 +177,6 @@ export const TOOL = {
 /** Chạy tool: trả bản gọn cho model (ít token) và bản đầy đủ cho trình duyệt. */
 export function runTool(input) {
   const slug = String((input && input.slug) || '');
-  const lyDo = input && input.ly_do === 'gan_nhat' ? 'gan_nhat' : 'exact';
   const { nganh } = timNganh(data, slug);
   if (!nganh || nganh.slug !== slug) {
     return { forModel: { loi: `Không có ngành "${slug}" trong dữ liệu. Chọn lại đúng slug trong DANH SÁCH NGÀNH.` }, baoGia: null };
@@ -194,12 +189,9 @@ export function runTool(input) {
       so_mau: nganh.bang_gia.length,
       gia_thap_nhat: nhan(Math.min(...gias)),
       gia_cao_nhat: nhan(Math.max(...gias)),
-      ly_do: lyDo,
-      ghi_chu: lyDo === 'gan_nhat'
-        ? 'Ngành khách nói KHÔNG có trong dữ liệu, đây là ngành gần nhất. Câu trả lời PHẢI mở đầu đúng bằng: "Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp", rồi nêu tên ngành thay thế, số mẫu, khoảng giá. Bảng giá đã hiện cho khách.'
-        : 'Bảng giá đầy đủ đã hiện cho khách, bạn chỉ nói 1 câu dẫn (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp.',
+      ghi_chu: 'Bảng giá đầy đủ đã hiện cho khách, bạn chỉ nói 1 câu dẫn (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp.',
     },
-    baoGia: { nganh: tomTat(nganh), bang_gia: nganh.bang_gia, ly_do: lyDo },
+    baoGia: { nganh: tomTat(nganh), bang_gia: nganh.bang_gia, ly_do: 'exact' },
   };
 }
 
@@ -406,12 +398,12 @@ export async function handleChat(request, env, deps = {}) {
       if (res.stop_reason === 'refusal') {
         return done('Câu này mình không hỗ trợ được, mình quay lại chuyện website của bạn nhé.', null);
       }
-      return done(epCauGanNhat(text || lastText || CAU_LOI, baoGia), baoGia);
+      return done(text || lastText || CAU_LOI, baoGia);
     }
     // Quá số vòng tool: vẫn trả bảng giá (nếu có) kèm câu dẫn chung.
     return done(
-      epCauGanNhat(lastText || (lienHe ? `Cảm ơn ${lienHe.hoten}, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ nhé.`
-        : baoGia ? `Đây là bảng giá ngành ${baoGia.nganh.ten}, bạn xem mẫu nào ưng thì nói mình nhé.` : CAU_LOI), baoGia),
+      lastText || (lienHe ? `Cảm ơn ${lienHe.hoten}, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ nhé.`
+        : baoGia ? `Đây là bảng giá ngành ${baoGia.nganh.ten}, bạn xem mẫu nào ưng thì nói mình nhé.` : CAU_LOI),
       baoGia,
     );
   } catch (err) {

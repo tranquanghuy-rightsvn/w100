@@ -88,18 +88,21 @@ bạn xem bảng bên dưới nhé".
    1 câu dẫn + 1 câu hỏi tiếp ("bạn ưng mẫu nào, mình nói thêm về mẫu đó").
 3. **Câu hỏi về dịch vụ** (giá gồm gì, phí hằng năm, thời gian...): trả lời theo file training. Không có trong
    file (hoặc file ghi "liên hệ qua Zalo"): nói phần này cần tư vấn viên trả lời, rồi **xin số Zalo + tên** (mục 4.2).
-4. **Ngành không có trong danh sách**: AI tự chọn 1 (tối đa 3) ngành gần nhất trong danh sách, nói đúng ý:
-   "Ngành của bạn hiện chưa có trong dữ liệu báo giá mình biết, nhưng mình nghĩ các mẫu sau cũng có thể phù hợp",
-   rồi gọi `tra_bao_gia` với ngành gần nhất để hiện bảng. Ví dụ: "bán cá cảnh" ->
-   `ban-thu-cung-thuc-an-va-phu-kien-thu-cung`; "dạy guitar" -> `trung-tam-day-nhac-va-day-ve`;
-   "bán đàn" -> `ban-nhac-cu`.
+4. **Ngành không có trong danh sách** (từ 2026-11-16, bỏ cách gợi ý "ngành gần nhất"): AI **không** gọi
+   `tra_bao_gia`, không gợi ý mẫu ngành khác. AI hỏi kỹ nhu cầu, mỗi lượt 1 câu, 2 đến 3 lượt (làm/bán cụ thể gì,
+   website dùng để làm gì, cần trang/chức năng gì, phong cách, web tham khảo); khách trả lời chung chung thì chốt
+   luôn. Chốt đúng ý: "Mình hiểu rồi, mình sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn chi tiết cho
+   bạn. Bạn cho mình xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé." (ngoại lệ duy nhất của "mỗi lượt
+   hỏi 1 điều"). Ngân sách không bắt buộc; có số + tên là gọi `gui_lien_he`, `nhu_cau` ghi ngành, nhu cầu đã kể,
+   ngân sách nếu có. Tool `tra_bao_gia` bỏ tham số `ly_do`.
 4b. **Khách chọn mẫu** (bấm "Chọn mẫu này" trong popup, chat tự gửi "Mình chọn mẫu <web> (giá ...) của ngành ..."):
    AI xác nhận mẫu + giá rồi xin liên hệ, khác nhau theo trang (`kenh` gửi kèm `/api/chat`, lấy từ `data-kenh`
    của `#lh-chat`):
    - `/lien-he/` (`lien_he`): giao diện hiện **khung nhập tên + SĐT** ngay dưới câu trả lời. Gửi khung ->
      GAS action `chat` (trình duyệt gửi).
    - `/lp/*` (`lp`): không có khung, **AI tự xin số Zalo + tên** trong chat rồi gọi tool `gui_lien_he` (mục 4.2).
-5. **Khách không đồng ý** với mẫu gợi ý / muốn thứ khác: xin số Zalo + tên để Web100 gọi lại tư vấn đúng ngành.
+5. **Khách không tìm thấy mẫu ưng ý** (đã xem bảng giá nhưng chê / muốn kiểu khác): làm **giống mục 4**, không
+   gọi lại `tra_bao_gia`, hỏi khách chưa ưng điểm nào / muốn website thế nào, rồi chốt và xin SĐT, tên, ngân sách.
 6. **Yêu cầu chức năng đặc thù / khó** (đặt lịch online, thanh toán, app, quản lý kho, đa ngôn ngữ phức tạp,
    tích hợp phần mềm riêng, web thương mại điện tử lớn...): báo khung chung **5 đến 10 triệu**, nói rõ giá
    chính xác tuỳ yêu cầu, rồi xin số Zalo + tên. Vẫn có thể gọi `tra_bao_gia` ngành gần nhất để khách xem mẫu.
@@ -140,10 +143,9 @@ phiên (`sid` do trình duyệt sinh) về GAS action `chat_log`: 1 file JSON / 
   "input_schema": {
     "type": "object",
     "properties": {
-      "slug": { "type": "string", "enum": ["du-lich-trong-nuoc", "...", "dich-vu-ban-lap-camera"] },
-      "ly_do": { "type": "string", "description": "exact nếu khách nói đúng ngành này; gan_nhat nếu ngành khách không có và đây là ngành gần nhất bạn chọn", "enum": ["exact", "gan_nhat"] }
+      "slug": { "type": "string", "enum": ["du-lich-trong-nuoc", "...", "dich-vu-ban-lap-camera"] }
     },
-    "required": ["slug", "ly_do"],
+    "required": ["slug"],
     "additionalProperties": false
   }
 }
