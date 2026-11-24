@@ -369,12 +369,12 @@ export const TOOL_GIA_MAU = {
   },
 };
 
-// Chỉ có ở kịch bản "ngan_sach". slug KHÔNG dùng enum 232 ngành như 3 tool kia: 4 tool strict cùng mang enum 232
-// giá trị làm API trả lỗi (502 ở kịch bản ngân sách, 2026-11-25); server tự kiểm tra slug trong runNganSach.
+// Chỉ có ở kịch bản "ngan_sach". KHÔNG strict: thêm 1 tool strict nữa (kể cả không có enum ngành) làm API trả 400
+// "Schema is too complex for compilation" (2026-11-25, khách nhận câu "trục trặc kỹ thuật"). runNganSach tự kiểm tra
+// slug (phải có trong dữ liệu) và ngan_sach (số hợp lệ), sai thì báo AI gọi lại.
 export const TOOL_NGAN_SACH = {
   name: 'bao_gia_ngan_sach',
   description: 'Khách đã nói ngân sách: tính khung giá mẫu theo ngân sách và hiện luôn 5 mẫu kèm giá cho khách. slug = ngành của khách, ngan_sach = số đồng (VD 3000000).',
-  strict: true,
   input_schema: {
     type: 'object',
     properties: {

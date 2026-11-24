@@ -483,10 +483,14 @@ test('A/B chat: ngân sách trình duyệt gửi lại được dùng cho bao_gi
   assert.match(client.calls[0].system[1].text, /Ngân sách khách: 5\.000\.000đ \(giá mẫu từ 4tr5 đến 5tr5\)/);
 });
 
-test('A/B: tối đa 3 tool strict mang enum 232 ngành (4 tool làm API lỗi 502), slug sai ở tool ngân sách bị chặn', async () => {
+test('A/B: số tool strict ở kịch bản ngân sách không vượt kịch bản thường (thêm tool strict -> API 400 schema too complex)', async () => {
   const { toolsFor } = await import('./chat.js');
-  const coEnum = toolsFor('ngan_sach').filter((x) => x.input_schema.properties.slug && x.input_schema.properties.slug.enum);
-  assert.ok(coEnum.length <= 3);
+  const strict = (kb) => toolsFor(kb).filter((x) => x.strict).length;
+  assert.equal(strict('ngan_sach'), strict('thuong'));
+  assert.ok(!toolsFor('ngan_sach').find((x) => x.name === 'bao_gia_ngan_sach').strict);
+  // ngân sách dạng chuỗi (tool không strict) vẫn đọc được, rác thì bị chặn
+  assert.equal(runNganSach({ slug: 'ban-hang-quan-ao', ngan_sach: '3000000' }, {}).nganSach, 3000000);
+  assert.equal(runNganSach({ slug: 'ban-hang-quan-ao', ngan_sach: 'ba triệu' }, {}).nganSach, 0);
   const r = runNganSach({ slug: 'khong-co-nganh', ngan_sach: 3000000 }, {});
   assert.equal(r.mau, null);
   assert.match(r.forModel.loi, /Không có ngành/);
