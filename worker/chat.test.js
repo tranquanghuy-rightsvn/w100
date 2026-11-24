@@ -1,7 +1,7 @@
 // node --test worker/   (không gọi API thật: client giả trả về kịch bản định sẵn)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { handleChat, cleanMessages, runTool, TOOL, buildSystem, boChaoLai } from './chat.js';
+import { handleChat, cleanMessages, runTool, runGuiMau, runGiaMau, TOOL, buildSystem, buildTinhTrang, boChaoLai } from './chat.js';
 
 const post = (body, ip = '1.2.3.4') => new Request('https://web100.vn/api/chat', {
   method: 'POST',
@@ -35,36 +35,77 @@ test('cleanMessages chặn dữ liệu sai', () => {
   assert.deepEqual(cleanMessages([{ role: 'user', content: ' xin chào ' }]), [{ role: 'user', content: 'xin chào' }]);
 });
 
-test('runTool: slug đúng trả bản gọn cho model và bảng đầy đủ cho client', () => {
+test('runTool: chỉ trả khoảng giá cho model (luôn từ 2tr5), không gửi gì cho trình duyệt', () => {
   const r = runTool({ slug: 'cua-hang-xe-may-dien' });
   assert.equal(r.forModel.ten, 'Cửa hàng xe máy điện');
   assert.equal(r.forModel.so_mau, 18);
-  assert.equal(r.forModel.gia_thap_nhat, '3tr');
+  assert.equal(r.forModel.gia_thap_nhat, '2tr5');
   assert.equal(r.forModel.gia_cao_nhat, '5tr');
-  assert.equal(r.baoGia.bang_gia.length, 18);
-  assert.ok(r.baoGia.bang_gia[0].url.startsWith('http'));
+  assert.ok(!('baoGia' in r));
+  // ngành có mẫu 1tr5/2tr trong dữ liệu vẫn báo từ 2tr5
+  const re = runTool({ slug: 'ban-hang-quan-ao' });
+  assert.equal(re.forModel.gia_thap_nhat, '2tr5');
   const sai = runTool({ slug: 'khong-co' });
-  assert.equal(sai.baoGia, null);
+  assert.equal(sai.nganh, null);
   assert.match(sai.forModel.loi, /Không có ngành/);
+});
+
+test('gui_mau: 5 mẫu / lần, không có giá, lần sau ra 5 mẫu tiếp theo, re_nhat ra 5 mẫu rẻ nhất', () => {
+  const da = {};
+  const a = runGuiMau({ slug: 'cua-hang-xe-may-dien', kieu: 'tiep_theo' }, da);
+  assert.equal(a.mau.ds.length, 5);
+  assert.equal(a.mau.tu, 0);
+  assert.ok(a.mau.ds.every((x) => Object.keys(x).join() === 'url'), 'mẫu gửi trình duyệt chỉ có url, không giá');
+  assert.ok(!JSON.stringify(a.forModel).includes('gia'), 'model không nhận giá từng mẫu khi gửi mẫu');
+  assert.equal(da['cua-hang-xe-may-dien'], 5);
+  const b = runGuiMau({ slug: 'cua-hang-xe-may-dien', kieu: 'tiep_theo' }, da);
+  assert.equal(b.mau.tu, 5);
+  assert.notEqual(b.mau.ds[0].url, a.mau.ds[0].url);
+  const c = runGuiMau({ slug: 'cua-hang-xe-may-dien', kieu: 're_nhat' }, da);
+  assert.equal(c.mau.tu, 0);
+  assert.deepEqual(c.mau.ds, a.mau.ds);
+  assert.equal(da['cua-hang-xe-may-dien'], 10, 're_nhat không làm lùi bộ đếm');
+  da['cua-hang-xe-may-dien'] = 18;
+  const het = runGuiMau({ slug: 'cua-hang-xe-may-dien', kieu: 'tiep_theo' }, da);
+  assert.equal(het.mau, null);
+  assert.equal(het.forModel.het_mau, true);
+});
+
+test('bao_gia_mau: tìm giá theo tên miền, giá dưới 2tr5 báo 2tr5', () => {
+  const r = runGiaMau({ slug: 'cua-hang-xe-may-dien', website: 'https://www.pega.com.vn/' });
+  assert.equal(r.forModel.website, 'pega.com.vn');
+  assert.equal(r.forModel.gia, '3.000.000đ');
+  assert.equal(r.mauChon.gia_vnd, 3000000);
+  // slug sai nhưng tên miền có trong dữ liệu: vẫn tìm được
+  assert.ok(runGiaMau({ slug: 'spa', website: 'pega.com.vn' }).mauChon);
+  assert.equal(runGiaMau({ slug: 'spa', website: 'khongco-abcxyz.vn' }).mauChon, null);
+});
+
+test('tình trạng: tin 1-2 chưa xin số, từ tin 3 xin số, đã có số thì không xin', () => {
+  assert.match(buildTinhTrang(1, false), /Chưa xin số/);
+  assert.match(buildTinhTrang(3, false), /xin số Zalo/);
+  assert.match(buildTinhTrang(5, true), /ĐÃ để lại số/);
 });
 
 test('chat: trả lời thường, không tool', async () => {
   const client = fakeClient([
-    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Chào bạn, bạn làm website ngành gì?' }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Em chào đại ca, đại ca làm website ngành gì ạ?' }] },
   ]);
   const res = await handleChat(post({ messages: [{ role: 'user', content: 'chào' }] }), {}, { client, training: '' });
   assert.equal(res.status, 200);
   const body = await res.json();
-  assert.equal(body.reply, 'Bạn làm website ngành gì?'); // câu chào lặp bị cắt (boChaoLai)
-  assert.equal(body.bao_gia, null);
+  assert.equal(body.reply, 'Đại ca làm website ngành gì ạ?'); // câu chào lặp bị cắt (boChaoLai)
+  assert.equal(body.mau, null);
   const req = client.calls[0];
   assert.equal(req.model, 'claude-haiku-5-5');
   assert.equal(req.tools[0].name, 'tra_bao_gia');
   assert.equal(req.system[0].cache_control.type, 'ephemeral');
   assert.deepEqual(req.output_config, { effort: 'low' });
+  assert.match(req.system[1].text, /TÌNH TRẠNG: Đây là tin thứ 1/);
+  assert.equal(req.system[1].cache_control, undefined);
 });
 
-test('chat: AI gọi tool -> tool_result gọn -> câu dẫn + bao_gia đầy đủ', async () => {
+test('chat: tra_bao_gia -> chỉ câu báo khoảng giá, không có mẫu cho trình duyệt', async () => {
   const client = fakeClient([
     {
       stop_reason: 'tool_use',
@@ -73,26 +114,42 @@ test('chat: AI gọi tool -> tool_result gọn -> câu dẫn + bao_gia đầy đ
         { type: 'tool_use', id: 'tu_1', name: 'tra_bao_gia', input: { slug: 'cua-hang-xe-may-dien' } },
       ],
     },
-    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Ngành xe máy điện có 18 mẫu, giá 3tr đến 5tr.' }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Dạ, ngành xe máy điện bên em làm trọn gói từ 2tr5 đến 5tr ạ.' }] },
   ]);
   const res = await handleChat(post({ messages: [{ role: 'user', content: 'mình bán xe máy đien' }] }), {}, { client, training: '' });
   const body = await res.json();
   assert.equal(body.ok, true);
-  assert.match(body.reply, /18 mẫu/);
-  assert.equal(body.bao_gia.nganh.slug, 'cua-hang-xe-may-dien');
-  assert.equal(body.bao_gia.bang_gia.length, 18);
-  assert.equal(body.bao_gia.ly_do, 'exact');
+  assert.match(body.reply, /2tr5 đến 5tr/);
+  assert.equal(body.mau, null);
   // Vòng 2 phải gửi lại nguyên content của assistant (kể cả thinking) + tool_result
   const msgs = client.calls[1].messages;
   assert.equal(msgs.length, 3);
-  assert.equal(msgs[1].role, 'assistant');
   assert.equal(msgs[1].content[0].type, 'thinking');
-  assert.equal(msgs[2].content[0].type, 'tool_result');
   assert.equal(msgs[2].content[0].tool_use_id, 'tu_1');
   const forModel = JSON.parse(msgs[2].content[0].content);
-  assert.equal(forModel.so_mau, 18);
-  assert.equal(forModel.gia_thap_nhat, '3tr');
+  assert.equal(forModel.gia_thap_nhat, '2tr5');
   assert.ok(!('bang_gia' in forModel), 'không gửi URL cho model');
+});
+
+test('chat: khách xin mẫu -> gui_mau -> trả 5 mẫu + bộ đếm; chọn mẫu -> bao_gia_mau -> mau_chon có giá', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_m', name: 'gui_mau', input: { slug: 'cua-hang-xe-may-dien', kieu: 'tiep_theo' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Dạ em gửi đại ca 5 mẫu ạ.' }] },
+  ]);
+  const res = await handleChat(post({ messages: [{ role: 'user', content: 'cho xem thêm mẫu xe điện' }], mau_da_gui: { 'cua-hang-xe-may-dien': 5, 'khong-co': 3, spa: 'x' } }, '9.9.8.1'), {}, { client, training: '' });
+  const body = await res.json();
+  assert.equal(body.mau.tu, 5);
+  assert.equal(body.mau.ds.length, 5);
+  assert.deepEqual(body.mau_da_gui, { 'cua-hang-xe-may-dien': 10 });
+
+  const client2 = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_g', name: 'bao_gia_mau', input: { slug: 'cua-hang-xe-may-dien', website: 'pega.com.vn' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Dạ, mẫu pega.com.vn bên em làm trọn gói 3.000.000đ ạ.' }] },
+  ]);
+  const res2 = await handleChat(post({ messages: [{ role: 'user', content: 'Tôi muốn mẫu pega.com.vn của ngành Cửa hàng xe máy điện.' }] }, '9.9.8.2'), {}, { client: client2, training: '' });
+  const body2 = await res2.json();
+  assert.equal(body2.mau_chon.gia_vnd, 3000000);
+  assert.equal(body2.mau, null);
 });
 
 test('chat: thiếu API key -> 503 kèm câu mời Zalo', async () => {
@@ -118,12 +175,13 @@ test('chat: quá 30 request / IP -> 429', async () => {
 test('ngành không có / không ưng mẫu: system prompt bắt hỏi kỹ rồi xin SĐT, tên, ngân sách; tool không còn gan_nhat', () => {
   const sys = buildSystem('', 'lp');
   assert.match(sys, /HỎI KỸ NHU CẦU RỒI CHỐT/);
-  assert.match(sys, /không tìm thấy mẫu ưng ý/);
-  assert.match(sys, /đội kỹ thuật báo giá cũng như tư vấn\s+chi tiết cho bạn/);
+  assert.match(sys, /đã xem mẫu nhưng không ưng/);
+  assert.match(sys, /đội kỹ thuật báo giá cũng như tư vấn\s+chi tiết cho đại ca/);
   assert.match(sys, /ngân sách dự kiến \(nếu có\)/);
   assert.doesNotMatch(sys, /gan_nhat/);
   assert.equal(TOOL.input_schema.properties.ly_do, undefined);
-  assert.equal(runTool({ slug: 'cua-hang-xe-may-dien' }).baoGia.ly_do, 'exact');
+  assert.match(sys, /xưng "em", gọi khách là "đại ca"/);
+  assert.match(sys, /GỬI MẪU CHỈ KHI KHÁCH XIN/);
 });
 
 test('chat: có sid -> gửi log hội thoại (tin cũ + câu trả lời) qua ctx.waitUntil', async () => {
@@ -169,7 +227,7 @@ test('chat: log sau tool_use chỉ chứa văn bản, có tên ngành', async ()
 test('system: kênh lp tự xin Zalo khi chọn mẫu, không còn câu mời nhắn Zalo của Web100', () => {
   const lp = buildSystem('', 'lp');
   const lh = buildSystem('', 'lien_he');
-  assert.match(lp, /xin khách số Zalo và tên/);
+  assert.match(lp, /xin đại ca số Zalo\s+và tên/);
   assert.match(lh, /khung ngay bên dưới/);
   assert.doesNotMatch(lp, /0964074043/);
   assert.doesNotMatch(lh, /0964074043/);
@@ -192,8 +250,8 @@ test('chat: AI gọi gui_lien_he -> gửi GAS action chat (chuẩn hoá SĐT, k�
   assert.equal(leads[0].nguon, 'gclid=abc');
   assert.equal(leads[0].kenh, 'lp');
   assert.equal(leads[0].messages[0].content, 'Huy 0905123456');
-  assert.deepEqual(client.calls[0].tools.map((t) => t.name), ['tra_bao_gia', 'gui_lien_he']);
-  assert.match(client.calls[0].system[0].text, /xin khách số Zalo và tên/);
+  assert.deepEqual(client.calls[0].tools.map((t) => t.name), ['tra_bao_gia', 'gui_mau', 'bao_gia_mau', 'gui_lien_he']);
+  assert.match(client.calls[0].system[0].text, /xin đại ca số Zalo\s+và tên/);
   const toolResult = JSON.parse(client.calls[1].messages.at(-1).content[0].content);
   assert.equal(toolResult.ok, true);
 });
@@ -243,6 +301,9 @@ test('chat: phiên đã gửi số (da_gui) -> AI gọi lại gui_lien_he cùng 
 
 test('boChaoLai: cắt câu chào lặp ở đầu, giữ nguyên câu khác', () => {
   assert.equal(boChaoLai('Chào bạn! Bạn định làm website ngành gì?'), 'Bạn định làm website ngành gì?');
+  assert.equal(boChaoLai('Em chào đại ca, đại ca cần gì ạ?'), 'Đại ca cần gì ạ?');
+  assert.equal(boChaoLai('Dạ, em chào đại ca ạ! Đại ca làm ngành gì?'), 'Đại ca làm ngành gì?');
+  assert.equal(boChaoLai('Dạ, đại ca làm ngành gì ạ?'), 'Dạ, đại ca làm ngành gì ạ?');
   assert.equal(boChaoLai('Xin chào, mình hỏi chút nhé.'), 'Mình hỏi chút nhé.');
   assert.equal(boChaoLai('Chào bạn.'), 'Chào bạn.');
   assert.equal(boChaoLai('Chào mừng bạn, ngành gì?'), 'Chào mừng bạn, ngành gì?');

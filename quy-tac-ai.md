@@ -5,13 +5,14 @@ bằng "Nói chuyện với AI". Mọi thay đổi kịch bản sửa ở đây 
 
 ## 1. Mục tiêu và phạm vi
 
-- AI chỉ làm 3 việc: chào hỏi cơ bản, hỏi khách cần website ngành gì, báo giá theo ngành.
+- AI làm 4 việc (từ 2026-11-24): hỏi nhu cầu + ngành, báo **khoảng giá** (luôn từ 2tr5 đến giá cao nhất của ngành),
+  xin **số Zalo / SĐT + tên** (từ tin thứ 3 của khách), gửi mẫu **chỉ khi khách xin** (5 mẫu / lần, không giá).
 - Câu hỏi về dịch vụ (giá gồm gì, phí hằng năm, thời gian làm, bảo hành...) trả lời theo **file training**
   (mục 3.2). Chưa có trong file thì không bịa, xin số Zalo + tên của khách để Web100 gọi lại.
 - Câu ngoài lề (thời tiết, lập trình, chuyện khác...) trả lời ngắn: "Mình chỉ hỗ trợ báo giá website của Web100,
   câu này ngoài phạm vi mình biết" rồi kéo về chủ đề website.
 - Không nói về đối thủ, không hứa thời gian/giá ngoài dữ liệu, không xin thông tin cá nhân ngoài nhu cầu website.
-- Xưng hô: "mình" / "bạn". Giọng thân thiện, ngắn gọn, mỗi lượt 1 đến 3 câu. Không dùng dấu gạch ngang dài (em dash)
+- Xưng hô (từ 2026-11-24): xưng **"em"**, gọi khách **"đại ca"**, câu chào "Em chào đại ca, đại ca cần gì ạ?". Giọng thân thiện, ngắn gọn, mỗi lượt 1 đến 3 câu. Không dùng dấu gạch ngang dài (em dash)
   trong câu trả lời (quy ước copy của web100).
 
 ## 2. Kiến trúc
@@ -24,7 +25,7 @@ bằng "Nói chuyện với AI". Mọi thay đổi kịch bản sửa ở đây 
 | AI | Claude **Haiku**, model id `claude-haiku-5-5`, `effort: low`, `max_tokens: 600` | gọi qua `@anthropic-ai/sdk` từ Worker (không gọi từ trình duyệt, lộ key) |
 | Endpoint chat | `POST /api/chat`, code `worker/chat.js`, test `npm test` | key để ở Secret `ANTHROPIC_API_KEY` của Worker w100 (Dashboard hoặc `npx wrangler secret put`) |
 | File training | `worker/training-dich-vu.md` | nhúng nguyên văn vào system prompt, sửa xong push là có hiệu lực |
-| Giao diện | `html/lien-he/index.html` + `html/js/chat-bao-gia.js` + CSS trong `html/css/lien-he.css` | khung chat thay form cũ, bảng giá hiện popup (URL mẫu, Giá, nút Xem thử) |
+| Giao diện | `html/lien-he/index.html` + `html/js/chat-bao-gia.js` + CSS `html/css/chat-ai.css` | khung chat thay form cũ, khách xin mẫu thì hiện popup 5 mẫu (URL mẫu, Xem thử, Chọn mẫu này, Xem thêm mẫu khác), **không có giá** |
 
 ### 2.1 API `/bao-gia`
 
@@ -75,34 +76,42 @@ Toàn bộ file này được nhúng vào system prompt, đặt sau danh sách n
 
 ### 3.3 Không biết: nội dung bảng giá
 
-AI không giữ 3.822 URL trong prompt (tốn token). Giá và URL chỉ về qua kết quả tool, và giao diện tự vẽ bảng từ
-JSON đó. AI chỉ cần nói 1 câu dẫn, ví dụ "Website ngành cửa hàng xe máy điện có 18 mẫu, giá từ 3tr đến 5tr,
-bạn xem bảng bên dưới nhé".
+AI không giữ 3.822 URL trong prompt (tốn token). `tra_bao_gia` chỉ trả **khoảng giá** cho AI (giá thấp nhất luôn
+ghi 2tr5, giá cao nhất của ngành, số mẫu), không gửi gì cho trình duyệt. URL mẫu chỉ về trình duyệt qua `gui_mau`
+(không kèm giá); giá 1 mẫu chỉ về qua `bao_gia_mau` khi khách chọn mẫu đó (mẫu nào dưới 2tr5 trong CSV cũng báo 2tr5).
 
 ## 4. Kịch bản hội thoại
 
-1. **Mở đầu**: chào + hỏi khách định làm website cho ngành/lĩnh vực gì. Nếu khách đã nói ngành ngay trong câu
-   đầu thì bỏ qua bước hỏi.
-2. **Khách nêu ngành có trong danh sách** (kể cả viết sai, viết khác): gọi ngay `tra_bao_gia(slug)`, không hỏi
-   thêm. Kết quả hiện **popup bảng giá** gồm 3 cột: URL mẫu, Giá, nút **Xem thử** (mở URL ở tab mới). AI nói
-   1 câu dẫn + 1 câu hỏi tiếp ("bạn ưng mẫu nào, mình nói thêm về mẫu đó").
+Từ 2026-11-24 (chủ web100): KHÔNG tự hiện danh sách mẫu nữa.
+
+1. **Mở đầu**: giao diện hiện sẵn "Em chào đại ca, đại ca cần gì ạ?". AI hỏi nhu cầu + ngành (đã nói ngành thì bỏ qua).
+2. **Báo khoảng giá**: biết ngành có trong danh sách -> gọi `tra_bao_gia(slug)` -> báo "trọn gói từ 2tr5 đến <max> tuỳ
+   mẫu". Không gửi mẫu, không liệt kê website.
+2b. **Xin SĐT/Zalo + tên** (quan trọng nhất): từ **tin thứ 3** của khách, khách đã nói nhu cầu mà chưa để lại số thì
+   xin số Zalo + tên. Worker thêm 1 block system động (sau điểm cache) `TÌNH TRẠNG: Đây là tin thứ N của khách...`
+   (`buildTinhTrang`) để AI không phải tự đếm; đã có số (`da_gui`) thì báo AI không xin lại.
+2c. **Khách xin mẫu** -> `gui_mau(slug, kieu)`: 5 mẫu / lần, popup **không giá**. `kieu = tiep_theo` ra 5 mẫu tiếp
+   theo (trình duyệt nhớ `mau_da_gui = {slug: số mẫu đã hiện}` gửi kèm `/api/chat`), popup có nút "Xem thêm mẫu khác".
+   Khách hỏi mẫu giá 2tr5 / rẻ nhất -> `kieu = re_nhat`: 5 mẫu rẻ nhất hiện có của ngành. Hết mẫu thì AI hỏi khách
+   muốn website kiểu gì.
+2d. **Khách chọn mẫu** (bấm "Chọn mẫu này" -> chat tự gửi "Tôi muốn mẫu abc.vn của ngành X.", hoặc khách tự gõ) ->
+   `bao_gia_mau(slug, website)` -> AI báo giá trọn gói mẫu đó, rồi xin liên hệ (mục 4b).
 3. **Câu hỏi về dịch vụ** (giá gồm gì, phí hằng năm, thời gian...): trả lời theo file training. Không có trong
    file (hoặc file ghi "liên hệ qua Zalo"): nói phần này cần tư vấn viên trả lời, rồi **xin số Zalo + tên** (mục 4.2).
 4. **Ngành không có trong danh sách** (từ 2026-11-16, bỏ cách gợi ý "ngành gần nhất"): AI **không** gọi
    `tra_bao_gia`, không gợi ý mẫu ngành khác. AI hỏi kỹ nhu cầu, mỗi lượt 1 câu, 2 đến 3 lượt (làm/bán cụ thể gì,
    website dùng để làm gì, cần trang/chức năng gì, phong cách, web tham khảo); khách trả lời chung chung thì chốt
-   luôn. Chốt đúng ý: "Mình hiểu rồi, mình sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn chi tiết cho
-   bạn. Bạn cho mình xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé." (ngoại lệ duy nhất của "mỗi lượt
+   luôn. Chốt đúng ý: "Dạ em hiểu rồi, em sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn chi tiết cho
+   đại ca. Đại ca cho em xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé ạ." (ngoại lệ duy nhất của "mỗi lượt
    hỏi 1 điều"). Ngân sách không bắt buộc; có số + tên là gọi `gui_lien_he`, `nhu_cau` ghi ngành, nhu cầu đã kể,
    ngân sách nếu có. Tool `tra_bao_gia` bỏ tham số `ly_do`.
-4b. **Khách chọn mẫu** (bấm "Chọn mẫu này" trong popup, chat tự gửi "Mình chọn mẫu <web> (giá ...) của ngành ..."):
-   AI xác nhận mẫu + giá rồi xin liên hệ, khác nhau theo trang (`kenh` gửi kèm `/api/chat`, lấy từ `data-kenh`
+4b. **Khách chọn mẫu** (bấm "Chọn mẫu này" trong popup, chat tự gửi "Tôi muốn mẫu <web> của ngành ..."):
+   AI gọi `bao_gia_mau`, báo giá mẫu rồi xin liên hệ (nếu chưa có số), khác nhau theo trang (`kenh` gửi kèm `/api/chat`, lấy từ `data-kenh`
    của `#lh-chat`):
    - `/lien-he/` (`lien_he`): giao diện hiện **khung nhập tên + SĐT** ngay dưới câu trả lời. Gửi khung ->
-     GAS action `chat` (trình duyệt gửi).
+     GAS action `chat` (trình duyệt gửi). Giá trong khung lấy từ `mau_chon` của phản hồi.
    - `/lp/*` (`lp`): không có khung, **AI tự xin số Zalo + tên** trong chat rồi gọi tool `gui_lien_he` (mục 4.2).
-5. **Khách không tìm thấy mẫu ưng ý** (đã xem bảng giá nhưng chê / muốn kiểu khác): làm **giống mục 4**, không
-   gọi lại `tra_bao_gia`, hỏi khách chưa ưng điểm nào / muốn website thế nào, rồi chốt và xin SĐT, tên, ngân sách.
+5. **Khách không tìm thấy mẫu ưng ý** (đã xem mẫu nhưng chê / muốn kiểu khác, không xin xem thêm): làm **giống mục 4**, hỏi khách chưa ưng điểm nào / muốn website thế nào, rồi chốt và xin SĐT, tên, ngân sách.
 6. **Yêu cầu chức năng đặc thù / khó** (đặt lịch online, thanh toán, app, quản lý kho, đa ngôn ngữ phức tạp,
    tích hợp phần mềm riêng, web thương mại điện tử lớn...): báo khung chung **5 đến 10 triệu**, nói rõ giá
    chính xác tuỳ yêu cầu, rồi xin số Zalo + tên. Vẫn có thể gọi `tra_bao_gia` ngành gần nhất để khách xem mẫu.
@@ -135,29 +144,19 @@ phiên (`sid` do trình duyệt sinh) về GAS action `chat_log`: 1 file JSON / 
 
 ## 5. Tool cho AI (định nghĩa gửi kèm request Messages API)
 
-```json
-{
-  "name": "tra_bao_gia",
-  "description": "Lấy bảng giá website theo ngành từ web100.vn. Chỉ gọi với slug nằm đúng trong danh sách ngành. Kết quả được giao diện hiển thị thành bảng popup, bạn chỉ cần nói 1 câu dẫn.",
-  "strict": true,
-  "input_schema": {
-    "type": "object",
-    "properties": {
-      "slug": { "type": "string", "enum": ["du-lich-trong-nuoc", "...", "dich-vu-ban-lap-camera"] }
-    },
-    "required": ["slug"],
-    "additionalProperties": false
-  }
-}
-```
+4 tool, đều `strict: true`, `slug` là `enum` đúng 232 slug (`TOOLS` trong `worker/chat.js`):
 
-Worker xử lý tool: nhận `slug` -> gọi nội bộ `timNganh(data, slug)` (không cần HTTP ra ngoài) -> trả
-`tool_result` cho AI **bản gọn** (`nganh` + `so_mau` + `gia_thap_nhat`/`gia_cao_nhat`, không kèm URL) để tiết
-kiệm token, đồng thời gửi **bản đầy đủ** `bang_gia` cho trình duyệt vẽ popup.
+| Tool | Input | Trả cho AI | Trả cho trình duyệt |
+|---|---|---|---|
+| `tra_bao_gia` | `slug` | `ten`, `so_mau`, `gia_thap_nhat` (luôn "2tr5"), `gia_cao_nhat` | không gì |
+| `gui_mau` | `slug`, `kieu` (`tiep_theo` / `re_nhat`) | tên miền 5 mẫu vừa hiện, `con_lai` (không giá) | `mau: {nganh, tu, ds:[{url}], con_lai}` + `mau_da_gui` |
+| `bao_gia_mau` | `slug`, `website` | `website`, `nganh`, `gia` ("3.000.000đ", tối thiểu 2.500.000đ) | `mau_chon: {url, gia_vnd, nganh}` |
+| `gui_lien_he` | `hoten`, `dienthoai`, `nhu_cau` | ok / lỗi số | `lien_he: {hoten, dienthoai}` |
 
 Tham số gọi model (mục 2): `model: "claude-haiku-5-5"`, `max_tokens: 600`, `output_config: {effort: "low"}`
-(chat ngắn, không cần suy nghĩ sâu), `tool_choice: {type: "auto"}`, system prompt + tool đặt `cache_control`
-để cache. Hội thoại lưu ở trình duyệt (sessionStorage), mỗi lượt gửi lại toàn bộ `messages`, giới hạn 20 lượt.
+(chat ngắn, không cần suy nghĩ sâu), `tool_choice: {type: "auto"}`, system = [quy tắc + danh sách ngành + training
+(`cache_control`), dòng TÌNH TRẠNG động (không cache)]. Hội thoại lưu ở trình duyệt (sessionStorage `w100_chat_v3`),
+mỗi lượt gửi lại toàn bộ `messages`, giới hạn 24 tin.
 
 ## 6. System prompt
 

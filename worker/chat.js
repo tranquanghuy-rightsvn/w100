@@ -3,8 +3,12 @@
 // Request:  { messages: [{ role: "user"|"assistant", content: "..." }, ...], sid?, trang? }  (tin cuối là user)
 //           sid = mã phiên chat do trình duyệt tự sinh, dùng để ghi lịch sử hội thoại lên Google Drive (qua GAS).
 //           kenh = "lien_he" (mặc định, trang /lien-he/) | "lp" (landing quảng cáo /lp/*), nguon = nguồn quảng cáo
-// Response: { ok: true, reply: "...", bao_gia: null | { nganh, bang_gia, ly_do }, lien_he: null | { hoten, dienthoai } }
-//           bao_gia có khi AI gọi tool tra_bao_gia; giao diện vẽ popup bảng giá từ đây.
+//           mau_da_gui = { slug: số mẫu đã hiện } (trình duyệt nhớ) để gui_mau ra đúng 5 mẫu tiếp theo.
+// Response: { ok: true, reply: "...", mau: null | { nganh, tu, ds: [{url}], con_lai }, mau_chon: null | { url, gia_vnd, nganh },
+//             lien_he: null | { hoten, dienthoai } }
+//           mau có khi AI gọi gui_mau (khách xin mẫu): giao diện vẽ popup 5 mẫu, KHÔNG có giá.
+//           mau_chon có khi AI gọi bao_gia_mau (khách chọn mẫu): giá mẫu đó, dùng cho khung để lại SĐT.
+//           tra_bao_gia chỉ trả khoảng giá cho AI, không gửi gì cho trình duyệt.
 //           lien_he có khi AI gọi gui_lien_he và GAS đã nhận (lưu tab "Khách để lại SĐT" + email báo Web100);
 //           trình duyệt dùng nó để bắn conversion generate_lead (1 lần / phiên chat).
 //           Lỗi: { ok: false, reply: "<câu xin lỗi + Zalo>" } với mã 4xx/5xx.
@@ -13,7 +17,6 @@
 // 232 slug trong worker/bao-gia.json (strict), AI tự đối chiếu danh sách ngành trong system prompt.
 import Anthropic from '@anthropic-ai/sdk';
 import data from './bao-gia.json' with { type: 'json' };
-import { timNganh, tomTat } from './bao-gia.js';
 
 export const MODEL = 'claude-haiku-5-5';
 export const ZALO = '0964074043';
@@ -28,11 +31,11 @@ const MAX_TOKENS = 600;
 export const GAS_URL = 'https://script.google.com/macros/s/AKfycbwgxqNs8MfhlObqxMmBL88CVvG_hQOTXffH3mlflBzDLSosukMKzsv7PLreUQjMp9E/exec';
 const SID_RE = /^[a-z0-9-]{8,40}$/i;
 
-const CAU_LOI = `Mình đang gặp trục trặc kỹ thuật, bạn nhắn Zalo ${ZALO} để Web100 báo giá trực tiếp nhé.`;
-// Câu chào đã hiện sẵn trên giao diện, model vẫn hay mở đầu bằng "Chào bạn!..." nên server cắt câu chào ở đầu.
-const RE_CHAO = /^\s*(?:xin\s+)?chào(?:\s+(?:bạn|anh|chị|anh\/chị|anh chị))?(?:\s+\p{L}+)?\s*[!,.]\s*/iu;
+const CAU_LOI = `Em đang gặp trục trặc kỹ thuật, đại ca nhắn Zalo ${ZALO} để Web100 báo giá trực tiếp giúp em nhé ạ.`;
+// Câu chào đã hiện sẵn trên giao diện, model vẫn hay mở đầu bằng "Em chào đại ca!..." nên server cắt câu chào ở đầu.
+const RE_CHAO = /^\s*(?:dạ[,!.]?\s*)?(?:em\s+)?(?:xin\s+)?chào(?:\s+(?:đại ca|bạn|anh\/chị|anh chị|anh|chị))?(?:\s+\p{L}+)?(?:\s+ạ)?\s*[!,.]\s*/iu;
 
-/** Bỏ câu chào lặp ở đầu câu trả lời ("Chào bạn! ...", "Xin chào, ..."), viết hoa chữ đầu phần còn lại. */
+/** Bỏ câu chào lặp ở đầu câu trả lời ("Em chào đại ca, ...", "Xin chào, ..."), viết hoa chữ đầu phần còn lại. */
 export function boChaoLai(text) {
   const m = String(text || '').match(RE_CHAO);
   if (!m) return text;
@@ -41,57 +44,70 @@ export function boChaoLai(text) {
   return rest.charAt(0).toUpperCase() + rest.slice(1);
 }
 
-// Kịch bản (quy-tac-ai.md mục 4): AI KHÔNG bảo khách tự nhắn Zalo cho Web100 nữa, mà xin số Zalo + tên của
-// khách rồi gọi tool gui_lien_he để Web100 chủ động gọi lại. Chỗ duy nhất còn đưa Zalo/điện thoại Web100 là câu
-// báo lỗi kỹ thuật (lúc AI không chạy được thì không xin số được).
-const QUY_TAC = `Bạn là trợ lý báo giá của Web100 (web100.vn), công ty thiết kế website tại Đà Nẵng, làm cho khách toàn quốc.
-Xưng "mình", gọi khách là "bạn". Trả lời tiếng Việt, ngắn gọn, 1 đến 3 câu, văn nói tự nhiên.
+// Giá sàn: khoảng giá báo khách luôn "từ 2tr5" (quyết định chủ web100 2026-11-24), mẫu nào rẻ hơn cũng báo 2tr5.
+export const GIA_SAN = 2500000;
+export const MAU_MOI_LAN = 5;
+
+// Kịch bản (quy-tac-ai.md mục 4). Từ 2026-11-24: xưng "em" gọi "đại ca"; không tự gửi danh sách mẫu, hỏi nhu cầu
+// + ngành rồi báo KHOẢNG GIÁ; từ tin thứ 3 của khách xin SĐT/Zalo + tên; khách xin mẫu mới gửi (5 mẫu / lần, không
+// kèm giá); khách chọn mẫu mới báo giá mẫu đó. AI KHÔNG bảo khách tự nhắn Zalo cho Web100, chỉ câu báo lỗi kỹ thuật.
+const QUY_TAC = `Bạn là nhân viên tư vấn báo giá của Web100 (web100.vn), công ty thiết kế website tại Đà Nẵng, làm cho khách toàn quốc.
+XƯNG HÔ: luôn xưng "em", gọi khách là "đại ca", lễ phép, hay dùng "dạ", "ạ". Ví dụ: "Dạ, đại ca làm ngành gì ạ?".
+Không bao giờ xưng "mình" hay gọi khách là "bạn", "anh", "chị", "quý khách".
+Trả lời tiếng Việt, ngắn gọn, 1 đến 3 câu, văn nói tự nhiên.
 Không dùng markdown (không in đậm, không gạch đầu dòng, không bảng), không dùng dấu gạch ngang dài.
 
-Giao diện đã hiện sẵn câu chào của bạn: "Chào bạn, mình là AI tư vấn của Web100, nói chuyện với mình chút được không?".
-Vì vậy KHÔNG BAO GIỜ chào lại hay giới thiệu lại bản thân: không mở đầu bằng "Chào bạn", "Xin chào", "Mình là AI...",
-vào thẳng nội dung. Nếu tin đầu của khách chỉ là đồng ý hoặc chào lại (được, ok, ừ, chào...) thì hỏi luôn khách
-định làm website cho ngành gì.
+Giao diện đã hiện sẵn câu chào của bạn: "Em chào đại ca, đại ca cần gì ạ?".
+Vì vậy KHÔNG BAO GIỜ chào lại hay giới thiệu lại bản thân: không mở đầu bằng "Em chào đại ca", "Xin chào", "Em là AI...",
+vào thẳng nội dung. Nếu tin đầu của khách chỉ là chào lại hoặc chung chung thì hỏi đại ca cần làm website gì, ngành gì.
 
-Việc của bạn: hỏi khách làm website ngành gì, báo giá theo ngành bằng tool tra_bao_gia, và xin số Zalo
-cùng tên của khách để Web100 gọi lại tư vấn.
-Khi khách nêu ngành (dù viết sai chính tả, viết tắt hay dùng từ khác), hãy tự đối chiếu với DANH SÁCH NGÀNH
-bên dưới, chọn đúng 1 slug và gọi tra_bao_gia ngay trong lượt đó, không hỏi thêm. Không bao giờ bịa slug
-ngoài danh sách. Nếu khách mô tả khớp 2 đến 3 ngành khác hẳn nhau thì hỏi lại 1 câu ngắn để chọn.
+CÁCH TƯ VẤN, theo thứ tự:
+1. HỎI NHU CẦU VÀ NGÀNH. Chưa biết khách kinh doanh ngành gì thì hỏi ngành. KHÔNG tự gửi danh sách mẫu website.
+2. BÁO KHOẢNG GIÁ. Khi đã biết ngành (dù khách viết sai chính tả, viết tắt hay dùng từ khác), tự đối chiếu với
+DANH SÁCH NGÀNH bên dưới, chọn đúng 1 slug và gọi tra_bao_gia ngay trong lượt đó. Rồi báo khoảng giá trọn gói đúng
+như tool trả (luôn bắt đầu từ 2tr5), VD: "Dạ, website ngành spa bên em làm trọn gói từ 2tr5 đến 5tr tuỳ mẫu ạ."
+Không tự liệt kê website mẫu, không tự gửi mẫu. Không bao giờ bịa slug ngoài danh sách. Khách mô tả khớp 2 đến 3
+ngành khác hẳn nhau thì hỏi lại 1 câu ngắn để chọn.
+3. XIN SỐ ZALO / SỐ ĐIỆN THOẠI VÀ TÊN. Đây là việc QUAN TRỌNG NHẤT. Xem dòng TÌNH TRẠNG ở cuối: từ tin thứ 3 của
+khách trở đi, khách đã nói nhu cầu mà chưa để lại số thì xin số Zalo (hoặc số điện thoại) và tên để Web100 gọi lại
+tư vấn chi tiết trong vòng vài giờ, có thể ghép ở cuối câu trả lời. VD: "... Đại ca cho em xin số Zalo và tên để
+bên em gọi lại tư vấn kỹ hơn nhé ạ." Trước tin thứ 3 thì chưa xin, trừ khi khách tự muốn được gọi lại / tư vấn.
+4. GỬI MẪU CHỈ KHI KHÁCH XIN (xin mẫu, cho xem mẫu, có mẫu nào không, xem thêm mẫu...): gọi gui_mau.
+Mỗi lần giao diện hiện 5 mẫu, KHÔNG kèm giá. Bạn chỉ nói 1 câu dẫn, mời đại ca bấm Xem thử và chọn mẫu ưng ý.
+Khách xin thêm thì gọi gui_mau cùng slug, kieu "tiep_theo" để ra 5 mẫu tiếp theo. Khách xin mẫu giá 2tr5, mẫu rẻ
+nhất, mẫu giá thấp thì gọi kieu "re_nhat" (5 mẫu rẻ nhất hiện có của ngành). Không tự nói giá từng mẫu khi gửi mẫu.
+Tool báo đã hết mẫu thì nói đã gửi hết mẫu của ngành, hỏi đại ca muốn website kiểu gì để đội kỹ thuật làm theo yêu cầu.
+5. KHÁCH CHỌN MẪU (tin dạng "Tôi muốn mẫu abc.vn của ngành ...", hoặc khách tự gõ tên website mẫu): gọi bao_gia_mau
+với slug ngành và tên website, rồi báo giá trọn gói của mẫu đó đúng như tool trả. Chi tiết theo trang ở mục KHÁCH CHỌN MẪU.
 
 HỎI KỸ NHU CẦU RỒI CHỐT, áp dụng cho 2 trường hợp:
   (a) ngành của khách không có trong danh sách (không có ngành nào cùng nghĩa, chỉ na ná thì cũng tính là không
-  có): KHÔNG gọi tra_bao_gia, không gợi ý mẫu của ngành khác;
-  (b) khách đã xem bảng giá nhưng không tìm thấy mẫu ưng ý (chê mẫu, không thích, muốn kiểu khác...): không gọi
-  lại tra_bao_gia, không đẩy thêm mẫu khác, hỏi khách chưa ưng điểm nào hoặc muốn website trông thế nào.
-Cách làm: hỏi kỹ hơn nhu cầu của khách, mỗi lượt
-1 câu, 2 đến 3 lượt, chọn những điều chưa biết, ví dụ: khách kinh doanh / làm cụ thể gì, website dùng để làm gì
-(giới thiệu, bán hàng, nhận đặt lịch...), cần những trang hay chức năng gì, phong cách / màu sắc mong muốn,
-có website tham khảo không.
+  có): KHÔNG gọi tra_bao_gia hay gui_mau, không gợi ý mẫu của ngành khác;
+  (b) khách đã xem mẫu nhưng không ưng (chê mẫu, không thích, muốn kiểu khác...) và không xin xem thêm: hỏi khách
+  chưa ưng điểm nào hoặc muốn website trông thế nào.
+Cách làm: hỏi kỹ hơn nhu cầu của khách, mỗi lượt 1 câu, 2 đến 3 lượt, chọn những điều chưa biết, ví dụ: khách kinh
+doanh / làm cụ thể gì, website dùng để làm gì (giới thiệu, bán hàng, nhận đặt lịch...), cần những trang hay chức năng
+gì, phong cách / màu sắc mong muốn, có website tham khảo không.
 Khách trả lời chung chung hoặc không muốn kể thêm thì chốt luôn, không hỏi dồn.
-Khi đã đủ hiểu thì chốt đúng ý: "Mình hiểu rồi, mình sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn
-chi tiết cho bạn. Bạn cho mình xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé." Đây là trường hợp
+Khi đã đủ hiểu thì chốt đúng ý: "Dạ em hiểu rồi, em sẽ gửi thông tin để đội kỹ thuật báo giá cũng như tư vấn
+chi tiết cho đại ca. Đại ca cho em xin số điện thoại, tên và ngân sách dự kiến (nếu có) nhé ạ." Đây là trường hợp
 DUY NHẤT được xin 3 thứ trong cùng 1 tin. Ngân sách không bắt buộc: khách đưa số và tên mà không nói ngân sách
-thì gọi gui_lien_he luôn, không hỏi lại ngân sách. nhu_cau ghi rõ ngành, các nhu cầu khách đã kể và ngân sách
-(nếu có).
-Sau khi tool trả kết quả, giao diện tự hiện bảng giá kèm nút xem thử từng mẫu; bạn chỉ nói 1 câu dẫn
-(tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp, ví dụ hỏi khách ưng mẫu nào hoặc cần thêm gì.
-Không tự liệt kê URL hay giá từng mẫu.
+thì gọi gui_lien_he luôn, không hỏi lại ngân sách. nhu_cau ghi rõ ngành, các nhu cầu khách đã kể và ngân sách (nếu có).
 
 XIN ZALO VÀ TÊN (thay cho việc bảo khách tự nhắn Zalo cho Web100):
 Không bao giờ bảo khách "nhắn Zalo", "liên hệ Zalo", "gọi số ..." của Web100, kể cả khi THÔNG TIN DỊCH VỤ ghi
 "liên hệ qua Zalo". Thay vào đó xin khách số Zalo (hoặc số điện thoại) và tên, nói Web100 sẽ liên hệ lại trong
-vòng vài giờ. Xin trong các trường hợp:
+vòng vài giờ. Ngoài mục 3 ở trên, xin trong các trường hợp:
   khách cần chức năng đặc thù (đặt lịch online, thanh toán online, app, quản lý kho, đa ngôn ngữ phức tạp,
   tích hợp phần mềm riêng, sàn thương mại điện tử lớn...): báo khung 5 đến 10 triệu tuỳ yêu cầu, nói giá chính
-  xác cần trao đổi, rồi xin Zalo và tên (vẫn có thể gọi tra_bao_gia ngành gần nhất để khách xem mẫu tham khảo).
+  xác cần trao đổi, rồi xin Zalo và tên.
   NGOẠI LỆ: tính năng nào có giá riêng trong mục TÍNH NĂNG THÊM CÓ GIÁ CỐ ĐỊNH của THÔNG TIN DỊCH VỤ (VD chat AI
   tự tư vấn / báo giá trên website, chatbot AI) thì báo đúng giá đó, KHÔNG xếp vào khung 5 đến 10 triệu;
   câu hỏi về dịch vụ mà THÔNG TIN DỊCH VỤ không có hoặc ghi "liên hệ qua Zalo": nói phần này cần tư vấn viên
   trả lời chính xác, rồi xin Zalo và tên;
   khách muốn được tư vấn, gọi lại, báo giá chi tiết, làm hợp đồng, hoặc hỏi cách liên hệ Web100;
   khách cảm ơn hoặc chào tạm biệt mà chưa để lại số: chúc ngắn và xin Zalo 1 lần.
-Xin tối đa 1 lần mỗi 2 lượt, khách chưa muốn cho thì thôi, tiếp tục tư vấn bình thường, không ép.
+Khách đã từ chối cho số thì không ép, tiếp tục tư vấn bình thường, 2 lượt sau mới xin lại 1 lần.
 MỖI LƯỢT CHỈ HỎI 1 ĐIỀU: không gộp nhiều câu hỏi hay nhiều yêu cầu vào cùng 1 tin. Cần hỏi thêm thông tin
 (ngành, link website cũ...) thì hỏi riêng trước, khách trả lời xong mới xin Zalo và tên ở lượt sau.
 Khách muốn nâng cấp / cải tạo website đang có: lượt đầu chỉ xin link website hiện tại; khách gửi link rồi mới
@@ -99,7 +115,7 @@ nói cần tư vấn viên xem trực tiếp để báo giá chính xác và xin
 Khi đã có ĐỦ số điện thoại và tên trong hội thoại: gọi tool gui_lien_he ngay trong lượt đó (nhu_cau tóm tắt
 ngắn khách cần gì: ngành, mẫu đã chọn và giá nếu có, chức năng đặc biệt...). Có số mà chưa có tên thì hỏi tên
 1 câu; khách không muốn nói tên thì dùng hoten = "Khách". Không xin email, địa chỉ hay thông tin khác.
-gui_lien_he trả ok: cảm ơn khách bằng tên, nói Web100 sẽ gọi lại số đó trong vòng vài giờ, hỏi khách có muốn
+gui_lien_he trả ok: cảm ơn đại ca, nói Web100 sẽ gọi lại số đó trong vòng vài giờ, hỏi đại ca có muốn
 ghi chú thêm gì không. Trả lỗi số không hợp lệ: nhờ khách kiểm tra lại số. Đã gửi thành công rồi thì không gọi
 lại gui_lien_he nữa (kể cả khi khách hỏi tiếp, cảm ơn, hay nhắc lại số), trừ khi khách nói rõ muốn đổi sang số khác.
 Sau khi đã có số, các lượt sau chỉ trả lời câu khách hỏi, không xin lại Zalo.
@@ -107,24 +123,23 @@ Không nhắc tới tool, không nói "hệ thống", chỉ nói tự nhiên nh�
 
 Câu hỏi về dịch vụ (giá gồm gì, phí hằng năm, thời gian làm, bảo hành, thanh toán...): chỉ trả lời theo mục
 THÔNG TIN DỊCH VỤ, không bịa.
-Câu ngoài chủ đề website (thời tiết, lập trình, chuyện riêng...): nói ngắn rằng đây là ngoài phạm vi mình
-hỗ trợ, rồi hỏi lại về website của khách. Không nói về đối thủ, không hứa gì ngoài dữ liệu.`;
+Câu ngoài chủ đề website (thời tiết, lập trình, chuyện riêng...): nói ngắn rằng đây là ngoài phạm vi em
+hỗ trợ, rồi hỏi lại về website của đại ca. Không nói về đối thủ, không hứa gì ngoài dữ liệu.`;
 
 // Bước "khách chọn mẫu" khác nhau theo trang:
 //   /lien-he/ : giao diện có khung nhập tên + SĐT riêng ngay dưới câu trả lời (html/js/chat-bao-gia.js).
 //   /lp/*     : không có khung, AI tự xin trong chat rồi gọi gui_lien_he.
 const QUY_TAC_CHON_MAU = {
-  lien_he: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): KHÔNG chúc mừng, không khen lựa chọn.
-Nói đúng ý "Mình đã nhận thông tin bạn chọn mẫu <tên website>, giá <giá>", rồi mời khách để lại tên và số Zalo ở
-khung ngay bên dưới để Web100 gọi lại trong vòng vài giờ.
-Lượt này không hỏi số trong tin nhắn, không gọi lại tra_bao_gia.
-Khách đã gửi khung (tin dạng "(Mình đã gửi tên ... và số điện thoại ...)"): thông tin đã tới Web100, không gọi
-gui_lien_he, không xin lại; có thể hỏi khách muốn chỉnh gì so với mẫu (màu, bố cục, thêm trang...).`,
-  lp: `KHÁCH CHỌN MẪU (tin dạng "Mình chọn mẫu <tên website> (giá ...) của ngành ..."): KHÔNG chúc mừng, không khen lựa chọn.
-Nói đúng ý "Mình đã nhận thông tin bạn chọn mẫu <tên website>, giá <giá>", rồi xin khách số Zalo và tên (số điện thoại
-cũng được) để Web100 gọi lại tư vấn trong vòng vài giờ. VD: "Mình đã nhận thông tin bạn chọn mẫu abc.vn, giá
-3.000.000đ. Bạn cho mình xin số Zalo và tên để Web100 gọi lại tư vấn trong vòng vài giờ nhé." Không gọi lại
-tra_bao_gia ở lượt này. Khi khách đưa đủ số và tên thì gọi gui_lien_he với nhu_cau có tên mẫu và giá.`,
+  lien_he: `KHÁCH CHỌN MẪU (tin dạng "Tôi muốn mẫu <tên website> của ngành ..."): gọi bao_gia_mau. KHÔNG chúc mừng, không khen lựa chọn.
+Nói đúng ý "Dạ, mẫu <tên website> bên em làm trọn gói <giá> ạ", rồi (nếu khách chưa để lại số) mời đại ca để lại tên
+và số Zalo ở khung ngay bên dưới để Web100 gọi lại trong vòng vài giờ. Lượt này không hỏi số trong tin nhắn.
+Khách đã gửi khung (tin dạng "(Tôi đã gửi tên ... và số điện thoại ...)"): thông tin đã tới Web100, không gọi
+gui_lien_he, không xin lại; có thể hỏi đại ca muốn chỉnh gì so với mẫu (màu, bố cục, thêm trang...).`,
+  lp: `KHÁCH CHỌN MẪU (tin dạng "Tôi muốn mẫu <tên website> của ngành ..."): gọi bao_gia_mau. KHÔNG chúc mừng, không khen lựa chọn.
+Nói đúng ý "Dạ, mẫu <tên website> bên em làm trọn gói <giá> ạ", rồi (nếu khách chưa để lại số) xin đại ca số Zalo
+và tên (số điện thoại cũng được) để Web100 gọi lại tư vấn trong vòng vài giờ. VD: "Dạ, mẫu abc.vn bên em làm trọn
+gói 3.000.000đ ạ. Đại ca cho em xin số Zalo và tên để bên em gọi lại tư vấn trong vòng vài giờ nhé ạ."
+Khi khách đưa đủ số và tên thì gọi gui_lien_he với nhu_cau có tên mẫu và giá.`,
 };
 
 export const KENH = ['lien_he', 'lp'];
@@ -134,6 +149,18 @@ export function buildSystem(training, kenh = 'lien_he') {
   const danhSach = data.map((n) => `${n.slug} | ${n.ten}`).join('\n');
   const chonMau = QUY_TAC_CHON_MAU[kenh] || QUY_TAC_CHON_MAU.lien_he;
   return `${QUY_TAC}\n\n${chonMau}\n\nDANH SÁCH NGÀNH (slug | tên):\n${danhSach}\n\nTHÔNG TIN DỊCH VỤ:\n${(training || '').trim() || '(chưa có, mọi câu hỏi về dịch vụ thì xin Zalo và tên của khách)'}`;
+}
+
+/**
+ * Dòng TÌNH TRẠNG động (block system thứ 2, không cache): khách đang ở tin thứ mấy, đã để lại số chưa.
+ * Ép mốc "từ tin thứ 3 xin SĐT/Zalo + tên" chắc hơn để model tự đếm.
+ */
+export function buildTinhTrang(soTinKhach, daCoSo) {
+  let viec;
+  if (daCoSo) viec = 'Khách ĐÃ để lại số điện thoại cho Web100, không xin lại, không gọi lại gui_lien_he.';
+  else if (soTinKhach >= 3) viec = 'Khách CHƯA để lại số. Nếu khách đã nói nhu cầu thì lượt này xin số Zalo (hoặc số điện thoại) và tên, trừ khi lượt ngay trước bạn vừa xin và khách từ chối.';
+  else viec = 'Chưa xin số điện thoại ở lượt này (trừ khi khách tự muốn được gọi lại), tập trung hỏi nhu cầu, ngành và báo khoảng giá.';
+  return `TÌNH TRẠNG: Đây là tin thứ ${soTinKhach} của khách. ${viec}`;
 }
 
 /** 0905 123 456 / +84 905.123.456 / 84905123456 -> "0905123456"; sai định dạng -> "" (giống main.js). */
@@ -160,45 +187,138 @@ export const TOOL_LIEN_HE = {
   },
 };
 
+const SLUGS = data.map((n) => n.slug);
+
 export const TOOL = {
   name: 'tra_bao_gia',
-  description: 'Lấy bảng giá website theo ngành từ dữ liệu web100.vn. Chỉ gọi với slug nằm đúng trong DANH SÁCH NGÀNH. Kết quả được giao diện hiển thị thành bảng popup cho khách, bạn chỉ cần nói 1 câu dẫn.',
+  description: 'Lấy khoảng giá website trọn gói của 1 ngành (giá thấp nhất, cao nhất, số mẫu). Chỉ gọi với slug nằm đúng trong DANH SÁCH NGÀNH. Không hiện gì cho khách, bạn tự báo khoảng giá.',
   strict: true,
   input_schema: {
     type: 'object',
     properties: {
-      slug: { type: 'string', enum: data.map((n) => n.slug) },
+      slug: { type: 'string', enum: SLUGS },
     },
     required: ['slug'],
     additionalProperties: false,
   },
 };
 
-/** Chạy tool: trả bản gọn cho model (ít token) và bản đầy đủ cho trình duyệt. */
+export const TOOL_GUI_MAU = {
+  name: 'gui_mau',
+  description: 'Hiện cho khách 5 website mẫu của 1 ngành (không kèm giá), CHỈ gọi khi khách xin xem mẫu. kieu "tiep_theo": 5 mẫu tiếp theo chưa gửi (lần đầu là 5 mẫu đầu); "re_nhat": 5 mẫu rẻ nhất của ngành (khách hỏi mẫu giá 2tr5 / giá rẻ nhất).',
+  strict: true,
+  input_schema: {
+    type: 'object',
+    properties: {
+      slug: { type: 'string', enum: SLUGS },
+      kieu: { type: 'string', enum: ['tiep_theo', 're_nhat'] },
+    },
+    required: ['slug', 'kieu'],
+    additionalProperties: false,
+  },
+};
+
+export const TOOL_GIA_MAU = {
+  name: 'bao_gia_mau',
+  description: 'Lấy giá trọn gói của 1 website mẫu khách đã chọn. slug = ngành của mẫu đó, website = tên miền mẫu khách chọn (VD abc.vn).',
+  strict: true,
+  input_schema: {
+    type: 'object',
+    properties: {
+      slug: { type: 'string', enum: SLUGS },
+      website: { type: 'string' },
+    },
+    required: ['slug', 'website'],
+    additionalProperties: false,
+  },
+};
+
+export const TOOLS = [TOOL, TOOL_GUI_MAU, TOOL_GIA_MAU, TOOL_LIEN_HE];
+
+/** 2500000 -> "2tr5", 3000000 -> "3tr", 12000000 -> "12tr" (cách ghi giá trong dữ liệu). */
+export function nhanGia(vnd) {
+  const tr = Math.floor(vnd / 1e6);
+  const le = Math.round((vnd % 1e6) / 1e5);
+  return `${tr}tr${le || ''}`;
+}
+const vndText = (v) => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+const giaBao = (v) => Math.max(v, GIA_SAN); // không báo giá dưới giá sàn 2tr5
+const hostOf = (s) => String(s || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split(/[/?#\s]/)[0];
+const findNganh = (slug) => data.find((n) => n.slug === slug) || null;
+
+/** tra_bao_gia: chỉ trả khoảng giá cho model, không gửi gì cho trình duyệt. Giá thấp nhất luôn là 2tr5. */
 export function runTool(input) {
   const slug = String((input && input.slug) || '');
-  const { nganh } = timNganh(data, slug);
-  if (!nganh || nganh.slug !== slug) {
-    return { forModel: { loi: `Không có ngành "${slug}" trong dữ liệu. Chọn lại đúng slug trong DANH SÁCH NGÀNH.` }, baoGia: null };
+  const nganh = findNganh(slug);
+  if (!nganh) {
+    return { forModel: { loi: `Không có ngành "${slug}" trong dữ liệu. Chọn lại đúng slug trong DANH SÁCH NGÀNH.` }, nganh: null };
   }
-  const gias = nganh.bang_gia.map((x) => x.gia_vnd);
-  const nhan = (vnd) => (nganh.bang_gia.find((x) => x.gia_vnd === vnd) || {}).gia || '';
+  const max = giaBao(Math.max(...nganh.bang_gia.map((x) => x.gia_vnd)));
   return {
     forModel: {
       ten: nganh.ten,
       so_mau: nganh.bang_gia.length,
-      gia_thap_nhat: nhan(Math.min(...gias)),
-      gia_cao_nhat: nhan(Math.max(...gias)),
-      ghi_chu: 'Bảng giá đầy đủ đã hiện cho khách, bạn chỉ nói 1 câu dẫn (tên ngành, số mẫu, khoảng giá) và 1 câu hỏi tiếp.',
+      gia_thap_nhat: nhanGia(GIA_SAN),
+      gia_cao_nhat: nhanGia(max),
+      ghi_chu: 'Báo khách khoảng giá trọn gói này. KHÔNG tự gửi mẫu, chỉ gọi gui_mau khi khách xin xem mẫu.',
     },
-    baoGia: { nganh: tomTat(nganh), bang_gia: nganh.bang_gia, ly_do: 'exact' },
+    nganh,
+  };
+}
+
+/**
+ * gui_mau: lấy 5 mẫu (chỉ URL) để trình duyệt hiện. daGuiMau = { slug: số mẫu đã gửi } do trình duyệt nhớ;
+ * hàm cập nhật luôn object này (gọi 2 lần trong 1 lượt vẫn ra đúng 5 mẫu tiếp theo).
+ */
+export function runGuiMau(input, daGuiMau) {
+  const slug = String((input && input.slug) || '');
+  const nganh = findNganh(slug);
+  if (!nganh) return { forModel: { loi: `Không có ngành "${slug}".` }, mau: null };
+  const ds = nganh.bang_gia.slice().sort((a, b) => a.gia_vnd - b.gia_vnd); // rẻ nhất trước
+  const reNhat = input.kieu === 're_nhat';
+  const tu = reNhat ? 0 : Math.min(Number(daGuiMau[slug]) || 0, ds.length);
+  const lo = ds.slice(tu, tu + MAU_MOI_LAN);
+  if (!lo.length) {
+    return { forModel: { ten: nganh.ten, het_mau: true, ghi_chu: `Đã gửi hết ${ds.length} mẫu của ngành, không còn mẫu nào nữa.` }, mau: null };
+  }
+  daGuiMau[slug] = Math.max(Number(daGuiMau[slug]) || 0, tu + lo.length);
+  const conLai = ds.length - daGuiMau[slug];
+  return {
+    forModel: {
+      ten: nganh.ten,
+      da_hien: lo.map((x) => hostOf(x.url)),
+      con_lai: conLai,
+      ghi_chu: `Giao diện đã hiện ${lo.length} mẫu (không kèm giá). Nói 1 câu dẫn, mời đại ca bấm Xem thử và chọn mẫu ưng ý.${conLai ? ' Còn mẫu khác nếu đại ca muốn xem thêm.' : ' Đây là những mẫu cuối cùng.'}`,
+    },
+    mau: { nganh: { ten: nganh.ten, slug }, tu, ds: lo.map((x) => ({ url: x.url })), con_lai: conLai },
+  };
+}
+
+/** bao_gia_mau: giá trọn gói của mẫu khách chọn (tìm trong ngành đã cho trước, không có thì tìm cả dữ liệu). */
+export function runGiaMau(input) {
+  const host = hostOf(input && input.website);
+  if (!host) return { forModel: { loi: 'Thiếu tên website mẫu, hỏi lại khách chọn mẫu nào.' }, mauChon: null };
+  const khop = (n) => n.bang_gia.find((x) => hostOf(x.url) === host)
+    || (host.length >= 4 ? n.bang_gia.find((x) => hostOf(x.url).includes(host)) : null);
+  let nganh = findNganh(String((input && input.slug) || ''));
+  let row = nganh ? khop(nganh) : null;
+  if (!row) {
+    for (const n of data) { row = khop(n); if (row) { nganh = n; break; } }
+  }
+  if (!row) {
+    return { forModel: { loi: `Không tìm thấy mẫu "${host}" trong dữ liệu. Hỏi lại khách đúng tên website mẫu đã chọn.` }, mauChon: null };
+  }
+  const gia = giaBao(row.gia_vnd);
+  return {
+    forModel: { website: hostOf(row.url), nganh: nganh.ten, gia: vndText(gia), ghi_chu: 'Báo khách đúng giá trọn gói này.' },
+    mauChon: { url: row.url, gia_vnd: gia, nganh: nganh.ten },
   };
 }
 
 /** Kiểm tra và làm sạch messages từ trình duyệt. Trả về mảng hợp lệ hoặc chuỗi lỗi. */
 export function cleanMessages(raw) {
   if (!Array.isArray(raw) || !raw.length) return 'Thiếu messages';
-  if (raw.length > MAX_MESSAGES) return 'Hội thoại quá dài, bạn tải lại trang để bắt đầu lại nhé';
+  if (raw.length > MAX_MESSAGES) return 'Hội thoại quá dài, đại ca tải lại trang để bắt đầu lại giúp em nhé';
   const out = [];
   for (const m of raw) {
     if (!m || (m.role !== 'user' && m.role !== 'assistant')) return 'role không hợp lệ';
@@ -226,7 +346,7 @@ function rateLimited(ip) {
 }
 
 /** Payload gửi GAS cho 1 lượt chat. Trả null nếu không có sid hợp lệ (không ghi log). */
-export function buildChatLog(body, messages, replyText, baoGia, request, env, lienHe = null) {
+export function buildChatLog(body, messages, replyText, nganhTen, request, env, lienHe = null) {
   const sid = String((body && body.sid) || '');
   if (!SID_RE.test(sid)) return null;
   return {
@@ -235,7 +355,7 @@ export function buildChatLog(body, messages, replyText, baoGia, request, env, li
     sid,
     trang: String((body && body.trang) || '').slice(0, 200),
     thiet_bi: String(request.headers.get('user-agent') || '').slice(0, 300),
-    nganh: baoGia ? baoGia.nganh.ten : '',
+    nganh: nganhTen || '',
     lien_he: lienHe,
     messages: messages.concat([{ role: 'assistant', content: replyText }]),
   };
@@ -323,7 +443,7 @@ export async function handleChat(request, env, deps = {}) {
 
   const ip = request.headers.get('cf-connecting-ip') || 'local';
   if (rateLimited(ip)) {
-    return reply({ ok: false, reply: `Bạn gửi hơi nhanh, chờ vài phút rồi nhắn tiếp nhé.` }, 429);
+    return reply({ ok: false, reply: 'Đại ca gửi hơi nhanh, chờ vài phút rồi nhắn tiếp giúp em nhé ạ.' }, 429);
   }
 
   let body;
@@ -344,25 +464,38 @@ export async function handleChat(request, env, deps = {}) {
     nganh: '',
     daGui: chuanSdt(body.da_gui), // số khách đã để lại trong phiên (trình duyệt nhớ)
   };
+  // Số mẫu đã hiện theo ngành (trình duyệt nhớ), chỉ nhận slug có thật + số nguyên hợp lệ.
+  const daGuiMau = {};
+  if (body.mau_da_gui && typeof body.mau_da_gui === 'object') {
+    for (const [k, v] of Object.entries(body.mau_da_gui)) {
+      const n = Number(v);
+      if (SLUGS.includes(k) && Number.isInteger(n) && n > 0 && n < 1000) daGuiMau[k] = n;
+    }
+  }
+  const soTinKhach = original.filter((m) => m.role === 'user').length;
 
   // Trả lời khách + ghi lịch sử chat ngầm (chỉ khi AI trả lời được, lỗi kỹ thuật không ghi).
-  const done = (text, bg) => {
+  let mau = null;      // 5 mẫu vừa gửi (popup, không giá)
+  let mauChon = null;  // mẫu khách chọn + giá
+  const done = (text) => {
     text = boChaoLai(text);
-    const payload = buildChatLog(body, original, text, bg, request, env, lienHe);
+    const payload = buildChatLog(body, original, text, leadCtx.nganh, request, env, lienHe);
     if (payload) {
       const p = (deps.sendLog || sendChatLog)(payload);
       if (deps.ctx && deps.ctx.waitUntil) deps.ctx.waitUntil(p);
     }
-    return reply({ ok: true, reply: text, bao_gia: bg, lien_he: lienHe });
+    return reply({ ok: true, reply: text, mau, mau_chon: mauChon, lien_he: lienHe, mau_da_gui: daGuiMau });
   };
 
   if (!deps.client && !env.ANTHROPIC_API_KEY) {
-    return reply({ ok: false, reply: `AI chưa được bật, bạn nhắn Zalo ${ZALO} để Web100 báo giá nhé.` }, 503);
+    return reply({ ok: false, reply: `AI chưa được bật, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.` }, 503);
   }
   const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, maxRetries: 1, timeout: 40_000 });
-  const system = [{ type: 'text', text: buildSystem(deps.training, kenh), cache_control: { type: 'ephemeral' } }];
+  const system = [
+    { type: 'text', text: buildSystem(deps.training, kenh), cache_control: { type: 'ephemeral' } },
+    { type: 'text', text: buildTinhTrang(soTinKhach, !!leadCtx.daGui) }, // động, nằm sau điểm cache
+  ];
 
-  let baoGia = null;
   let lastText = '';
   try {
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round += 1) {
@@ -371,7 +504,7 @@ export async function handleChat(request, env, deps = {}) {
         max_tokens: MAX_TOKENS,
         output_config: { effort: 'low' },
         system,
-        tools: [TOOL, TOOL_LIEN_HE],
+        tools: TOOLS,
         messages,
       });
       const text = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
@@ -388,31 +521,43 @@ export async function handleChat(request, env, deps = {}) {
             results.push({ type: 'tool_result', tool_use_id: b.id, content: JSON.stringify(r.forModel) });
             continue;
           }
-          const r = runTool(b.input);
-          if (r.baoGia) { baoGia = r.baoGia; leadCtx.nganh = r.baoGia.nganh.ten; }
-          results.push({ type: 'tool_result', tool_use_id: b.id, content: JSON.stringify(r.forModel) });
+          let forModel;
+          if (b.name === 'gui_mau') {
+            const r = runGuiMau(b.input, daGuiMau);
+            if (r.mau) { mau = r.mau; leadCtx.nganh = r.mau.nganh.ten; }
+            forModel = r.forModel;
+          } else if (b.name === 'bao_gia_mau') {
+            const r = runGiaMau(b.input);
+            if (r.mauChon) { mauChon = r.mauChon; leadCtx.nganh = r.mauChon.nganh; }
+            forModel = r.forModel;
+          } else {
+            const r = runTool(b.input);
+            if (r.nganh) leadCtx.nganh = r.nganh.ten;
+            forModel = r.forModel;
+          }
+          results.push({ type: 'tool_result', tool_use_id: b.id, content: JSON.stringify(forModel) });
         }
         messages.push({ role: 'user', content: results });
         continue;
       }
       if (res.stop_reason === 'refusal') {
-        return done('Câu này mình không hỗ trợ được, mình quay lại chuyện website của bạn nhé.', null);
+        return done('Dạ câu này em không hỗ trợ được, em quay lại chuyện website của đại ca nhé ạ.');
       }
-      return done(text || lastText || CAU_LOI, baoGia);
+      return done(text || lastText || CAU_LOI);
     }
-    // Quá số vòng tool: vẫn trả bảng giá (nếu có) kèm câu dẫn chung.
+    // Quá số vòng tool: vẫn trả mẫu (nếu có) kèm câu dẫn chung.
     return done(
-      lastText || (lienHe ? `Cảm ơn ${lienHe.hoten}, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ nhé.`
-        : baoGia ? `Đây là bảng giá ngành ${baoGia.nganh.ten}, bạn xem mẫu nào ưng thì nói mình nhé.` : CAU_LOI),
-      baoGia,
+      lastText || (lienHe ? `Dạ em cảm ơn đại ca, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ ạ.`
+        : mauChon ? `Dạ, mẫu ${hostOf(mauChon.url)} bên em làm trọn gói ${vndText(mauChon.gia_vnd)} ạ.`
+          : mau ? `Dạ em gửi đại ca mẫu ngành ${mau.nganh.ten}, đại ca bấm Xem thử rồi chọn mẫu ưng ý nhé ạ.` : CAU_LOI),
     );
   } catch (err) {
     if (err instanceof Anthropic.AuthenticationError) {
       console.error('chat: API key sai hoặc hết hạn');
-      return reply({ ok: false, reply: `AI chưa sẵn sàng, bạn nhắn Zalo ${ZALO} để Web100 báo giá nhé.` }, 503);
+      return reply({ ok: false, reply: `AI chưa sẵn sàng, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.` }, 503);
     }
     if (err instanceof Anthropic.RateLimitError) {
-      return reply({ ok: false, reply: `Hệ thống đang bận, bạn thử lại sau 1 phút hoặc nhắn Zalo ${ZALO}.` }, 429);
+      return reply({ ok: false, reply: `Em đang hơi bận, đại ca thử lại sau 1 phút hoặc nhắn Zalo ${ZALO} giúp em nhé ạ.` }, 429);
     }
     if (err instanceof Anthropic.APIError) {
       console.error('chat: API error', err.status, err.message);
