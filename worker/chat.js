@@ -20,7 +20,7 @@ import data from './bao-gia.json' with { type: 'json' };
 
 export const MODEL = 'claude-haiku-5-5';
 export const ZALO = '0964074043';
-const MAX_MESSAGES = 24;      // 12 lượt hỏi đáp
+const MAX_MESSAGES = 44;      // 22 lượt hỏi đáp (2026-11-24: tăng từ 12 lượt)
 const MAX_CONTENT_LEN = 1000; // ký tự mỗi tin
 const MAX_TOOL_ROUNDS = 3; // tra_bao_gia + gui_lien_he có thể cùng 1 lượt
 const MAX_TOKENS = 600;

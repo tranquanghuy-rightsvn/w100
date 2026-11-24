@@ -163,7 +163,7 @@ phiên (`sid` do trình duyệt sinh) về GAS action `chat_log`: 1 file JSON / 
 Tham số gọi model (mục 2): `model: "claude-haiku-5-5"`, `max_tokens: 600`, `output_config: {effort: "low"}`
 (chat ngắn, không cần suy nghĩ sâu), `tool_choice: {type: "auto"}`, system = [quy tắc + danh sách ngành + training
 (`cache_control`), dòng TÌNH TRẠNG động (không cache)]. Hội thoại lưu ở trình duyệt (sessionStorage `w100_chat_v3`),
-mỗi lượt gửi lại toàn bộ `messages`, giới hạn 24 tin.
+mỗi lượt gửi lại toàn bộ `messages`, giới hạn 44 tin (22 lượt).
 
 ## 6. System prompt
 
@@ -176,7 +176,7 @@ Bản chạy thật nằm ở `QUY_TAC` + `QUY_TAC_CHON_MAU` trong `worker/chat.
 - [ ] Chủ web100 đặt Secret `ANTHROPIC_API_KEY` cho Worker w100 (chưa có thì chat trả 503 kèm câu mời Zalo).
 - [ ] Chủ web100 điền `worker/training-dich-vu.md` (mục 3.2).
 - [x] Worker `/api/chat`: Haiku + tool `tra_bao_gia` (enum 232 slug, strict), tool_result gọn cho model,
-      `bao_gia` đầy đủ cho trình duyệt; chặn spam 30 request / IP / 10 phút, tối đa 24 tin, 1000 ký tự mỗi tin.
+      `bao_gia` đầy đủ cho trình duyệt; chặn spam 30 request / IP / 10 phút, tối đa 44 tin, 1000 ký tự mỗi tin.
 - [x] `/lien-he/`: khung chat + chip gợi ý + popup bảng giá; hội thoại lưu sessionStorage.
 - [ ] Ghi log hội thoại về Google Sheet qua GAS (giống form cũ) để chủ web100 theo dõi lead.
 - [ ] Sau 1 đến 2 tuần chạy thật: đọc log, chỉnh QUY_TAC trong `worker/chat.js` nếu AI trả lời lệch.

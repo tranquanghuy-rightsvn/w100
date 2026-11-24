@@ -108,7 +108,7 @@
   }
 
   function save() {
-    try { sessionStorage.setItem(STORE_KEY, JSON.stringify({ sid: sid, kenh: KENH, lead: leadTracked, leadPhone: leadPhone, mauDaGui: mauDaGui, messages: messages, entries: entries.slice(-60) })); } catch (e) { /* bỏ qua */ }
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify({ sid: sid, kenh: KENH, lead: leadTracked, leadPhone: leadPhone, mauDaGui: mauDaGui, messages: messages, entries: entries.slice(-100) })); } catch (e) { /* bỏ qua */ }
   }
   function restore() {
     try {
