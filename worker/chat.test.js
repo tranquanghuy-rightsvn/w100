@@ -82,8 +82,12 @@ test('bao_gia_mau: tìm giá theo tên miền, giá dưới 2tr5 báo 2tr5', () 
 });
 
 test('tình trạng: tin 1-2 chưa xin số, từ tin 3 xin số, đã có số thì không xin', () => {
-  assert.match(buildTinhTrang(1, false), /Chưa xin số/);
-  assert.match(buildTinhTrang(3, false), /xin số Zalo/);
+  assert.match(buildTinhTrang(1, false), /Chưa biết ngành thì chỉ hỏi ngành/);
+  assert.match(buildTinhTrang(1, false), /xin số điện thoại\/Zalo ngay trong câu báo giá/);
+  const sys = buildSystem('', 'lp');
+  assert.match(sys, /KHÔNG HỎI SÂU CHI TIẾT NỮA/);
+  assert.match(sys, /Đại ca cho em xin số\s+điện thoại\/Zalo bên em sẽ liên hệ tư vấn cụ thể hơn ạ/);
+  assert.match(buildTinhTrang(3, false), /xin số điện thoại\/Zalo/);
   assert.match(buildTinhTrang(5, true), /ĐÃ để lại số/);
 });
 

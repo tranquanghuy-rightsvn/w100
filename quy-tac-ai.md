@@ -86,7 +86,10 @@ Từ 2026-11-24 (chủ web100): KHÔNG tự hiện danh sách mẫu nữa.
 
 1. **Mở đầu**: giao diện hiện sẵn "Em chào đại ca, đại ca cần gì ạ?". AI hỏi nhu cầu + ngành (đã nói ngành thì bỏ qua).
 2. **Báo khoảng giá**: biết ngành có trong danh sách -> gọi `tra_bao_gia(slug)` -> báo "trọn gói từ 2tr5 đến <max> tuỳ
-   mẫu". Không gửi mẫu, không liệt kê website.
+   mẫu". Không gửi mẫu, không liệt kê website. **Đã biết ngành thì KHÔNG hỏi sâu chi tiết** (bán online hay cửa
+   hàng, giỏ hàng, chức năng, phong cách...), chỉ báo giá + xin số ngay trong cùng câu (2026-11-24). Câu chuẩn:
+   "Dạ, website ngành bán hàng quần áo bên em làm trọn gói từ 2tr5 đến 5tr tuỳ mẫu và yêu cầu ạ. Đại ca cho em xin
+   số điện thoại/Zalo bên em sẽ liên hệ tư vấn cụ thể hơn ạ." Khách đưa số rồi mới hỏi tên.
 2b. **Xin SĐT/Zalo + tên** (quan trọng nhất): từ **tin thứ 3** của khách, khách đã nói nhu cầu mà chưa để lại số thì
    xin số Zalo + tên. Worker thêm 1 block system động (sau điểm cache) `TÌNH TRẠNG: Đây là tin thứ N của khách...`
    (`buildTinhTrang`) để AI không phải tự đếm; đã có số (`da_gui`) thì báo AI không xin lại.
