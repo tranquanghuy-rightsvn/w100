@@ -313,3 +313,10 @@ test('boChaoLai: cắt câu chào lặp ở đầu, giữ nguyên câu khác', (
   assert.equal(boChaoLai('Chào mừng bạn, ngành gì?'), 'Chào mừng bạn, ngành gì?');
   assert.equal(boChaoLai('Bạn làm ngành gì?'), 'Bạn làm ngành gì?');
 });
+
+test('system: khách chất vấn mẫu không phải Web100 làm -> giải thích là mẫu tham khảo, xưng đại ca', () => {
+  const sys = buildSystem('', 'lp');
+  assert.match(sys, /KHÁCH CHẤT VẤN WEBSITE MẪU KHÔNG PHẢI DO WEB100 LÀM/);
+  assert.match(sys, /mẫu giao diện tham khảo được Web100 chọn lọc/);
+  assert.match(sys, /không bị giới hạn trong bất kỳ mẫu nào/);
+});

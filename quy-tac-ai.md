@@ -118,6 +118,10 @@ Từ 2026-11-24 (chủ web100): KHÔNG tự hiện danh sách mẫu nữa.
 6. **Yêu cầu chức năng đặc thù / khó** (đặt lịch online, thanh toán, app, quản lý kho, đa ngôn ngữ phức tạp,
    tích hợp phần mềm riêng, web thương mại điện tử lớn...): báo khung chung **5 đến 10 triệu**, nói rõ giá
    chính xác tuỳ yêu cầu, rồi xin số Zalo + tên. Vẫn có thể gọi `tra_bao_gia` ngành gần nhất để khách xem mẫu.
+6b. **Khách chất vấn mẫu không phải Web100 làm** (2026-11-24): không chối, giải thích các website gửi là mẫu giao
+   diện tham khảo Web100 chọn lọc theo thẩm mỹ, trải nghiệm, ngành nghề; để khách hình dung trước; khi làm Web100 tùy
+   chỉnh bố cục, màu, hình, nội dung, tính năng theo thương hiệu; khách có thể kết hợp điểm thích từ nhiều mẫu.
+   Câu nguyên văn trong `QUY_TAC` (`worker/chat.js`), đổi "anh/chị" thành "đại ca".
 7. **Ngoài lề**: 1 câu từ chối nhẹ + kéo về chủ đề (mục 1).
 8. **Kết thúc**: khách cảm ơn / xong việc mà chưa để lại số thì chúc ngắn + xin số Zalo 1 lần.
 
