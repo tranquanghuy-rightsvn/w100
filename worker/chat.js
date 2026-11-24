@@ -369,7 +369,8 @@ export const TOOL_GIA_MAU = {
   },
 };
 
-// Chỉ có ở kịch bản "ngan_sach".
+// Chỉ có ở kịch bản "ngan_sach". slug KHÔNG dùng enum 232 ngành như 3 tool kia: 4 tool strict cùng mang enum 232
+// giá trị làm API trả lỗi (502 ở kịch bản ngân sách, 2026-11-25); server tự kiểm tra slug trong runNganSach.
 export const TOOL_NGAN_SACH = {
   name: 'bao_gia_ngan_sach',
   description: 'Khách đã nói ngân sách: tính khung giá mẫu theo ngân sách và hiện luôn 5 mẫu kèm giá cho khách. slug = ngành của khách, ngan_sach = số đồng (VD 3000000).',
@@ -377,7 +378,7 @@ export const TOOL_NGAN_SACH = {
   input_schema: {
     type: 'object',
     properties: {
-      slug: { type: 'string', enum: SLUGS },
+      slug: { type: 'string', description: 'slug ngành của khách, đúng nguyên văn như trong DANH SÁCH NGÀNH' },
       ngan_sach: { type: 'integer', description: 'Ngân sách khách nói, đổi ra đồng. VD "3tr5" -> 3500000' },
     },
     required: ['slug', 'ngan_sach'],
@@ -457,7 +458,7 @@ export function runGuiMau(input, daGuiMau, nganSach = 0) {
 export function runNganSach(input, daGuiMau) {
   const slug = String((input && input.slug) || '');
   const ns = Math.round(Number(input && input.ngan_sach));
-  if (!findNganh(slug)) return { forModel: { loi: `Không có ngành "${slug}".` }, mau: null, nganSach: 0 };
+  if (!findNganh(slug)) return { forModel: { loi: `Không có ngành "${slug}". Gọi lại với đúng slug trong DANH SÁCH NGÀNH.` }, mau: null, nganSach: 0 };
   if (!Number.isFinite(ns) || ns < 100000 || ns > 1e10) {
     return { forModel: { loi: 'Ngân sách không hợp lệ, hỏi lại khách ngân sách khoảng bao nhiêu (VD 3 triệu).' }, mau: null, nganSach: 0 };
   }
@@ -768,7 +769,8 @@ export async function handleChat(request, env, deps = {}) {
     }
     if (err instanceof Anthropic.APIError) {
       console.error('chat: API error', err.status, err.message);
-      return reply({ ok: false, reply: xung(CAU_LOI) }, 502);
+      // chi_tiet: để chẩn đoán nhanh bằng cách gọi thẳng /api/chat (log Worker nằm ở tài khoản Cloudflare khác).
+      return reply({ ok: false, reply: xung(CAU_LOI), chi_tiet: `${err.status || ''} ${String(err.message || '').slice(0, 300)}`.trim() }, 502);
     }
     console.error('chat: lỗi', err && err.message);
     return reply({ ok: false, reply: xung(CAU_LOI) }, 500);

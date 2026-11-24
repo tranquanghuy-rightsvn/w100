@@ -482,3 +482,12 @@ test('A/B chat: ngân sách trình duyệt gửi lại được dùng cho bao_gi
   assert.ok(body.mau_chon.gia_vnd >= 4500000 && body.mau_chon.gia_vnd <= 5500000);
   assert.match(client.calls[0].system[1].text, /Ngân sách khách: 5\.000\.000đ \(giá mẫu từ 4tr5 đến 5tr5\)/);
 });
+
+test('A/B: tối đa 3 tool strict mang enum 232 ngành (4 tool làm API lỗi 502), slug sai ở tool ngân sách bị chặn', async () => {
+  const { toolsFor } = await import('./chat.js');
+  const coEnum = toolsFor('ngan_sach').filter((x) => x.input_schema.properties.slug && x.input_schema.properties.slug.enum);
+  assert.ok(coEnum.length <= 3);
+  const r = runNganSach({ slug: 'khong-co-nganh', ngan_sach: 3000000 }, {});
+  assert.equal(r.mau, null);
+  assert.match(r.forModel.loi, /Không có ngành/);
+});
