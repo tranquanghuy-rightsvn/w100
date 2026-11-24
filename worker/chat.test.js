@@ -320,3 +320,21 @@ test('system: khách chất vấn mẫu không phải Web100 làm -> giải thí
   assert.match(sys, /mẫu giao diện tham khảo được Web100 chọn lọc/);
   assert.match(sys, /không bị giới hạn trong bất kỳ mẫu nào/);
 });
+
+test('system: khách hỏi lại giá -> khẳng định đúng, giá trọn gói, không VAT', async () => {
+  const { readFileSync } = await import('node:fs');
+  const training = readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8');
+  const sys = buildSystem(training, 'lp');
+  assert.match(sys, /KHÁCH HỎI LẠI GIÁ/);
+  assert.match(sys, /Dạ đúng rồi ạ, đó là giá trọn\s+gói cho mẫu đó rồi ạ/);
+  assert.doesNotMatch(training, /Chưa bao gồm VAT|vui lòng thêm|xuất VAT/);
+});
+
+test('training: có danh sách website Web100 đã làm thật', async () => {
+  const { readFileSync } = await import('node:fs');
+  const sys = buildSystem(readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8'), 'lp');
+  assert.match(sys, /CÁC WEBSITE WEB100 ĐÃ LÀM THẬT/);
+  assert.match(sys, /bloomingpassage\.com.*ngheanpaper\.com/s);
+  assert.match(sys, /ngheanpaper\.com \.\.\./);
+  assert.match(sys, /Hơn 100 khách hàng trong năm 2026/);
+});
