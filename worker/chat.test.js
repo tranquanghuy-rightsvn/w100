@@ -338,3 +338,18 @@ test('training: có danh sách website Web100 đã làm thật', async () => {
   assert.match(sys, /ngheanpaper\.com \.\.\./);
   assert.match(sys, /Hơn 100 khách hàng trong năm 2026/);
 });
+
+test('system: không hỏi thì không tự khai tên miền / hosting / phí hằng năm', async () => {
+  const { readFileSync } = await import('node:fs');
+  const sys = buildSystem(readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8'), 'lp');
+  assert.match(sys, /KHÔNG HỎI THÌ KHÔNG KHAI/);
+  assert.match(sys, /PHÍ HẰNG NĂM \(CHỈ NÓI KHI KHÁCH HỎI/);
+});
+
+test('system: hỏi trọn gói / phát sinh -> 1 câu cam kết, training không còn chữ VAT', async () => {
+  const { readFileSync } = await import('node:fs');
+  const training = readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8');
+  const sys = buildSystem(training, 'lp');
+  assert.match(sys, /Dạ, giá em báo là giá trọn gói rồi ạ, cam kết không phát sinh\./);
+  assert.doesNotMatch(training, /VAT/);
+});
