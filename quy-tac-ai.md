@@ -149,6 +149,37 @@ Sau mỗi lượt AI trả lời, Worker (`worker/chat.js`, `ctx.waitUntil`, kh�
 phiên (`sid` do trình duyệt sinh) về GAS action `chat_log`: 1 file JSON / phiên trong thư mục Drive
 "Web100 - Lịch sử chat AI" + 1 dòng sheet `ChatAI`. Xem / xoá ở trang quản trị `/admin/`, tab "Lịch sử chat AI".
 
+## 4.3 A/B test kịch bản (từ 2026-11-25)
+
+Mục đích: so tỉ lệ chốt (phiên để lại SĐT / tổng phiên) giữa các cách tư vấn. 2 biến **độc lập**, mỗi khách bốc
+thăm 1 lần (trình duyệt nhớ ở localStorage `w100_ab`, quay lại vẫn cùng kịch bản), mặc định 50/50 mỗi biến
+-> 4 nhóm: `em/đại ca + thường`, `em/đại ca + hỏi ngân sách`, `mình/bạn + thường`, `mình/bạn + hỏi ngân sách`.
+
+| Biến | Giá trị | Nội dung |
+|---|---|---|
+| `xh` xưng hô | `em` | xưng em, gọi đại ca, chào "Em chào đại ca, đại ca cần gì ạ?" (bản gốc) |
+|  | `minh` | xưng mình, gọi bạn, chào "Chào bạn, bạn cần mình tư vấn gì ạ?" |
+| `kb` kịch bản | `thuong` | biết ngành -> báo khoảng giá từ 2tr5 + xin SĐT (mục 4) |
+|  | `ngan_sach` | biết ngành -> hỏi ngân sách. Khách đưa ngân sách -> tool `bao_gia_ngan_sach` quy giá mọi mẫu của ngành về **ngân sách ± 500k** (ngân sách làm tròn mốc 500k, giá mẫu làm tròn mốc 500k, không dưới **1tr5**, không quá **7tr**, mẫu rẻ của ngành ra giá thấp của khung, mẫu đắt ra giá cao), báo khoảng đó, **gửi luôn 5 mẫu có cột giá** + xin SĐT. Khách không đưa ngân sách -> chạy như `thuong`. |
+
+VD ngân sách 3tr -> khung 2tr5 đến 3tr5; 3tr2 -> 2tr5 đến 3tr5; 1tr -> 1tr5; 6tr8 -> 6tr5 đến 7tr; 20tr -> 7tr.
+
+**Chỉnh để test (params):**
+- Ép biến thể bằng URL trang có khung chat: `?xh=em|minh`, `?kb=thuong|ngan_sach`, `?ab=reset` (bốc thăm lại).
+  VD `https://web100.vn/lien-he/?xh=minh&kb=ngan_sach`. Lựa chọn được nhớ cho các lần vào sau.
+- Tỉ lệ bốc thăm: `AB_CONFIG` đầu `html/js/chat-bao-gia.js` (`ti_le_minh`, `ti_le_ngan_sach`, 0..1; đặt 0 hoặc 1 để tắt).
+  Sửa xong nhớ đổi `?v=` của `chat-bao-gia.js` ở các trang.
+- Khung giá: `NGAN_SACH` trong `worker/chat.js` (`BUOC` 500k, `BIEN_DO` 500k, `SAN` 1tr5, `TRAN` 7tr).
+- Prompt chỉ viết 1 bản em/đại ca; bản mình/bạn sinh tự động bằng `doiXungHo()` (không đụng tên ngành "trẻ em").
+
+**Đo kết quả:**
+- Email báo lead: tiêu đề kèm `[kịch bản]`, thân có dòng "Kịch bản A/B" và "Ngân sách khách đưa".
+- Sheet tab "Khách để lại SĐT (chat AI)": cột `kich_ban`, `ngan_sach`. Sheet `ChatAI` (mọi phiên): cột `kich_ban`.
+- Admin `/admin/` tab "Lịch sử chat AI": bảng tỉ lệ chốt theo kịch bản (số phiên, số để lại SĐT, %).
+- GA4 `generate_lead` có tham số `kich_ban` (`em_thuong`, `minh_ngan_sach`...); muốn xem trong báo cáo GA4 thì tạo
+  custom dimension (event-scoped) tên `kich_ban`.
+- GAS: dán lại `gas/Code.js`, `gas/js.html`, `gas/app.html` vào Apps Script + New version (cột mới tự thêm vào sheet).
+
 ## 5. Tool cho AI (định nghĩa gửi kèm request Messages API)
 
 4 tool, đều `strict: true`, `slug` là `enum` đúng 232 slug (`TOOLS` trong `worker/chat.js`):

@@ -4,6 +4,7 @@
 //           sid = mã phiên chat do trình duyệt tự sinh, dùng để ghi lịch sử hội thoại lên Google Drive (qua GAS).
 //           kenh = "lien_he" (mặc định, trang /lien-he/) | "lp" (landing quảng cáo /lp/*), nguon = nguồn quảng cáo
 //           mau_da_gui = { slug: số mẫu đã hiện } (trình duyệt nhớ) để gui_mau ra đúng 5 mẫu tiếp theo.
+//           bien_the = { xh: em|minh, kb: thuong|ngan_sach } (A/B test, xem mục A/B TEST bên dưới), ngan_sach = số đồng.
 // Response: { ok: true, reply: "...", mau: null | { nganh, tu, ds: [{url}], con_lai }, mau_chon: null | { url, gia_vnd, nganh },
 //             lien_he: null | { hoten, dienthoai } }
 //           mau có khi AI gọi gui_mau (khách xin mẫu): giao diện vẽ popup 5 mẫu, KHÔNG có giá.
@@ -33,7 +34,7 @@ const SID_RE = /^[a-z0-9-]{8,40}$/i;
 
 const CAU_LOI = `Em đang gặp trục trặc kỹ thuật, đại ca nhắn Zalo ${ZALO} để Web100 báo giá trực tiếp giúp em nhé ạ.`;
 // Câu chào đã hiện sẵn trên giao diện, model vẫn hay mở đầu bằng "Em chào đại ca!..." nên server cắt câu chào ở đầu.
-const RE_CHAO = /^\s*(?:dạ[,!.]?\s*)?(?:em\s+)?(?:xin\s+)?chào(?:\s+(?:đại ca|bạn|anh\/chị|anh chị|anh|chị))?(?:\s+\p{L}+)?(?:\s+ạ)?\s*[!,.]\s*/iu;
+const RE_CHAO = /^\s*(?:dạ[,!.]?\s*)?(?:(?:em|mình)\s+)?(?:xin\s+)?chào(?:\s+(?:đại ca|bạn|anh\/chị|anh chị|anh|chị))?(?:\s+\p{L}+)?(?:\s+ạ)?\s*[!,.]\s*/iu;
 
 /** Bỏ câu chào lặp ở đầu câu trả lời ("Em chào đại ca, ...", "Xin chào, ..."), viết hoa chữ đầu phần còn lại. */
 export function boChaoLai(text) {
@@ -173,23 +174,129 @@ Khi khách đưa đủ số và tên thì gọi gui_lien_he với nhu_cau có t�
 
 export const KENH = ['lien_he', 'lp'];
 
-/** System prompt: quy tắc + danh sách ngành + thông tin dịch vụ (training). Tĩnh theo kênh để cache được. */
-export function buildSystem(training, kenh = 'lien_he') {
-  const danhSach = data.map((n) => `${n.slug} | ${n.ten}`).join('\n');
-  const chonMau = QUY_TAC_CHON_MAU[kenh] || QUY_TAC_CHON_MAU.lien_he;
-  return `${QUY_TAC}\n\n${chonMau}\n\nDANH SÁCH NGÀNH (slug | tên):\n${danhSach}\n\nTHÔNG TIN DỊCH VỤ:\n${(training || '').trim() || '(chưa có, mọi câu hỏi về dịch vụ thì xin Zalo và tên của khách)'}`;
+// ================= A/B TEST KỊCH BẢN (2026-11-24) =================
+// Trình duyệt bốc thăm cho mỗi khách (html/js/chat-bao-gia.js, AB_CONFIG, nhớ trong localStorage) rồi gửi kèm
+// /api/chat: body.bien_the = { xh, kb }. 2 biến độc lập, mặc định mỗi biến 50/50:
+//   xh (xưng hô): "em"   = xưng em, gọi khách đại ca (bản gốc)
+//                 "minh" = xưng mình, gọi khách bạn
+//   kb (kịch bản): "thuong"    = biết ngành -> báo khoảng giá (từ 2tr5) + xin SĐT
+//                  "ngan_sach" = biết ngành -> hỏi ngân sách -> khách đưa ngân sách thì quy giá các mẫu về
+//                                ngân sách ± NGAN_SACH.BIEN_DO (làm tròn mốc NGAN_SACH.BUOC, trong khoảng SAN..TRAN),
+//                                báo khoảng giá đó + gửi luôn 5 mẫu CÓ GIÁ + xin SĐT. Khách không đưa ngân sách
+//                                thì chạy như kịch bản thường.
+// Ép biến thể để test: thêm ?xh=minh&kb=ngan_sach (hoặc ?ab=reset để bốc thăm lại) vào URL trang có khung chat.
+// Mỗi lead (email + tab "Khách để lại SĐT") và mỗi phiên trong sheet ChatAI có cột kich_ban (nhanKichBan) để so tỉ lệ chốt.
+export const XUNG_HO = ['em', 'minh'];
+export const KICH_BAN = ['thuong', 'ngan_sach'];
+export const NGAN_SACH = {
+  BUOC: 500000,     // làm tròn ngân sách và giá mẫu về mốc 500k (2tr5, 3tr, 3tr5...)
+  BIEN_DO: 500000,  // khung giá mẫu = ngân sách ± 500k
+  SAN: 1500000,     // giá mẫu không xuống dưới 1tr5
+  TRAN: 7000000,    // giá mẫu không lên quá 7tr
+};
+
+const lamTron = (v, buoc = NGAN_SACH.BUOC) => Math.round(v / buoc) * buoc;
+const kep = (v) => Math.min(NGAN_SACH.TRAN, Math.max(NGAN_SACH.SAN, v));
+
+/** Ngân sách khách (đồng) -> khung giá mẫu { tu, den }. VD 3.200.000 -> 2tr5 đến 3tr5; 1tr -> 1tr5 đến 1tr5; 20tr -> 7tr đến 7tr. */
+export function khungNganSach(nganSach) {
+  const giua = lamTron(Number(nganSach) || 0);
+  return { tu: kep(giua - NGAN_SACH.BIEN_DO), den: kep(giua + NGAN_SACH.BIEN_DO) };
 }
 
 /**
- * Dòng TÌNH TRẠNG động (block system thứ 2, không cache): khách đang ở tin thứ mấy, đã để lại số chưa.
- * Ép mốc "từ tin thứ 3 xin SĐT/Zalo + tên" chắc hơn để model tự đếm.
+ * Quy giá gốc của 1 mẫu về khung ngân sách: giữ vị trí tương đối của mẫu trong ngành (rẻ nhất -> khung.tu,
+ * đắt nhất -> khung.den), làm tròn mốc 500k. Thứ tự rẻ/đắt giữa các mẫu không đổi.
  */
-export function buildTinhTrang(soTinKhach, daCoSo) {
+export function giaTheoNganSach(giaGoc, nganh, khung) {
+  const gias = nganh.bang_gia.map((x) => x.gia_vnd);
+  const min = Math.min(...gias);
+  const max = Math.max(...gias);
+  const t = max > min ? (giaGoc - min) / (max - min) : 0.5;
+  return kep(lamTron(khung.tu + t * (khung.den - khung.tu)));
+}
+
+/** Nhãn kịch bản ghi vào email / sheet, VD "mình/bạn, hỏi ngân sách (khách đưa 3.000.000đ)". */
+export function nhanKichBan(xh, kb, nganSach) {
+  const a = xh === 'minh' ? 'mình/bạn' : 'em/đại ca';
+  const b = kb === 'ngan_sach'
+    ? `hỏi ngân sách (${nganSach ? `khách đưa ${vndText(nganSach)}` : 'khách chưa đưa ngân sách'})`
+    : 'kịch bản thường';
+  return `${a}, ${b}`;
+}
+
+// Câu chào hiện sẵn trên giao diện theo xưng hô (chat-bao-gia.js dùng đúng 2 câu này).
+export const CAU_CHAO = { em: 'Em chào đại ca, đại ca cần gì ạ?', minh: 'Chào bạn, bạn cần mình tư vấn gì ạ?' };
+const XH_EM = `XƯNG HÔ: luôn xưng "em", gọi khách là "đại ca", lễ phép, hay dùng "dạ", "ạ". Ví dụ: "Dạ, đại ca làm ngành gì ạ?".
+Không bao giờ xưng "mình" hay gọi khách là "bạn", "anh", "chị", "quý khách".`;
+const XH_MINH = `XƯNG HÔ: luôn xưng "mình", gọi khách là "bạn", thân thiện, lịch sự. Ví dụ: "Bạn làm ngành gì vậy?".
+Không bao giờ xưng "em" hay gọi khách là "đại ca", "anh", "chị", "quý khách".`;
+
+/**
+ * Đổi toàn bộ văn bản từ xưng em / đại ca sang mình / bạn (xh = "minh"). Prompt viết 1 bản gốc (em / đại ca),
+ * bản mình / bạn sinh ra từ đây. Không áp dụng cho DANH SÁCH NGÀNH (tên ngành có "trẻ em").
+ */
+export function doiXungHo(text, xh) {
+  if (xh !== 'minh') return text;
+  // Câu chào + khối XƯNG HÔ đổi nguyên khối, giữ chỗ bằng mã tạm để phép đổi em/đại ca phía dưới không đụng vào.
+  return String(text)
+    .split(CAU_CHAO.em).join('\u0001')
+    .split(XH_EM).join('\u0002')
+    .split('"Em chào đại ca"').join('"Chào bạn"')
+    .replace(/Đại ca/g, 'Bạn')
+    .replace(/đại ca/g, 'bạn')
+    .replace(/(?<!\p{L})Em(?!\p{L})/gu, 'Mình')
+    .replace(/(?<!\p{L})em(?!\p{L})/gu, 'mình')
+    .replace(/(?<!\p{L})trẻ mình(?!\p{L})/gu, 'trẻ em')
+    .split('\u0001').join(CAU_CHAO.minh)
+    .split('\u0002').join(XH_MINH);
+}
+
+// Thêm vào QUY_TAC khi kb = "ngan_sach" (viết bằng em / đại ca, doiXungHo tự đổi nếu xh = "minh").
+const QUY_TAC_NGAN_SACH = `KỊCH BẢN HỎI NGÂN SÁCH (áp dụng cho cuộc chat này, THAY cho bước 2 BÁO KHOẢNG GIÁ ở trên):
+Khi đã biết ngành (có trong danh sách) mà CHƯA biết ngân sách: KHÔNG gọi tra_bao_gia, KHÔNG báo khoảng giá, KHÔNG xin
+số ở lượt này, chỉ hỏi đúng 1 câu: "Dạ, đại ca dự kiến ngân sách làm website khoảng bao nhiêu ạ?"
+Khách đưa ngân sách (VD "3 triệu", "3tr", "tầm 3tr5", "khoảng 4 đến 5tr" thì lấy số ở giữa là 4tr5): gọi
+bao_gia_ngan_sach với slug ngành và ngan_sach là số đồng (VD 3000000). Giao diện tự hiện 5 mẫu KÈM GIÁ hợp ngân sách.
+Rồi trả lời đúng ý, khoảng giá lấy đúng từ tool: "Dạ, với ngân sách 3tr bên em có các mẫu từ 2tr5 đến 3tr5, em gửi
+đại ca 5 mẫu bên dưới ạ. Đại ca cho em xin số điện thoại/Zalo bên em sẽ liên hệ tư vấn cụ thể hơn ạ." (khách đã để
+lại số thì bỏ câu xin số). Tool báo cả khung là 1 mức giá (VD 1tr5 đến 1tr5) thì nói "các mẫu giá 1tr5".
+Khách không muốn nói, chưa biết ngân sách, hoặc hỏi ngược lại giá bao nhiêu: quay về kịch bản thường, gọi tra_bao_gia
+và báo khoảng giá như bước 2.
+Đã có ngân sách (dòng TÌNH TRẠNG ghi ngân sách): giá mẫu tính theo ngân sách. Khách xin thêm mẫu thì gọi gui_mau như
+thường, lúc này giao diện CÓ hiện giá từng mẫu; khách chọn mẫu thì gọi bao_gia_mau và báo đúng giá tool trả. Trong
+kịch bản này không nói "giá từ 2tr5". Khách đổi ngân sách thì gọi lại bao_gia_ngan_sach với số mới.`;
+
+/** System prompt: quy tắc (+ kịch bản ngân sách) + danh sách ngành + training. Tĩnh theo (kênh, xh, kb) để cache được. */
+export function buildSystem(training, kenh = 'lien_he', xh = 'em', kb = 'thuong') {
+  const danhSach = data.map((n) => `${n.slug} | ${n.ten}`).join('\n');
+  const chonMau = QUY_TAC_CHON_MAU[kenh] || QUY_TAC_CHON_MAU.lien_he;
+  const quyTac = kb === 'ngan_sach' ? `${QUY_TAC}\n\n${QUY_TAC_NGAN_SACH}` : QUY_TAC;
+  const dichVu = (training || '').trim() || '(chưa có, mọi câu hỏi về dịch vụ thì xin Zalo và tên của khách)';
+  return `${doiXungHo(`${quyTac}\n\n${chonMau}`, xh)}\n\nDANH SÁCH NGÀNH (slug | tên):\n${danhSach}\n\nTHÔNG TIN DỊCH VỤ:\n${doiXungHo(dichVu, xh)}`;
+}
+
+/**
+ * Dòng TÌNH TRẠNG động (block system thứ 2, không cache): khách đang ở tin thứ mấy, đã để lại số chưa, ngân sách.
+ * Ép mốc "từ tin thứ 3 xin SĐT/Zalo" chắc hơn để model tự đếm.
+ */
+export function buildTinhTrang(soTinKhach, daCoSo, ab = {}) {
+  const ns = ab.kb === 'ngan_sach';
   let viec;
   if (daCoSo) viec = 'Khách ĐÃ để lại số điện thoại cho Web100, không xin lại, không gọi lại gui_lien_he.';
   else if (soTinKhach >= 3) viec = 'Khách CHƯA để lại số. Nếu khách đã nói ngành / nhu cầu thì lượt này xin số điện thoại/Zalo (1 câu ngắn, không hỏi thêm gì khác), trừ khi lượt ngay trước bạn vừa xin và khách từ chối.';
+  else if (ns && !ab.nganSach) viec = 'Khách CHƯA để lại số. Chưa biết ngành thì chỉ hỏi ngành. Biết ngành mà chưa có ngân sách thì chỉ hỏi ngân sách, KHÔNG xin số ở lượt hỏi ngân sách. Lượt báo giá theo ngân sách thì xin số điện thoại/Zalo ngay trong câu đó.';
   else viec = 'Khách CHƯA để lại số. Chưa biết ngành thì chỉ hỏi ngành, chưa xin số. Lượt này báo khoảng giá thì xin số điện thoại/Zalo ngay trong câu báo giá như câu chuẩn.';
-  return `TÌNH TRẠNG: Đây là tin thứ ${soTinKhach} của khách. ${viec}`;
+  let out = `TÌNH TRẠNG: Đây là tin thứ ${soTinKhach} của khách. ${viec}`;
+  if (ns) {
+    if (ab.nganSach) {
+      const k = khungNganSach(ab.nganSach);
+      out += ` Ngân sách khách: ${vndText(ab.nganSach)} (giá mẫu từ ${nhanGia(k.tu)} đến ${nhanGia(k.den)}).`;
+    } else {
+      out += ' Ngân sách khách: chưa có.';
+    }
+  }
+  return doiXungHo(out, ab.xh);
 }
 
 /** 0905 123 456 / +84 905.123.456 / 84905123456 -> "0905123456"; sai định dạng -> "" (giống main.js). */
@@ -234,7 +341,7 @@ export const TOOL = {
 
 export const TOOL_GUI_MAU = {
   name: 'gui_mau',
-  description: 'Hiện cho khách 5 website mẫu của 1 ngành (không kèm giá), CHỈ gọi khi khách xin xem mẫu. kieu "tiep_theo": 5 mẫu tiếp theo chưa gửi (lần đầu là 5 mẫu đầu); "re_nhat": 5 mẫu rẻ nhất của ngành (khách hỏi mẫu giá 2tr5 / giá rẻ nhất).',
+  description: 'Hiện cho khách 5 website mẫu của 1 ngành, CHỈ gọi khi khách xin xem mẫu (kịch bản ngân sách: bao_gia_ngan_sach đã tự gửi 5 mẫu đầu). kieu "tiep_theo": 5 mẫu tiếp theo chưa gửi (lần đầu là 5 mẫu đầu); "re_nhat": 5 mẫu rẻ nhất của ngành (khách hỏi mẫu giá 2tr5 / giá rẻ nhất).',
   strict: true,
   input_schema: {
     type: 'object',
@@ -262,7 +369,24 @@ export const TOOL_GIA_MAU = {
   },
 };
 
+// Chỉ có ở kịch bản "ngan_sach".
+export const TOOL_NGAN_SACH = {
+  name: 'bao_gia_ngan_sach',
+  description: 'Khách đã nói ngân sách: tính khung giá mẫu theo ngân sách và hiện luôn 5 mẫu kèm giá cho khách. slug = ngành của khách, ngan_sach = số đồng (VD 3000000).',
+  strict: true,
+  input_schema: {
+    type: 'object',
+    properties: {
+      slug: { type: 'string', enum: SLUGS },
+      ngan_sach: { type: 'integer', description: 'Ngân sách khách nói, đổi ra đồng. VD "3tr5" -> 3500000' },
+    },
+    required: ['slug', 'ngan_sach'],
+    additionalProperties: false,
+  },
+};
+
 export const TOOLS = [TOOL, TOOL_GUI_MAU, TOOL_GIA_MAU, TOOL_LIEN_HE];
+export const toolsFor = (kb) => (kb === 'ngan_sach' ? [TOOL, TOOL_NGAN_SACH, TOOL_GUI_MAU, TOOL_GIA_MAU, TOOL_LIEN_HE] : TOOLS);
 
 /** 2500000 -> "2tr5", 3000000 -> "3tr", 12000000 -> "12tr" (cách ghi giá trong dữ liệu). */
 export function nhanGia(vnd) {
@@ -270,7 +394,7 @@ export function nhanGia(vnd) {
   const le = Math.round((vnd % 1e6) / 1e5);
   return `${tr}tr${le || ''}`;
 }
-const vndText = (v) => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+function vndText(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ'; }
 const giaBao = (v) => Math.max(v, GIA_SAN); // không báo giá dưới giá sàn 2tr5
 const hostOf = (s) => String(s || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split(/[/?#\s]/)[0];
 const findNganh = (slug) => data.find((n) => n.slug === slug) || null;
@@ -296,10 +420,11 @@ export function runTool(input) {
 }
 
 /**
- * gui_mau: lấy 5 mẫu (chỉ URL) để trình duyệt hiện. daGuiMau = { slug: số mẫu đã gửi } do trình duyệt nhớ;
- * hàm cập nhật luôn object này (gọi 2 lần trong 1 lượt vẫn ra đúng 5 mẫu tiếp theo).
+ * gui_mau: lấy 5 mẫu để trình duyệt hiện. daGuiMau = { slug: số mẫu đã gửi } do trình duyệt nhớ; hàm cập nhật
+ * luôn object này (gọi 2 lần trong 1 lượt vẫn ra đúng 5 mẫu tiếp theo).
+ * nganSach (kịch bản ngân sách, khách đã đưa): mẫu kèm giá đã quy về ngân sách (co_gia = true). Không có: chỉ URL.
  */
-export function runGuiMau(input, daGuiMau) {
+export function runGuiMau(input, daGuiMau, nganSach = 0) {
   const slug = String((input && input.slug) || '');
   const nganh = findNganh(slug);
   if (!nganh) return { forModel: { loi: `Không có ngành "${slug}".` }, mau: null };
@@ -312,19 +437,50 @@ export function runGuiMau(input, daGuiMau) {
   }
   daGuiMau[slug] = Math.max(Number(daGuiMau[slug]) || 0, tu + lo.length);
   const conLai = ds.length - daGuiMau[slug];
+  const khung = nganSach ? khungNganSach(nganSach) : null;
+  const items = lo.map((x) => (khung ? { url: x.url, gia_vnd: giaTheoNganSach(x.gia_vnd, nganh, khung) } : { url: x.url }));
+  const conMau = conLai ? ' Còn mẫu khác nếu khách muốn xem thêm.' : ' Đây là những mẫu cuối cùng.';
   return {
     forModel: {
       ten: nganh.ten,
-      da_hien: lo.map((x) => hostOf(x.url)),
+      da_hien: items.map((x) => (khung ? `${hostOf(x.url)} ${nhanGia(x.gia_vnd)}` : hostOf(x.url))),
       con_lai: conLai,
-      ghi_chu: `Giao diện đã hiện ${lo.length} mẫu (không kèm giá). Nói 1 câu dẫn, mời đại ca bấm Xem thử và chọn mẫu ưng ý.${conLai ? ' Còn mẫu khác nếu đại ca muốn xem thêm.' : ' Đây là những mẫu cuối cùng.'}`,
+      ghi_chu: khung
+        ? `Giao diện đã hiện ${items.length} mẫu KÈM GIÁ theo ngân sách. Nói 1 câu dẫn, mời khách bấm Xem thử và chọn mẫu ưng ý.${conMau}`
+        : `Giao diện đã hiện ${items.length} mẫu (không kèm giá). Nói 1 câu dẫn, mời khách bấm Xem thử và chọn mẫu ưng ý.${conMau}`,
     },
-    mau: { nganh: { ten: nganh.ten, slug }, tu, ds: lo.map((x) => ({ url: x.url })), con_lai: conLai },
+    mau: { nganh: { ten: nganh.ten, slug }, tu, ds: items, con_lai: conLai, co_gia: !!khung },
   };
 }
 
-/** bao_gia_mau: giá trọn gói của mẫu khách chọn (tìm trong ngành đã cho trước, không có thì tìm cả dữ liệu). */
-export function runGiaMau(input) {
+/** bao_gia_ngan_sach: ghi nhận ngân sách, trả khung giá + gửi luôn 5 mẫu kèm giá theo ngân sách. */
+export function runNganSach(input, daGuiMau) {
+  const slug = String((input && input.slug) || '');
+  const ns = Math.round(Number(input && input.ngan_sach));
+  if (!findNganh(slug)) return { forModel: { loi: `Không có ngành "${slug}".` }, mau: null, nganSach: 0 };
+  if (!Number.isFinite(ns) || ns < 100000 || ns > 1e10) {
+    return { forModel: { loi: 'Ngân sách không hợp lệ, hỏi lại khách ngân sách khoảng bao nhiêu (VD 3 triệu).' }, mau: null, nganSach: 0 };
+  }
+  const k = khungNganSach(ns);
+  const r = runGuiMau({ slug, kieu: 'tiep_theo' }, daGuiMau, ns);
+  const khoang = k.tu === k.den ? `các mẫu giá ${nhanGia(k.tu)}` : `các mẫu từ ${nhanGia(k.tu)} đến ${nhanGia(k.den)}`;
+  return {
+    forModel: {
+      ngan_sach: nhanGia(ns),
+      khoang_gia: khoang,
+      ...r.forModel,
+      ghi_chu: `Báo khách: với ngân sách ${nhanGia(ns)} bên mình có ${khoang} (xưng hô theo mục XƯNG HÔ), đã gửi 5 mẫu kèm giá bên dưới, rồi xin số điện thoại/Zalo (nếu khách chưa để lại).`,
+    },
+    mau: r.mau,
+    nganSach: ns,
+  };
+}
+
+/**
+ * bao_gia_mau: giá trọn gói của mẫu khách chọn (tìm trong ngành đã cho trước, không có thì tìm cả dữ liệu).
+ * nganSach (kịch bản ngân sách): giá quy về ngân sách; không có: giá gốc, tối thiểu 2tr5.
+ */
+export function runGiaMau(input, nganSach = 0) {
   const host = hostOf(input && input.website);
   if (!host) return { forModel: { loi: 'Thiếu tên website mẫu, hỏi lại khách chọn mẫu nào.' }, mauChon: null };
   const khop = (n) => n.bang_gia.find((x) => hostOf(x.url) === host)
@@ -337,7 +493,7 @@ export function runGiaMau(input) {
   if (!row) {
     return { forModel: { loi: `Không tìm thấy mẫu "${host}" trong dữ liệu. Hỏi lại khách đúng tên website mẫu đã chọn.` }, mauChon: null };
   }
-  const gia = giaBao(row.gia_vnd);
+  const gia = nganSach ? giaTheoNganSach(row.gia_vnd, nganh, khungNganSach(nganSach)) : giaBao(row.gia_vnd);
   return {
     forModel: { website: hostOf(row.url), nganh: nganh.ten, gia: vndText(gia), ghi_chu: 'Báo khách đúng giá trọn gói này.' },
     mauChon: { url: row.url, gia_vnd: gia, nganh: nganh.ten },
@@ -347,7 +503,7 @@ export function runGiaMau(input) {
 /** Kiểm tra và làm sạch messages từ trình duyệt. Trả về mảng hợp lệ hoặc chuỗi lỗi. */
 export function cleanMessages(raw) {
   if (!Array.isArray(raw) || !raw.length) return 'Thiếu messages';
-  if (raw.length > MAX_MESSAGES) return 'Hội thoại quá dài, đại ca tải lại trang để bắt đầu lại giúp em nhé';
+  if (raw.length > MAX_MESSAGES) return 'Hội thoại quá dài, tải lại trang để bắt đầu lại nhé.';
   const out = [];
   for (const m of raw) {
     if (!m || (m.role !== 'user' && m.role !== 'assistant')) return 'role không hợp lệ';
@@ -375,7 +531,7 @@ function rateLimited(ip) {
 }
 
 /** Payload gửi GAS cho 1 lượt chat. Trả null nếu không có sid hợp lệ (không ghi log). */
-export function buildChatLog(body, messages, replyText, nganhTen, request, env, lienHe = null) {
+export function buildChatLog(body, messages, replyText, nganhTen, request, env, lienHe = null, kichBan = '') {
   const sid = String((body && body.sid) || '');
   if (!SID_RE.test(sid)) return null;
   return {
@@ -386,6 +542,7 @@ export function buildChatLog(body, messages, replyText, nganhTen, request, env, 
     thiet_bi: String(request.headers.get('user-agent') || '').slice(0, 300),
     nganh: nganhTen || '',
     lien_he: lienHe,
+    kich_ban: kichBan,
     messages: messages.concat([{ role: 'assistant', content: replyText }]),
   };
 }
@@ -429,6 +586,8 @@ export async function runLienHe(input, ctx) {
     nguon: ctx.nguon,
     trang: ctx.trang,
     kenh: ctx.kenh,
+    kich_ban: nhanKichBan(ctx.xh, ctx.kb, ctx.nganSach), // A/B: so tỉ lệ chốt giữa các kịch bản
+    ngan_sach: ctx.nganSach ? vndText(ctx.nganSach) : '',
     messages: ctx.messages, // để email báo có đủ hội thoại, kể cả lượt khách vừa đưa số
   });
   if (!ok) {
@@ -482,6 +641,13 @@ export async function handleChat(request, env, deps = {}) {
   const original = messages.map((m) => ({ role: m.role, content: m.content })); // trước khi chèn tool_use/tool_result
   const kenh = KENH.includes(body.kenh) ? body.kenh : 'lien_he';
   const sid = SID_RE.test(String(body.sid || '')) ? String(body.sid) : '';
+  // A/B: biến thể do trình duyệt bốc thăm (chat-bao-gia.js), sai / thiếu thì về bản gốc em + thường.
+  const bt = (body.bien_the && typeof body.bien_the === 'object') ? body.bien_the : {};
+  const xh = XUNG_HO.includes(bt.xh) ? bt.xh : 'em';
+  const kb = KICH_BAN.includes(bt.kb) ? bt.kb : 'thuong';
+  const nsRaw = Math.round(Number(body.ngan_sach));
+  const nganSachCu = kb === 'ngan_sach' && Number.isFinite(nsRaw) && nsRaw >= 100000 && nsRaw <= 1e10 ? nsRaw : 0;
+  const xung = (t) => doiXungHo(t, xh);
   let lienHe = null;
   const leadCtx = {
     sid,
@@ -492,6 +658,9 @@ export async function handleChat(request, env, deps = {}) {
     sendLead: deps.sendLead || sendLead,
     nganh: '',
     daGui: chuanSdt(body.da_gui), // số khách đã để lại trong phiên (trình duyệt nhớ)
+    xh,
+    kb,
+    nganSach: nganSachCu, // ngân sách khách đã đưa (kịch bản ngan_sach), cập nhật khi AI gọi bao_gia_ngan_sach
   };
   // Số mẫu đã hiện theo ngành (trình duyệt nhớ), chỉ nhận slug có thật + số nguyên hợp lệ.
   const daGuiMau = {};
@@ -504,25 +673,29 @@ export async function handleChat(request, env, deps = {}) {
   const soTinKhach = original.filter((m) => m.role === 'user').length;
 
   // Trả lời khách + ghi lịch sử chat ngầm (chỉ khi AI trả lời được, lỗi kỹ thuật không ghi).
-  let mau = null;      // 5 mẫu vừa gửi (popup, không giá)
+  let mau = null;      // 5 mẫu vừa gửi (popup; có giá khi kịch bản ngân sách đã có ngân sách)
   let mauChon = null;  // mẫu khách chọn + giá
   const done = (text) => {
     text = boChaoLai(text);
-    const payload = buildChatLog(body, original, text, leadCtx.nganh, request, env, lienHe);
+    const kichBan = nhanKichBan(xh, kb, leadCtx.nganSach);
+    const payload = buildChatLog(body, original, text, leadCtx.nganh, request, env, lienHe, kichBan);
     if (payload) {
       const p = (deps.sendLog || sendChatLog)(payload);
       if (deps.ctx && deps.ctx.waitUntil) deps.ctx.waitUntil(p);
     }
-    return reply({ ok: true, reply: text, mau, mau_chon: mauChon, lien_he: lienHe, mau_da_gui: daGuiMau });
+    return reply({
+      ok: true, reply: text, mau, mau_chon: mauChon, lien_he: lienHe, mau_da_gui: daGuiMau,
+      ngan_sach: leadCtx.nganSach || null, kich_ban: kichBan,
+    });
   };
 
   if (!deps.client && !env.ANTHROPIC_API_KEY) {
-    return reply({ ok: false, reply: `AI chưa được bật, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.` }, 503);
+    return reply({ ok: false, reply: xung(`AI chưa được bật, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.`) }, 503);
   }
   const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, maxRetries: 1, timeout: 40_000 });
   const system = [
-    { type: 'text', text: buildSystem(deps.training, kenh), cache_control: { type: 'ephemeral' } },
-    { type: 'text', text: buildTinhTrang(soTinKhach, !!leadCtx.daGui) }, // động, nằm sau điểm cache
+    { type: 'text', text: buildSystem(deps.training, kenh, xh, kb), cache_control: { type: 'ephemeral' } },
+    { type: 'text', text: buildTinhTrang(soTinKhach, !!leadCtx.daGui, { xh, kb, nganSach: leadCtx.nganSach }) }, // động, sau điểm cache
   ];
 
   let lastText = '';
@@ -533,7 +706,7 @@ export async function handleChat(request, env, deps = {}) {
         max_tokens: MAX_TOKENS,
         output_config: { effort: 'low' },
         system,
-        tools: TOOLS,
+        tools: toolsFor(kb),
         messages,
       });
       const text = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
@@ -551,12 +724,17 @@ export async function handleChat(request, env, deps = {}) {
             continue;
           }
           let forModel;
-          if (b.name === 'gui_mau') {
-            const r = runGuiMau(b.input, daGuiMau);
+          if (b.name === 'bao_gia_ngan_sach' && kb === 'ngan_sach') {
+            const r = runNganSach(b.input, daGuiMau);
+            if (r.nganSach) leadCtx.nganSach = r.nganSach;
+            if (r.mau) { mau = r.mau; leadCtx.nganh = r.mau.nganh.ten; }
+            forModel = r.forModel;
+          } else if (b.name === 'gui_mau') {
+            const r = runGuiMau(b.input, daGuiMau, leadCtx.nganSach);
             if (r.mau) { mau = r.mau; leadCtx.nganh = r.mau.nganh.ten; }
             forModel = r.forModel;
           } else if (b.name === 'bao_gia_mau') {
-            const r = runGiaMau(b.input);
+            const r = runGiaMau(b.input, leadCtx.nganSach);
             if (r.mauChon) { mauChon = r.mauChon; leadCtx.nganh = r.mauChon.nganh; }
             forModel = r.forModel;
           } else {
@@ -570,29 +748,29 @@ export async function handleChat(request, env, deps = {}) {
         continue;
       }
       if (res.stop_reason === 'refusal') {
-        return done('Dạ câu này em không hỗ trợ được, em quay lại chuyện website của đại ca nhé ạ.');
+        return done(xung('Dạ câu này em không hỗ trợ được, em quay lại chuyện website của đại ca nhé ạ.'));
       }
-      return done(text || lastText || CAU_LOI);
+      return done(text || lastText || xung(CAU_LOI));
     }
     // Quá số vòng tool: vẫn trả mẫu (nếu có) kèm câu dẫn chung.
     return done(
-      lastText || (lienHe ? `Dạ em cảm ơn đại ca, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ ạ.`
+      lastText || xung(lienHe ? `Dạ em cảm ơn đại ca, Web100 sẽ gọi lại số ${lienHe.dienthoai} trong vòng vài giờ ạ.`
         : mauChon ? `Dạ, mẫu ${hostOf(mauChon.url)} bên em làm trọn gói ${vndText(mauChon.gia_vnd)} ạ.`
           : mau ? `Dạ em gửi đại ca mẫu ngành ${mau.nganh.ten}, đại ca bấm Xem thử rồi chọn mẫu ưng ý nhé ạ.` : CAU_LOI),
     );
   } catch (err) {
     if (err instanceof Anthropic.AuthenticationError) {
       console.error('chat: API key sai hoặc hết hạn');
-      return reply({ ok: false, reply: `AI chưa sẵn sàng, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.` }, 503);
+      return reply({ ok: false, reply: xung(`AI chưa sẵn sàng, đại ca nhắn Zalo ${ZALO} để Web100 báo giá giúp em nhé ạ.`) }, 503);
     }
     if (err instanceof Anthropic.RateLimitError) {
-      return reply({ ok: false, reply: `Em đang hơi bận, đại ca thử lại sau 1 phút hoặc nhắn Zalo ${ZALO} giúp em nhé ạ.` }, 429);
+      return reply({ ok: false, reply: xung(`Em đang hơi bận, đại ca thử lại sau 1 phút hoặc nhắn Zalo ${ZALO} giúp em nhé ạ.`) }, 429);
     }
     if (err instanceof Anthropic.APIError) {
       console.error('chat: API error', err.status, err.message);
-      return reply({ ok: false, reply: CAU_LOI }, 502);
+      return reply({ ok: false, reply: xung(CAU_LOI) }, 502);
     }
     console.error('chat: lỗi', err && err.message);
-    return reply({ ok: false, reply: CAU_LOI }, 500);
+    return reply({ ok: false, reply: xung(CAU_LOI) }, 500);
   }
 }

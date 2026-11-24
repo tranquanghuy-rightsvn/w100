@@ -63,7 +63,8 @@ function trackFb(event, params) {
 
 // Bắn generate_lead rồi mới gọi done() — chờ gtag gửi xong (tối đa 1,2s) vì
 // done() có thể chuyển sang trang cảm ơn, rời trang sớm quá là mất sự kiện.
-function trackLead({ form, package: pkg, phone, location: formLocation }, done) {
+// kich_ban (tuỳ chọn): biến thể A/B của chat AI (chat-bao-gia.js), gửi kèm generate_lead để so tỉ lệ chốt trong GA4.
+function trackLead({ form, package: pkg, phone, location: formLocation, kich_ban: kichBan }, done) {
   let called = false;
   const once = () => { if (!called) { called = true; done(); } };
   try {
@@ -72,6 +73,7 @@ function trackLead({ form, package: pkg, phone, location: formLocation }, done) 
       if (phone) window.gtag('set', 'user_data', { phone_number: '+84' + phone.slice(1) });
       window.gtag('event', 'generate_lead', {
         form, package: pkg, form_location: formLocation || 'other', currency: 'VND', value: 1,
+        ...(kichBan ? { kich_ban: kichBan } : {}),
         event_callback: once, event_timeout: 1200,
       });
     }

@@ -353,3 +353,132 @@ test('system: hỏi trọn gói / phát sinh -> 1 câu cam kết, training khôn
   assert.match(sys, /Dạ, giá em báo là giá trọn gói rồi ạ, cam kết không phát sinh\./);
   assert.doesNotMatch(training, /VAT/);
 });
+
+// ================= A/B test kịch bản =================
+import { khungNganSach, giaTheoNganSach, nhanKichBan, doiXungHo, runNganSach, NGAN_SACH, CAU_CHAO } from './chat.js';
+import baoGiaData from './bao-gia.json' with { type: 'json' };
+
+test('A/B: khung ngân sách ±500k, làm tròn mốc 500k, kẹp 1tr5..7tr', () => {
+  assert.deepEqual(khungNganSach(3000000), { tu: 2500000, den: 3500000 });
+  assert.deepEqual(khungNganSach(3200000), { tu: 2500000, den: 3500000 });
+  assert.deepEqual(khungNganSach(3300000), { tu: 3000000, den: 4000000 });
+  assert.deepEqual(khungNganSach(2000000), { tu: 1500000, den: 2500000 });
+  assert.deepEqual(khungNganSach(1000000), { tu: 1500000, den: 1500000 });
+  assert.deepEqual(khungNganSach(6800000), { tu: 6500000, den: 7000000 });
+  assert.deepEqual(khungNganSach(20000000), { tu: 7000000, den: 7000000 });
+});
+
+test('A/B: giá mẫu quy về ngân sách nằm trong khung, mốc 500k, giữ thứ tự rẻ/đắt (mọi ngành, nhiều ngân sách)', () => {
+  for (const nganh of baoGiaData) {
+    for (const ns of [1000000, 2500000, 3000000, 4200000, 9000000]) {
+      const k = khungNganSach(ns);
+      const ds = nganh.bang_gia.slice().sort((a, b) => a.gia_vnd - b.gia_vnd);
+      let truoc = 0;
+      for (const x of ds) {
+        const g = giaTheoNganSach(x.gia_vnd, nganh, k);
+        assert.ok(g >= k.tu && g <= k.den, `${nganh.slug} ${ns} ${g}`);
+        assert.ok(g >= NGAN_SACH.SAN && g <= NGAN_SACH.TRAN);
+        assert.equal(g % NGAN_SACH.BUOC, 0);
+        assert.ok(g >= truoc, 'không đảo thứ tự');
+        truoc = g;
+      }
+    }
+  }
+});
+
+test('A/B: bao_gia_ngan_sach trả khung + 5 mẫu có giá; gui_mau / bao_gia_mau sau đó dùng giá theo ngân sách', () => {
+  const da = {};
+  const r = runNganSach({ slug: 'ban-hang-quan-ao', ngan_sach: 3000000 }, da);
+  assert.equal(r.nganSach, 3000000);
+  assert.equal(r.forModel.khoang_gia, 'các mẫu từ 2tr5 đến 3tr5');
+  assert.equal(r.mau.co_gia, true);
+  assert.equal(r.mau.ds.length, 5);
+  assert.ok(r.mau.ds.every((x) => x.gia_vnd >= 2500000 && x.gia_vnd <= 3500000));
+  const g = runGuiMau({ slug: 'ban-hang-quan-ao', kieu: 'tiep_theo' }, da, 3000000);
+  assert.equal(g.mau.tu, 5);
+  assert.ok(g.mau.ds.every((x) => x.gia_vnd >= 2500000 && x.gia_vnd <= 3500000));
+  const c = runGiaMau({ slug: 'ban-hang-quan-ao', website: g.mau.ds[0].url }, 3000000);
+  assert.equal(c.mauChon.gia_vnd, g.mau.ds[0].gia_vnd);
+  // không có ngân sách: như cũ, không giá, tối thiểu 2tr5
+  assert.equal(runGuiMau({ slug: 'ban-hang-quan-ao', kieu: 're_nhat' }, {}).mau.co_gia, false);
+  assert.ok(runGiaMau({ slug: 'ban-hang-quan-ao', website: g.mau.ds[0].url }).mauChon.gia_vnd >= 2500000);
+  assert.equal(runNganSach({ slug: 'ban-hang-quan-ao', ngan_sach: 0 }, {}).nganSach, 0);
+});
+
+test('A/B: nhãn kịch bản', () => {
+  assert.equal(nhanKichBan('em', 'thuong', 0), 'em/đại ca, kịch bản thường');
+  assert.equal(nhanKichBan('minh', 'ngan_sach', 0), 'mình/bạn, hỏi ngân sách (khách chưa đưa ngân sách)');
+  assert.equal(nhanKichBan('minh', 'ngan_sach', 3500000), 'mình/bạn, hỏi ngân sách (khách đưa 3.500.000đ)');
+});
+
+test('A/B: prompt mình/bạn không còn em / đại ca, khối XƯNG HÔ đúng, tên ngành "trẻ em" giữ nguyên', async () => {
+  const { readFileSync } = await import('node:fs');
+  const training = readFileSync(new URL('./training-dich-vu.md', import.meta.url), 'utf8');
+  const sys = buildSystem(training, 'lp', 'minh', 'ngan_sach');
+  const ngoaiDanhSach = sys.split('DANH SÁCH NGÀNH')[0] + sys.split('THÔNG TIN DỊCH VỤ:')[1];
+  const xungHo = ngoaiDanhSach.split('\n').slice(1, 3).join('\n');
+  const conLai = ngoaiDanhSach.replace(xungHo, '');
+  assert.match(xungHo, /luôn xưng "mình", gọi khách là "bạn"/);
+  assert.match(xungHo, /Không bao giờ xưng "em" hay gọi khách là "đại ca"/);
+  assert.doesNotMatch(conLai, /đại ca|Đại ca/);
+  assert.doesNotMatch(conLai, /(?<!\p{L})[Ee]m(?!\p{L})/u);
+  assert.ok(sys.includes(CAU_CHAO.minh));
+  assert.match(sys, /Bán hàng đồ chơi trẻ em/);
+  assert.match(sys, /KỊCH BẢN HỎI NGÂN SÁCH/);
+  // bản gốc không đổi, không có kịch bản ngân sách
+  const goc = buildSystem(training, 'lp');
+  assert.equal(goc, buildSystem(training, 'lp', 'em', 'thuong'));
+  assert.doesNotMatch(goc, /KỊCH BẢN HỎI NGÂN SÁCH/);
+  assert.equal(doiXungHo('Dạ em chào đại ca', 'em'), 'Dạ em chào đại ca');
+  assert.equal(boChaoLai('Chào bạn, bạn bán gì vậy?'), 'Bạn bán gì vậy?');
+});
+
+test('A/B chat: minh + ngan_sach -> tool ngân sách, mẫu có giá, trả ngan_sach + kich_ban, lead và log kèm kịch bản', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_ns', name: 'bao_gia_ngan_sach', input: { slug: 'ban-hang-quan-ao', ngan_sach: 3000000 } }] },
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_lh', name: 'gui_lien_he', input: { hoten: 'Lan', dienthoai: '0905123456', nhu_cau: 'web quần áo 3tr' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Cảm ơn Lan, Web100 sẽ gọi lại nhé.' }] },
+  ]);
+  const leads = [];
+  const logs = [];
+  const res = await handleChat(post({
+    messages: [{ role: 'user', content: 'shop quần áo, ngân sách 3tr, số mình 0905123456 tên Lan' }],
+    sid: 'sid-ab-000001', kenh: 'lp', bien_the: { xh: 'minh', kb: 'ngan_sach' },
+  }, '9.9.7.1'), {}, { client, training: '', sendLog: async (p) => { logs.push(p); }, sendLead: async (p) => { leads.push(p); return true; } });
+  const body = await res.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.ngan_sach, 3000000);
+  assert.equal(body.mau.co_gia, true);
+  assert.equal(body.kich_ban, 'mình/bạn, hỏi ngân sách (khách đưa 3.000.000đ)');
+  assert.equal(leads[0].kich_ban, 'mình/bạn, hỏi ngân sách (khách đưa 3.000.000đ)');
+  assert.equal(leads[0].ngan_sach, '3.000.000đ');
+  assert.equal(logs[0].kich_ban, 'mình/bạn, hỏi ngân sách (khách đưa 3.000.000đ)');
+  const req = client.calls[0];
+  assert.ok(req.tools.some((x) => x.name === 'bao_gia_ngan_sach'));
+  assert.match(req.system[0].text, /luôn xưng "mình"/);
+  assert.match(req.system[1].text, /Ngân sách khách: chưa có/);
+  assert.match(client.calls[1].system[1].text, /Ngân sách khách: chưa có/, 'system cố định trong 1 lượt (cache)');
+});
+
+test('A/B chat: không gửi bien_the -> bản gốc em + thường, không có tool ngân sách, bỏ qua ngan_sach', async () => {
+  const client = fakeClient([{ stop_reason: 'end_turn', content: [{ type: 'text', text: 'Dạ, đại ca làm ngành gì ạ?' }] }]);
+  const res = await handleChat(post({ messages: [{ role: 'user', content: 'hi' }], ngan_sach: 3000000 }, '9.9.7.2'), {}, { client, training: '' });
+  const body = await res.json();
+  assert.equal(body.kich_ban, 'em/đại ca, kịch bản thường');
+  assert.equal(body.ngan_sach, null);
+  assert.ok(!client.calls[0].tools.some((x) => x.name === 'bao_gia_ngan_sach'));
+  assert.match(client.calls[0].system[0].text, /luôn xưng "em"/);
+});
+
+test('A/B chat: ngân sách trình duyệt gửi lại được dùng cho bao_gia_mau ở lượt sau', async () => {
+  const client = fakeClient([
+    { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 'tu_g2', name: 'bao_gia_mau', input: { slug: 'ban-hang-quan-ao', website: 'nosbyn.com' } }] },
+    { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Mẫu này giá ...' }] },
+  ]);
+  const res = await handleChat(post({
+    messages: [{ role: 'user', content: 'Tôi muốn mẫu nosbyn.com' }], bien_the: { xh: 'em', kb: 'ngan_sach' }, ngan_sach: 5000000,
+  }, '9.9.7.3'), {}, { client, training: '' });
+  const body = await res.json();
+  assert.ok(body.mau_chon.gia_vnd >= 4500000 && body.mau_chon.gia_vnd <= 5500000);
+  assert.match(client.calls[0].system[1].text, /Ngân sách khách: 5\.000\.000đ \(giá mẫu từ 4tr5 đến 5tr5\)/);
+});
