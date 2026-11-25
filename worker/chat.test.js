@@ -495,3 +495,12 @@ test('A/B: số tool strict ở kịch bản ngân sách không vượt kịch b
   assert.equal(r.mau, null);
   assert.match(r.forModel.loi, /Không có ngành/);
 });
+
+test('schema: chỉ 1 tool mang enum 232 ngành (nhiều enum -> API 400 schema too complex)', async () => {
+  const { toolsFor } = await import('./chat.js');
+  for (const kb of ['thuong', 'ngan_sach']) {
+    const coEnum = toolsFor(kb).filter((x) => x.input_schema.properties.slug && x.input_schema.properties.slug.enum);
+    assert.deepEqual(coEnum.map((x) => x.name), ['tra_bao_gia']);
+  }
+  assert.match(runGuiMau({ slug: 'khong-co', kieu: 'tiep_theo' }, {}).forModel.loi, /Không có ngành/);
+});

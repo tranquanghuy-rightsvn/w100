@@ -339,6 +339,8 @@ export const TOOL = {
   },
 };
 
+// Chỉ tra_bao_gia giữ enum 232 ngành. Nhiều tool cùng mang enum đó làm API trả 400 "Schema is too complex for
+// compilation" (2026-11-25, nhóm A/B ngân sách có thêm 1 tool là vượt). gui_mau / bao_gia_mau tự kiểm tra slug.
 export const TOOL_GUI_MAU = {
   name: 'gui_mau',
   description: 'Hiện cho khách 5 website mẫu của 1 ngành, CHỈ gọi khi khách xin xem mẫu (kịch bản ngân sách: bao_gia_ngan_sach đã tự gửi 5 mẫu đầu). kieu "tiep_theo": 5 mẫu tiếp theo chưa gửi (lần đầu là 5 mẫu đầu); "re_nhat": 5 mẫu rẻ nhất của ngành (khách hỏi mẫu giá 2tr5 / giá rẻ nhất).',
@@ -346,7 +348,7 @@ export const TOOL_GUI_MAU = {
   input_schema: {
     type: 'object',
     properties: {
-      slug: { type: 'string', enum: SLUGS },
+      slug: { type: 'string', description: 'slug ngành, đúng nguyên văn như trong DANH SÁCH NGÀNH' },
       kieu: { type: 'string', enum: ['tiep_theo', 're_nhat'] },
     },
     required: ['slug', 'kieu'],
@@ -361,7 +363,7 @@ export const TOOL_GIA_MAU = {
   input_schema: {
     type: 'object',
     properties: {
-      slug: { type: 'string', enum: SLUGS },
+      slug: { type: 'string', description: 'slug ngành, đúng nguyên văn như trong DANH SÁCH NGÀNH' },
       website: { type: 'string' },
     },
     required: ['slug', 'website'],
@@ -428,7 +430,7 @@ export function runTool(input) {
 export function runGuiMau(input, daGuiMau, nganSach = 0) {
   const slug = String((input && input.slug) || '');
   const nganh = findNganh(slug);
-  if (!nganh) return { forModel: { loi: `Không có ngành "${slug}".` }, mau: null };
+  if (!nganh) return { forModel: { loi: `Không có ngành "${slug}". Gọi lại với đúng slug trong DANH SÁCH NGÀNH.` }, mau: null };
   const ds = nganh.bang_gia.slice().sort((a, b) => a.gia_vnd - b.gia_vnd); // rẻ nhất trước
   const reNhat = input.kieu === 're_nhat';
   const tu = reNhat ? 0 : Math.min(Number(daGuiMau[slug]) || 0, ds.length);
