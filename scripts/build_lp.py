@@ -33,7 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LP_DIR = ROOT / "html" / "lp"
-ASSET_V = "20261125ab"
+ASSET_V = "20261125b"
 
 PHONE_TEL = "+84964074043"
 PHONE_TXT = "096.407.4043"

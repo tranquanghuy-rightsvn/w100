@@ -38,7 +38,9 @@
   };
   var AB_KEY = 'w100_ab';
   var CAU_CHAO = { em: 'Em chào đại ca, đại ca cần gì ạ?', minh: 'Chào bạn, bạn cần mình tư vấn gì ạ?' }; // khớp CAU_CHAO ở worker/chat.js
-  var LEAD_KEY = 'w100_chat_lead'; // { hoten, dienthoai } đã gửi, để lần chọn mẫu sau điền sẵn
+  // Khung để lại SĐT KHÔNG tự điền tên / số đã gửi lần trước (2026-11-25: khách thấy sẵn tên + số người khác / của
+  // lần thử trước, dễ nhầm). Xoá luôn dữ liệu cũ từng lưu ở key này.
+  try { localStorage.removeItem('w100_chat_lead'); } catch (e) { /* bỏ qua */ }
   var VIEWED_KEY = 'w100_mau_da_xem';
   var CHOSEN_KEY = 'w100_mau_da_chon';
   var chatBox = document.getElementById('lh-chat');
@@ -278,18 +280,15 @@
       el.innerHTML = '<p class="lh-lead__done">' + ICON_CHECK + 'Đã gửi: ' + esc(e.hoten) + ', ' + esc(e.dienthoai) + '</p>';
       return el;
     }
-    var saved = loadJson(LEAD_KEY, {}) || {};
     el.innerHTML = '<p class="lh-lead__title">' + t('Đại ca để lại tên và số điện thoại, Web100 gọi lại tư vấn trong vòng vài giờ ạ',
       'Bạn để lại tên và số điện thoại, Web100 gọi lại tư vấn trong vòng vài giờ nhé') + '</p>'
       + '<div class="lh-lead__row">'
-      + '<input name="hoten" type="text" placeholder="' + t('Tên đại ca', 'Tên của bạn') + '" autocomplete="name" maxlength="80" required>'
-      + '<input name="dienthoai" type="tel" placeholder="Số điện thoại / Zalo" autocomplete="tel" inputmode="tel" maxlength="20" required>'
+      + '<input name="hoten" type="text" placeholder="' + t('Tên của đại ca', 'Tên của bạn') + '" autocomplete="name" maxlength="80" required>'
+      + '<input name="dienthoai" type="tel" placeholder="SĐT/Zalo liên hệ" autocomplete="tel" inputmode="tel" maxlength="20" required>'
       + '</div>'
       + '<input name="_hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="lh-lead__hp">'
       + '<p class="lh-lead__err" hidden></p>'
       + '<button type="submit" class="lh-lead__btn">Gửi, Web100 gọi lại cho tôi</button>';
-    el.hoten.value = saved.hoten || '';
-    el.dienthoai.value = saved.dienthoai || '';
     el.addEventListener('submit', function (ev) { ev.preventDefault(); submitLead(el, e); });
     return el;
   }
@@ -344,7 +343,6 @@
       .then(function (d) {
         var duplicate = d && d.error === 'rate_limited'; // cùng số vừa gửi xong, yêu cầu trước đã lưu
         if (!d || (!d.ok && !duplicate)) throw new Error((d && d.error) || 'unknown');
-        saveJson(LEAD_KEY, { hoten: hoten, dienthoai: phone });
         e.sent = true; e.hoten = hoten; e.dienthoai = phone;
         el.replaceWith(renderLeadForm(e));
         var thanks = t('Dạ em cảm ơn đại ca ' + hoten + ', Web100 đã nhận thông tin và sẽ gọi lại số ' + phone
@@ -417,7 +415,6 @@
           if (opts.lead) opts.lead.gia = vnd(d.mau_chon.gia_vnd);
         }
         if (d.lien_he && d.lien_he.dienthoai) {
-          saveJson(LEAD_KEY, { hoten: d.lien_he.hoten, dienthoai: d.lien_he.dienthoai });
           fireLead(d.lien_he.dienthoai, chosen ? 'Mẫu ' + host(chosen.url) + (chosen.gia_vnd ? ' ' + vnd(chosen.gia_vnd) : '') : '');
         }
         if (d.mau && d.mau.ds && d.mau.ds.length) {
