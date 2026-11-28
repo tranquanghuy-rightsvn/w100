@@ -87,10 +87,18 @@
 .lh-hours strong { font-size: 14px; color: var(--ink); }
 .lh-hours span { font-size: 13.5px; color: var(--muted); }
 
-/* ------------------------------ Chat AI báo giá & bản đồ ------------------------------ */
-/* Khung chat (.lh-chat, .bg-popup, .lh-lead) nằm ở /css/chat-ai.css, dùng chung với các trang /lp/. */
+/* ------------------------------ Form tư vấn & bản đồ ------------------------------ */
+/* Form dùng lại .modal (như popup "Yêu cầu tư vấn") nhưng đặt tĩnh trên trang; main.js tự xử lý .modal__form. Chat AI chỉ còn ở trang chủ (/css/chat-ai.css). */
 .lh-form { padding: 24px 0 72px; }
 .lh-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+.lh-form-card {
+  position: static;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
 .lh-map {
   border-radius: var(--radius);
   overflow: hidden;

@@ -19,6 +19,9 @@ sua tay nhieu (banner 3 o gia + o loai website, popup chon goi, nhan xet khach h
 Zalo truoc nut Goi, khong Messenger...) nen script BO QUA, khong ghi de. Sua phan dung
 chung (du an top Google, FAQ, quy trinh...) thi phai sua tay them o trang do.
 
+2026-11-28: BO chat AI khoi landing, hero + khoi cuoi quay lai form lead (lead_form) nhu truoc. Bang gia
+3 goi van bo. Doan duoi la lich su.
+
 2026-11: hero = khung chat AI bao gia (chat_widget, data-kenh="lp": AI tu xin so Zalo + ten roi gui
 Web100, ban generate_lead 1 lan / phien chat), khoi cuoi = the dan len chat (FINAL_AI). Da bo bang gia
 3 goi, nut "Chon goi", popup chon goi khoi landing (gia theo nganh do AI bao). PACKAGES/price_card/promo
@@ -33,7 +36,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LP_DIR = ROOT / "html" / "lp"
-ASSET_V = "20261125b"
+ASSET_V = "20261128a"
 
 PHONE_TEL = "+84964074043"
 PHONE_TXT = "096.407.4043"
@@ -700,8 +703,9 @@ def landing(v: dict) -> str:
         proof_cap = "<strong>Honda Hiếu Nga</strong> ký hợp đồng cùng CEO Quang Huy của Web100."
         footer, og = FOOTER.replace(FOOTER_ADDR, FOOTER_TAGLINE), "home.jpg"
 
-    # 2026-11: bo bang gia 3 goi khoi landing (gia theo nganh do AI bao) -> khong can pricing.css / PROMO.
-    extra = f'<link rel="stylesheet" href="/css/chat-ai.css?v={ASSET_V}">' + chr(10)
+    # 2026-11: bo bang gia 3 goi khoi landing -> khong can pricing.css / PROMO.
+    # 2026-11-28: bo chat AI khoi landing (chu: "chi dung AI o trang chu"), quay lai form cu.
+    extra = ""
     return f"""{head(v["title"], v["description"], extra, og)}
 <body class="lp">
 
@@ -727,8 +731,8 @@ def landing(v: dict) -> str:
       </div>
     </div>
 
-    <div class="lp-hero__form" id="dang-ky">
-      {chat_widget()}
+    <div class="lp-hero__form">
+      {lead_form("dang-ky", "form-hero", "Nhận báo giá miễn phí")}
     </div>
 
     <figure class="lp-hero__proof">
@@ -752,8 +756,8 @@ def landing(v: dict) -> str:
 <section class="lp-final">
   <div class="container lp-final__grid">
     <div class="lp-final__copy">
-      <h2>Nhận báo giá website ngay</h2>
-      <p>Hỏi AI để có báo giá theo ngành ngay, hoặc liên hệ trực tiếp, tư vấn miễn phí, không ràng buộc.</p>
+      <h2>Nhận báo giá website trong 1 giờ</h2>
+      <p>Để lại số điện thoại hoặc liên hệ trực tiếp, tư vấn miễn phí, không ràng buộc.</p>
       <div class="lp-final__contacts" data-track-area="final">
         <a href="tel:{PHONE_TEL}">{I_PHONE}<span>Gọi {PHONE_TXT}</span></a>
         <a href="{ZALO}" target="_blank" rel="noopener">{ZALO_IMG}<span>Nhắn Zalo</span></a>
@@ -761,7 +765,7 @@ def landing(v: dict) -> str:
       </div>
     </div>
     <div class="lp-final__form">
-      {FINAL_AI}
+      {lead_form("dang-ky-cuoi", "form-final", "Để lại số điện thoại")}
     </div>
   </div>
 </section>
@@ -773,7 +777,6 @@ def landing(v: dict) -> str:
 {CONTACT}
 
 <script src="/js/main.js?v={ASSET_V}"></script>
-<script src="/js/chat-bao-gia.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 """
